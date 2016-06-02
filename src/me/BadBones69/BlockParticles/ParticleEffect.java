@@ -9,14 +9,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import me.BadBones69.BlockParticles.ReflectionUtils.PackageType;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
+
+import me.BadBones69.BlockParticles.ParticleEffect.ParticleData;
+import me.BadBones69.BlockParticles.ReflectionUtils.PackageType;
 
 /**
  * <b>ParticleEffect Library</b>
@@ -1527,14 +1528,16 @@ public enum ParticleEffect {
 			if (range < 1) {
 				throw new IllegalArgumentException("The range is lower than 1");
 			}
-			if(center.getWorld()!=null){
-				String worldName = center.getWorld().getName();
-				double squared = range * range;
-				for (Player player : Bukkit.getOnlinePlayers()) {
-					if (!player.getWorld().getName().equals(worldName) || player.getLocation().distanceSquared(center) > squared) {
-						continue;
+			if(center!=null){
+				if(center.getWorld()!=null){
+					String worldName = center.getWorld().getName();
+					double squared = range * range;
+					for (Player player : Bukkit.getOnlinePlayers()) {
+						if (!player.getWorld().getName().equals(worldName) || player.getLocation().distanceSquared(center) > squared) {
+							continue;
+						}
+						sendTo(center, player);
 					}
-					sendTo(center, player);
 				}
 			}
 		}

@@ -7,5 +7,4 @@ description: >
 commands:
   BlockParticle:
     description: Adds particles to blocks!
-  BP:
-    description: Adds particles to blocks!
+    aliases: [bp]

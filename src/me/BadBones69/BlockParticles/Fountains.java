@@ -118,7 +118,11 @@ public class Fountains {
 					if(e instanceof Player){
 						name =  e.getName();
 						final Item head = Bukkit.getWorld(loc.getWorld().getName()).dropItem(loc.clone().add(.5, .8, .5), Api.getPlayerHead(name));
-						head.setVelocity(new Vector(Vec(), .3, Vec()));
+						if(Api.getVersion()>=191){
+							head.setVelocity(new Vector(Vec(), .01, Vec()));
+						}else{
+							head.setVelocity(new Vector(Vec(), .3, Vec()));
+						}
 						items.add(head);
 						Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable(){
 							@Override
@@ -142,7 +146,11 @@ public class Fountains {
 				heads.add("CruXXx");
 				for(String e : heads){
 					final Item head = Bukkit.getWorld(loc.getWorld().getName()).dropItem(loc.clone().add(.5, .8, .5), Api.getPlayerHead(e));
-					head.setVelocity(new Vector(Vec(), .3, Vec()));
+					if(Api.getVersion()>=191){
+						head.setVelocity(new Vector(Vec(), .01, Vec()));
+					}else{
+						head.setVelocity(new Vector(Vec(), .3, Vec()));
+					}
 					items.add(head);
 					Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable(){
 						@Override
@@ -190,7 +198,11 @@ public class Fountains {
 				}
 				for(String e : picked){
 					final Item head = Bukkit.getWorld(loc.getWorld().getName()).dropItem(loc.clone().add(.5, .8, .5), Api.getPlayerHead(e));
-					head.setVelocity(new Vector(Vec(), .3, Vec()));
+					if(Api.getVersion()>=191){
+						head.setVelocity(new Vector(Vec(), .01, Vec()));
+					}else{
+						head.setVelocity(new Vector(Vec(), .3, Vec()));
+					}
 					items.add(head);
 					Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable(){
 						@Override
@@ -222,7 +234,11 @@ public class Fountains {
 				}
 				for(String e : picked){
 					final Item head = Bukkit.getWorld(loc.getWorld().getName()).dropItem(loc.clone().add(.5, .8, .5), Api.getPlayerHead(e));
-					head.setVelocity(new Vector(Vec(), .3, Vec()));
+					if(Api.getVersion()>=191){
+						head.setVelocity(new Vector(Vec(), .01, Vec()));
+					}else{
+						head.setVelocity(new Vector(Vec(), .3, Vec()));
+					}
 					items.add(head);
 					Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable(){
 						@Override
@@ -261,7 +277,11 @@ public class Fountains {
 				}
 				for(String e : picked){
 					final Item head = Bukkit.getWorld(loc.getWorld().getName()).dropItem(loc.clone().add(.5, .8, .5), Api.getPlayerHead(e));
-					head.setVelocity(new Vector(Vec(), .3, Vec()));
+					if(Api.getVersion()>=191){
+						head.setVelocity(new Vector(Vec(), .01, Vec()));
+					}else{
+						head.setVelocity(new Vector(Vec(), .3, Vec()));
+					}
 					items.add(head);
 					Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable(){
 						@Override
@@ -293,7 +313,11 @@ public class Fountains {
 				}
 				for(String e : picked){
 					final Item head = Bukkit.getWorld(loc.getWorld().getName()).dropItem(loc.clone().add(.5, .8, .5), Api.getPlayerHead(e));
-					head.setVelocity(new Vector(Vec(), .3, Vec()));
+					if(Api.getVersion()>=191){
+						head.setVelocity(new Vector(Vec(), .01, Vec()));
+					}else{
+						head.setVelocity(new Vector(Vec(), .3, Vec()));
+					}
 					items.add(head);
 					Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable(){
 						@Override

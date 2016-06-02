@@ -1,12 +1,12 @@
 package me.BadBones69.BlockParticles.API;
 
-import me.BadBones69.BlockParticles.Fountains;
-import me.BadBones69.BlockParticles.Main;
-import me.BadBones69.BlockParticles.PlayParticles;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
+
+import me.BadBones69.BlockParticles.Fountains;
+import me.BadBones69.BlockParticles.Main;
+import me.BadBones69.BlockParticles.PlayParticles;
 
 public class BlockParticles{
 	static BlockParticles instance = new BlockParticles();

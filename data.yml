@@ -1,11 +1,1 @@
-Locations:
-    <Location Name>:
-      X: <X>
-      Y: <Y>
-      Z: <Z>
-      Particle: <Particle>
-    <Another Location Name>:
-      X: <X>
-      Y: <Y>
-      Z: <Z>
-      Particle: <Particle>
+Locations: {}

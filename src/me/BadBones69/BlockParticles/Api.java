@@ -1,6 +1,7 @@
 package me.BadBones69.BlockParticles;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
@@ -27,6 +28,7 @@ import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.plugin.Plugin;
 
 public class Api implements Listener{
+	public static HashMap<Location, Location> Locations = new HashMap<Location, Location>();
 	static Plugin plugin = Bukkit.getServer().getPluginManager().getPlugin("BlockParticles");
 	@SuppressWarnings("static-access")
 	public Api(Plugin plugin){
@@ -47,13 +49,21 @@ public class Api implements Listener{
 	    ent.remove();
 	    return out;
 	}
+	public static Integer getVersion(){
+		String ver = Bukkit.getServer().getClass().getPackage().getName();
+		ver = ver.substring(ver.lastIndexOf('.')+1);
+		ver=ver.replaceAll("_", "").replaceAll("R", "").replaceAll("v", "");
+		return Integer.parseInt(ver);
+	}
 	static boolean anyPlayers(Location loc, int range){
 		List<Entity> out = getNearbyEntities(loc, range, range, range);
-		for(Entity e : out){
-			if(e instanceof LivingEntity){
-				LivingEntity en = (LivingEntity) e;
-				if(en instanceof Player){
-					return true;
+		if(!out.isEmpty()){
+			for(Entity e : out){
+				if(e instanceof LivingEntity){
+					LivingEntity en = (LivingEntity) e;
+					if(en instanceof Player){
+						return true;
+					}
 				}
 			}
 		}
@@ -149,7 +159,7 @@ public class Api implements Listener{
 	@SuppressWarnings("deprecation")
 	static void addLoc(Player player, String name){
 		String Prefix = Main.settings.getConfig().getString("Settings.Prefix");
-		if(Main.settings.getData().getConfigurationSection("Locations") == null){
+		if(!Main.settings.getData().contains("Locations")){
 			Main.settings.getData().set("Locations.clear", null);
 			Main.settings.saveData();
 		}

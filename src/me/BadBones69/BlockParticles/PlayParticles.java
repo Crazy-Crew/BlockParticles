@@ -11,6 +11,7 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.util.Vector;
+import org.inventivetalent.particle.ParticleEffects;
 
 public class PlayParticles {
 	public static HashMap<String, Integer> Blocks = new HashMap<String, Integer>();
@@ -31,7 +32,7 @@ public class PlayParticles {
 		float Vec = (float) -.05 + (float) (Math.random() * ((.05 - -.05)));
 		return Vec;
 	}
-	public void ranLoc(ParticlesEff part, Location loc, double offsetX, double offsetY, double offsetZ, int Amount, Color color){
+	public void ranLoc(ParticleEffects part, Location loc, double offsetX, double offsetY, double offsetZ, int Amount, Color color){
 		for(int i=0; i<Amount; i++){
 			try {part.sendColor(Bukkit.getOnlinePlayers(), RanSpawn(loc.clone(), offsetX, offsetY, offsetZ), color);}
 			catch (Exception e){e.printStackTrace();}
@@ -624,22 +625,22 @@ public class PlayParticles {
 				if(!Api.anyPlayers(l.clone(), range))return;
 				try {
 					for(int i=0; i<3; i++){
-						ParticlesEff.RED_DUST.sendColor(Bukkit.getOnlinePlayers(), l.clone().add(.5,0,0), Color.fromRGB(255, 255, 0));
-						ParticlesEff.RED_DUST.sendColor(Bukkit.getOnlinePlayers(), l.clone().add(.45,0,.13), Color.fromRGB(255, 255, 0));
-						ParticlesEff.RED_DUST.sendColor(Bukkit.getOnlinePlayers(), l.clone().add(.35,0,.35), Color.fromRGB(255, 255, 0));
-						ParticlesEff.RED_DUST.sendColor(Bukkit.getOnlinePlayers(), l.clone().add(.13,0,.45), Color.fromRGB(255, 255, 0));
-						ParticlesEff.RED_DUST.sendColor(Bukkit.getOnlinePlayers(), l.clone().add(0,0,.5), Color.fromRGB(255, 255, 0));
-						ParticlesEff.RED_DUST.sendColor(Bukkit.getOnlinePlayers(), l.clone().add(-.13,0,.45), Color.fromRGB(255, 255, 0));
-						ParticlesEff.RED_DUST.sendColor(Bukkit.getOnlinePlayers(), l.clone().add(-.35,0,.35), Color.fromRGB(255, 255, 0));
-						ParticlesEff.RED_DUST.sendColor(Bukkit.getOnlinePlayers(), l.clone().add(-.45,0,.13), Color.fromRGB(255, 255, 0));
-						ParticlesEff.RED_DUST.sendColor(Bukkit.getOnlinePlayers(), l.clone().add(-.5,0,0), Color.fromRGB(255, 255, 0));
-						ParticlesEff.RED_DUST.sendColor(Bukkit.getOnlinePlayers(), l.clone().add(-.45,0,-.13), Color.fromRGB(255, 255, 0));
-						ParticlesEff.RED_DUST.sendColor(Bukkit.getOnlinePlayers(), l.clone().add(-.35,0,-.35), Color.fromRGB(255, 255, 0));
-						ParticlesEff.RED_DUST.sendColor(Bukkit.getOnlinePlayers(), l.clone().add(-.13,0,-.45), Color.fromRGB(255, 255, 0));
-						ParticlesEff.RED_DUST.sendColor(Bukkit.getOnlinePlayers(), l.clone().add(0,0,-.5), Color.fromRGB(255, 255, 0));
-						ParticlesEff.RED_DUST.sendColor(Bukkit.getOnlinePlayers(), l.clone().add(.13,0,-.45), Color.fromRGB(255, 255, 0));
-						ParticlesEff.RED_DUST.sendColor(Bukkit.getOnlinePlayers(), l.clone().add(.35,0,-.35), Color.fromRGB(255, 255, 0));
-						ParticlesEff.RED_DUST.sendColor(Bukkit.getOnlinePlayers(), l.clone().add(.45,0,-.13), Color.fromRGB(255, 255, 0));
+						ParticleEffects.REDSTONE.sendColor(Bukkit.getOnlinePlayers(), l.clone().add(.5,0,0), Color.fromRGB(255, 255, 0));
+						ParticleEffects.REDSTONE.sendColor(Bukkit.getOnlinePlayers(), l.clone().add(.45,0,.13), Color.fromRGB(255, 255, 0));
+						ParticleEffects.REDSTONE.sendColor(Bukkit.getOnlinePlayers(), l.clone().add(.35,0,.35), Color.fromRGB(255, 255, 0));
+						ParticleEffects.REDSTONE.sendColor(Bukkit.getOnlinePlayers(), l.clone().add(.13,0,.45), Color.fromRGB(255, 255, 0));
+						ParticleEffects.REDSTONE.sendColor(Bukkit.getOnlinePlayers(), l.clone().add(0,0,.5), Color.fromRGB(255, 255, 0));
+						ParticleEffects.REDSTONE.sendColor(Bukkit.getOnlinePlayers(), l.clone().add(-.13,0,.45), Color.fromRGB(255, 255, 0));
+						ParticleEffects.REDSTONE.sendColor(Bukkit.getOnlinePlayers(), l.clone().add(-.35,0,.35), Color.fromRGB(255, 255, 0));
+						ParticleEffects.REDSTONE.sendColor(Bukkit.getOnlinePlayers(), l.clone().add(-.45,0,.13), Color.fromRGB(255, 255, 0));
+						ParticleEffects.REDSTONE.sendColor(Bukkit.getOnlinePlayers(), l.clone().add(-.5,0,0), Color.fromRGB(255, 255, 0));
+						ParticleEffects.REDSTONE.sendColor(Bukkit.getOnlinePlayers(), l.clone().add(-.45,0,-.13), Color.fromRGB(255, 255, 0));
+						ParticleEffects.REDSTONE.sendColor(Bukkit.getOnlinePlayers(), l.clone().add(-.35,0,-.35), Color.fromRGB(255, 255, 0));
+						ParticleEffects.REDSTONE.sendColor(Bukkit.getOnlinePlayers(), l.clone().add(-.13,0,-.45), Color.fromRGB(255, 255, 0));
+						ParticleEffects.REDSTONE.sendColor(Bukkit.getOnlinePlayers(), l.clone().add(0,0,-.5), Color.fromRGB(255, 255, 0));
+						ParticleEffects.REDSTONE.sendColor(Bukkit.getOnlinePlayers(), l.clone().add(.13,0,-.45), Color.fromRGB(255, 255, 0));
+						ParticleEffects.REDSTONE.sendColor(Bukkit.getOnlinePlayers(), l.clone().add(.35,0,-.35), Color.fromRGB(255, 255, 0));
+						ParticleEffects.REDSTONE.sendColor(Bukkit.getOnlinePlayers(), l.clone().add(.45,0,-.13), Color.fromRGB(255, 255, 0));
 					}
 				}
 				catch (Exception e){e.printStackTrace();}
@@ -690,17 +691,17 @@ public class PlayParticles {
 					for(int i=0; i<3; i++){
 						Color red = Color.RED;
 						Color white = Color.fromRGB(255, 255, 255);
-						for(Location loc : getCircle(l1, .5, 20))ParticlesEff.RED_DUST.sendColor(Bukkit.getOnlinePlayers(), loc, white);
-						for(Location loc : getCircle(l2, .4, 15))ParticlesEff.RED_DUST.sendColor(Bukkit.getOnlinePlayers(), loc, red);
-						for(Location loc : getCircle(l3, .35, 15))ParticlesEff.RED_DUST.sendColor(Bukkit.getOnlinePlayers(), loc, red);
-						for(Location loc : getCircle(l4, .3, 15))ParticlesEff.RED_DUST.sendColor(Bukkit.getOnlinePlayers(), loc, red);
-						for(Location loc : getCircle(l5, .2, 15))ParticlesEff.RED_DUST.sendColor(Bukkit.getOnlinePlayers(), loc, red);
-						for(Location loc : getCircle(l6, .15, 15))ParticlesEff.RED_DUST.sendColor(Bukkit.getOnlinePlayers(), loc, red);
-						for(Location loc : getCircle(l7, .1, 15))ParticlesEff.RED_DUST.sendColor(Bukkit.getOnlinePlayers(), loc, red);
-						for(Location loc : getCircle(l8, .05, 10))ParticlesEff.RED_DUST.sendColor(Bukkit.getOnlinePlayers(), loc, red);
-						for(Location loc : getCircle(l9, .05, 10))ParticlesEff.RED_DUST.sendColor(Bukkit.getOnlinePlayers(), loc, red);
-						for(Location loc : getCircle(l10, .05, 15))ParticlesEff.RED_DUST.sendColor(Bukkit.getOnlinePlayers(), loc, white);
-						for(Location loc : getCircle(l11, .05, 15))ParticlesEff.RED_DUST.sendColor(Bukkit.getOnlinePlayers(), loc, white);
+						for(Location loc : getCircle(l1, .5, 20))ParticleEffects.REDSTONE.sendColor(Bukkit.getOnlinePlayers(), loc, white);
+						for(Location loc : getCircle(l2, .4, 15))ParticleEffects.REDSTONE.sendColor(Bukkit.getOnlinePlayers(), loc, red);
+						for(Location loc : getCircle(l3, .35, 15))ParticleEffects.REDSTONE.sendColor(Bukkit.getOnlinePlayers(), loc, red);
+						for(Location loc : getCircle(l4, .3, 15))ParticleEffects.REDSTONE.sendColor(Bukkit.getOnlinePlayers(), loc, red);
+						for(Location loc : getCircle(l5, .2, 15))ParticleEffects.REDSTONE.sendColor(Bukkit.getOnlinePlayers(), loc, red);
+						for(Location loc : getCircle(l6, .15, 15))ParticleEffects.REDSTONE.sendColor(Bukkit.getOnlinePlayers(), loc, red);
+						for(Location loc : getCircle(l7, .1, 15))ParticleEffects.REDSTONE.sendColor(Bukkit.getOnlinePlayers(), loc, red);
+						for(Location loc : getCircle(l8, .05, 10))ParticleEffects.REDSTONE.sendColor(Bukkit.getOnlinePlayers(), loc, red);
+						for(Location loc : getCircle(l9, .05, 10))ParticleEffects.REDSTONE.sendColor(Bukkit.getOnlinePlayers(), loc, red);
+						for(Location loc : getCircle(l10, .05, 15))ParticleEffects.REDSTONE.sendColor(Bukkit.getOnlinePlayers(), loc, white);
+						for(Location loc : getCircle(l11, .05, 15))ParticleEffects.REDSTONE.sendColor(Bukkit.getOnlinePlayers(), loc, white);
 					}
 				}
 				catch (Exception e){e.printStackTrace();}

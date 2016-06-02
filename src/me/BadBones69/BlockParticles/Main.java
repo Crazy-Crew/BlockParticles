@@ -2,16 +2,16 @@ package me.BadBones69.BlockParticles;
 
 import java.util.HashMap;
 
-import me.BadBones69.BlockParticles.API.BlockParticles;
-import me.BadBones69.BlockParticles.API.ParticleType;
-import me.BadBones69.BlockParticles.API.Particles;
-
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import me.BadBones69.BlockParticles.API.BlockParticles;
+import me.BadBones69.BlockParticles.API.ParticleType;
+import me.BadBones69.BlockParticles.API.Particles;
 
 public class Main extends JavaPlugin{
 	public static SettingsManager settings = SettingsManager.getInstance();
@@ -27,6 +27,10 @@ public class Main extends JavaPlugin{
 		settings.setup(this);
 		Bukkit.getServer().getPluginManager().registerEvents(new Api(this), this);
 		Bukkit.getServer().getPluginManager().registerEvents(new GUI(), this);
+		if(!settings.getData().contains("Locations")){
+			settings.getData().set("Locations.clear", null);
+			settings.saveData();
+		}
 		Api.kill();
 		Api.startParticles();
 	}
