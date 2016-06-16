@@ -28,10 +28,10 @@
 
 package org.inventivetalent.reflection.resolver;
 
-import java.lang.reflect.Field;
-
 import org.inventivetalent.reflection.resolver.wrapper.FieldWrapper;
 import org.inventivetalent.reflection.util.AccessUtil;
+
+import java.lang.reflect.Field;
 
 /**
  * Resolver for fields

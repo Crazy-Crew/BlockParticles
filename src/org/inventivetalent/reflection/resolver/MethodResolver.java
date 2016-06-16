@@ -28,10 +28,10 @@
 
 package org.inventivetalent.reflection.resolver;
 
-import java.lang.reflect.Method;
-
 import org.inventivetalent.reflection.resolver.wrapper.MethodWrapper;
 import org.inventivetalent.reflection.util.AccessUtil;
+
+import java.lang.reflect.Method;
 
 /**
  * Resolver for methods

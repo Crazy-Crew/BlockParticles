@@ -28,10 +28,10 @@
 
 package org.inventivetalent.reflection.resolver;
 
-import java.lang.reflect.Constructor;
-
 import org.inventivetalent.reflection.resolver.wrapper.ConstructorWrapper;
 import org.inventivetalent.reflection.util.AccessUtil;
+
+import java.lang.reflect.Constructor;
 
 /**
  * Resolver for constructors

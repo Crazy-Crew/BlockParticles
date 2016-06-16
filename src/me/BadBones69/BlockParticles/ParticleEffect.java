@@ -16,7 +16,6 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
-import me.BadBones69.BlockParticles.ParticleEffect.ParticleData;
 import me.BadBones69.BlockParticles.ReflectionUtils.PackageType;
 
 /**
@@ -383,8 +382,43 @@ public enum ParticleEffect {
 	 * <li>The offset values have no influence on this particle effect
 	 * </ul>
 	 */
-	MOB_APPEARANCE("mobappearance", 41, 8);
-
+	MOB_APPEARANCE("mobappearance", 41, 8),
+	/**
+	 * A particle effect which is displayed by ender dragon:
+	 * <ul>
+	 * <li>It looks like witch spell
+	 * <li>The speed value has no influence on this particle effect
+	 * <li>The offset values have no influence on this particle effect
+	 * </ul>
+	 */
+	DRAGON_BREATH("dragonbreath", 42, 9),
+	/**
+	 * A particle effect which is displayed by skulker bullets and end rods:
+	 * <ul>
+	 * <li>It looks like slow falling snow
+	 * <li>The speed value has no influence on this particle effect
+	 * <li>The offset values have no influence on this particle effect
+	 * </ul>
+	 */
+	END_ROD("endRod", 43, 9),
+	/**
+	 * A particle effect which is displayed by mobs when damaged:
+	 * <ul>
+	 * <li>It looks like small hearts
+	 * <li>The speed value has no influence on this particle effect
+	 * <li>The offset values have no influence on this particle effect
+	 * </ul>
+	 */
+	DAMAGE_INDICATOR("damageIndicator", 44, 9),
+	/**
+	 * A particle effect which is displayed by swinging swords:
+	 * <ul>
+	 * <li>It looks like a swinging sword
+	 * <li>The speed value has no influence on this particle effect
+	 * <li>The offset values have no influence on this particle effect
+	 * </ul>
+	 */
+	SWEEP_ATTACK("sweepAttack", 45, 9);
 	private static final Map<String, ParticleEffect> NAME_MAP = new HashMap<String, ParticleEffect>();
 	private static final Map<Integer, ParticleEffect> ID_MAP = new HashMap<Integer, ParticleEffect>();
 	private final String name;
@@ -1405,7 +1439,7 @@ public enum ParticleEffect {
 				return;
 			}
 			try {
-				version = Integer.parseInt(Character.toString(PackageType.getServerVersion().charAt(3)));
+				version = Integer.parseInt(PackageType.getServerVersion().split("_")[1]);
 				if (version > 7) {
 					enumParticle = PackageType.MINECRAFT_SERVER.getClass("EnumParticle");
 				}

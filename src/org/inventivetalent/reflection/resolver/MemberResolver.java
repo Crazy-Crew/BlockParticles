@@ -28,9 +28,9 @@
 
 package org.inventivetalent.reflection.resolver;
 
-import java.lang.reflect.Member;
-
 import org.inventivetalent.reflection.resolver.wrapper.WrapperAbstract;
+
+import java.lang.reflect.Member;
 
 /**
  * abstract class to resolve members

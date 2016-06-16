@@ -42,12 +42,11 @@ import org.inventivetalent.reflection.resolver.MethodResolver;
 import org.inventivetalent.reflection.resolver.minecraft.OBCClassResolver;
 import org.inventivetalent.reflection.util.AccessUtil;
 
-
 /**
  * Helper class to access minecraft/bukkit specific objects
  */
 public class Minecraft {
-	static final Pattern NUMERIC_VERSION_PATTERN = Pattern.compile("v([0-9])_([0-9])_R([0-9])");
+	static final Pattern NUMERIC_VERSION_PATTERN = Pattern.compile("v([0-9])_([0-9])*_R([0-9])");
 
 	public static final Version VERSION;
 
@@ -120,7 +119,9 @@ public class Minecraft {
 		v1_8_R4(10804),
 
 		v1_9_R1(10901),
-		v1_9_R2(10902);
+		v1_9_R2(10902),
+
+		v1_10_R1(11001);
 
 		private int version;
 

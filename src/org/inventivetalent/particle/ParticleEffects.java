@@ -28,15 +28,6 @@
 
 package org.inventivetalent.particle;
 
-import static org.inventivetalent.reflection.minecraft.Minecraft.Version.v1_7_R1;
-import static org.inventivetalent.reflection.minecraft.Minecraft.Version.v1_8_R1;
-import static org.inventivetalent.reflection.minecraft.Minecraft.Version.v1_9_R1;
-
-import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-
 import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -46,6 +37,13 @@ import org.inventivetalent.reflection.resolver.ConstructorResolver;
 import org.inventivetalent.reflection.resolver.FieldResolver;
 import org.inventivetalent.reflection.resolver.MethodResolver;
 import org.inventivetalent.reflection.resolver.minecraft.NMSClassResolver;
+
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+
+import static org.inventivetalent.reflection.minecraft.Minecraft.Version.*;
 
 public enum ParticleEffects {
 
@@ -163,7 +161,8 @@ public enum ParticleEffects {
 	DRAGON_BREATH("dragonbreath", v1_9_R1),
 	END_ROD("endRod", v1_9_R1),
 	DAMAGE_INDICATOR("damageIndicator", v1_9_R1),
-	SWEEP_ATTACK("sweepAttack", v1_9_R1);
+	SWEEP_ATTACK("sweepAttack", v1_9_R1),
+	FALLING_DUST("fallingDust", v1_10_R1);
 
 	private   String            name;
 	private   Minecraft.Version minVersion;
@@ -344,6 +343,7 @@ public enum ParticleEffects {
 	}
 
 	public void sendColor(Collection<? extends Player> receivers, Location location, Color color) {
+		receivers = new ArrayList<>(receivers);
 		for (Iterator<? extends Player> iterator = receivers.iterator(); iterator.hasNext(); ) {
 			if (!iterator.next().getWorld().getName().equals(location.getWorld().getName())) { iterator.remove(); }
 		}
@@ -351,6 +351,7 @@ public enum ParticleEffects {
 	}
 
 	public void sendColor(Collection<? extends Player> receivers, Location location, java.awt.Color color) {
+		receivers = new ArrayList<>(receivers);
 		for (Iterator<? extends Player> iterator = receivers.iterator(); iterator.hasNext(); ) {
 			if (!iterator.next().getWorld().getName().equals(location.getWorld().getName())) { iterator.remove(); }
 		}
@@ -395,6 +396,7 @@ public enum ParticleEffects {
 	 * @param itemStack {@link ItemStack} containing the ID&amp;data of the item/block
 	 * @throws ParticleException if this particle cannot have block or item data
 	 */
+	@SuppressWarnings("deprecation")
 	public void sendData(Collection<? extends Player> receivers, double x, double y, double z, double offsetX, double offsetY, double offsetZ, double speed, int count, ItemStack itemStack) {
 		sendData(receivers, x, y, z, offsetX, offsetY, offsetZ, speed, count, itemStack.getTypeId(), itemStack.getData().getData());
 	}
@@ -568,6 +570,7 @@ public enum ParticleEffects {
 		}
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	static Enum<?> getEnum(String enumFullName) {
 		String[] x = enumFullName.split("\\.(?=[^\\.]+$)");
 		if (x.length == 2) {

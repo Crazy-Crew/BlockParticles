@@ -28,6 +28,7 @@
 
 package org.inventivetalent.particle;
 
+@SuppressWarnings("serial")
 public class ParticleException extends RuntimeException {
 	public ParticleException() {
 	}

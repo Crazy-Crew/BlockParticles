@@ -28,19 +28,14 @@
 
 package org.inventivetalent.reflection.minecraft;
 
+import org.inventivetalent.reflection.resolver.*;
+import org.inventivetalent.reflection.resolver.minecraft.NMSClassResolver;
+
+import javax.annotation.Nullable;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.Arrays;
 import java.util.Map;
-
-import javax.annotation.Nullable;
-
-import org.inventivetalent.reflection.resolver.ClassResolver;
-import org.inventivetalent.reflection.resolver.ConstructorResolver;
-import org.inventivetalent.reflection.resolver.FieldResolver;
-import org.inventivetalent.reflection.resolver.MethodResolver;
-import org.inventivetalent.reflection.resolver.ResolverQuery;
-import org.inventivetalent.reflection.resolver.minecraft.NMSClassResolver;
 
 public class DataWatcher {
 
