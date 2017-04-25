@@ -221,6 +221,7 @@ public class Minecraft {
 		}
 	}
 
+	@SuppressWarnings("rawtypes")
 	public static Object newEnumInstance(Class clazz, Class[] types, Object[] values) throws ReflectiveOperationException {
 		Constructor constructor = new ConstructorResolver(clazz).resolve(types);
 		Field accessorField = new FieldResolver(Constructor.class).resolve("constructorAccessor");

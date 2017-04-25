@@ -1,4 +1,4 @@
-package me.BadBones69.BlockParticles;
+package me.badbones69.blockparticles;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;

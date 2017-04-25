@@ -1,4 +1,4 @@
-package me.BadBones69.BlockParticles;
+package me.badbones69.blockparticles;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -16,7 +16,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
-import me.BadBones69.BlockParticles.ReflectionUtils.PackageType;
+import me.badbones69.blockparticles.ReflectionUtils.PackageType;
 
 /**
  * <b>ParticleEffect Library</b>

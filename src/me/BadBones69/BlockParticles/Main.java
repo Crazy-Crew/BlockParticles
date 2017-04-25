@@ -1,4 +1,4 @@
-package me.BadBones69.BlockParticles;
+package me.badbones69.blockparticles;
 
 import java.util.HashMap;
 
@@ -9,9 +9,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import me.BadBones69.BlockParticles.API.BlockParticles;
-import me.BadBones69.BlockParticles.API.ParticleType;
-import me.BadBones69.BlockParticles.API.Particles;
+import me.badbones69.blockparticles.api.BlockParticles;
+import me.badbones69.blockparticles.api.ParticleType;
+import me.badbones69.blockparticles.api.Particles;
 
 public class Main extends JavaPlugin{
 	public static SettingsManager settings = SettingsManager.getInstance();

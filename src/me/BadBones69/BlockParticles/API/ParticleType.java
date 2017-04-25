@@ -1,4 +1,4 @@
-package me.BadBones69.BlockParticles.API;
+package me.badbones69.blockparticles.api;
 
 
 public enum ParticleType{

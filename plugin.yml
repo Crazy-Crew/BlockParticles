@@ -1,5 +1,5 @@
 name: BlockParticles
-main: me.BadBones69.BlockParticles.Main
+main: me.badbones69.blockparticles.Main
 version: 1.9.5.1
 softdepend: [Multiverse-Core, MultiWorld]
 description: >
