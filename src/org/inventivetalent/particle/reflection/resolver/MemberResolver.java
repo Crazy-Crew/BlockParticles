@@ -26,11 +26,11 @@
  *  either expressed or implied, of anybody else.
  */
 
-package org.inventivetalent.reflection.resolver;
-
-import org.inventivetalent.reflection.resolver.wrapper.WrapperAbstract;
+package org.inventivetalent.particle.reflection.resolver;
 
 import java.lang.reflect.Member;
+
+import org.inventivetalent.particle.reflection.resolver.wrapper.WrapperAbstract;
 
 /**
  * abstract class to resolve members

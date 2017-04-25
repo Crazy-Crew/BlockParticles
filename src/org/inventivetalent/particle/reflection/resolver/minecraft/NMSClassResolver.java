@@ -26,15 +26,24 @@
  *  either expressed or implied, of anybody else.
  */
 
-package org.inventivetalent.reflection.resolver.wrapper;
+package org.inventivetalent.particle.reflection.resolver.minecraft;
 
-public abstract class WrapperAbstract {
+import org.inventivetalent.particle.reflection.minecraft.Minecraft;
+import org.inventivetalent.particle.reflection.resolver.ClassResolver;
 
-	/**
-	 * Check whether the wrapped object exists (i.e. is not null)
-	 *
-	 * @return <code>true</code> if the wrapped object exists
-	 */
-	public abstract boolean exists();
+/**
+ * {@link ClassResolver} for <code>net.minecraft.server.*</code> classes
+ */
+public class NMSClassResolver extends ClassResolver {
 
+	@SuppressWarnings("rawtypes")
+	@Override
+	public Class resolve(String... names) throws ClassNotFoundException {
+		for (int i = 0; i < names.length; i++) {
+			if (!names[i].startsWith("net.minecraft.server")) {
+				names[i] = "net.minecraft.server." + Minecraft.getVersion() + names[i];
+			}
+		}
+		return super.resolve(names);
+	}
 }

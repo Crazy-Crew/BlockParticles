@@ -26,60 +26,55 @@
  *  either expressed or implied, of anybody else.
  */
 
-package org.inventivetalent.reflection.resolver.wrapper;
+package org.inventivetalent.particle.reflection;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 
-public class ConstructorWrapper<R> extends WrapperAbstract {
+/**
+ * Helper class to set fields, methods &amp; constructors accessible
+ */
+public abstract class AccessUtil {
 
-	private final Constructor<R> constructor;
-
-	public ConstructorWrapper(Constructor<R> constructor) {
-		this.constructor = constructor;
+	/**
+	 * Sets the field accessible and removes final modifiers
+	 *
+	 * @param field Field to set accessible
+	 * @return the Field
+	 * @throws ReflectiveOperationException  (usually never)
+	 */
+	public static Field setAccessible(Field field) throws ReflectiveOperationException {
+		field.setAccessible(true);
+		Field modifiersField = Field.class.getDeclaredField("modifiers");
+		modifiersField.setAccessible(true);
+		modifiersField.setInt(field, field.getModifiers() & 0xFFFFFFEF);
+		return field;
 	}
 
-	@Override
-	public boolean exists() {
-		return this.constructor != null;
+	/**
+	 * Sets the method accessible
+	 *
+	 * @param method Method to set accessible
+	 * @return the Method
+	 * @throws ReflectiveOperationException  (usually never)
+	 */
+	public static Method setAccessible(Method method) throws ReflectiveOperationException {
+		method.setAccessible(true);
+		return method;
 	}
 
-	public R newInstance(Object... args) {
-		try {
-			return this.constructor.newInstance(args);
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	public R newInstanceSilent(Object... args) {
-		try {
-			return this.constructor.newInstance(args);
-		} catch (Exception e) {
-		}
-		return null;
-	}
-
-	public Class<?>[] getParameterTypes() {
-		return this.constructor.getParameterTypes();
-	}
-
-	public Constructor<R> getConstructor() {
+	/**
+	 * Sets the constructor accessible
+	 *
+	 * @param constructor Constructor to set accessible
+	 * @return the Constructor
+	 * @throws ReflectiveOperationException  (usually never)
+	 */
+	@SuppressWarnings("rawtypes")
+	public static Constructor setAccessible(Constructor constructor) throws ReflectiveOperationException {
+		constructor.setAccessible(true);
 		return constructor;
 	}
 
-	@Override
-	public boolean equals(Object object) {
-		if (this == object) { return true; }
-		if (object == null || getClass() != object.getClass()) { return false; }
-
-		ConstructorWrapper<?> that = (ConstructorWrapper<?>) object;
-
-		return constructor != null ? constructor.equals(that.constructor) : that.constructor == null;
-
-	}
-
-	@Override
-	public int hashCode() {
-		return constructor != null ? constructor.hashCode() : 0;
-	}
 }

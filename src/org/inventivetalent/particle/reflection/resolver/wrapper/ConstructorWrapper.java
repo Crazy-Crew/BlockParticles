@@ -26,43 +26,45 @@
  *  either expressed or implied, of anybody else.
  */
 
-package org.inventivetalent.reflection.resolver.wrapper;
+package org.inventivetalent.particle.reflection.resolver.wrapper;
 
-public class ClassWrapper<R> extends WrapperAbstract {
+import java.lang.reflect.Constructor;
 
-	private final Class<R> clazz;
+public class ConstructorWrapper<R> extends WrapperAbstract {
 
-	public ClassWrapper(Class<R> clazz) {
-		this.clazz = clazz;
+	private final Constructor<R> constructor;
+
+	public ConstructorWrapper(Constructor<R> constructor) {
+		this.constructor = constructor;
 	}
 
 	@Override
 	public boolean exists() {
-		return this.clazz != null;
+		return this.constructor != null;
 	}
 
-	public Class<R> getClazz() {
-		return clazz;
-	}
-
-	public String getName() {
-		return this.clazz.getName();
-	}
-
-	public R newInstance() {
+	public R newInstance(Object... args) {
 		try {
-			return this.clazz.newInstance();
+			return this.constructor.newInstance(args);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	public R newInstanceSilent() {
+	public R newInstanceSilent(Object... args) {
 		try {
-			return this.clazz.newInstance();
+			return this.constructor.newInstance(args);
 		} catch (Exception e) {
 		}
 		return null;
+	}
+
+	public Class<?>[] getParameterTypes() {
+		return this.constructor.getParameterTypes();
+	}
+
+	public Constructor<R> getConstructor() {
+		return constructor;
 	}
 
 	@Override
@@ -70,14 +72,14 @@ public class ClassWrapper<R> extends WrapperAbstract {
 		if (this == object) { return true; }
 		if (object == null || getClass() != object.getClass()) { return false; }
 
-		ClassWrapper<?> that = (ClassWrapper<?>) object;
+		ConstructorWrapper<?> that = (ConstructorWrapper<?>) object;
 
-		return clazz != null ? clazz.equals(that.clazz) : that.clazz == null;
+		return constructor != null ? constructor.equals(that.constructor) : that.constructor == null;
 
 	}
 
 	@Override
 	public int hashCode() {
-		return clazz != null ? clazz.hashCode() : 0;
+		return constructor != null ? constructor.hashCode() : 0;
 	}
 }

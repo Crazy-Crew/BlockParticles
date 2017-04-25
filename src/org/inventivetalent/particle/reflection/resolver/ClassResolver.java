@@ -26,54 +26,47 @@
  *  either expressed or implied, of anybody else.
  */
 
-package org.inventivetalent.reflection.util;
+package org.inventivetalent.particle.reflection.resolver;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
+import org.inventivetalent.particle.reflection.resolver.wrapper.ClassWrapper;
 
 /**
- * Helper class to set fields, methods &amp; constructors accessible
+ * Default {@link ClassResolver}
  */
-public abstract class AccessUtil {
+@SuppressWarnings("rawtypes")
+public class ClassResolver extends ResolverAbstract<Class> {
 
-	/**
-	 * Sets the field accessible and removes final modifiers
-	 *
-	 * @param field Field to set accessible
-	 * @return the Field
-	 * @throws ReflectiveOperationException  (usually never)
-	 */
-	public static Field setAccessible(Field field) throws ReflectiveOperationException {
-		field.setAccessible(true);
-		Field modifiersField = Field.class.getDeclaredField("modifiers");
-		modifiersField.setAccessible(true);
-		modifiersField.setInt(field, field.getModifiers() & 0xFFFFFFEF);
-		return field;
+	@SuppressWarnings("unchecked")
+	public ClassWrapper resolveWrapper(String... names) {
+		return new ClassWrapper<>(resolveSilent(names));
 	}
 
-	/**
-	 * Sets the method accessible
-	 *
-	 * @param method Method to set accessible
-	 * @return the Method
-	 * @throws ReflectiveOperationException  (usually never)
-	 */
-	public static Method setAccessible(Method method) throws ReflectiveOperationException {
-		method.setAccessible(true);
-		return method;
+	public Class resolveSilent(String... names) {
+		try {
+			return resolve(names);
+		} catch (Exception e) {
+		}
+		return null;
 	}
 
-	/**
-	 * Sets the constructor accessible
-	 *
-	 * @param constructor Constructor to set accessible
-	 * @return the Constructor
-	 * @throws ReflectiveOperationException  (usually never)
-	 */
-	public static Constructor setAccessible(Constructor constructor) throws ReflectiveOperationException {
-		constructor.setAccessible(true);
-		return constructor;
+	public Class resolve(String... names) throws ClassNotFoundException {
+		ResolverQuery.Builder builder = ResolverQuery.builder();
+		for (String name : names)
+			builder.with(name);
+		try {
+			return super.resolve(builder.build());
+		} catch (ReflectiveOperationException e) {
+			throw (ClassNotFoundException) e;
+		}
 	}
 
+	@Override
+	protected Class resolveObject(ResolverQuery query) throws ReflectiveOperationException {
+		return Class.forName(query.getName());
+	}
+
+	@Override
+	protected ClassNotFoundException notFoundException(String joinedNames) {
+		return new ClassNotFoundException("Could not resolve class for " + joinedNames);
+	}
 }

@@ -20,7 +20,6 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.ItemMergeEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -28,20 +27,25 @@ import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.plugin.Plugin;
 
 public class Api implements Listener{
+
 	public static HashMap<Location, Location> Locations = new HashMap<Location, Location>();
 	static Plugin plugin = Bukkit.getServer().getPluginManager().getPlugin("BlockParticles");
+
 	@SuppressWarnings("static-access")
 	public Api(Plugin plugin){
 		this.plugin = plugin;
 	}
+
 	public static String removeColor(String msg){
 		msg = ChatColor.stripColor(msg);
 		return msg;
 	}
+
 	static void reset(){
 		kill();
 		startParticles();
 	}
+
 	@SuppressWarnings("deprecation")
 	private static List<Entity> getNearbyEntities(Location loc, double x, double y, double z) {
 	    FallingBlock ent = loc.getWorld().spawnFallingBlock(loc.subtract(0, 2, 0), 0, (byte) 0);
@@ -49,12 +53,14 @@ public class Api implements Listener{
 	    ent.remove();
 	    return out;
 	}
+
 	public static Integer getVersion(){
 		String ver = Bukkit.getServer().getClass().getPackage().getName();
 		ver = ver.substring(ver.lastIndexOf('.')+1);
 		ver=ver.replaceAll("_", "").replaceAll("R", "").replaceAll("v", "");
 		return Integer.parseInt(ver);
 	}
+
 	static boolean anyPlayers(Location loc, int range){
 		List<Entity> out = getNearbyEntities(loc, range, range, range);
 		if(!out.isEmpty()){
@@ -69,6 +75,7 @@ public class Api implements Listener{
 		}
 		return false;
 	}
+
 	static ArrayList<String> getLocations(){
 		ArrayList<String> l = new ArrayList<String>();
 		for(String L : Main.settings.getData().getConfigurationSection("Locations").getKeys(false)){
@@ -76,6 +83,7 @@ public class Api implements Listener{
 		}
 		return l;
 	}
+
 	static void kill(){
 		PlayParticles.Blocks.clear();
 		PlayParticles.R.clear();
@@ -92,6 +100,7 @@ public class Api implements Listener{
 		Fountains.items.clear();
 		Bukkit.getScheduler().cancelTasks(plugin);
 	}
+
 	static void startParticles(){
 		if(Main.settings.getData().getConfigurationSection("Locations") == null){
 			Main.settings.getData().set("Locations.clear", null);
@@ -156,6 +165,7 @@ public class Api implements Listener{
 			if(particle.equalsIgnoreCase("Big Crit")||particle.equalsIgnoreCase("BigCrit"))PlayParticles.playBigCrit(loc, L);
 		}
 	}
+
 	@SuppressWarnings("deprecation")
 	static void addLoc(Player player, String name){
 		String Prefix = Main.settings.getConfig().getString("Settings.Prefix");
@@ -189,6 +199,7 @@ public class Api implements Listener{
 		startParticles();
 		player.sendMessage(color(Prefix + "&3You have added &6" + name + " &3to the BlockParticles."));
 	}
+
 	static void delLoc(CommandSender player, String name){
 		String Prefix = Main.settings.getConfig().getString("Settings.Prefix");
 		if(Main.settings.getData().getConfigurationSection("Locations") == null){
@@ -207,6 +218,7 @@ public class Api implements Listener{
 		}
 		player.sendMessage(color(Prefix + "&3There are no Locations called &6" + name + "&3."));
 	}
+
 	static void listLoc(Player player){
 		String Prefix = Api.color(Main.settings.getConfig().getString("Settings.Prefix"));
 		if(Main.settings.getData().getConfigurationSection("Locations") == null){
@@ -250,11 +262,13 @@ public class Api implements Listener{
 		player.sendMessage(Api.color("&3Number of Locations: &6" + line));
 		return;
 	}
+
 	static int randomColor(){
 		Random r = new Random();
 		int i = r.nextInt(255);
 		return i;
 	}
+
 	public static ItemStack makeItem(Material material, int amount, int type, String name){
 		ItemStack item = new ItemStack(material, amount, (short) type);
 		ItemMeta m = item.getItemMeta();
@@ -262,6 +276,7 @@ public class Api implements Listener{
 		item.setItemMeta(m);
 		return item;
 	}
+
 	static void setLoc(CommandSender player, String name, String particle){
 		String Prefix = Main.settings.getConfig().getString("Settings.Prefix");
 		if(Main.settings.getData().getConfigurationSection("Locations") == null){
@@ -335,6 +350,7 @@ public class Api implements Listener{
 		}
 		player.sendMessage(color(Prefix + "&3There are no Locations called &6" + name + "&3."));
 	}
+
 	static boolean permCheck(Player player, String perm){
 		if(!player.hasPermission("BParticles." + perm)){
 			player.sendMessage(color("&cYou do not have permission to use that command!"));
@@ -342,6 +358,7 @@ public class Api implements Listener{
 		}
 		return false;
 	}
+
 	static String color(String msg){
 		msg = msg.replaceAll("(&([a-f0-9]))", "\u00A7$2");
 		msg = msg.replaceAll("&l", ChatColor.BOLD + "");
@@ -349,25 +366,17 @@ public class Api implements Listener{
 		msg = msg.replaceAll("&k", ChatColor.MAGIC + "");
 		return msg;
 	}
-	@EventHandler
-	public void onitemStack(ItemMergeEvent e){
-		ItemStack item = e.getEntity().getItemStack();
-		if(!item.hasItemMeta())return;
-		if(!item.getItemMeta().hasDisplayName())return;
-		if(item.getItemMeta().getDisplayName().equalsIgnoreCase(color("&3&lApple"))){
-			e.setCancelled(true);
-		}
-	}
+	
 	@EventHandler
 	public void onitemPickUp(PlayerPickupItemEvent e){
-		ItemStack item = e.getItem().getItemStack();
-		if(!item.hasItemMeta())return;
-		if(item.getItemMeta().hasDisplayName()){
-			if(item.getItemMeta().getDisplayName().equals(color("&3&lApple"))){
+		Item item = e.getItem();
+		if(item != null){
+			if(Fountains.items.contains(item)){
 				e.setCancelled(true);
 			}
 		}
 	}
+
 	@SuppressWarnings("deprecation")
 	static ItemStack getPlayerHead(String name, String N){
 		ItemStack head = new ItemStack(397, 1, (short)3);
@@ -377,12 +386,13 @@ public class Api implements Listener{
 		head.setItemMeta(m);
 		return head;
 	}
+
 	@SuppressWarnings("deprecation")
 	static ItemStack getPlayerHead(String name){
 		ItemStack head = new ItemStack(397, 1, (short)3);
 		SkullMeta m = (SkullMeta) head.getItemMeta();
 		m.setOwner(name);
-		m.setDisplayName(color("&3&lApple"));
+		m.setDisplayName(new Random().nextInt(Integer.MAX_VALUE) + "");
 		head.setItemMeta(m);
 		return head;
 	}

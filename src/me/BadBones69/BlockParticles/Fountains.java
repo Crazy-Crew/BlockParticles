@@ -17,23 +17,27 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.util.Vector;
 
 public class Fountains {
-	static ArrayList<Item> items = new ArrayList<Item>();
-	static Plugin plugin = Bukkit.getServer().getPluginManager().getPlugin("BlockParticles");
+	
+	public static ArrayList<Item> items = new ArrayList<Item>();
+	public static Plugin plugin = Bukkit.getServer().getPluginManager().getPlugin("BlockParticles");
+	
 	@SuppressWarnings("static-access")
 	public Fountains(Plugin plugin){
 		this.plugin = plugin;
 	}
+
 	private static float Vec(){
 		float Vec = (float) -.1 + (float) (Math.random() * ((.1 - -.1)));
 		return Vec;
 	}
+
 	public static void startHalloween(final Location loc, String L){
 		PlayParticles.Blocks.put(L, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable(){
 			@Override
     		public void run(){
 				ItemStack emerald = new ItemStack(Material.ROTTEN_FLESH);
 				ItemMeta m = emerald.getItemMeta();
-				m.setDisplayName(Api.color("&3&lApple"));
+				m.setDisplayName(new Random().nextInt(Integer.MAX_VALUE) + "");
 				emerald.setItemMeta(m);
 				ItemStack diamond = new ItemStack(Material.REDSTONE);
 				diamond.setItemMeta(m);
@@ -70,13 +74,14 @@ public class Fountains {
 			}
 		}, 0, 2));
 	}
+
 	public static void startGems(final Location loc, String L){
 		PlayParticles.Blocks.put(L, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable(){
 			@Override
     		public void run(){
 				ItemStack emerald = new ItemStack(Material.EMERALD);
 				ItemMeta m = emerald.getItemMeta();
-				m.setDisplayName(Api.color("&3&lApple"));
+				m.setDisplayName(new Random().nextInt(Integer.MAX_VALUE) + "");
 				emerald.setItemMeta(m);
 				ItemStack diamond = new ItemStack(Material.DIAMOND);
 				diamond.setItemMeta(m);
@@ -108,6 +113,7 @@ public class Fountains {
 			}
 		}, 0, 2));
 	}
+
 	public static void startHeads(final Location loc, String L){
 		PlayParticles.Blocks.put(L, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable(){
 			@Override
@@ -136,6 +142,7 @@ public class Fountains {
 			}
 		}, 0, 3));
 	}
+
 	public static void startPresents(final Location loc, String L){
 		PlayParticles.Blocks.put(L, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable(){
 			@Override
@@ -163,6 +170,7 @@ public class Fountains {
 			}
 		}, 0, 3));
 	}
+
 	public static void startMobs(final Location loc, String L){
 		PlayParticles.Blocks.put(L, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable(){
 			@Override
@@ -215,6 +223,7 @@ public class Fountains {
 			}
 		}, 0, 3));
 	}
+
 	public static void startFood(final Location loc, String L){
 		PlayParticles.Blocks.put(L, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable(){
 			@Override
@@ -223,11 +232,16 @@ public class Fountains {
 				List<String> picked = new ArrayList<String>();
 				Random r = new Random();
 				heads.add("Sloggy_Whopper");
-				heads.add("FriedSushi");
+				heads.add("Hamburger");
 				heads.add("AmericanOreo");
 				heads.add("KylexDavis");
 				heads.add("Spinken5840");
-				heads.add("DoughnutDogg");
+				heads.add("Crunchy_Taco34");
+				heads.add("lmaoki");
+				heads.add("ZachWarnerHD");
+				heads.add("Chazwell777");
+				heads.add("MHF_Cake");
+				heads.add("Chipsandip");
 				for(int i=0; i<3; i++){
 					int p = r.nextInt(heads.size());
 					picked.add(heads.get(p));
@@ -251,6 +265,7 @@ public class Fountains {
 			}
 		}, 0, 3));
 	}
+
 	public static void startPokemon(final Location loc, String L){
 		PlayParticles.Blocks.put(L, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable(){
 			@Override
@@ -258,9 +273,6 @@ public class Fountains {
 				List<String> heads = new ArrayList<String>();
 				List<String> picked = new ArrayList<String>();
 				Random r = new Random();
-				heads.add("Bulbasaur");
-				heads.add("Mudkip_MC");
-				heads.add("Rayquaza");
 				heads.add("Mercer444");
 				heads.add("Articuno");
 				heads.add("hojp");
@@ -294,6 +306,7 @@ public class Fountains {
 			}
 		}, 0, 3));
 	}
+
 	public static void startMario(final Location loc, String L){
 		PlayParticles.Blocks.put(L, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable(){
 			@Override
@@ -330,6 +343,7 @@ public class Fountains {
 			}
 		}, 0, 3));
 	}
+
 	@SuppressWarnings("deprecation")
 	public static List<Entity> getNearbyEntities(Location loc, double x, double y, double z) {
 	    FallingBlock ent = loc.getWorld().spawnFallingBlock(loc.subtract(0, 1, 0), 132, (byte) 0);
@@ -338,4 +352,5 @@ public class Fountains {
 	   
 	    return out;
 	}
+
 }

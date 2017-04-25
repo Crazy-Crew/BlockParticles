@@ -26,12 +26,13 @@
  *  either expressed or implied, of anybody else.
  */
 
-package org.inventivetalent.reflection.minecraft;
-
-import org.inventivetalent.reflection.resolver.*;
-import org.inventivetalent.reflection.resolver.minecraft.NMSClassResolver;
+package org.inventivetalent.particle.reflection.minecraft;
 
 import javax.annotation.Nullable;
+
+import org.inventivetalent.particle.reflection.resolver.*;
+import org.inventivetalent.particle.reflection.resolver.minecraft.NMSClassResolver;
+
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.Arrays;

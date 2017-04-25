@@ -26,23 +26,62 @@
  *  either expressed or implied, of anybody else.
  */
 
-package org.inventivetalent.reflection.resolver.minecraft;
+package org.inventivetalent.particle.reflection.resolver.wrapper;
 
-import org.inventivetalent.reflection.minecraft.Minecraft;
-import org.inventivetalent.reflection.resolver.ClassResolver;
+import java.lang.reflect.Method;
 
-/**
- * {@link ClassResolver} for <code>org.bukkit.craftbukkit.*</code> classes
- */
-public class OBCClassResolver extends ClassResolver {
+public class MethodWrapper<R> extends WrapperAbstract {
+
+	private final Method method;
+
+	public MethodWrapper(Method method) {
+		this.method = method;
+	}
 
 	@Override
-	public Class resolve(String... names) throws ClassNotFoundException {
-		for (int i = 0; i < names.length; i++) {
-			if (!names[i].startsWith("org.bukkit.craftbukkit")) {
-				names[i] = "org.bukkit.craftbukkit." + Minecraft.getVersion() + names[i];
-			}
+	public boolean exists() {
+		return this.method != null;
+	}
+
+	public String getName() {
+		return this.method.getName();
+	}
+
+	@SuppressWarnings("unchecked")
+	public R invoke(Object object, Object... args) {
+		try {
+			return (R) this.method.invoke(object, args);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
 		}
-		return super.resolve(names);
+	}
+
+	@SuppressWarnings("unchecked")
+	public R invokeSilent(Object object, Object... args) {
+		try {
+			return (R) this.method.invoke(object, args);
+		} catch (Exception e) {
+		}
+		return null;
+	}
+
+	public Method getMethod() {
+		return method;
+	}
+
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) { return true; }
+		if (object == null || getClass() != object.getClass()) { return false; }
+
+		MethodWrapper<?> that = (MethodWrapper<?>) object;
+
+		return method != null ? method.equals(that.method) : that.method == null;
+
+	}
+
+	@Override
+	public int hashCode() {
+		return method != null ? method.hashCode() : 0;
 	}
 }

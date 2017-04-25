@@ -26,12 +26,12 @@
  *  either expressed or implied, of anybody else.
  */
 
-package org.inventivetalent.reflection.resolver;
-
-import org.inventivetalent.reflection.resolver.wrapper.MethodWrapper;
-import org.inventivetalent.reflection.util.AccessUtil;
+package org.inventivetalent.particle.reflection.resolver;
 
 import java.lang.reflect.Method;
+
+import org.inventivetalent.particle.reflection.AccessUtil;
+import org.inventivetalent.particle.reflection.resolver.wrapper.MethodWrapper;
 
 /**
  * Resolver for methods
@@ -60,15 +60,18 @@ public class MethodResolver extends MemberResolver<Method> {
 		return null;
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Override
 	public MethodWrapper resolveIndexWrapper(int index) {
 		return new MethodWrapper<>(resolveIndexSilent(index));
 	}
 
+	@SuppressWarnings("rawtypes")
 	public MethodWrapper resolveWrapper(String... names) {
 		return new MethodWrapper<>(resolveSilent(names));
 	}
 
+	@SuppressWarnings("rawtypes")
 	public MethodWrapper resolveWrapper(ResolverQuery... queries) {
 		return new MethodWrapper<>(resolveSilent(queries));
 	}

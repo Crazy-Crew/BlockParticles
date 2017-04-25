@@ -1,5 +1,6 @@
 package me.badbones69.blockparticles;
 
+import java.io.IOException;
 import java.util.HashMap;
 
 import org.bukkit.Bukkit;
@@ -14,13 +15,16 @@ import me.badbones69.blockparticles.api.ParticleType;
 import me.badbones69.blockparticles.api.Particles;
 
 public class Main extends JavaPlugin{
+	
 	public static SettingsManager settings = SettingsManager.getInstance();
 	public static BlockParticles bp = BlockParticles.getInstance();
 	static HashMap<Player, String> B = new HashMap<Player, String>();
+	
 	@Override
 	public void onDisable() {
 		Api.kill();
 	}
+	
 	@Override
 	public void onEnable() {
 		saveDefaultConfig();
@@ -33,7 +37,11 @@ public class Main extends JavaPlugin{
 		}
 		Api.kill();
 		Api.startParticles();
+		try {
+			new MCUpdate(this, true);
+		} catch (IOException e) {}
 	}
+	
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLable, String[] args){
 		if(commandLable.equalsIgnoreCase("BlockParticle") || commandLable.equalsIgnoreCase("BP")){
 			String Prefix = Main.settings.getConfig().getString("Settings.Prefix");
@@ -122,6 +130,7 @@ public class Main extends JavaPlugin{
 		}
 		return false;
 	}
+	
 	String color(String msg){
 		msg = msg.replaceAll("(&([a-f0-9]))", "\u00A7$2");
 		msg = msg.replaceAll("&l", ChatColor.BOLD + "");

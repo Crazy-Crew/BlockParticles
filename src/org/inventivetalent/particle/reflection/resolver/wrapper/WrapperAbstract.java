@@ -26,60 +26,15 @@
  *  either expressed or implied, of anybody else.
  */
 
-package org.inventivetalent.reflection.resolver.wrapper;
+package org.inventivetalent.particle.reflection.resolver.wrapper;
 
-import java.lang.reflect.Method;
+public abstract class WrapperAbstract {
 
-public class MethodWrapper<R> extends WrapperAbstract {
+	/**
+	 * Check whether the wrapped object exists (i.e. is not null)
+	 *
+	 * @return <code>true</code> if the wrapped object exists
+	 */
+	public abstract boolean exists();
 
-	private final Method method;
-
-	public MethodWrapper(Method method) {
-		this.method = method;
-	}
-
-	@Override
-	public boolean exists() {
-		return this.method != null;
-	}
-
-	public String getName() {
-		return this.method.getName();
-	}
-
-	public R invoke(Object object, Object... args) {
-		try {
-			return (R) this.method.invoke(object, args);
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	public R invokeSilent(Object object, Object... args) {
-		try {
-			return (R) this.method.invoke(object, args);
-		} catch (Exception e) {
-		}
-		return null;
-	}
-
-	public Method getMethod() {
-		return method;
-	}
-
-	@Override
-	public boolean equals(Object object) {
-		if (this == object) { return true; }
-		if (object == null || getClass() != object.getClass()) { return false; }
-
-		MethodWrapper<?> that = (MethodWrapper<?>) object;
-
-		return method != null ? method.equals(that.method) : that.method == null;
-
-	}
-
-	@Override
-	public int hashCode() {
-		return method != null ? method.hashCode() : 0;
-	}
 }

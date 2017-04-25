@@ -26,7 +26,7 @@
  *  either expressed or implied, of anybody else.
  */
 
-package org.inventivetalent.reflection.resolver;
+package org.inventivetalent.particle.reflection.resolver;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -35,7 +35,7 @@ import java.util.List;
 /**
  * Container class for resolver-queries Used by {@link MethodResolver}
  *
- * @see org.inventivetalent.reflection.resolver.ResolverQuery.Builder
+ * @see org.inventivetalent.particle.reflection.resolver.ResolverQuery.Builder
  */
 public class ResolverQuery {
 

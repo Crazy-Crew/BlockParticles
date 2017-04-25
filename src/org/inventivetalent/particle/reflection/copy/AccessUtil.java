@@ -26,23 +26,55 @@
  *  either expressed or implied, of anybody else.
  */
 
-package org.inventivetalent.reflection.resolver.minecraft;
+package org.inventivetalent.particle.reflection.copy;
 
-import org.inventivetalent.reflection.minecraft.Minecraft;
-import org.inventivetalent.reflection.resolver.ClassResolver;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 
 /**
- * {@link ClassResolver} for <code>net.minecraft.server.*</code> classes
+ * Helper class to set fields, methods &amp; constructors accessible
  */
-public class NMSClassResolver extends ClassResolver {
+public abstract class AccessUtil {
 
-	@Override
-	public Class resolve(String... names) throws ClassNotFoundException {
-		for (int i = 0; i < names.length; i++) {
-			if (!names[i].startsWith("net.minecraft.server")) {
-				names[i] = "net.minecraft.server." + Minecraft.getVersion() + names[i];
-			}
-		}
-		return super.resolve(names);
+	/**
+	 * Sets the field accessible and removes final modifiers
+	 *
+	 * @param field Field to set accessible
+	 * @return the Field
+	 * @throws ReflectiveOperationException  (usually never)
+	 */
+	public static Field setAccessible(Field field) throws ReflectiveOperationException {
+		field.setAccessible(true);
+		Field modifiersField = Field.class.getDeclaredField("modifiers");
+		modifiersField.setAccessible(true);
+		modifiersField.setInt(field, field.getModifiers() & 0xFFFFFFEF);
+		return field;
 	}
+
+	/**
+	 * Sets the method accessible
+	 *
+	 * @param method Method to set accessible
+	 * @return the Method
+	 * @throws ReflectiveOperationException  (usually never)
+	 */
+	public static Method setAccessible(Method method) throws ReflectiveOperationException {
+		method.setAccessible(true);
+		return method;
+	}
+
+	/**
+	 * Sets the constructor accessible
+	 *
+	 * @param constructor Constructor to set accessible
+	 * @return the Constructor
+	 * @throws ReflectiveOperationException  (usually never)
+	 */
+	@SuppressWarnings("rawtypes")
+	public static Constructor setAccessible(Constructor constructor) throws ReflectiveOperationException {
+		constructor.setAccessible(true);
+		return constructor;
+	}
+
 }

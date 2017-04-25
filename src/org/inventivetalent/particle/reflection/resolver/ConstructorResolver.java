@@ -26,16 +26,17 @@
  *  either expressed or implied, of anybody else.
  */
 
-package org.inventivetalent.reflection.resolver;
-
-import org.inventivetalent.reflection.resolver.wrapper.ConstructorWrapper;
-import org.inventivetalent.reflection.util.AccessUtil;
+package org.inventivetalent.particle.reflection.resolver;
 
 import java.lang.reflect.Constructor;
+
+import org.inventivetalent.particle.reflection.AccessUtil;
+import org.inventivetalent.particle.reflection.resolver.wrapper.ConstructorWrapper;
 
 /**
  * Resolver for constructors
  */
+@SuppressWarnings({ "unchecked", "rawtypes" })
 public class ConstructorResolver extends MemberResolver<Constructor> {
 
 	public ConstructorResolver(Class<?> clazz) {

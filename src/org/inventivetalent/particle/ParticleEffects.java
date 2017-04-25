@@ -32,18 +32,18 @@ import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.inventivetalent.reflection.minecraft.Minecraft;
-import org.inventivetalent.reflection.resolver.ConstructorResolver;
-import org.inventivetalent.reflection.resolver.FieldResolver;
-import org.inventivetalent.reflection.resolver.MethodResolver;
-import org.inventivetalent.reflection.resolver.minecraft.NMSClassResolver;
+import org.inventivetalent.particle.reflection.minecraft.Minecraft;
+import org.inventivetalent.particle.reflection.resolver.ConstructorResolver;
+import org.inventivetalent.particle.reflection.resolver.FieldResolver;
+import org.inventivetalent.particle.reflection.resolver.MethodResolver;
+import org.inventivetalent.particle.reflection.resolver.minecraft.NMSClassResolver;
+
+import static org.inventivetalent.particle.reflection.minecraft.Minecraft.Version.*;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
-
-import static org.inventivetalent.reflection.minecraft.Minecraft.Version.*;
 
 public enum ParticleEffects {
 
@@ -162,12 +162,14 @@ public enum ParticleEffects {
 	END_ROD("endRod", v1_9_R1),
 	DAMAGE_INDICATOR("damageIndicator", v1_9_R1),
 	SWEEP_ATTACK("sweepAttack", v1_9_R1),
-	FALLING_DUST("fallingDust", v1_10_R1);
+    FALLING_DUST("fallingDust", v1_10_R1),
+    LLAMA_SPIT("llamaSpit", v1_11_R1),
+    TOTEM("totem", v1_11_R1);
 
-	private   String            name;
+    protected Particle particle;
+    private   String            name;
 	private   Minecraft.Version minVersion;
 	private   Feature           feature;
-	protected Particle          particle;
 
 	ParticleEffects(String name, Minecraft.Version minVersion, Feature feature) {
 		this.name = name;
@@ -188,12 +190,45 @@ public enum ParticleEffects {
 		this(name, v1_7_R1);
 	}
 
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+	static Enum<?> getEnum(String enumFullName) {
+        String[] x = enumFullName.split("\\.(?=[^\\.]+$)");
+        if (x.length == 2) {
+            String enumClassName = x[0];
+            String enumName = x[1];
+            try {
+                Class<Enum> cl = (Class<Enum>) Class.forName(enumClassName);
+                return Enum.valueOf(cl, enumName);
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+    protected static void sendPacket(Object packet, Player p) throws IllegalArgumentException, IllegalAccessException, InvocationTargetException, ClassNotFoundException, NoSuchFieldException, NoSuchMethodException {
+        if (Reflection.EntityPlayerFieldResolver == null) {
+            Reflection.EntityPlayerFieldResolver = new FieldResolver(Reflection.NMS_CLASS_RESOLVER.resolve("EntityPlayer"));
+        }
+        if (Reflection.PlayerConnectionMethodResolver == null) {
+            Reflection.PlayerConnectionMethodResolver = new MethodResolver(Reflection.NMS_CLASS_RESOLVER.resolve("PlayerConnection"));
+        }
+
+        try {
+            Object handle = Minecraft.getHandle(p);
+            final Object connection = Reflection.EntityPlayerFieldResolver.resolve("playerConnection").get(handle);
+            Reflection.PlayerConnectionMethodResolver.resolve("sendPacket").invoke(connection, packet);
+        } catch (ReflectiveOperationException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 	public String getName() {
 		return name;
 	}
 
 	/**
-	 * @return the minimum {@link org.inventivetalent.reflection.minecraft.Minecraft.Version} required for this particle
+	 * @return the minimum {@link org.inventivetalent.particle.reflection.minecraft.Minecraft.Version} required for this particle
 	 */
 	public Minecraft.Version getMinVersion() {
 		return minVersion;
@@ -205,6 +240,10 @@ public enum ParticleEffects {
 	public boolean isCompatible() {
 		return Minecraft.VERSION.newerThan(getMinVersion());
 	}
+
+    //*** Public send methods
+
+    //General
 
 	/**
 	 * Check if this particle has special {@link org.inventivetalent.particle.ParticleEffects.Feature}s - Particles with features cannot use the default send() methods - Particles without features cannot use special sendColor or sendData methods
@@ -226,10 +265,6 @@ public enum ParticleEffects {
 	public boolean hasNoFeatures() {
 		return this.feature == null;
 	}
-
-	//*** Public send methods
-
-	//General
 
 	/**
 	 * Send this particle
@@ -274,6 +309,8 @@ public enum ParticleEffects {
 		send(receivers, location.getX(), location.getY(), location.getZ(), offsetX, offsetY, offsetZ, speed, count, range);
 	}
 
+    //Color
+
 	/**
 	 * Send this particle
 	 *
@@ -310,8 +347,6 @@ public enum ParticleEffects {
 		this.particle.send(receivers, location.getX(), location.getY(), location.getZ(), offsetX, offsetY, offsetZ, speed, count);
 	}
 
-	//Color
-
 	/**
 	 * Send this particle with a color
 	 *
@@ -323,8 +358,10 @@ public enum ParticleEffects {
 	 * @throws ParticleException if this particle cannot have a color
 	 */
 	public void sendColor(Collection<? extends Player> receivers, double x, double y, double z, org.bukkit.Color color) {
-		if (!hasFeature(Feature.COLOR)) { throw new ParticleException("This particle cannot be colored"); }
-		((ColoredParticle) this.particle).send(receivers, x, y, z, color);
+        if (!hasFeature(Feature.COLOR)) {
+            throw new ParticleException("This particle cannot be colored");
+        }
+        ((ColoredParticle) this.particle).send(receivers, x, y, z, color);
 	}
 
 	/**
@@ -342,6 +379,8 @@ public enum ParticleEffects {
 		((ColoredParticle) this.particle).send(receivers, x, y, z, color);
 	}
 
+    //Data
+
 	public void sendColor(Collection<? extends Player> receivers, Location location, Color color) {
 		receivers = new ArrayList<>(receivers);
 		for (Iterator<? extends Player> iterator = receivers.iterator(); iterator.hasNext(); ) {
@@ -357,8 +396,6 @@ public enum ParticleEffects {
 		}
 		sendColor(receivers, location.getX(), location.getY(), location.getZ(), color);
 	}
-
-	//Data
 
 	/**
 	 * Send this particle with block or item data
@@ -553,10 +590,9 @@ public enum ParticleEffects {
 		void send(Collection<? extends Player> receivers, double x, double y, double z, double offsetX, double offsetY, double offsetZ, double speed, int count, int id, byte data) {
 			try {
 				if (Minecraft.VERSION.newerThan(v1_8_R1)) {
-					send_1_8(receivers, x, y, z, offsetX, offsetY, offsetZ, speed, count, new int[] {
-							id,
-							id | data << 12 });
-				} else {
+                    send_1_8(receivers, x, y, z, offsetX, offsetY, offsetZ, speed, count, id,
+                            id | data << 12);
+                } else {
 					send_1_7(effect.name + id + (data >= 0 ? "_" + data : ""), receivers, x, y, z, offsetX, offsetY, offsetZ, speed, count);
 				}
 			} catch (Exception e) {
@@ -570,45 +606,12 @@ public enum ParticleEffects {
 		}
 	}
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	static Enum<?> getEnum(String enumFullName) {
-		String[] x = enumFullName.split("\\.(?=[^\\.]+$)");
-		if (x.length == 2) {
-			String enumClassName = x[0];
-			String enumName = x[1];
-			try {
-				Class<Enum> cl = (Class<Enum>) Class.forName(enumClassName);
-				return Enum.valueOf(cl, enumName);
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
-			}
-		}
-		return null;
-	}
-
 	static class Reflection {
 
 		static final NMSClassResolver NMS_CLASS_RESOLVER = new NMSClassResolver();
 		//Packets
 		private static FieldResolver  EntityPlayerFieldResolver;
 		private static MethodResolver PlayerConnectionMethodResolver;
-	}
-
-	protected static void sendPacket(Object packet, Player p) throws IllegalArgumentException, IllegalAccessException, InvocationTargetException, ClassNotFoundException, NoSuchFieldException, NoSuchMethodException {
-		if (Reflection.EntityPlayerFieldResolver == null) {
-			Reflection.EntityPlayerFieldResolver = new FieldResolver(Reflection.NMS_CLASS_RESOLVER.resolve("EntityPlayer"));
-		}
-		if (Reflection.PlayerConnectionMethodResolver == null) {
-			Reflection.PlayerConnectionMethodResolver = new MethodResolver(Reflection.NMS_CLASS_RESOLVER.resolve("PlayerConnection"));
-		}
-
-		try {
-			Object handle = Minecraft.getHandle(p);
-			final Object connection = Reflection.EntityPlayerFieldResolver.resolve("playerConnection").get(handle);
-			Reflection.PlayerConnectionMethodResolver.resolve("sendPacket").invoke(connection, packet);
-		} catch (ReflectiveOperationException e) {
-			throw new RuntimeException(e);
-		}
 	}
 
 }

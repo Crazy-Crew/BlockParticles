@@ -26,12 +26,12 @@
  *  either expressed or implied, of anybody else.
  */
 
-package org.inventivetalent.reflection.resolver;
-
-import org.inventivetalent.reflection.resolver.wrapper.FieldWrapper;
-import org.inventivetalent.reflection.util.AccessUtil;
+package org.inventivetalent.particle.reflection.resolver;
 
 import java.lang.reflect.Field;
+
+import org.inventivetalent.particle.reflection.AccessUtil;
+import org.inventivetalent.particle.reflection.resolver.wrapper.FieldWrapper;
 
 /**
  * Resolver for fields
@@ -60,11 +60,13 @@ public class FieldResolver extends MemberResolver<Field> {
 		return null;
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Override
 	public FieldWrapper resolveIndexWrapper(int index) {
 		return new FieldWrapper<>(resolveIndexSilent(index));
 	}
 
+	@SuppressWarnings("rawtypes")
 	public FieldWrapper resolveWrapper(String... names) {
 		return new FieldWrapper<>(resolveSilent(names));
 	}
@@ -104,6 +106,7 @@ public class FieldResolver extends MemberResolver<Field> {
 		}
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Override
 	protected Field resolveObject(ResolverQuery query) throws ReflectiveOperationException {
 		if (query.getTypes() == null || query.getTypes().length == 0) {

@@ -26,7 +26,7 @@
  *  either expressed or implied, of anybody else.
  */
 
-package org.inventivetalent.reflection.resolver.wrapper;
+package org.inventivetalent.particle.reflection.resolver.wrapper;
 
 import java.lang.reflect.Field;
 
@@ -47,6 +47,7 @@ public class FieldWrapper<R> extends WrapperAbstract {
 		return this.field.getName();
 	}
 
+	@SuppressWarnings("unchecked")
 	public R get(Object object) {
 		try {
 			return (R) this.field.get(object);
@@ -55,6 +56,7 @@ public class FieldWrapper<R> extends WrapperAbstract {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	public R getSilent(Object object) {
 		try {
 			return (R) this.field.get(object);

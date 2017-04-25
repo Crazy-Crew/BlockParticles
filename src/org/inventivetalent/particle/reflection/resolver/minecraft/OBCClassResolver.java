@@ -1,5 +1,5 @@
 /*
- * Copyright 2015-2016 inventivetalent. All rights reserved.
+ * Copyright 2016 inventivetalent. All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without modification, are
  *  permitted provided that the following conditions are met:
@@ -26,30 +26,24 @@
  *  either expressed or implied, of anybody else.
  */
 
-package org.inventivetalent.particle;
+package org.inventivetalent.particle.reflection.resolver.minecraft;
 
-public class ParticleException extends RuntimeException {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -5642976279581598528L;
+import org.inventivetalent.particle.reflection.minecraft.Minecraft;
+import org.inventivetalent.particle.reflection.resolver.ClassResolver;
 
-	public ParticleException() {
-	}
+/**
+ * {@link ClassResolver} for <code>org.bukkit.craftbukkit.*</code> classes
+ */
+public class OBCClassResolver extends ClassResolver {
 
-	public ParticleException(String message) {
-		super(message);
-	}
-
-	public ParticleException(String message, Throwable cause) {
-		super(message, cause);
-	}
-
-	public ParticleException(Throwable cause) {
-		super(cause);
-	}
-
-	public ParticleException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
-		super(message, cause, enableSuppression, writableStackTrace);
+	@SuppressWarnings("rawtypes")
+	@Override
+	public Class resolve(String... names) throws ClassNotFoundException {
+		for (int i = 0; i < names.length; i++) {
+			if (!names[i].startsWith("org.bukkit.craftbukkit")) {
+				names[i] = "org.bukkit.craftbukkit." + Minecraft.getVersion() + names[i];
+			}
+		}
+		return super.resolve(names);
 	}
 }
