@@ -1,6 +1,6 @@
 name: BlockParticles
 main: me.badbones69.blockparticles.Main
-version: 1.9.6
+version: 1.9.7
 softdepend: [Multiverse-Core, MultiWorld]
 description: Add particles to blocks!
 commands:

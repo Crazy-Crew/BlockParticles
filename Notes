@@ -1,16 +1,16 @@
 Features:
   - 
+  
 Bug Reports:
   - 
   
 Bug Fixes:
-  - Some servers get a error from the ItemMergeEvent and so it was removed and instead of using that the fountain items just have a random name to avoid merging.
-  - Fixed the food and pokemon fountains so they don't have random heads in it.
+  - 
   
 Added:
-  - Added support for versions 1.10 - 1.11.2.
-  - A few new for the food fountain.
-  - New MCUpdate stats to view the usage of Block Particles. Link: http://mcupdate.org/plugin?a=metrics&pl=75
+  - 1.12 support has been added.
+  - Option to disable sending Metrics data to MCUpdate.org.
+  - Updated MCUpdate class.
   
 Changes:
   - 

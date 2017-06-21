@@ -37,9 +37,17 @@ public class Main extends JavaPlugin{
 		}
 		Api.kill();
 		Api.startParticles();
-		try {
-			new MCUpdate(this, true);
-		} catch (IOException e) {}
+		if(settings.getConfig().contains("Settings.Metrics")){
+			if(settings.getConfig().getBoolean("Settings.Metrics")){
+				try {
+					new MCUpdate(this, true);
+				} catch (IOException e) {}
+			}
+		}else{
+			try {
+				new MCUpdate(this, true);
+			} catch (IOException e) {}
+		}
 	}
 	
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLable, String[] args){
