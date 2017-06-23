@@ -284,7 +284,7 @@ public class MCUpdate implements Listener {
 	}
 
 	private static String format(String format) {
-		return ChatColor.translateAlternateColorCodes('&', format);
+		return format == null ? null : ChatColor.translateAlternateColorCodes('&', format);
 	}
 
 }
