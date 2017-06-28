@@ -249,7 +249,7 @@ public class MCUpdate implements Listener {
 			String serverMessage = getString(endData, "message");
 			String cVersion = getString(endData, "pl_Version");
 			updateMessage = getString(endData, "update_Message");
-			
+
 			if (serverMessage != null) {
 				if (!serverMessage.equals("ERROR")) {
 					if (cVersion != null) {
@@ -284,7 +284,11 @@ public class MCUpdate implements Listener {
 	}
 
 	private static String format(String format) {
-		return format == null ? null : ChatColor.translateAlternateColorCodes('&', format);
+		if (format != null) {
+			return ChatColor.translateAlternateColorCodes('&', format);
+		} else {
+			return "";
+		}
 	}
 
 }

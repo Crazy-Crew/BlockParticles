@@ -48,10 +48,13 @@ public class Api implements Listener{
 
 	@SuppressWarnings("deprecation")
 	private static List<Entity> getNearbyEntities(Location loc, double x, double y, double z) {
-	    FallingBlock ent = loc.getWorld().spawnFallingBlock(loc.subtract(0, 2, 0), 0, (byte) 0);
-	    List<Entity> out = ent.getNearbyEntities(x, y, z);
-	    ent.remove();
-	    return out;
+		try{
+			FallingBlock ent = loc.getWorld().spawnFallingBlock(loc.subtract(0, 2, 0), 0, (byte) 0);
+		    List<Entity> out = ent.getNearbyEntities(x, y, z);
+		    ent.remove();
+		    return out;
+		}catch(Exception e){}
+		return new ArrayList<Entity>();
 	}
 
 	public static Integer getVersion(){
@@ -62,17 +65,19 @@ public class Api implements Listener{
 	}
 
 	static boolean anyPlayers(Location loc, int range){
-		List<Entity> out = getNearbyEntities(loc, range, range, range);
-		if(!out.isEmpty()){
-			for(Entity e : out){
-				if(e instanceof LivingEntity){
-					LivingEntity en = (LivingEntity) e;
-					if(en instanceof Player){
-						return true;
+		try{
+			List<Entity> out = getNearbyEntities(loc, range, range, range);
+			if(!out.isEmpty()){
+				for(Entity e : out){
+					if(e instanceof LivingEntity){
+						LivingEntity en = (LivingEntity) e;
+						if(en instanceof Player){
+							return true;
+						}
 					}
 				}
 			}
-		}
+		}catch(Exception e){}
 		return false;
 	}
 

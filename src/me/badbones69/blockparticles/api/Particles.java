@@ -3,6 +3,7 @@ package me.badbones69.blockparticles.api;
 import java.util.ArrayList;
 
 public enum Particles{
+	
 	BIGLOVEWELL("BigLoveWell", ParticleType.PARTICLE),
 	LOVEWELL("LoveWell", ParticleType.PARTICLE),
 	WITCHTORNADO("WitchTornado", ParticleType.PARTICLE),
@@ -49,8 +50,10 @@ public enum Particles{
 	DOUBLESPIRAL("DoubleSpiral", ParticleType.PARTICLE),
 	CRIT("Crit", ParticleType.PARTICLE),
 	BIGCRIT("BigCrit", ParticleType.PARTICLE);
+	
 	String Name;
 	ParticleType Type;
+	
 	private Particles(String name, ParticleType type){
 		this.Name=name;
 		this.Type=type;

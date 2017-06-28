@@ -14,9 +14,6 @@ import org.bukkit.plugin.PluginDescriptionFile;
 
 public class SettingsManager {
 
-	private SettingsManager() {
-	}
-
 	static SettingsManager instance = new SettingsManager();
 
 	public static SettingsManager getInstance() {
