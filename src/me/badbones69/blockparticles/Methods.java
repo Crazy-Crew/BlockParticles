@@ -2,9 +2,9 @@ package me.badbones69.blockparticles;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -18,27 +18,24 @@ import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.plugin.Plugin;
 
-public class Api implements Listener{
+public class Methods implements Listener{
 
 	public static HashMap<Location, Location> Locations = new HashMap<Location, Location>();
 	static Plugin plugin = Bukkit.getServer().getPluginManager().getPlugin("BlockParticles");
 
 	@SuppressWarnings("static-access")
-	public Api(Plugin plugin){
+	public Methods(Plugin plugin){
 		this.plugin = plugin;
 	}
 
 	public static String removeColor(String msg){
-		msg = ChatColor.stripColor(msg);
-		return msg;
+		return ChatColor.stripColor(msg);
 	}
 
 	static void reset(){
@@ -46,7 +43,6 @@ public class Api implements Listener{
 		startParticles();
 	}
 
-	@SuppressWarnings("deprecation")
 	private static List<Entity> getNearbyEntities(Location loc, double x, double y, double z) {
 		try{
 			FallingBlock ent = loc.getWorld().spawnFallingBlock(loc.subtract(0, 2, 0), 0, (byte) 0);
@@ -171,7 +167,6 @@ public class Api implements Listener{
 		}
 	}
 
-	@SuppressWarnings("deprecation")
 	static void addLoc(Player player, String name){
 		String Prefix = Main.settings.getConfig().getString("Settings.Prefix");
 		if(!Main.settings.getData().contains("Locations")){
@@ -184,9 +179,9 @@ public class Api implements Listener{
 				return;
 			}
 		}
-		Block block = player.getTargetBlock((HashSet<Byte>)null, 5);
+		Block block = player.getTargetBlock((Set<Material>)null, 5);
 		if(block.isEmpty()){
-			player.sendMessage(Api.color(Prefix + "&cYou are not looking at a Block."));
+			player.sendMessage(Methods.color(Prefix + "&cYou are not looking at a Block."));
 			return;
 		}
 		Location l = block.getLocation();
@@ -225,15 +220,15 @@ public class Api implements Listener{
 	}
 
 	static void listLoc(Player player){
-		String Prefix = Api.color(Main.settings.getConfig().getString("Settings.Prefix"));
+		String Prefix = Methods.color(Main.settings.getConfig().getString("Settings.Prefix"));
 		if(Main.settings.getData().getConfigurationSection("Locations") == null){
-			player.sendMessage(Prefix + Api.color("&cThere are no Locations set!"));
+			player.sendMessage(Prefix + Methods.color("&cThere are no Locations set!"));
 			Main.settings.getData().set("Locations.clear", null);
 			Main.settings.saveData();
 			return;
 		}
 		if(Main.settings.getData().getConfigurationSection("Locations").getKeys(false).isEmpty()){
-			player.sendMessage(Prefix + Api.color("&cThere are no Locations set!"));
+			player.sendMessage(Prefix + Methods.color("&cThere are no Locations set!"));
 			return;
 		}
 		String msg = "";
@@ -251,7 +246,7 @@ public class Api implements Listener{
 			String Y = Main.settings.getData().getString("Locations." + L + ".Y");
 			String Z = Main.settings.getData().getString("Locations." + L + ".Z");
 			
-			part = Api.color("&8[&6" + line + "&8]: " + "&c" + L + "&8, &c" + W +
+			part = Methods.color("&8[&6" + line + "&8]: " + "&c" + L + "&8, &c" + W +
 					"&8, &c" + X + "&8, &c" + Y + "&8, &c" + Z);
 			l += part;
 			l += "\n";
@@ -261,10 +256,10 @@ public class Api implements Listener{
 		}
 		msg = l;
 		line = line - 1;
-		player.sendMessage(Prefix + Api.color("&6A list of all the Locations."));
-		player.sendMessage(Api.color("&c[Locations Name]&8, &c[World]&8, &c[X]&8, &c[Y]&8, &c[Z]"));
+		player.sendMessage(Prefix + Methods.color("&6A list of all the Locations."));
+		player.sendMessage(Methods.color("&c[Locations Name]&8, &c[World]&8, &c[X]&8, &c[Y]&8, &c[Z]"));
 		player.sendMessage(msg);
-		player.sendMessage(Api.color("&3Number of Locations: &6" + line));
+		player.sendMessage(Methods.color("&3Number of Locations: &6" + line));
 		return;
 	}
 
@@ -372,17 +367,6 @@ public class Api implements Listener{
 		return msg;
 	}
 	
-	@EventHandler
-	public void onitemPickUp(PlayerPickupItemEvent e){
-		Item item = e.getItem();
-		if(item != null){
-			if(Fountains.items.contains(item)){
-				e.setCancelled(true);
-			}
-		}
-	}
-
-	@SuppressWarnings("deprecation")
 	static ItemStack getPlayerHead(String name, String N){
 		ItemStack head = new ItemStack(397, 1, (short)3);
 		SkullMeta m = (SkullMeta) head.getItemMeta();
@@ -392,7 +376,6 @@ public class Api implements Listener{
 		return head;
 	}
 
-	@SuppressWarnings("deprecation")
 	static ItemStack getPlayerHead(String name){
 		ItemStack head = new ItemStack(397, 1, (short)3);
 		SkullMeta m = (SkullMeta) head.getItemMeta();
@@ -401,4 +384,5 @@ public class Api implements Listener{
 		head.setItemMeta(m);
 		return head;
 	}
+
 }

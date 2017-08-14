@@ -52,7 +52,7 @@ public class PlayParticles {
 			Location l = loc.add(.5, .8, .5);
 			@Override
     		public void run(){
-				if(!Api.anyPlayers(l.clone(), range))return;
+				if(!Methods.anyPlayers(l.clone(), range))return;
 				ParticleEffect.LAVA.display(0, 0, 0, 0, 10, l, 100);
 			}
 		}, 0, 4));
@@ -62,7 +62,7 @@ public class PlayParticles {
 			Location l = loc.clone().add(.5, .1, .5);
 			@Override
     		public void run(){
-				if(!Api.anyPlayers(l.clone(), range))return;
+				if(!Methods.anyPlayers(l.clone(), range))return;
 				for(Location loc : getCircle(l, 1, 15))ParticleEffect.FLAME.display(0, 0, 0, 0, 1, loc, 100);
 				for(Location loc : getCircle(l, 2, 25))ParticleEffect.FLAME.display(0, 0, 0, 0, 1, loc, 100);
 			}
@@ -73,7 +73,7 @@ public class PlayParticles {
 			Location l = loc.add(.5, .1, .5);
 			@Override
     		public void run(){
-				if(!Api.anyPlayers(l.clone(), range))return;
+				if(!Methods.anyPlayers(l.clone(), range))return;
 				for(Location loc : getCircle(l, .6, 15))ParticleEffect.FLAME.display(0, 0, 0, 0, 1, loc, 100);
 				for(Location loc : getCircle(l, 1, 20))ParticleEffect.FLAME.display(0, 0, 0, 0, 1, loc, 100);
 			}
@@ -85,7 +85,7 @@ public class PlayParticles {
 			int time = 16;
 			@Override
     		public void run(){
-				if(!Api.anyPlayers(l.clone(), range))return;
+				if(!Methods.anyPlayers(l.clone(), range))return;
 				if(time == 15){
 					ParticleEffect.FIREWORKS_SPARK.display(0, 0, 0, 0, 1, l.clone().add(.8,0,0), 100);
 					ParticleEffect.FIREWORKS_SPARK.display(0, 0, 0, 0, 1, l.clone().add(-.8,0,0), 100);
@@ -161,7 +161,7 @@ public class PlayParticles {
 			int time = 16;
 			@Override
     		public void run(){
-				if(!Api.anyPlayers(l.clone(), range))return;
+				if(!Methods.anyPlayers(l.clone(), range))return;
 				if(time == 15)ParticleEffect.FIREWORKS_SPARK.display(0, 0, 0, 0, 1, l.clone().add(.8,0,0), 100);
 				if(time == 14)ParticleEffect.FIREWORKS_SPARK.display(0, 0, 0, 0, 1, l.clone().add(.75,0,.43), 100);
 				if(time == 13)ParticleEffect.FIREWORKS_SPARK.display(0, 0, 0, 0, 1, l.clone().add(.65,0,.65), 100);
@@ -190,7 +190,7 @@ public class PlayParticles {
 			Location l = loc.add(.5, 1.1, .5);
 			@Override
     		public void run(){
-				if(!Api.anyPlayers(l.clone(), range))return;
+				if(!Methods.anyPlayers(l.clone(), range))return;
 				ParticleEffect.CRIT.display(0, 0, 0, 0, 1, l.clone(), 100);
 			}
 		}, 0, 2));
@@ -200,7 +200,7 @@ public class PlayParticles {
 			Location l = loc.add(.5, .5, .5);
 			@Override
     		public void run(){
-				if(!Api.anyPlayers(l.clone(), range))return;
+				if(!Methods.anyPlayers(l.clone(), range))return;
 				for(Location loc : getCircle(l, 2, 20))ParticleEffect.CRIT.display(0, 0, 0, 0, 1, loc, 100);
 			}
 		}, 0, 2));
@@ -210,7 +210,7 @@ public class PlayParticles {
 			Location l = loc.add(.5, 2, .5);
 			@Override
     		public void run(){
-				if(!Api.anyPlayers(l.clone(), range))return;
+				if(!Methods.anyPlayers(l.clone(), range))return;
 				ParticleEffect.CLOUD.display((float).3, 0, (float).3, 0, 15, l, 100);
 				ParticleEffect.WATER_DROP.display((float).2, 0, (float).2, 0, 10, l.clone().add(0, 0, .1), 100);
 			}
@@ -221,7 +221,7 @@ public class PlayParticles {
 			Location l = loc.add(.5, .5, .5);
 			@Override
     		public void run(){
-				if(!Api.anyPlayers(l.clone(), range))return;
+				if(!Methods.anyPlayers(l.clone(), range))return;
 				ParticleEffect.CLOUD.display((float).3, 0, (float).3, (float).05, 20, l, 100);
 			}
 		}, 0, 2));
@@ -231,7 +231,7 @@ public class PlayParticles {
 			Location l = loc.add(.5, 1.5, .5);
 			@Override
     		public void run(){
-				if(!Api.anyPlayers(l.clone(), range))return;
+				if(!Methods.anyPlayers(l.clone(), range))return;
 				ParticleEffect.ENCHANTMENT_TABLE.display((float)0, 0, (float)0, (float)2, 20, l, 100);
 			}
 		}, 0, 2));
@@ -241,7 +241,7 @@ public class PlayParticles {
 			Location l = loc.add(.5, .1, .5);
 			@Override
     		public void run(){
-				if(!Api.anyPlayers(l.clone(), range))return;
+				if(!Methods.anyPlayers(l.clone(), range))return;
 				ParticleEffect.FLAME.display(0, 0, 0, 0, 1, l.clone().add(1, 0, 1), 100);
 				ParticleEffect.FLAME.display(0, 0, 0, 0, 1, l.clone().add(.9, .1, .9), 100);
 				ParticleEffect.FLAME.display(0, 0, 0, 0, 1, l.clone().add(.8, .2, .8), 100);
@@ -281,7 +281,7 @@ public class PlayParticles {
 			Location l = loc.add(.5, 2, .5);
 			@Override
     		public void run(){
-				if(!Api.anyPlayers(l.clone(), range))return;
+				if(!Methods.anyPlayers(l.clone(), range))return;
 				ParticleEffect.SMOKE_LARGE.display((float).3, 0, (float).3, 0, 15, l, 100);
 				ParticleEffect.FLAME.display(new Vector(0, -.2, 0), 1, Drop(l.clone()), 100);
 				ParticleEffect.FLAME.display(new Vector(0, -.2, 0), 1, Drop(l.clone()), 100);
@@ -293,7 +293,7 @@ public class PlayParticles {
 			Location l = loc.add(.5, 2, .5);
 			@Override
     		public void run(){
-				if(!Api.anyPlayers(l.clone(), range))return;
+				if(!Methods.anyPlayers(l.clone(), range))return;
 				ParticleEffect.FIREWORKS_SPARK.display((float).7, (float).7, (float).7, 0, 1, l, 100);
 			}
 		}, 0, 2));
@@ -303,7 +303,7 @@ public class PlayParticles {
 			Location l = loc.add(.5, 1, .5);
 			@Override
     		public void run(){
-				if(!Api.anyPlayers(l.clone(), range))return;
+				if(!Methods.anyPlayers(l.clone(), range))return;
 				ParticleEffect.FIREWORKS_SPARK.display(new Vector(Vec(), .1, Vec()), 1, l, 100);
 			}
 		}, 0, 2));
@@ -313,10 +313,10 @@ public class PlayParticles {
 			Location l = loc.add(.5, .2, .5);
 			@Override
     		public void run(){
-				if(!Api.anyPlayers(l.clone(), range))return;
-				ParticleEffect.SPELL_MOB.display((float).3, (float)0, (float).3, Api.randomColor(), 6, l, 100);
-				ParticleEffect.SPELL_MOB.display((float).3, (float)0, (float).3, Api.randomColor(), 6, l, 100);
-				ParticleEffect.SPELL_MOB.display((float).3, (float)0, (float).3, Api.randomColor(), 6, l, 100);
+				if(!Methods.anyPlayers(l.clone(), range))return;
+				ParticleEffect.SPELL_MOB.display((float).3, (float)0, (float).3, Methods.randomColor(), 6, l, 100);
+				ParticleEffect.SPELL_MOB.display((float).3, (float)0, (float).3, Methods.randomColor(), 6, l, 100);
+				ParticleEffect.SPELL_MOB.display((float).3, (float)0, (float).3, Methods.randomColor(), 6, l, 100);
 			}
 		}, 0, 2));
 	}
@@ -327,27 +327,27 @@ public class PlayParticles {
 			int time = 0;
 			@Override
     		public void run(){
-				if(!Api.anyPlayers(l.clone(), range))return;
+				if(!Methods.anyPlayers(l.clone(), range))return;
 				int i = time;
 				if(time == 15){
-					ParticleEffect.NOTE.display(0, 0, 0, Api.randomColor(), 1, locs.get(i), 100);
+					ParticleEffect.NOTE.display(0, 0, 0, Methods.randomColor(), 1, locs.get(i), 100);
 					time = -1;
 				}
-				if(time == 14)ParticleEffect.NOTE.display(0, 0, 0, Api.randomColor(), 1, locs.get(i), 100);
-				if(time == 13)ParticleEffect.NOTE.display(0, 0, 0, Api.randomColor(), 1, locs.get(i), 100);
-				if(time == 12)ParticleEffect.NOTE.display(0, 0, 0, Api.randomColor(), 1, locs.get(i), 100);
-				if(time == 11)ParticleEffect.NOTE.display(0, 0, 0, Api.randomColor(), 1, locs.get(i), 100);
-				if(time == 10)ParticleEffect.NOTE.display(0, 0, 0, Api.randomColor(), 1, locs.get(i), 100);
-				if(time == 9)ParticleEffect.NOTE.display(0, 0, 0, Api.randomColor(), 1, locs.get(i), 100);
-				if(time == 8)ParticleEffect.NOTE.display(0, 0, 0, Api.randomColor(), 1, locs.get(i), 100);
-				if(time == 7)ParticleEffect.NOTE.display(0, 0, 0, Api.randomColor(), 1, locs.get(i), 100);
-				if(time == 6)ParticleEffect.NOTE.display(0, 0, 0, Api.randomColor(), 1, locs.get(i), 100);
-				if(time == 5)ParticleEffect.NOTE.display(0, 0, 0, Api.randomColor(), 1, locs.get(i), 100);
-				if(time == 4)ParticleEffect.NOTE.display(0, 0, 0, Api.randomColor(), 1, locs.get(i), 100);
-				if(time == 3)ParticleEffect.NOTE.display(0, 0, 0, Api.randomColor(), 1, locs.get(i), 100);
-				if(time == 2)ParticleEffect.NOTE.display(0, 0, 0, Api.randomColor(), 1, locs.get(i), 100);
-				if(time == 1)ParticleEffect.NOTE.display(0, 0, 0, Api.randomColor(), 1, locs.get(i), 100);
-				if(time == 0)ParticleEffect.NOTE.display(0, 0, 0, Api.randomColor(), 1, locs.get(i), 100);
+				if(time == 14)ParticleEffect.NOTE.display(0, 0, 0, Methods.randomColor(), 1, locs.get(i), 100);
+				if(time == 13)ParticleEffect.NOTE.display(0, 0, 0, Methods.randomColor(), 1, locs.get(i), 100);
+				if(time == 12)ParticleEffect.NOTE.display(0, 0, 0, Methods.randomColor(), 1, locs.get(i), 100);
+				if(time == 11)ParticleEffect.NOTE.display(0, 0, 0, Methods.randomColor(), 1, locs.get(i), 100);
+				if(time == 10)ParticleEffect.NOTE.display(0, 0, 0, Methods.randomColor(), 1, locs.get(i), 100);
+				if(time == 9)ParticleEffect.NOTE.display(0, 0, 0, Methods.randomColor(), 1, locs.get(i), 100);
+				if(time == 8)ParticleEffect.NOTE.display(0, 0, 0, Methods.randomColor(), 1, locs.get(i), 100);
+				if(time == 7)ParticleEffect.NOTE.display(0, 0, 0, Methods.randomColor(), 1, locs.get(i), 100);
+				if(time == 6)ParticleEffect.NOTE.display(0, 0, 0, Methods.randomColor(), 1, locs.get(i), 100);
+				if(time == 5)ParticleEffect.NOTE.display(0, 0, 0, Methods.randomColor(), 1, locs.get(i), 100);
+				if(time == 4)ParticleEffect.NOTE.display(0, 0, 0, Methods.randomColor(), 1, locs.get(i), 100);
+				if(time == 3)ParticleEffect.NOTE.display(0, 0, 0, Methods.randomColor(), 1, locs.get(i), 100);
+				if(time == 2)ParticleEffect.NOTE.display(0, 0, 0, Methods.randomColor(), 1, locs.get(i), 100);
+				if(time == 1)ParticleEffect.NOTE.display(0, 0, 0, Methods.randomColor(), 1, locs.get(i), 100);
+				if(time == 0)ParticleEffect.NOTE.display(0, 0, 0, Methods.randomColor(), 1, locs.get(i), 100);
 				time ++;
 				i++;
 			}
@@ -359,7 +359,7 @@ public class PlayParticles {
 			int time = 16;
 			@Override
     		public void run(){
-				if(!Api.anyPlayers(l.clone(), range))return;
+				if(!Methods.anyPlayers(l.clone(), range))return;
 				if(time == 15)ParticleEffect.CRIT_MAGIC.display(0, 0, 0, 0, 5, l.clone().add(0,.8,0), 100);
 				if(time == 0)ParticleEffect.CRIT_MAGIC.display(0, 0, 0, 0, 5, l.clone().add(0,.75,.43), 100);
 				if(time == 1)ParticleEffect.CRIT_MAGIC.display(0, 0, 0, 0, 5, l.clone().add(0,.65,.65), 100);
@@ -406,7 +406,7 @@ public class PlayParticles {
 			int time = 16;
 			@Override
     		public void run(){
-				if(!Api.anyPlayers(l.clone(), range))return;
+				if(!Methods.anyPlayers(l.clone(), range))return;
 				if(time == 15)ParticleEffect.SPELL_WITCH.display(0, 0, 0, 0, 5, l.clone().add(.8,0,0), 100);
 				if(time == 14)ParticleEffect.SPELL_WITCH.display(0, 0, 0, 0, 5, l.clone().add(.75,0,.43), 100);
 				if(time == 13)ParticleEffect.SPELL_WITCH.display(0, 0, 0, 0, 5, l.clone().add(.65,0,.65), 100);
@@ -436,7 +436,7 @@ public class PlayParticles {
 			int time = 16;
 			@Override
     		public void run(){
-				if(!Api.anyPlayers(l.clone(), range))return;
+				if(!Methods.anyPlayers(l.clone(), range))return;
 				if(time == 15){
 					ParticleEffect.SPELL_WITCH.display(0, 0, 0, 0, 5, l.clone().add(.8,0,0), 100);
 					ParticleEffect.SPELL_WITCH.display(0, 0, 0, 0, 5, l.clone().add(-.8,0,0), 100);
@@ -511,7 +511,7 @@ public class PlayParticles {
 			Location l = loc.add(.5, 2, .5);
 			@Override
     		public void run(){
-				if(!Api.anyPlayers(l.clone(), range))return;
+				if(!Methods.anyPlayers(l.clone(), range))return;
 				ParticleEffect.CLOUD.display((float).3, 0, (float).3, 0, 15, l, 100);
 				ParticleEffect.FIREWORKS_SPARK.display((float) .3,(float) 0, (float) .3, 0, 2, l, 100);
 			}
@@ -522,7 +522,7 @@ public class PlayParticles {
 			Location l = loc.add(.5, 1, .5);
 			@Override
     		public void run(){
-				if(!Api.anyPlayers(l.clone(), range))return;
+				if(!Methods.anyPlayers(l.clone(), range))return;
 				ParticleEffect.FLAME.display(new Vector(Vec(), .1, Vec()), (float) 1.5, l, 100);
 				ParticleEffect.FLAME.display(new Vector(Vec(), .1, Vec()), (float) 1.5, l, 100);
 				ParticleEffect.FLAME.display(new Vector(Vec(), .1, Vec()), (float) 1.5, l, 100);
@@ -534,7 +534,7 @@ public class PlayParticles {
 			Location l = loc.add(.5, .1, .5);
 			@Override
     		public void run(){
-				if(!Api.anyPlayers(l.clone(), range))return;
+				if(!Methods.anyPlayers(l.clone(), range))return;
 				ParticleEffect.FOOTSTEP.display(1, 0, 1, 0, 3, l, 100);
 			}
 		}, 0, 20));
@@ -544,7 +544,7 @@ public class PlayParticles {
 			Location l = loc.add(.5, .1, .5);
 			@Override
     		public void run(){
-				if(!Api.anyPlayers(l.clone(), range))return;
+				if(!Methods.anyPlayers(l.clone(), range))return;
 				ParticleEffect.VILLAGER_HAPPY.display((float).5, (float).5, (float).5, 0, 10, l, 100);
 			}
 		}, 0, 5));
@@ -554,7 +554,7 @@ public class PlayParticles {
 			Location l = loc.add(.5, .1, .5);
 			@Override
     		public void run(){
-				if(!Api.anyPlayers(l.clone(), range))return;
+				if(!Methods.anyPlayers(l.clone(), range))return;
 				ParticleEffect.VILLAGER_ANGRY.display((float).5, (float).5, (float).5, 0, 5, l, 100);
 			}
 		}, 0, 10));
@@ -564,7 +564,7 @@ public class PlayParticles {
 			Location l = loc.add(.5, .1, .5);
 			@Override
     		public void run(){
-				if(!Api.anyPlayers(l.clone(), range))return;
+				if(!Methods.anyPlayers(l.clone(), range))return;
 				ParticleEffect.FLAME.display((float).5, (float).5, (float).5, 0, 15, l, 100);
 			}
 		}, 0, 8));
@@ -574,7 +574,7 @@ public class PlayParticles {
 			Location l = loc.add(.5, .8, .6);
 			@Override
     		public void run(){
-				if(!Api.anyPlayers(l.clone(), range))return;
+				if(!Methods.anyPlayers(l.clone(), range))return;
 				ParticleEffect.WATER_DROP.display(0, 0, 0, 0, 10, l.clone().add(0, .1, 0), 100);
 				ParticleEffect.WATER_DROP.display(0, 0, 0, 0, 10, l.clone().add(0, .5, 0), 100);
 				ParticleEffect.WATER_DROP.display(0, 0, 0, 0, 10, l.clone().add(.2, .3, .2), 100);
@@ -589,7 +589,7 @@ public class PlayParticles {
 			Location l = loc.add(.5, 0, .5);
 			@Override
     		public void run(){
-				if(!Api.anyPlayers(l.clone(), range))return;
+				if(!Methods.anyPlayers(l.clone(), range))return;
 				loc.getWorld().playEffect(l, Effect.ENDER_SIGNAL, 1);
 				loc.getWorld().playEffect(l, Effect.ENDER_SIGNAL, 1);
 				loc.getWorld().playEffect(l, Effect.ENDER_SIGNAL, 1);
@@ -602,7 +602,7 @@ public class PlayParticles {
 			Location l = loc.add(.5, .1, .5);
 			@Override
     		public void run(){
-				if(!Api.anyPlayers(l.clone(), range))return;
+				if(!Methods.anyPlayers(l.clone(), range))return;
 				ParticleEffect.REDSTONE.display((float).5, (float).5, (float).5, 1, 10, l, 100);
 			}
 		}, 0, 5));
@@ -612,7 +612,7 @@ public class PlayParticles {
 			Location l = loc.add(.5, .5, .5);
 			@Override
     		public void run(){
-				if(!Api.anyPlayers(l.clone(), range))return;
+				if(!Methods.anyPlayers(l.clone(), range))return;
 				ParticleEffect.SNOW_SHOVEL.display(0,0,0, (float).2, 40, l, 100);
 			}
 		}, 0, 2));
@@ -622,7 +622,7 @@ public class PlayParticles {
 			Location l = loc.add(.5, 1.3, .5);
 			@Override
     		public void run(){
-				if(!Api.anyPlayers(l.clone(), range))return;
+				if(!Methods.anyPlayers(l.clone(), range))return;
 				try {
 					for(int i=0; i<3; i++){
 						ParticleEffects.REDSTONE.sendColor(Bukkit.getOnlinePlayers(), l.clone().add(.5,0,0), Color.fromRGB(255, 255, 0));
@@ -686,7 +686,7 @@ public class PlayParticles {
 			Location l11 = l10.clone().add(0, .05, 0);
 			@Override
     		public void run(){
-				if(!Api.anyPlayers(l1.clone(), 20))return;
+				if(!Methods.anyPlayers(l1.clone(), 20))return;
 				try {
 					for(int i=0; i<3; i++){
 						Color red = Color.RED;
@@ -738,7 +738,7 @@ public class PlayParticles {
 			}
 			@Override
     		public void run(){
-				if(!Api.anyPlayers(l.clone(), range))return;
+				if(!Methods.anyPlayers(l.clone(), range))return;
 				startSoulWell(l, L);
 			}
 		},0, 16));
@@ -773,7 +773,7 @@ public class PlayParticles {
 			}
 			@Override
     		public void run(){
-				if(!Api.anyPlayers(l.clone(), range))return;
+				if(!Methods.anyPlayers(l.clone(), range))return;
 				startBigSoulWell(l, L);
 			}
 		},0, 25));
@@ -818,7 +818,7 @@ public class PlayParticles {
 			}
 			@Override
     		public void run(){
-				if(!Api.anyPlayers(l.clone(), range))return;
+				if(!Methods.anyPlayers(l.clone(), range))return;
 					startFlameWheel(l.clone(), L);
 			}
 		},0, 25));
@@ -826,7 +826,7 @@ public class PlayParticles {
 			Location l = loc.clone().add(.5, .1, .5);
 			@Override
     		public void run(){
-				if(!Api.anyPlayers(l.clone(), range))return;
+				if(!Methods.anyPlayers(l.clone(), range))return;
 					ArrayList<Location> locs = getCircle(l, 3.5, 75);
 					for(Location i : locs)ParticleEffect.FLAME.display(0, 0, 0, 0, 1, i, 100);
 			}
@@ -866,7 +866,7 @@ public class PlayParticles {
 			}
 			@Override
     		public void run(){
-				if(!Api.anyPlayers(l.clone(), range))return;
+				if(!Methods.anyPlayers(l.clone(), range))return;
 				startWitchTornado(l, L);
 			}
 		},0, 30));
@@ -904,7 +904,7 @@ public class PlayParticles {
 			}
 			@Override
     		public void run(){
-				if(!Api.anyPlayers(l.clone(), range))return;
+				if(!Methods.anyPlayers(l.clone(), range))return;
 				startLoveTornado(l, L);
 			}
 		},0, 30));
@@ -939,7 +939,7 @@ public class PlayParticles {
 			}
 			@Override
     		public void run(){
-				if(!Api.anyPlayers(l.clone(), range))return;
+				if(!Methods.anyPlayers(l.clone(), range))return;
 				startBigLoveWell(l, L);
 			}
 		},0, 25));
@@ -974,7 +974,7 @@ public class PlayParticles {
 			}
 			@Override
     		public void run(){
-				if(!Api.anyPlayers(l.clone(), range))return;
+				if(!Methods.anyPlayers(l.clone(), range))return;
 				startLoveWell(l, L);
 			}
 		},0, 16));

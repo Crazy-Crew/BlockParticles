@@ -8,11 +8,15 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import me.badbones69.blockparticles.api.BlockParticles;
 import me.badbones69.blockparticles.api.ParticleType;
 import me.badbones69.blockparticles.api.Particles;
+import me.badbones69.blockparticles.multisupport.NMS_v1_11_R1;
+import me.badbones69.blockparticles.multisupport.NMS_v1_12_R1;
+import me.badbones69.blockparticles.multisupport.Version;
 
 public class Main extends JavaPlugin{
 	
@@ -22,21 +26,28 @@ public class Main extends JavaPlugin{
 	
 	@Override
 	public void onDisable() {
-		Api.kill();
+		Methods.kill();
 	}
 	
 	@Override
 	public void onEnable() {
 		saveDefaultConfig();
 		settings.setup(this);
-		Bukkit.getServer().getPluginManager().registerEvents(new Api(this), this);
-		Bukkit.getServer().getPluginManager().registerEvents(new GUI(), this);
+		PluginManager pm = Bukkit.getServer().getPluginManager();
+		pm.registerEvents(new GUI(), this);
+		pm.registerEvents(new Methods(this), this);
+		pm.registerEvents(new Fountains(this), this);
+		if(Version.getVersion().comparedTo(Version.v1_12_R1) >= 0){
+			pm.registerEvents(new NMS_v1_12_R1(), this);
+		}else {
+			pm.registerEvents(new NMS_v1_11_R1(), this);
+		}
 		if(!settings.getData().contains("Locations")){
 			settings.getData().set("Locations.clear", null);
 			settings.saveData();
 		}
-		Api.kill();
-		Api.startParticles();
+		Methods.kill();
+		Methods.startParticles();
 		if(settings.getConfig().contains("Settings.Metrics")){
 			if(settings.getConfig().getBoolean("Settings.Metrics")){
 				try {
@@ -53,7 +64,7 @@ public class Main extends JavaPlugin{
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLable, String[] args){
 		if(commandLable.equalsIgnoreCase("BlockParticle") || commandLable.equalsIgnoreCase("BP")){
 			String Prefix = Main.settings.getConfig().getString("Settings.Prefix");
-			if(sender instanceof Player)if(Api.permCheck((Player)sender, "Admin"))return true;
+			if(sender instanceof Player)if(Methods.permCheck((Player)sender, "Admin"))return true;
 			if(args.length == 0){
 				sender.sendMessage(color("&cPlease do /BlockParticle Help for more information."));
 				return true;
@@ -93,20 +104,20 @@ public class Main extends JavaPlugin{
 					return true;
 				}
 				if(args[0].equalsIgnoreCase("List") || args[0].equalsIgnoreCase("L")){
-					Api.listLoc((Player)sender);
+					Methods.listLoc((Player)sender);
 					return true;
 				}
 				if(args[0].equalsIgnoreCase("Reload") || args[0].equalsIgnoreCase("R")){
 					settings.reloadConfig();
-					Api.kill();
-					Api.startParticles();
+					Methods.kill();
+					Methods.startParticles();
 					sender.sendMessage(color(Prefix + "&3You have just reloaded the Config.yml and Block Particles."));
 					return true;
 				}
 			}
 			if(args.length == 2){
 				if(args[0].equalsIgnoreCase("Set") || args[0].equalsIgnoreCase("S")){
-					for(String l : Api.getLocations()){
+					for(String l : Methods.getLocations()){
 						if(l.equalsIgnoreCase(args[1])){
 							B.put((Player)sender, l);
 							GUI.openGUIPage1((Player)sender);
@@ -117,18 +128,18 @@ public class Main extends JavaPlugin{
 					return true;
 				}
 				if(args[0].equalsIgnoreCase("Add") || args[0].equalsIgnoreCase("A")){
-					Api.addLoc((Player)sender, args[1]);
+					Methods.addLoc((Player)sender, args[1]);
 					return true;
 				}
 				if(args[0].equalsIgnoreCase("Delete") || args[0].equalsIgnoreCase("Del") || args[0].equalsIgnoreCase("D") ||
 						args[0].equalsIgnoreCase("Remove") || args[0].equalsIgnoreCase("R")){
-					Api.delLoc(sender, args[1]);
+					Methods.delLoc(sender, args[1]);
 					return true;
 				}
 			}
 			if(args.length == 3){
 				if(args[0].equalsIgnoreCase("Set") || args[0].equalsIgnoreCase("S")){
-					Api.setLoc(sender, args[1], args[2]);
+					Methods.setLoc(sender, args[1], args[2]);
 					return true;
 				}
 			}

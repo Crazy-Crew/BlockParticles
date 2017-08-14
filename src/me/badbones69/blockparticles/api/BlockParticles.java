@@ -9,10 +9,13 @@ import me.badbones69.blockparticles.Main;
 import me.badbones69.blockparticles.PlayParticles;
 
 public class BlockParticles{
+
 	static BlockParticles instance = new BlockParticles();
+
 	public static BlockParticles getInstance(){
 		return instance;
 	}
+
 	public boolean hasParticle(Location loc){
 		for(String L : Main.settings.getData().getConfigurationSection("Locations").getKeys(false)){
 			String w = Main.settings.getData().getString("Locations." + L + ".World");
@@ -30,6 +33,7 @@ public class BlockParticles{
 		}
 		return false;
 	}
+
 	/**
 	 * Set a Particle to a specified Location;
 	 * @param type The Particle you wish to use.
@@ -182,6 +186,7 @@ public class BlockParticles{
 			break;
 		}
 	}
+
 	/**
 	 * Remove a Particle;
 	 * @param name The Location Name.
@@ -196,6 +201,7 @@ public class BlockParticles{
 			PlayParticles.R.remove(name);
 		}
 	}
+
 	/**
 	 * Get the Particle Type of a Particle (Particle/Fountain).
 	 * @param particle The Particle you want to get the ParticleType from.

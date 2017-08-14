@@ -11,12 +11,15 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.util.Vector;
 
-public class Fountains {
+public class Fountains implements Listener{
 	
 	public static ArrayList<Item> items = new ArrayList<Item>();
 	public static Plugin plugin = Bukkit.getServer().getPluginManager().getPlugin("BlockParticles");
@@ -31,6 +34,15 @@ public class Fountains {
 		return Vec;
 	}
 
+	@EventHandler
+	public void onHopperPickUp(InventoryPickupItemEvent e) {
+		if(e.getItem() != null) {
+			if(items.contains(e.getItem())) {
+				e.setCancelled(true);
+			}
+		}
+	}
+	
 	public static void startHalloween(final Location loc, String L){
 		PlayParticles.Blocks.put(L, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable(){
 			@Override
@@ -123,8 +135,8 @@ public class Fountains {
 				for(Entity e : getNearbyEntities(loc.clone(), radius, radius, radius)){
 					if(e instanceof Player){
 						name =  e.getName();
-						final Item head = Bukkit.getWorld(loc.getWorld().getName()).dropItem(loc.clone().add(.5, .8, .5), Api.getPlayerHead(name));
-						if(Api.getVersion()>=191){
+						final Item head = Bukkit.getWorld(loc.getWorld().getName()).dropItem(loc.clone().add(.5, .8, .5), Methods.getPlayerHead(name));
+						if(Methods.getVersion()>=191){
 							head.setVelocity(new Vector(Vec(), .01, Vec()));
 						}else{
 							head.setVelocity(new Vector(Vec(), .3, Vec()));
@@ -152,8 +164,8 @@ public class Fountains {
 				heads.add("thresh3");
 				heads.add("CruXXx");
 				for(String e : heads){
-					final Item head = Bukkit.getWorld(loc.getWorld().getName()).dropItem(loc.clone().add(.5, .8, .5), Api.getPlayerHead(e));
-					if(Api.getVersion()>=191){
+					final Item head = Bukkit.getWorld(loc.getWorld().getName()).dropItem(loc.clone().add(.5, .8, .5), Methods.getPlayerHead(e));
+					if(Methods.getVersion()>=191){
 						head.setVelocity(new Vector(Vec(), .01, Vec()));
 					}else{
 						head.setVelocity(new Vector(Vec(), .3, Vec()));
@@ -205,8 +217,8 @@ public class Fountains {
 					picked.add(heads.get(p));
 				}
 				for(String e : picked){
-					final Item head = Bukkit.getWorld(loc.getWorld().getName()).dropItem(loc.clone().add(.5, .8, .5), Api.getPlayerHead(e));
-					if(Api.getVersion()>=191){
+					final Item head = Bukkit.getWorld(loc.getWorld().getName()).dropItem(loc.clone().add(.5, .8, .5), Methods.getPlayerHead(e));
+					if(Methods.getVersion()>=191){
 						head.setVelocity(new Vector(Vec(), .01, Vec()));
 					}else{
 						head.setVelocity(new Vector(Vec(), .3, Vec()));
@@ -247,8 +259,8 @@ public class Fountains {
 					picked.add(heads.get(p));
 				}
 				for(String e : picked){
-					final Item head = Bukkit.getWorld(loc.getWorld().getName()).dropItem(loc.clone().add(.5, .8, .5), Api.getPlayerHead(e));
-					if(Api.getVersion()>=191){
+					final Item head = Bukkit.getWorld(loc.getWorld().getName()).dropItem(loc.clone().add(.5, .8, .5), Methods.getPlayerHead(e));
+					if(Methods.getVersion()>=191){
 						head.setVelocity(new Vector(Vec(), .01, Vec()));
 					}else{
 						head.setVelocity(new Vector(Vec(), .3, Vec()));
@@ -288,8 +300,8 @@ public class Fountains {
 					picked.add(heads.get(p));
 				}
 				for(String e : picked){
-					final Item head = Bukkit.getWorld(loc.getWorld().getName()).dropItem(loc.clone().add(.5, .8, .5), Api.getPlayerHead(e));
-					if(Api.getVersion()>=191){
+					final Item head = Bukkit.getWorld(loc.getWorld().getName()).dropItem(loc.clone().add(.5, .8, .5), Methods.getPlayerHead(e));
+					if(Methods.getVersion()>=191){
 						head.setVelocity(new Vector(Vec(), .01, Vec()));
 					}else{
 						head.setVelocity(new Vector(Vec(), .3, Vec()));
@@ -325,8 +337,8 @@ public class Fountains {
 					picked.add(heads.get(p));
 				}
 				for(String e : picked){
-					final Item head = Bukkit.getWorld(loc.getWorld().getName()).dropItem(loc.clone().add(.5, .8, .5), Api.getPlayerHead(e));
-					if(Api.getVersion()>=191){
+					final Item head = Bukkit.getWorld(loc.getWorld().getName()).dropItem(loc.clone().add(.5, .8, .5), Methods.getPlayerHead(e));
+					if(Methods.getVersion()>=191){
 						head.setVelocity(new Vector(Vec(), .01, Vec()));
 					}else{
 						head.setVelocity(new Vector(Vec(), .3, Vec()));
