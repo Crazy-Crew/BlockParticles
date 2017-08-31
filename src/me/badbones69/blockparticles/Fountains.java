@@ -19,21 +19,21 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.util.Vector;
 
-public class Fountains implements Listener{
+public class Fountains implements Listener {
 	
 	public static ArrayList<Item> items = new ArrayList<Item>();
 	public static Plugin plugin = Bukkit.getServer().getPluginManager().getPlugin("BlockParticles");
 	
 	@SuppressWarnings("static-access")
-	public Fountains(Plugin plugin){
+	public Fountains(Plugin plugin) {
 		this.plugin = plugin;
 	}
-
-	private static float Vec(){
+	
+	private static float Vec() {
 		float Vec = (float) -.1 + (float) (Math.random() * ((.1 - -.1)));
 		return Vec;
 	}
-
+	
 	@EventHandler
 	public void onHopperPickUp(InventoryPickupItemEvent e) {
 		if(e.getItem() != null) {
@@ -43,10 +43,10 @@ public class Fountains implements Listener{
 		}
 	}
 	
-	public static void startHalloween(final Location loc, String L){
-		PlayParticles.Blocks.put(L, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable(){
+	public static void startHalloween(final Location loc, String L) {
+		PlayParticles.Blocks.put(L, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
 			@Override
-    		public void run(){
+			public void run() {
 				ItemStack emerald = new ItemStack(Material.ROTTEN_FLESH);
 				ItemMeta m = emerald.getItemMeta();
 				m.setDisplayName(new Random().nextInt(Integer.MAX_VALUE) + "");
@@ -70,7 +70,7 @@ public class Fountains implements Listener{
 				Pu.setVelocity(new Vector(Vec(), .3, Vec()));
 				items.add(Pu);
 				
-				Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable(){
+				Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
 					@Override
 					public void run() {
 						items.remove(Em);
@@ -82,15 +82,15 @@ public class Fountains implements Listener{
 						items.remove(Pu);
 						Pu.remove();
 					}
-				}, 2*20);
+				}, 2 * 20);
 			}
 		}, 0, 2));
 	}
-
-	public static void startGems(final Location loc, String L){
-		PlayParticles.Blocks.put(L, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable(){
+	
+	public static void startGems(final Location loc, String L) {
+		PlayParticles.Blocks.put(L, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
 			@Override
-    		public void run(){
+			public void run() {
 				ItemStack emerald = new ItemStack(Material.EMERALD);
 				ItemMeta m = emerald.getItemMeta();
 				m.setDisplayName(new Random().nextInt(Integer.MAX_VALUE) + "");
@@ -111,7 +111,7 @@ public class Fountains implements Listener{
 				Go.setVelocity(new Vector(Vec(), .3, Vec()));
 				items.add(Go);
 				
-				Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable(){
+				Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
 					@Override
 					public void run() {
 						items.remove(Em);
@@ -121,72 +121,72 @@ public class Fountains implements Listener{
 						items.remove(Go);
 						Go.remove();
 					}
-				}, 2*20);
+				}, 2 * 20);
 			}
 		}, 0, 2));
 	}
-
-	public static void startHeads(final Location loc, String L){
-		PlayParticles.Blocks.put(L, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable(){
+	
+	public static void startHeads(final Location loc, String L) {
+		PlayParticles.Blocks.put(L, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
 			@Override
-    		public void run(){
+			public void run() {
 				String name = "skeleton";
 				int radius = 10;
-				for(Entity e : getNearbyEntities(loc.clone(), radius, radius, radius)){
-					if(e instanceof Player){
-						name =  e.getName();
+				for(Entity e : getNearbyEntities(loc.clone(), radius, radius, radius)) {
+					if(e instanceof Player) {
+						name = e.getName();
 						final Item head = Bukkit.getWorld(loc.getWorld().getName()).dropItem(loc.clone().add(.5, .8, .5), Methods.getPlayerHead(name));
-						if(Methods.getVersion()>=191){
+						if(Methods.getVersion() >= 191) {
 							head.setVelocity(new Vector(Vec(), .01, Vec()));
-						}else{
+						}else {
 							head.setVelocity(new Vector(Vec(), .3, Vec()));
 						}
 						items.add(head);
-						Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable(){
+						Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
 							@Override
 							public void run() {
 								items.remove(head);
 								head.remove();
 							}
-						}, 2*20);
+						}, 2 * 20);
 					}
 				}
 			}
 		}, 0, 3));
 	}
-
-	public static void startPresents(final Location loc, String L){
-		PlayParticles.Blocks.put(L, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable(){
+	
+	public static void startPresents(final Location loc, String L) {
+		PlayParticles.Blocks.put(L, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
 			@Override
-    		public void run(){
+			public void run() {
 				List<String> heads = new ArrayList<String>();
 				heads.add("SeerPotion");
 				heads.add("thresh3");
 				heads.add("CruXXx");
-				for(String e : heads){
+				for(String e : heads) {
 					final Item head = Bukkit.getWorld(loc.getWorld().getName()).dropItem(loc.clone().add(.5, .8, .5), Methods.getPlayerHead(e));
-					if(Methods.getVersion()>=191){
+					if(Methods.getVersion() >= 191) {
 						head.setVelocity(new Vector(Vec(), .01, Vec()));
-					}else{
+					}else {
 						head.setVelocity(new Vector(Vec(), .3, Vec()));
 					}
 					items.add(head);
-					Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable(){
+					Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
 						@Override
 						public void run() {
 							items.remove(head);
 							head.remove();
 						}
-					}, 2*20);
+					}, 2 * 20);
 				}
 			}
 		}, 0, 3));
 	}
-
-	public static void startMobs(final Location loc, String L){
-		PlayParticles.Blocks.put(L, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable(){
+	
+	public static void startMobs(final Location loc, String L) {
+		PlayParticles.Blocks.put(L, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
 			@Override
-    		public void run(){
+			public void run() {
 				List<String> heads = new ArrayList<String>();
 				List<String> picked = new ArrayList<String>();
 				Random r = new Random();
@@ -212,34 +212,34 @@ public class Fountains implements Listener{
 				heads.add("MHF_Villager");
 				heads.add("MHF_WSkeleton");
 				heads.add("MHF_Zombie");
-				for(int i=0; i<3; i++){
+				for(int i = 0; i < 3; i++) {
 					int p = r.nextInt(heads.size());
 					picked.add(heads.get(p));
 				}
-				for(String e : picked){
+				for(String e : picked) {
 					final Item head = Bukkit.getWorld(loc.getWorld().getName()).dropItem(loc.clone().add(.5, .8, .5), Methods.getPlayerHead(e));
-					if(Methods.getVersion()>=191){
+					if(Methods.getVersion() >= 191) {
 						head.setVelocity(new Vector(Vec(), .01, Vec()));
-					}else{
+					}else {
 						head.setVelocity(new Vector(Vec(), .3, Vec()));
 					}
 					items.add(head);
-					Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable(){
+					Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
 						@Override
 						public void run() {
 							items.remove(head);
 							head.remove();
 						}
-					}, 2*20);
+					}, 2 * 20);
 				}
 			}
 		}, 0, 3));
 	}
-
-	public static void startFood(final Location loc, String L){
-		PlayParticles.Blocks.put(L, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable(){
+	
+	public static void startFood(final Location loc, String L) {
+		PlayParticles.Blocks.put(L, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
 			@Override
-    		public void run(){
+			public void run() {
 				List<String> heads = new ArrayList<String>();
 				List<String> picked = new ArrayList<String>();
 				Random r = new Random();
@@ -254,34 +254,34 @@ public class Fountains implements Listener{
 				heads.add("Chazwell777");
 				heads.add("MHF_Cake");
 				heads.add("Chipsandip");
-				for(int i=0; i<3; i++){
+				for(int i = 0; i < 3; i++) {
 					int p = r.nextInt(heads.size());
 					picked.add(heads.get(p));
 				}
-				for(String e : picked){
+				for(String e : picked) {
 					final Item head = Bukkit.getWorld(loc.getWorld().getName()).dropItem(loc.clone().add(.5, .8, .5), Methods.getPlayerHead(e));
-					if(Methods.getVersion()>=191){
+					if(Methods.getVersion() >= 191) {
 						head.setVelocity(new Vector(Vec(), .01, Vec()));
-					}else{
+					}else {
 						head.setVelocity(new Vector(Vec(), .3, Vec()));
 					}
 					items.add(head);
-					Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable(){
+					Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
 						@Override
 						public void run() {
 							items.remove(head);
 							head.remove();
 						}
-					}, 2*20);
+					}, 2 * 20);
 				}
 			}
 		}, 0, 3));
 	}
-
-	public static void startPokemon(final Location loc, String L){
-		PlayParticles.Blocks.put(L, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable(){
+	
+	public static void startPokemon(final Location loc, String L) {
+		PlayParticles.Blocks.put(L, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
 			@Override
-    		public void run(){
+			public void run() {
 				List<String> heads = new ArrayList<String>();
 				List<String> picked = new ArrayList<String>();
 				Random r = new Random();
@@ -295,34 +295,34 @@ public class Fountains implements Listener{
 				heads.add("mmmaik");
 				heads.add("impoli");
 				heads.add("Pikachubutler");
-				for(int i=0; i<3; i++){
+				for(int i = 0; i < 3; i++) {
 					int p = r.nextInt(heads.size());
 					picked.add(heads.get(p));
 				}
-				for(String e : picked){
+				for(String e : picked) {
 					final Item head = Bukkit.getWorld(loc.getWorld().getName()).dropItem(loc.clone().add(.5, .8, .5), Methods.getPlayerHead(e));
-					if(Methods.getVersion()>=191){
+					if(Methods.getVersion() >= 191) {
 						head.setVelocity(new Vector(Vec(), .01, Vec()));
-					}else{
+					}else {
 						head.setVelocity(new Vector(Vec(), .3, Vec()));
 					}
 					items.add(head);
-					Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable(){
+					Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
 						@Override
 						public void run() {
 							items.remove(head);
 							head.remove();
 						}
-					}, 2*20);
+					}, 2 * 20);
 				}
 			}
 		}, 0, 3));
 	}
-
-	public static void startMario(final Location loc, String L){
-		PlayParticles.Blocks.put(L, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable(){
+	
+	public static void startMario(final Location loc, String L) {
+		PlayParticles.Blocks.put(L, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
 			@Override
-    		public void run(){
+			public void run() {
 				List<String> heads = new ArrayList<String>();
 				List<String> picked = new ArrayList<String>();
 				Random r = new Random();
@@ -332,37 +332,37 @@ public class Fountains implements Listener{
 				heads.add("Yoshi");
 				heads.add("Toad");
 				heads.add("Bowser");
-				for(int i=0; i<3; i++){
+				for(int i = 0; i < 3; i++) {
 					int p = r.nextInt(heads.size());
 					picked.add(heads.get(p));
 				}
-				for(String e : picked){
+				for(String e : picked) {
 					final Item head = Bukkit.getWorld(loc.getWorld().getName()).dropItem(loc.clone().add(.5, .8, .5), Methods.getPlayerHead(e));
-					if(Methods.getVersion()>=191){
+					if(Methods.getVersion() >= 191) {
 						head.setVelocity(new Vector(Vec(), .01, Vec()));
-					}else{
+					}else {
 						head.setVelocity(new Vector(Vec(), .3, Vec()));
 					}
 					items.add(head);
-					Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable(){
+					Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
 						@Override
 						public void run() {
 							items.remove(head);
 							head.remove();
 						}
-					}, 2*20);
+					}, 2 * 20);
 				}
 			}
 		}, 0, 3));
 	}
-
+	
 	@SuppressWarnings("deprecation")
 	public static List<Entity> getNearbyEntities(Location loc, double x, double y, double z) {
-	    FallingBlock ent = loc.getWorld().spawnFallingBlock(loc.subtract(0, 1, 0), 132, (byte) 0);
-	    List<Entity> out = ent.getNearbyEntities(x, y, z);
-	    ent.remove();
-	   
-	    return out;
+		FallingBlock ent = loc.getWorld().spawnFallingBlock(loc.subtract(0, 1, 0), 132, (byte) 0);
+		List<Entity> out = ent.getNearbyEntities(x, y, z);
+		ent.remove();
+		
+		return out;
 	}
-
+	
 }

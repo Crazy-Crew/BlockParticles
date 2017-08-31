@@ -51,55 +51,61 @@ public enum Particles{
 	CRIT("Crit", ParticleType.PARTICLE),
 	BIGCRIT("BigCrit", ParticleType.PARTICLE);
 	
-	String Name;
-	ParticleType Type;
+	private String Name;
+	private ParticleType Type;
 	
-	private Particles(String name, ParticleType type){
-		this.Name=name;
-		this.Type=type;
+	private Particles(String name, ParticleType type) {
+		this.Name = name;
+		this.Type = type;
 	}
+	
 	/**
 	 * Returns the Particle's Name in a String.
 	 */
-	public String toString(){
+	public String toString() {
 		return Name;
 	}
+	
 	/**
 	 * 
 	 * @param name The Particle you wish to get.
 	 * @return A Particle.
 	 */
-	public static Particles fromName(String name){
-		for(Particles i : Particles.getParticles()){
-			if(i.toString().equalsIgnoreCase(name)){
+	public static Particles fromName(String name) {
+		for(Particles i : Particles.getParticles()) {
+			if(i.toString().equalsIgnoreCase(name)) {
 				return i;
 			}
 		}
 		return null;
 	}
+	
 	/**
 	 * Returns the Particle's Type (Particle/Fountain).
 	 */
-	public ParticleType getType(){
+	public ParticleType getType() {
 		return Type;
 	}
+	
 	/**
 	 * Returns all the Particle.
 	 */
-	public static Particles[] getParticles(){
+	public static Particles[] getParticles() {
 		Particles[] p = Particles.values();
 		return p;
 	}
+	
 	/**
 	 * 
 	 * @param type The ParticleType you want all the Particles From.
 	 * @return Returns all the Particles in a ParticleType.
 	 */
-	public static ArrayList<Particles> getParticles(ParticleType type){
+	public static ArrayList<Particles> getParticles(ParticleType type) {
 		ArrayList<Particles> i = new ArrayList<Particles>();
-		for(Particles p : Particles.values()){
-			if(p.getType().equals(type))i.add(p);
+		for(Particles p : Particles.values()) {
+			if(p.getType().equals(type)) i.add(p);
 		}
 		return i;
 	}
+	
 }

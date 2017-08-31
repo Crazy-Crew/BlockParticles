@@ -7,13 +7,13 @@ import org.bukkit.event.player.PlayerPickupItemEvent;
 
 import me.badbones69.blockparticles.Fountains;
 
-public class NMS_v1_11_R1 implements Listener{
+public class Events_v1_11_R1_Down implements Listener {
 	
 	@EventHandler
 	public void onItemPickUp(PlayerPickupItemEvent e) {
 		Entity item = e.getItem();
-		if(item != null){
-			if(Fountains.items.contains(item)){
+		if(item != null) {
+			if(Fountains.items.contains(item)) {
 				e.setCancelled(true);
 			}
 		}

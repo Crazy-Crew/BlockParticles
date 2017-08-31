@@ -8,9 +8,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 
-public class GUI implements Listener{
-
-	static void openGUIPage1(Player player){
+public class GUI implements Listener {
+	
+	static void openGUIPage1(Player player) {
 		Inventory inv = Bukkit.createInventory(null, 54, Methods.color("&8&lBlock &b&lParticles"));
 		inv.setItem(0, Methods.makeItem(Material.BROWN_MUSHROOM, 1, 0, "&6&lCrit"));
 		inv.setItem(1, Methods.makeItem(Material.HUGE_MUSHROOM_1, 1, 0, "&6&lBigCrit"));
@@ -53,8 +53,8 @@ public class GUI implements Listener{
 		inv.setItem(53, Methods.makeItem(Material.ARROW, 1, 0, "&e&lFountians"));
 		player.openInventory(inv);
 	}
-
-	static void openGUIPage2(Player player){
+	
+	static void openGUIPage2(Player player) {
 		Inventory inv = Bukkit.createInventory(null, 54, Methods.color("&8&lBlock &b&lParticles"));
 		inv.setItem(20, Methods.makeItem(Material.EMERALD, 1, 0, "&a&lGems"));
 		inv.setItem(21, Methods.getPlayerHead("Sloggy_Whopper", "&7&lFood"));
@@ -67,28 +67,28 @@ public class GUI implements Listener{
 		inv.setItem(45, Methods.makeItem(Material.ARROW, 1, 0, "&e&lParticles"));
 		player.openInventory(inv);
 	}
-
+	
 	@EventHandler
-	public void invClick(InventoryClickEvent e){
+	public void invClick(InventoryClickEvent e) {
 		Inventory inv = e.getInventory();
-		if(Main.B.containsKey(e.getWhoClicked())){
+		if(Main.B.containsKey(e.getWhoClicked())) {
 			String loc = Main.B.get(e.getWhoClicked());
-			if(inv!=null){
-				if(inv.getName().equals(Methods.color("&8&lBlock &b&lParticles"))){
+			if(inv != null) {
+				if(inv.getName().equals(Methods.color("&8&lBlock &b&lParticles"))) {
 					e.setCancelled(true);
-					if(e.getCurrentItem()!=null){
-						if(e.getCurrentItem().hasItemMeta()){
-							if(e.getCurrentItem().getType()!=Material.AIR){
+					if(e.getCurrentItem() != null) {
+						if(e.getCurrentItem().hasItemMeta()) {
+							if(e.getCurrentItem().getType() != Material.AIR) {
 								String name = Methods.removeColor(e.getCurrentItem().getItemMeta().getDisplayName());
-								if(e.getCurrentItem().getItemMeta().getDisplayName().equals(Methods.color("&e&lParticles"))){
-									openGUIPage1((Player)e.getWhoClicked());
+								if(e.getCurrentItem().getItemMeta().getDisplayName().equals(Methods.color("&e&lParticles"))) {
+									openGUIPage1((Player) e.getWhoClicked());
 									return;
 								}
-								if(e.getCurrentItem().getItemMeta().getDisplayName().equals(Methods.color("&e&lFountians"))){
-									openGUIPage2((Player)e.getWhoClicked());
+								if(e.getCurrentItem().getItemMeta().getDisplayName().equals(Methods.color("&e&lFountians"))) {
+									openGUIPage2((Player) e.getWhoClicked());
 									return;
 								}
-								Methods.setLoc((Player)e.getWhoClicked(), loc, name);
+								Methods.setLoc((Player) e.getWhoClicked(), loc, name);
 								e.getWhoClicked().closeInventory();
 								return;
 							}
@@ -98,5 +98,5 @@ public class GUI implements Listener{
 			}
 		}
 	}
-
+	
 }
