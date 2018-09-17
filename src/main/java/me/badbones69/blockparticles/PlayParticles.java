@@ -1,14 +1,13 @@
 package me.badbones69.blockparticles;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Random;
-
 import org.bukkit.*;
-import org.bukkit.block.data.type.Bed;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.util.Vector;
 import org.inventivetalent.particle.ParticleEffects;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Random;
 
 public class PlayParticles {
     public static HashMap<String, Integer> Blocks = new HashMap<>();
@@ -250,7 +249,7 @@ public class PlayParticles {
             @Override
             public void run() {
                 if (!Methods.anyPlayers(l.clone(), range)) return;
-                ParticleEffect.CLOUD.display((float) .3, 0, (float) .3, (float) .05, 20, l, 100);
+                l.getWorld().spawnParticle(Particle.CLOUD, l,20, .3f, 0, .3f, 0.05f);
             }
         }, 0, 2));
     }
@@ -332,7 +331,7 @@ public class PlayParticles {
             @Override
             public void run() {
                 if (!Methods.anyPlayers(l.clone(), range)) return;
-                ParticleEffect.FIREWORKS_SPARK.display((float) .7, (float) .7, (float) .7, 0, 1, l, 100);
+                l.getWorld().spawnParticle(Particle.FIREWORKS_SPARK, l, 1, .7f, .7f, .7f, 0);
             }
         }, 0, 2));
     }
@@ -344,7 +343,7 @@ public class PlayParticles {
             @Override
             public void run() {
                 if (!Methods.anyPlayers(l.clone(), range)) return;
-                ParticleEffect.FIREWORKS_SPARK.display(new Vector(Vec(), .1, Vec()), 1, l, 100);
+                l.getWorld().spawnParticle(Particle.FIREWORKS_SPARK, l, 1, Vec(), .1f, Vec(), 1);
             }
         }, 0, 2));
     }
@@ -374,24 +373,24 @@ public class PlayParticles {
                 if (!Methods.anyPlayers(l.clone(), range)) return;
                 int i = time;
                 if (time == 15) {
-                    ParticleEffect.NOTE.display(0, 0, 0, Methods.randomColor(), 1, locs.get(i), 100);
+                    l.getWorld().spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, Methods.randomColor());
                     time = -1;
                 }
-                if (time == 14) ParticleEffect.NOTE.display(0, 0, 0, Methods.randomColor(), 1, locs.get(i), 100);
-                if (time == 13) ParticleEffect.NOTE.display(0, 0, 0, Methods.randomColor(), 1, locs.get(i), 100);
-                if (time == 12) ParticleEffect.NOTE.display(0, 0, 0, Methods.randomColor(), 1, locs.get(i), 100);
-                if (time == 11) ParticleEffect.NOTE.display(0, 0, 0, Methods.randomColor(), 1, locs.get(i), 100);
-                if (time == 10) ParticleEffect.NOTE.display(0, 0, 0, Methods.randomColor(), 1, locs.get(i), 100);
-                if (time == 9) ParticleEffect.NOTE.display(0, 0, 0, Methods.randomColor(), 1, locs.get(i), 100);
-                if (time == 8) ParticleEffect.NOTE.display(0, 0, 0, Methods.randomColor(), 1, locs.get(i), 100);
-                if (time == 7) ParticleEffect.NOTE.display(0, 0, 0, Methods.randomColor(), 1, locs.get(i), 100);
-                if (time == 6) ParticleEffect.NOTE.display(0, 0, 0, Methods.randomColor(), 1, locs.get(i), 100);
-                if (time == 5) ParticleEffect.NOTE.display(0, 0, 0, Methods.randomColor(), 1, locs.get(i), 100);
-                if (time == 4) ParticleEffect.NOTE.display(0, 0, 0, Methods.randomColor(), 1, locs.get(i), 100);
-                if (time == 3) ParticleEffect.NOTE.display(0, 0, 0, Methods.randomColor(), 1, locs.get(i), 100);
-                if (time == 2) ParticleEffect.NOTE.display(0, 0, 0, Methods.randomColor(), 1, locs.get(i), 100);
-                if (time == 1) ParticleEffect.NOTE.display(0, 0, 0, Methods.randomColor(), 1, locs.get(i), 100);
-                if (time == 0) ParticleEffect.NOTE.display(0, 0, 0, Methods.randomColor(), 1, locs.get(i), 100);
+                if (time == 14) l.getWorld().spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, Methods.randomColor());
+                if (time == 13) l.getWorld().spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, Methods.randomColor());
+                if (time == 12) l.getWorld().spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, Methods.randomColor());
+                if (time == 11) l.getWorld().spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, Methods.randomColor());
+                if (time == 10) l.getWorld().spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, Methods.randomColor());
+                if (time == 9) l.getWorld().spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, Methods.randomColor());
+                if (time == 8) l.getWorld().spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, Methods.randomColor());
+                if (time == 7) l.getWorld().spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, Methods.randomColor());
+                if (time == 6) l.getWorld().spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, Methods.randomColor());
+                if (time == 5) l.getWorld().spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, Methods.randomColor());
+                if (time == 4) l.getWorld().spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, Methods.randomColor());
+                if (time == 3) l.getWorld().spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, Methods.randomColor());
+                if (time == 2) l.getWorld().spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, Methods.randomColor());
+                if (time == 1) l.getWorld().spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, Methods.randomColor());
+                if (time == 0) l.getWorld().spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, Methods.randomColor());
                 time++;
                 i++;
             }
@@ -467,9 +466,9 @@ public class PlayParticles {
             @Override
             public void run() {
                 if (!Methods.anyPlayers(l.clone(), range)) return;
-                ParticleEffect.FLAME.display(new Vector(Vec(), .1, Vec()), (float) 1.5, l, 100);
-                ParticleEffect.FLAME.display(new Vector(Vec(), .1, Vec()), (float) 1.5, l, 100);
-                ParticleEffect.FLAME.display(new Vector(Vec(), .1, Vec()), (float) 1.5, l, 100);
+                l.getWorld().spawnParticle(Particle.FLAME, l, 1, Vec(), .1f, Vec(), 1.5f);
+                l.getWorld().spawnParticle(Particle.FLAME, l, 1, Vec(), .1f, Vec(), 1.5f);
+                l.getWorld().spawnParticle(Particle.FLAME, l, 1, Vec(), .1f, Vec(), 1.5f);
             }
         }, 0, 2));
     }
