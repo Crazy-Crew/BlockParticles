@@ -1,0 +1,8 @@
+
+*.class
+
+.classpath
+
+*.prefs
+
+bin/
