@@ -1,0 +1,11 @@
+name: BlockParticlesAPI
+version: ${project.version}
+main: me.badbones69.blockparticles.BlockParticles
+softdepend: [Multiverse-Core, MultiWorld]
+description: Add particles to blocks!
+api-version: 1.13
+
+commands:
+  BlockParticle:
+    description: Adds particles to blocks!
+    aliases: [bp]
