@@ -1,14 +1,15 @@
 package org.inventivetalent.particle;
 
 public class ParticleException extends RuntimeException {
+
     public ParticleException() {
     }
 
-    public ParticleException(String message) {
+    ParticleException(String message) {
         super(message);
     }
 
-    public ParticleException(String message, Throwable cause) {
+    ParticleException(String message, Throwable cause) {
         super(message, cause);
     }
 

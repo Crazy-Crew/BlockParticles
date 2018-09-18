@@ -1,4 +1,4 @@
-name: BlockParticlesAPI
+name: BlockParticles
 version: ${project.version}
 main: me.badbones69.blockparticles.BlockParticles
 softdepend: [Multiverse-Core, MultiWorld]

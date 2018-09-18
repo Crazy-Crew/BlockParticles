@@ -6,13 +6,12 @@ public enum ParticleType {
 
     String Name;
 
-    private ParticleType(String name) {
+    ParticleType(String name) {
         this.Name = name;
     }
 
     public static ParticleType[] getTypes() {
-        ParticleType[] p = ParticleType.values();
-        return p;
+        return ParticleType.values();
     }
 
 }

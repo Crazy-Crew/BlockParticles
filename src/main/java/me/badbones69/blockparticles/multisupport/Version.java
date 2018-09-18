@@ -18,7 +18,7 @@ public enum Version {
     private Integer versionInteger;
     public static Version currentVersion;
 
-    private Version(int versionInteger) {
+    Version(int versionInteger) {
         this.versionInteger = versionInteger;
     }
 
@@ -85,9 +85,8 @@ public enum Version {
             resault = 1;
         }else if(current == check) {// check is the same as current
             resault = 0;
-        }else if(current < check || check == -1) {// check is older then current
-            resault = -1;
-        }
+        } // check is older then current
+
         return resault;
     }
 

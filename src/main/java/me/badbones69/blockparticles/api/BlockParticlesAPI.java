@@ -1,17 +1,16 @@
 package me.badbones69.blockparticles.api;
 
 import me.badbones69.blockparticles.BlockParticles;
+import me.badbones69.blockparticles.Fountains;
+import me.badbones69.blockparticles.PlayParticles;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.World;
 
-import me.badbones69.blockparticles.Fountains;
-import me.badbones69.blockparticles.PlayParticles;
-
 public class BlockParticlesAPI {
 
-    static BlockParticlesAPI instance = new BlockParticlesAPI();
+    private static BlockParticlesAPI instance = new BlockParticlesAPI();
 
     public static BlockParticlesAPI getInstance() {
         return instance;
@@ -41,12 +40,12 @@ public class BlockParticlesAPI {
      * @param type The Particle you wish to use.
      * @param loc  The location you wish to spawn the Particles.
      * @param name The Location Name.
-     * @return
      */
     public void setParticle(Particles type, Location loc, String name) {
         if (PlayParticles.Blocks.containsKey(name)) {
             Bukkit.getServer().getScheduler().cancelTask(PlayParticles.Blocks.get(name));
         }
+
         switch (type) {
             case LOVETORNADO:
                 PlayParticles.playLoveTornado(loc, name);

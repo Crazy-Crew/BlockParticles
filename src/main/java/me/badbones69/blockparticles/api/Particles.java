@@ -54,7 +54,7 @@ public enum Particles {
     private String Name;
     private ParticleType Type;
 
-    private Particles(String name, ParticleType type) {
+    Particles(String name, ParticleType type) {
         this.Name = name;
         this.Type = type;
     }
@@ -90,8 +90,7 @@ public enum Particles {
      * Returns all the Particle.
      */
     public static Particles[] getParticles() {
-        Particles[] p = Particles.values();
-        return p;
+        return Particles.values();
     }
 
     /**
@@ -99,7 +98,7 @@ public enum Particles {
      * @return Returns all the Particles in a ParticleType.
      */
     public static ArrayList<Particles> getParticles(ParticleType type) {
-        ArrayList<Particles> i = new ArrayList<Particles>();
+        ArrayList<Particles> i = new ArrayList<>();
         for (Particles p : Particles.values()) {
             if (p.getType().equals(type)) i.add(p);
         }

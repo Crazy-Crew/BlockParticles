@@ -11,7 +11,7 @@ import java.util.Random;
 
 public class PlayParticles {
     public static HashMap<String, Integer> Blocks = new HashMap<>();
-    public static Plugin plugin = Bukkit.getServer().getPluginManager().getPlugin("BlockParticlesAPI");
+    private static Plugin plugin = Bukkit.getServer().getPluginManager().getPlugin("BlockParticles");
     private static int range = 25;
 
     @SuppressWarnings ("static-access")
@@ -28,8 +28,7 @@ public class PlayParticles {
     }
 
     private static float Vec() {
-        float Vec = (float) -.05 + (float) (Math.random() * ((.05 - -.05)));
-        return Vec;
+        return (float) -.05 + (float) (Math.random() * ((.05 - -.05)));
     }
 
     public void ranLoc(ParticleEffects part, Location loc, double offsetX, double offsetY, double offsetZ, int Amount, Color color) {
@@ -58,8 +57,8 @@ public class PlayParticles {
 
             @Override
             public void run() {
-                if (!Methods.anyPlayers(l.clone(), range)) return;
-                ParticleEffect.LAVA.display(0, 0, 0, 0, 10, l, 100);
+                if (Methods.noPlayers(l.clone(), range)) return;
+                l.getWorld().spawnParticle(Particle.LAVA, l, 10, 0, 0, 0, 0);
             }
         }, 0, 4));
     }
@@ -70,11 +69,11 @@ public class PlayParticles {
 
             @Override
             public void run() {
-                if (!Methods.anyPlayers(l.clone(), range)) return;
+                if (Methods.noPlayers(l.clone(), range)) return;
                 for (Location loc : getCircle(l, 1, 15))
-                    l.getWorld().spawnParticle(Particle.FLAME, loc, 1, 0, 0,0, 0);
+                    l.getWorld().spawnParticle(Particle.FLAME, loc, 1, 0, 0, 0, 0);
                 for (Location loc : getCircle(l, 2, 25))
-                    l.getWorld().spawnParticle(Particle.FLAME, loc, 1, 0, 0,0, 0);
+                    l.getWorld().spawnParticle(Particle.FLAME, loc, 1, 0, 0, 0, 0);
             }
         }, 0, 5));
     }
@@ -85,11 +84,11 @@ public class PlayParticles {
 
             @Override
             public void run() {
-                if (!Methods.anyPlayers(l.clone(), range)) return;
+                if (Methods.noPlayers(l.clone(), range)) return;
                 for (Location loc : getCircle(l, .6, 15))
-                    l.getWorld().spawnParticle(Particle.FLAME, loc, 1, 0, 0,0, 0);
+                    l.getWorld().spawnParticle(Particle.FLAME, loc, 1, 0, 0, 0, 0);
                 for (Location loc : getCircle(l, 1, 20))
-                    l.getWorld().spawnParticle(Particle.FLAME, loc, 1, 0, 0,0, 0);
+                    l.getWorld().spawnParticle(Particle.FLAME, loc, 1, 0, 0, 0, 0);
             }
         }, 0, 5));
     }
@@ -101,7 +100,7 @@ public class PlayParticles {
 
             @Override
             public void run() {
-                if (!Methods.anyPlayers(l.clone(), range)) return;
+                if (Methods.noPlayers(l.clone(), range)) return;
                 if (time == 15) {
                     l.getWorld().spawnParticle(particle, l.clone().add(.8, 0, 0), amount, 0, 0, 0, 0);
                     l.getWorld().spawnParticle(particle, l.clone().add(-.8, 0, 0), amount, 0, 0, 0, 0);
@@ -179,7 +178,7 @@ public class PlayParticles {
 
             @Override
             public void run() {
-                if (!Methods.anyPlayers(l.clone(), range)) return;
+                if (Methods.noPlayers(l.clone(), range)) return;
                 if (time == 15) l.getWorld().spawnParticle(particle, l.clone().add(.8, 0, 0), amount, 0, 0, 0, 0);
                 if (time == 14) l.getWorld().spawnParticle(particle, l.clone().add(.75, 0, .43), amount, 0, 0, 0, 0);
                 if (time == 13) l.getWorld().spawnParticle(particle, l.clone().add(.65, 0, .65), amount, 0, 0, 0, 0);
@@ -210,7 +209,7 @@ public class PlayParticles {
 
             @Override
             public void run() {
-                if (!Methods.anyPlayers(l.clone(), range)) return;
+                if (Methods.noPlayers(l.clone(), range)) return;
                 l.getWorld().spawnParticle(Particle.CRIT, l.clone(), 1, 0, 0, 0, 0);
             }
         }, 0, 2));
@@ -222,7 +221,7 @@ public class PlayParticles {
 
             @Override
             public void run() {
-                if (!Methods.anyPlayers(l.clone(), range)) return;
+                if (Methods.noPlayers(l.clone(), range)) return;
                 for (Location loc : getCircle(l, 2, 20))
                     l.getWorld().spawnParticle(Particle.CRIT, loc, 1, 0, 0, 0, 0);
             }
@@ -235,9 +234,9 @@ public class PlayParticles {
 
             @Override
             public void run() {
-                if (!Methods.anyPlayers(l.clone(), range)) return;
+                if (Methods.noPlayers(l.clone(), range)) return;
                 l.getWorld().spawnParticle(Particle.CLOUD, l.clone(), 15, .3f, 0, 0.3f, 0);
-                l.getWorld().spawnParticle(Particle.WATER_DROP, l.clone().add(0, 0, .1), 10,0.2f, 0, 0.2f, 0);
+                l.getWorld().spawnParticle(Particle.WATER_DROP, l.clone().add(0, 0, .1), 10, 0.2f, 0, 0.2f, 0);
             }
         }, 0, 2));
     }
@@ -248,8 +247,8 @@ public class PlayParticles {
 
             @Override
             public void run() {
-                if (!Methods.anyPlayers(l.clone(), range)) return;
-                l.getWorld().spawnParticle(Particle.CLOUD, l,20, .3f, 0, .3f, 0.05f);
+                if (Methods.noPlayers(l.clone(), range)) return;
+                l.getWorld().spawnParticle(Particle.CLOUD, l, 20, .3f, 0, .3f, 0.05f);
             }
         }, 0, 2));
     }
@@ -260,8 +259,8 @@ public class PlayParticles {
 
             @Override
             public void run() {
-                if (!Methods.anyPlayers(l.clone(), range)) return;
-                ParticleEffect.ENCHANTMENT_TABLE.display((float) 0, 0, (float) 0, (float) 2, 20, l, 100);
+                if (Methods.noPlayers(l.clone(), range)) return;
+                l.getWorld().spawnParticle(Particle.ENCHANTMENT_TABLE, l, 20, 0, 0, 0, 2);
             }
         }, 0, 2));
     }
@@ -272,38 +271,38 @@ public class PlayParticles {
 
             @Override
             public void run() {
-                if (!Methods.anyPlayers(l.clone(), range)) return;
-                ParticleEffect.FLAME.display(0, 0, 0, 0, 1, l.clone().add(1, 0, 1), 100);
-                ParticleEffect.FLAME.display(0, 0, 0, 0, 1, l.clone().add(.9, .1, .9), 100);
-                ParticleEffect.FLAME.display(0, 0, 0, 0, 1, l.clone().add(.8, .2, .8), 100);
-                ParticleEffect.FLAME.display(0, 0, 0, 0, 1, l.clone().add(.7, .3, .7), 100);
-                ParticleEffect.FLAME.display(0, 0, 0, 0, 1, l.clone().add(.6, .4, .6), 100);
-                ParticleEffect.FLAME.display(0, 0, 0, 0, 1, l.clone().add(.5, .6, .5), 100);
-                ParticleEffect.FLAME.display(0, 0, 0, 0, 1, l.clone().add(.4, .8, .4), 100);
+                if (Methods.noPlayers(l.clone(), range)) return;
+                l.getWorld().spawnParticle(Particle.FLAME, l.clone().add(1, 0, 1), 1, 0, 0, 0, 0);
+                l.getWorld().spawnParticle(Particle.FLAME, l.clone().add(.9, .1, .9), 1, 0, 0, 0, 0);
+                l.getWorld().spawnParticle(Particle.FLAME, l.clone().add(.8, .2, .8), 1, 0, 0, 0, 0);
+                l.getWorld().spawnParticle(Particle.FLAME, l.clone().add(.7, .3, .7), 1, 0, 0, 0, 0);
+                l.getWorld().spawnParticle(Particle.FLAME, l.clone().add(.6, .4, .6), 1, 0, 0, 0, 0);
+                l.getWorld().spawnParticle(Particle.FLAME, l.clone().add(.5, .6, .5), 1, 0, 0, 0, 0);
+                l.getWorld().spawnParticle(Particle.FLAME, l.clone().add(.4, .8, .4), 1, 0, 0, 0, 0);
 
-                ParticleEffect.FLAME.display(0, 0, 0, 0, 1, l.clone().add(-1, 0, 1), 100);
-                ParticleEffect.FLAME.display(0, 0, 0, 0, 1, l.clone().add(-.9, .1, .9), 100);
-                ParticleEffect.FLAME.display(0, 0, 0, 0, 1, l.clone().add(-.8, .2, .8), 100);
-                ParticleEffect.FLAME.display(0, 0, 0, 0, 1, l.clone().add(-.7, .3, .7), 100);
-                ParticleEffect.FLAME.display(0, 0, 0, 0, 1, l.clone().add(-.6, .4, .6), 100);
-                ParticleEffect.FLAME.display(0, 0, 0, 0, 1, l.clone().add(-.5, .6, .5), 100);
-                ParticleEffect.FLAME.display(0, 0, 0, 0, 1, l.clone().add(-.4, .8, .4), 100);
+                l.getWorld().spawnParticle(Particle.FLAME, l.clone().add(-1, 0, 1), 1, 0, 0, 0, 0);
+                l.getWorld().spawnParticle(Particle.FLAME, l.clone().add(-.9, .1, .9), 1, 0, 0, 0, 0);
+                l.getWorld().spawnParticle(Particle.FLAME, l.clone().add(-.8, .2, .8), 1, 0, 0, 0, 0);
+                l.getWorld().spawnParticle(Particle.FLAME, l.clone().add(-.7, .3, .7), 1, 0, 0, 0, 0);
+                l.getWorld().spawnParticle(Particle.FLAME, l.clone().add(-.6, .4, .6), 1, 0, 0, 0, 0);
+                l.getWorld().spawnParticle(Particle.FLAME, l.clone().add(-.5, .6, .5), 1, 0, 0, 0, 0);
+                l.getWorld().spawnParticle(Particle.FLAME, l.clone().add(-.4, .8, .4), 1, 0, 0, 0, 0);
 
-                ParticleEffect.FLAME.display(0, 0, 0, 0, 1, l.clone().add(-1, 0, -1), 100);
-                ParticleEffect.FLAME.display(0, 0, 0, 0, 1, l.clone().add(-.9, .1, -.9), 100);
-                ParticleEffect.FLAME.display(0, 0, 0, 0, 1, l.clone().add(-.8, .2, -.8), 100);
-                ParticleEffect.FLAME.display(0, 0, 0, 0, 1, l.clone().add(-.7, .3, -.7), 100);
-                ParticleEffect.FLAME.display(0, 0, 0, 0, 1, l.clone().add(-.6, .4, -.6), 100);
-                ParticleEffect.FLAME.display(0, 0, 0, 0, 1, l.clone().add(-.5, .6, -.5), 100);
-                ParticleEffect.FLAME.display(0, 0, 0, 0, 1, l.clone().add(-.4, .8, -.4), 100);
+                l.getWorld().spawnParticle(Particle.FLAME, l.clone().add(-1, 0, -1), 1, 0, 0, 0, 0);
+                l.getWorld().spawnParticle(Particle.FLAME, l.clone().add(-.9, .1, -.9), 1, 0, 0, 0, 0);
+                l.getWorld().spawnParticle(Particle.FLAME, l.clone().add(-.8, .2, -.8), 1, 0, 0, 0, 0);
+                l.getWorld().spawnParticle(Particle.FLAME, l.clone().add(-.7, .3, -.7), 1, 0, 0, 0, 0);
+                l.getWorld().spawnParticle(Particle.FLAME, l.clone().add(-.6, .4, -.6), 1, 0, 0, 0, 0);
+                l.getWorld().spawnParticle(Particle.FLAME, l.clone().add(-.5, .6, -.5), 1, 0, 0, 0, 0);
+                l.getWorld().spawnParticle(Particle.FLAME, l.clone().add(-.4, .8, -.4), 1, 0, 0, 0, 0);
 
-                ParticleEffect.FLAME.display(0, 0, 0, 0, 1, l.clone().add(1, 0, -1), 100);
-                ParticleEffect.FLAME.display(0, 0, 0, 0, 1, l.clone().add(.9, .1, -.9), 100);
-                ParticleEffect.FLAME.display(0, 0, 0, 0, 1, l.clone().add(.8, .2, -.8), 100);
-                ParticleEffect.FLAME.display(0, 0, 0, 0, 1, l.clone().add(.7, .3, -.7), 100);
-                ParticleEffect.FLAME.display(0, 0, 0, 0, 1, l.clone().add(.6, .4, -.6), 100);
-                ParticleEffect.FLAME.display(0, 0, 0, 0, 1, l.clone().add(.5, .6, -.5), 100);
-                ParticleEffect.FLAME.display(0, 0, 0, 0, 1, l.clone().add(.4, .8, -.4), 100);
+                l.getWorld().spawnParticle(Particle.FLAME, l.clone().add(1, 0, -1), 1, 0, 0, 0, 0);
+                l.getWorld().spawnParticle(Particle.FLAME, l.clone().add(.9, .1, -.9), 1, 0, 0, 0, 0);
+                l.getWorld().spawnParticle(Particle.FLAME, l.clone().add(.8, .2, -.8), 1, 0, 0, 0, 0);
+                l.getWorld().spawnParticle(Particle.FLAME, l.clone().add(.7, .3, -.7), 1, 0, 0, 0, 0);
+                l.getWorld().spawnParticle(Particle.FLAME, l.clone().add(.6, .4, -.6), 1, 0, 0, 0, 0);
+                l.getWorld().spawnParticle(Particle.FLAME, l.clone().add(.5, .6, -.5), 1, 0, 0, 0, 0);
+                l.getWorld().spawnParticle(Particle.FLAME, l.clone().add(.4, .8, -.4), 1, 0, 0, 0, 0);
             }
         }, 0, 5));
     }
@@ -314,12 +313,12 @@ public class PlayParticles {
 
             @Override
             public void run() {
-                if (!Methods.anyPlayers(l.clone(), range)) return;
+                if (Methods.noPlayers(l.clone(), range)) return;
                 l.getWorld().spawnParticle(Particle.SMOKE_LARGE, l, 15, 0.3f, 0, 0.3f);
                 l.getWorld().spawnParticle(Particle.FLAME, Drop(l.clone()), 15, 0, -0.2f, 0);
                 l.getWorld().spawnParticle(Particle.FLAME, Drop(l.clone()), 15, 0, -0.2f, 0);
-                ParticleEffect.FLAME.display(new Vector(0, -.2, 0), 1, Drop(l.clone()), 100);
-                ParticleEffect.FLAME.display(new Vector(0, -.2, 0), 1, Drop(l.clone()), 100);
+                /*ParticleEffect.FLAME.display(new Vector(0, -.2, 0), 1, Drop(l.clone()), 100);
+                ParticleEffect.FLAME.display(new Vector(0, -.2, 0), 1, Drop(l.clone()), 100);*/
             }
         }, 0, 2));
     }
@@ -330,7 +329,7 @@ public class PlayParticles {
 
             @Override
             public void run() {
-                if (!Methods.anyPlayers(l.clone(), range)) return;
+                if (Methods.noPlayers(l.clone(), range)) return;
                 l.getWorld().spawnParticle(Particle.FIREWORKS_SPARK, l, 1, .7f, .7f, .7f, 0);
             }
         }, 0, 2));
@@ -342,7 +341,7 @@ public class PlayParticles {
 
             @Override
             public void run() {
-                if (!Methods.anyPlayers(l.clone(), range)) return;
+                if (Methods.noPlayers(l.clone(), range)) return;
                 l.getWorld().spawnParticle(Particle.FIREWORKS_SPARK, l, 1, Vec(), .1f, Vec(), 1);
             }
         }, 0, 2));
@@ -354,7 +353,7 @@ public class PlayParticles {
 
             @Override
             public void run() {
-                if (!Methods.anyPlayers(l.clone(), range)) return;
+                if (Methods.noPlayers(l.clone(), range)) return;
                 l.getWorld().spawnParticle(Particle.SPELL_MOB, l, 6, .3f, 0, .3f, Methods.randomColor());
                 l.getWorld().spawnParticle(Particle.SPELL_MOB, l, 6, .3f, 0, .3f, Methods.randomColor());
                 l.getWorld().spawnParticle(Particle.SPELL_MOB, l, 6, .3f, 0, .3f, Methods.randomColor());
@@ -370,27 +369,42 @@ public class PlayParticles {
 
             @Override
             public void run() {
-                if (!Methods.anyPlayers(l.clone(), range)) return;
+                if (Methods.noPlayers(l.clone(), range)) return;
                 int i = time;
                 if (time == 15) {
                     l.getWorld().spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, Methods.randomColor());
                     time = -1;
                 }
-                if (time == 14) l.getWorld().spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, Methods.randomColor());
-                if (time == 13) l.getWorld().spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, Methods.randomColor());
-                if (time == 12) l.getWorld().spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, Methods.randomColor());
-                if (time == 11) l.getWorld().spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, Methods.randomColor());
-                if (time == 10) l.getWorld().spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, Methods.randomColor());
-                if (time == 9) l.getWorld().spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, Methods.randomColor());
-                if (time == 8) l.getWorld().spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, Methods.randomColor());
-                if (time == 7) l.getWorld().spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, Methods.randomColor());
-                if (time == 6) l.getWorld().spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, Methods.randomColor());
-                if (time == 5) l.getWorld().spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, Methods.randomColor());
-                if (time == 4) l.getWorld().spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, Methods.randomColor());
-                if (time == 3) l.getWorld().spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, Methods.randomColor());
-                if (time == 2) l.getWorld().spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, Methods.randomColor());
-                if (time == 1) l.getWorld().spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, Methods.randomColor());
-                if (time == 0) l.getWorld().spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, Methods.randomColor());
+                if (time == 14)
+                    l.getWorld().spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, Methods.randomColor());
+                if (time == 13)
+                    l.getWorld().spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, Methods.randomColor());
+                if (time == 12)
+                    l.getWorld().spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, Methods.randomColor());
+                if (time == 11)
+                    l.getWorld().spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, Methods.randomColor());
+                if (time == 10)
+                    l.getWorld().spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, Methods.randomColor());
+                if (time == 9)
+                    l.getWorld().spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, Methods.randomColor());
+                if (time == 8)
+                    l.getWorld().spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, Methods.randomColor());
+                if (time == 7)
+                    l.getWorld().spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, Methods.randomColor());
+                if (time == 6)
+                    l.getWorld().spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, Methods.randomColor());
+                if (time == 5)
+                    l.getWorld().spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, Methods.randomColor());
+                if (time == 4)
+                    l.getWorld().spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, Methods.randomColor());
+                if (time == 3)
+                    l.getWorld().spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, Methods.randomColor());
+                if (time == 2)
+                    l.getWorld().spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, Methods.randomColor());
+                if (time == 1)
+                    l.getWorld().spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, Methods.randomColor());
+                if (time == 0)
+                    l.getWorld().spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, Methods.randomColor());
                 time++;
                 i++;
             }
@@ -404,39 +418,63 @@ public class PlayParticles {
 
             @Override
             public void run() {
-                if (!Methods.anyPlayers(l.clone(), range)) return;
+                if (Methods.noPlayers(l.clone(), range)) return;
                 if (time == 15) l.getWorld().spawnParticle(Particle.CRIT_MAGIC, l.clone().add(0, .8, 0), 5, 0, 0, 0, 0);
-                if (time == 0) l.getWorld().spawnParticle(Particle.CRIT_MAGIC, l.clone().add(0, .75, .43), 5, 0, 0, 0, 0);
-                if (time == 1) l.getWorld().spawnParticle(Particle.CRIT_MAGIC, l.clone().add(0, .65, .65), 5, 0, 0, 0, 0);
-                if (time == 2) l.getWorld().spawnParticle(Particle.CRIT_MAGIC, l.clone().add(0, .43, .75), 5, 0, 0, 0, 0);
+                if (time == 0)
+                    l.getWorld().spawnParticle(Particle.CRIT_MAGIC, l.clone().add(0, .75, .43), 5, 0, 0, 0, 0);
+                if (time == 1)
+                    l.getWorld().spawnParticle(Particle.CRIT_MAGIC, l.clone().add(0, .65, .65), 5, 0, 0, 0, 0);
+                if (time == 2)
+                    l.getWorld().spawnParticle(Particle.CRIT_MAGIC, l.clone().add(0, .43, .75), 5, 0, 0, 0, 0);
                 if (time == 3) l.getWorld().spawnParticle(Particle.CRIT_MAGIC, l.clone().add(0, 0, .8), 5, 0, 0, 0, 0);
-                if (time == 4) l.getWorld().spawnParticle(Particle.CRIT_MAGIC, l.clone().add(0, -.43, .75), 5, 0, 0, 0, 0);
-                if (time == 5) l.getWorld().spawnParticle(Particle.CRIT_MAGIC, l.clone().add(0, -.65, .65), 5, 0, 0, 0, 0);
-                if (time == 86) l.getWorld().spawnParticle(Particle.CRIT_MAGIC, l.clone().add(0, -.75, .43), 5, 0, 0, 0, 0);
+                if (time == 4)
+                    l.getWorld().spawnParticle(Particle.CRIT_MAGIC, l.clone().add(0, -.43, .75), 5, 0, 0, 0, 0);
+                if (time == 5)
+                    l.getWorld().spawnParticle(Particle.CRIT_MAGIC, l.clone().add(0, -.65, .65), 5, 0, 0, 0, 0);
+                if (time == 86)
+                    l.getWorld().spawnParticle(Particle.CRIT_MAGIC, l.clone().add(0, -.75, .43), 5, 0, 0, 0, 0);
                 if (time == 7) l.getWorld().spawnParticle(Particle.CRIT_MAGIC, l.clone().add(0, -.8, 0), 5, 0, 0, 0, 0);
-                if (time == 8) l.getWorld().spawnParticle(Particle.CRIT_MAGIC, l.clone().add(0, -.75, -.43), 5, 0, 0, 0, 0);
-                if (time == 9) l.getWorld().spawnParticle(Particle.CRIT_MAGIC, l.clone().add(0, -.65, -.65), 5, 0, 0, 0, 0);
-                if (time == 10) l.getWorld().spawnParticle(Particle.CRIT_MAGIC, l.clone().add(0, -.43, -.75), 5, 0, 0, 0, 0);
-                if (time == 11) l.getWorld().spawnParticle(Particle.CRIT_MAGIC, l.clone().add(0, 0, -.8), 5, 0, 0, 0, 0);
-                if (time == 12) l.getWorld().spawnParticle(Particle.CRIT_MAGIC, l.clone().add(0, .43, -.75), 5, 0, 0, 0, 0);
-                if (time == 13) l.getWorld().spawnParticle(Particle.CRIT_MAGIC, l.clone().add(0, .65, -.65), 5, 0, 0, 0, 0);
-                if (time == 14) l.getWorld().spawnParticle(Particle.CRIT_MAGIC, l.clone().add(0, .75, -.43), 5, 0, 0, 0, 0);
+                if (time == 8)
+                    l.getWorld().spawnParticle(Particle.CRIT_MAGIC, l.clone().add(0, -.75, -.43), 5, 0, 0, 0, 0);
+                if (time == 9)
+                    l.getWorld().spawnParticle(Particle.CRIT_MAGIC, l.clone().add(0, -.65, -.65), 5, 0, 0, 0, 0);
+                if (time == 10)
+                    l.getWorld().spawnParticle(Particle.CRIT_MAGIC, l.clone().add(0, -.43, -.75), 5, 0, 0, 0, 0);
+                if (time == 11)
+                    l.getWorld().spawnParticle(Particle.CRIT_MAGIC, l.clone().add(0, 0, -.8), 5, 0, 0, 0, 0);
+                if (time == 12)
+                    l.getWorld().spawnParticle(Particle.CRIT_MAGIC, l.clone().add(0, .43, -.75), 5, 0, 0, 0, 0);
+                if (time == 13)
+                    l.getWorld().spawnParticle(Particle.CRIT_MAGIC, l.clone().add(0, .65, -.65), 5, 0, 0, 0, 0);
+                if (time == 14)
+                    l.getWorld().spawnParticle(Particle.CRIT_MAGIC, l.clone().add(0, .75, -.43), 5, 0, 0, 0, 0);
 
                 if (time == 15) l.getWorld().spawnParticle(Particle.CRIT_MAGIC, l.clone().add(.8, 0, 0), 5, 0, 0, 0, 0);
-                if (time == 14) l.getWorld().spawnParticle(Particle.CRIT_MAGIC, l.clone().add(.75, 0, .43), 5, 0, 0, 0, 0);
-                if (time == 13) l.getWorld().spawnParticle(Particle.CRIT_MAGIC, l.clone().add(.65, 0, .65), 5, 0, 0, 0, 0);
-                if (time == 12) l.getWorld().spawnParticle(Particle.CRIT_MAGIC, l.clone().add(.43, 0, .75), 5, 0, 0, 0, 0);
+                if (time == 14)
+                    l.getWorld().spawnParticle(Particle.CRIT_MAGIC, l.clone().add(.75, 0, .43), 5, 0, 0, 0, 0);
+                if (time == 13)
+                    l.getWorld().spawnParticle(Particle.CRIT_MAGIC, l.clone().add(.65, 0, .65), 5, 0, 0, 0, 0);
+                if (time == 12)
+                    l.getWorld().spawnParticle(Particle.CRIT_MAGIC, l.clone().add(.43, 0, .75), 5, 0, 0, 0, 0);
                 if (time == 11) l.getWorld().spawnParticle(Particle.CRIT_MAGIC, l.clone().add(0, 0, .8), 5, 0, 0, 0, 0);
-                if (time == 10) l.getWorld().spawnParticle(Particle.CRIT_MAGIC, l.clone().add(-.43, 0, .75), 5, 0, 0, 0, 0);
-                if (time == 9) l.getWorld().spawnParticle(Particle.CRIT_MAGIC, l.clone().add(-.65, 0, .65), 5, 0, 0, 0, 0);
-                if (time == 8) l.getWorld().spawnParticle(Particle.CRIT_MAGIC, l.clone().add(-.75, 0, .43), 5, 0, 0, 0, 0);
+                if (time == 10)
+                    l.getWorld().spawnParticle(Particle.CRIT_MAGIC, l.clone().add(-.43, 0, .75), 5, 0, 0, 0, 0);
+                if (time == 9)
+                    l.getWorld().spawnParticle(Particle.CRIT_MAGIC, l.clone().add(-.65, 0, .65), 5, 0, 0, 0, 0);
+                if (time == 8)
+                    l.getWorld().spawnParticle(Particle.CRIT_MAGIC, l.clone().add(-.75, 0, .43), 5, 0, 0, 0, 0);
                 if (time == 7) l.getWorld().spawnParticle(Particle.CRIT_MAGIC, l.clone().add(-.8, 0, 0), 5, 0, 0, 0, 0);
-                if (time == 6) l.getWorld().spawnParticle(Particle.CRIT_MAGIC, l.clone().add(-.75, 0, -.43), 5, 0, 0, 0, 0);
-                if (time == 5) l.getWorld().spawnParticle(Particle.CRIT_MAGIC, l.clone().add(-.65, 0, -.65), 5, 0, 0, 0, 0);
-                if (time == 4) l.getWorld().spawnParticle(Particle.CRIT_MAGIC, l.clone().add(-.43, 0, -.75), 5, 0, 0, 0, 0);
+                if (time == 6)
+                    l.getWorld().spawnParticle(Particle.CRIT_MAGIC, l.clone().add(-.75, 0, -.43), 5, 0, 0, 0, 0);
+                if (time == 5)
+                    l.getWorld().spawnParticle(Particle.CRIT_MAGIC, l.clone().add(-.65, 0, -.65), 5, 0, 0, 0, 0);
+                if (time == 4)
+                    l.getWorld().spawnParticle(Particle.CRIT_MAGIC, l.clone().add(-.43, 0, -.75), 5, 0, 0, 0, 0);
                 if (time == 3) l.getWorld().spawnParticle(Particle.CRIT_MAGIC, l.clone().add(0, 0, -.8), 5, 0, 0, 0, 0);
-                if (time == 2) l.getWorld().spawnParticle(Particle.CRIT_MAGIC, l.clone().add(.43, 0, -.75), 5, 0, 0, 0, 0);
-                if (time == 1) l.getWorld().spawnParticle(Particle.CRIT_MAGIC, l.clone().add(.65, 0, -.65), 5, 0, 0, 0, 0);
+                if (time == 2)
+                    l.getWorld().spawnParticle(Particle.CRIT_MAGIC, l.clone().add(.43, 0, -.75), 5, 0, 0, 0, 0);
+                if (time == 1)
+                    l.getWorld().spawnParticle(Particle.CRIT_MAGIC, l.clone().add(.65, 0, -.65), 5, 0, 0, 0, 0);
                 if (time == 0) {
                     l.getWorld().spawnParticle(Particle.CRIT_MAGIC, l.clone().add(.75, 0, -.43), 5, 0, 0, 0, 0);
                     time = 16;
@@ -452,7 +490,7 @@ public class PlayParticles {
 
             @Override
             public void run() {
-                if (!Methods.anyPlayers(l.clone(), range)) return;
+                if (Methods.noPlayers(l.clone(), range)) return;
                 l.getWorld().spawnParticle(Particle.CLOUD, l, 15, .3f, 0, .3f, 0);
                 l.getWorld().spawnParticle(Particle.FIREWORKS_SPARK, l, 2, .3f, 0, .3f, 0);
             }
@@ -465,7 +503,7 @@ public class PlayParticles {
 
             @Override
             public void run() {
-                if (!Methods.anyPlayers(l.clone(), range)) return;
+                if (Methods.noPlayers(l.clone(), range)) return;
                 l.getWorld().spawnParticle(Particle.FLAME, l, 1, Vec(), .1f, Vec(), 1.5f);
                 l.getWorld().spawnParticle(Particle.FLAME, l, 1, Vec(), .1f, Vec(), 1.5f);
                 l.getWorld().spawnParticle(Particle.FLAME, l, 1, Vec(), .1f, Vec(), 1.5f);
@@ -479,8 +517,8 @@ public class PlayParticles {
 
             @Override
             public void run() {
-                if (!Methods.anyPlayers(l.clone(), range)) return;
-                ParticleEffect.FOOTSTEP.display(1, 0, 1, 0, 3, l, 100);
+                if (Methods.noPlayers(l.clone(), range)) return;
+                l.getWorld().spawnParticle(Particle.TOWN_AURA, l, 3, 1, 0, 1, 0);
             }
         }, 0, 20));
     }
@@ -491,8 +529,8 @@ public class PlayParticles {
 
             @Override
             public void run() {
-                if (!Methods.anyPlayers(l.clone(), range)) return;
-                ParticleEffect.VILLAGER_HAPPY.display((float) .5, (float) .5, (float) .5, 0, 10, l, 100);
+                if (Methods.noPlayers(l.clone(), range)) return;
+                loc.getWorld().spawnParticle(Particle.VILLAGER_HAPPY, l, 10, .5f, .5f, .5f, 0);
             }
         }, 0, 5));
     }
@@ -503,8 +541,8 @@ public class PlayParticles {
 
             @Override
             public void run() {
-                if (!Methods.anyPlayers(l.clone(), range)) return;
-                ParticleEffect.VILLAGER_ANGRY.display((float) .5, (float) .5, (float) .5, 0, 5, l, 100);
+                if (Methods.noPlayers(l.clone(), range)) return;
+                l.getWorld().spawnParticle(Particle.VILLAGER_ANGRY, l, 5, .5f, .5f, .5f, 0);
             }
         }, 0, 10));
     }
@@ -515,8 +553,8 @@ public class PlayParticles {
 
             @Override
             public void run() {
-                if (!Methods.anyPlayers(l.clone(), range)) return;
-                ParticleEffect.FLAME.display((float) .5, (float) .5, (float) .5, 0, 15, l, 100);
+                if (Methods.noPlayers(l.clone(), range)) return;
+                l.getWorld().spawnParticle(Particle.FLAME, l, 15, .5f, .5f, .5f, 0);
             }
         }, 0, 8));
     }
@@ -527,13 +565,13 @@ public class PlayParticles {
 
             @Override
             public void run() {
-                if (!Methods.anyPlayers(l.clone(), range)) return;
-                ParticleEffect.WATER_DROP.display(0, 0, 0, 0, 10, l.clone().add(0, .1, 0), 100);
-                ParticleEffect.WATER_DROP.display(0, 0, 0, 0, 10, l.clone().add(0, .5, 0), 100);
-                ParticleEffect.WATER_DROP.display(0, 0, 0, 0, 10, l.clone().add(.2, .3, .2), 100);
-                ParticleEffect.WATER_DROP.display(0, 0, 0, 0, 10, l.clone().add(-.2, .3, .2), 100);
-                ParticleEffect.WATER_DROP.display(0, 0, 0, 0, 10, l.clone().add(.2, .3, -.2), 100);
-                ParticleEffect.WATER_DROP.display(0, 0, 0, 0, 10, l.clone().add(-.2, .3, -.2), 100);
+                if (Methods.noPlayers(l.clone(), range)) return;
+                loc.getWorld().spawnParticle(Particle.WATER_DROP, l.clone().add(0, .1, 0), 10, 0, 0, 0, 0);
+                loc.getWorld().spawnParticle(Particle.WATER_DROP, l.clone().add(0, .5, 0), 10, 0, 0, 0, 0);
+                loc.getWorld().spawnParticle(Particle.WATER_DROP, l.clone().add(.2, .3, .2), 10, 0, 0, 0, 0);
+                loc.getWorld().spawnParticle(Particle.WATER_DROP, l.clone().add(-.2, .3, .2), 10, 0, 0, 0, 0);
+                loc.getWorld().spawnParticle(Particle.WATER_DROP, l.clone().add(.2, .3, -.2), 10, 0, 0, 0, 0);
+                loc.getWorld().spawnParticle(Particle.WATER_DROP, l.clone().add(-.2, .3, -.2), 10, 0, 0, 0, 0);
             }
         }, 0, 2));
     }
@@ -544,7 +582,7 @@ public class PlayParticles {
 
             @Override
             public void run() {
-                if (!Methods.anyPlayers(l.clone(), range)) return;
+                if (Methods.noPlayers(l.clone(), range)) return;
                 loc.getWorld().playEffect(l, Effect.ENDER_SIGNAL, 1);
                 loc.getWorld().playEffect(l, Effect.ENDER_SIGNAL, 1);
                 loc.getWorld().playEffect(l, Effect.ENDER_SIGNAL, 1);
@@ -559,8 +597,13 @@ public class PlayParticles {
 
             @Override
             public void run() {
-                if (!Methods.anyPlayers(l.clone(), range)) return;
-                ParticleEffect.REDSTONE.display((float) .5, (float) .5, (float) .5, 1, 10, l, 100);
+                if (Methods.noPlayers(l.clone(), range)) return;
+                Random rand = new Random();
+                int r = rand.nextInt(255);
+                int g = rand.nextInt(255);
+                int b = rand.nextInt(255);
+                Particle.DustOptions dustOptions = new Particle.DustOptions(Color.fromRGB(r, g, b), 1);
+                l.getWorld().spawnParticle(Particle.REDSTONE, l, 10, .5f, .5f, .5f, 1, dustOptions);
             }
         }, 0, 5));
     }
@@ -571,8 +614,8 @@ public class PlayParticles {
 
             @Override
             public void run() {
-                if (!Methods.anyPlayers(l.clone(), range)) return;
-                ParticleEffect.SNOW_SHOVEL.display(0, 0, 0, (float) .2, 40, l, 100);
+                if (Methods.noPlayers(l.clone(), range)) return;
+                l.getWorld().spawnParticle(Particle.SNOW_SHOVEL, l, 40, 0, 0, 0, .2f);
             }
         }, 0, 2));
     }
@@ -583,25 +626,25 @@ public class PlayParticles {
 
             @Override
             public void run() {
-                if (!Methods.anyPlayers(l.clone(), range)) return;
+                if (Methods.noPlayers(l.clone(), range)) return;
                 try {
                     for (int i = 0; i < 3; i++) {
-                        ParticleEffects.REDSTONE.sendColor(Bukkit.getOnlinePlayers(), l.clone().add(.5, 0, 0), Color.fromRGB(255, 255, 0));
-                        ParticleEffects.REDSTONE.sendColor(Bukkit.getOnlinePlayers(), l.clone().add(.45, 0, .13), Color.fromRGB(255, 255, 0));
-                        ParticleEffects.REDSTONE.sendColor(Bukkit.getOnlinePlayers(), l.clone().add(.35, 0, .35), Color.fromRGB(255, 255, 0));
-                        ParticleEffects.REDSTONE.sendColor(Bukkit.getOnlinePlayers(), l.clone().add(.13, 0, .45), Color.fromRGB(255, 255, 0));
-                        ParticleEffects.REDSTONE.sendColor(Bukkit.getOnlinePlayers(), l.clone().add(0, 0, .5), Color.fromRGB(255, 255, 0));
-                        ParticleEffects.REDSTONE.sendColor(Bukkit.getOnlinePlayers(), l.clone().add(-.13, 0, .45), Color.fromRGB(255, 255, 0));
-                        ParticleEffects.REDSTONE.sendColor(Bukkit.getOnlinePlayers(), l.clone().add(-.35, 0, .35), Color.fromRGB(255, 255, 0));
-                        ParticleEffects.REDSTONE.sendColor(Bukkit.getOnlinePlayers(), l.clone().add(-.45, 0, .13), Color.fromRGB(255, 255, 0));
-                        ParticleEffects.REDSTONE.sendColor(Bukkit.getOnlinePlayers(), l.clone().add(-.5, 0, 0), Color.fromRGB(255, 255, 0));
-                        ParticleEffects.REDSTONE.sendColor(Bukkit.getOnlinePlayers(), l.clone().add(-.45, 0, -.13), Color.fromRGB(255, 255, 0));
-                        ParticleEffects.REDSTONE.sendColor(Bukkit.getOnlinePlayers(), l.clone().add(-.35, 0, -.35), Color.fromRGB(255, 255, 0));
-                        ParticleEffects.REDSTONE.sendColor(Bukkit.getOnlinePlayers(), l.clone().add(-.13, 0, -.45), Color.fromRGB(255, 255, 0));
-                        ParticleEffects.REDSTONE.sendColor(Bukkit.getOnlinePlayers(), l.clone().add(0, 0, -.5), Color.fromRGB(255, 255, 0));
-                        ParticleEffects.REDSTONE.sendColor(Bukkit.getOnlinePlayers(), l.clone().add(.13, 0, -.45), Color.fromRGB(255, 255, 0));
-                        ParticleEffects.REDSTONE.sendColor(Bukkit.getOnlinePlayers(), l.clone().add(.35, 0, -.35), Color.fromRGB(255, 255, 0));
-                        ParticleEffects.REDSTONE.sendColor(Bukkit.getOnlinePlayers(), l.clone().add(.45, 0, -.13), Color.fromRGB(255, 255, 0));
+                        l.getWorld().spawnParticle(Particle.REDSTONE, l.clone().add(.5, 0, 0), 1, 0, 0, 0, 1, new Particle.DustOptions(Color.fromRGB(255, 255, 0), 1));
+                        l.getWorld().spawnParticle(Particle.REDSTONE, l.clone().add(.45, 0, .13), 1, 0, 0, 0, 1, new Particle.DustOptions(Color.fromRGB(255, 255, 0), 1));
+                        l.getWorld().spawnParticle(Particle.REDSTONE, l.clone().add(.35, 0, .35), 1, 0, 0, 0, 1, new Particle.DustOptions(Color.fromRGB(255, 255, 0), 1));
+                        l.getWorld().spawnParticle(Particle.REDSTONE, l.clone().add(.13, 0, .45), 1, 0, 0, 0, 1, new Particle.DustOptions(Color.fromRGB(255, 255, 0), 1));
+                        l.getWorld().spawnParticle(Particle.REDSTONE, l.clone().add(0, 0, .5), 1, 0, 0, 0, 1, new Particle.DustOptions(Color.fromRGB(255, 255, 0), 1));
+                        l.getWorld().spawnParticle(Particle.REDSTONE, l.clone().add(-.13, 0, .45), 1, 0, 0, 0, 1, new Particle.DustOptions(Color.fromRGB(255, 255, 0), 1));
+                        l.getWorld().spawnParticle(Particle.REDSTONE, l.clone().add(-.35, 0, .35), 1, 0, 0, 0, 1, new Particle.DustOptions(Color.fromRGB(255, 255, 0), 1));
+                        l.getWorld().spawnParticle(Particle.REDSTONE, l.clone().add(-.45, 0, .13), 1, 0, 0, 0, 1, new Particle.DustOptions(Color.fromRGB(255, 255, 0), 1));
+                        l.getWorld().spawnParticle(Particle.REDSTONE, l.clone().add(-.5, 0, 0), 1, 0, 0, 0, 1, new Particle.DustOptions(Color.fromRGB(255, 255, 0), 1));
+                        l.getWorld().spawnParticle(Particle.REDSTONE, l.clone().add(-.45, 0, -.13), 1, 0, 0, 0, 1, new Particle.DustOptions(Color.fromRGB(255, 255, 0), 1));
+                        l.getWorld().spawnParticle(Particle.REDSTONE, l.clone().add(-.35, 0, -.35), 1, 0, 0, 0, 1, new Particle.DustOptions(Color.fromRGB(255, 255, 0), 1));
+                        l.getWorld().spawnParticle(Particle.REDSTONE, l.clone().add(-.13, 0, -.45), 1, 0, 0, 0, 1, new Particle.DustOptions(Color.fromRGB(255, 255, 0), 1));
+                        l.getWorld().spawnParticle(Particle.REDSTONE, l.clone().add(0, 0, -.5), 1, 0, 0, 0, 1, new Particle.DustOptions(Color.fromRGB(255, 255, 0), 1));
+                        l.getWorld().spawnParticle(Particle.REDSTONE, l.clone().add(.13, 0, -.45), 1, 0, 0, 0, 1, new Particle.DustOptions(Color.fromRGB(255, 255, 0), 1));
+                        l.getWorld().spawnParticle(Particle.REDSTONE, l.clone().add(.35, 0, -.35), 1, 0, 0, 0, 1, new Particle.DustOptions(Color.fromRGB(255, 255, 0), 1));
+                        l.getWorld().spawnParticle(Particle.REDSTONE, l.clone().add(.45, 0, -.13), 1, 0, 0, 0, 1, new Particle.DustOptions(Color.fromRGB(255, 255, 0), 1));
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -610,10 +653,10 @@ public class PlayParticles {
         }, 0, 5));
     }
 
-    public static ArrayList<Location> getCircle(Location center, double radius, int amount) {
+    private static ArrayList<Location> getCircle(Location center, double radius, int amount) {
         World world = center.getWorld();
         double increment = (2 * Math.PI) / amount;
-        ArrayList<Location> locations = new ArrayList<Location>();
+        ArrayList<Location> locations = new ArrayList<>();
         for (int i = 0; i < amount; i++) {
             double angle = i * increment;
             double x = center.getX() + (radius * Math.cos(angle));
@@ -623,10 +666,10 @@ public class PlayParticles {
         return locations;
     }
 
-    public static ArrayList<Location> getCircleReverse(Location center, double radius, int amount) {
+    private static ArrayList<Location> getCircleReverse(Location center, double radius, int amount) {
         World world = center.getWorld();
         double increment = (2 * Math.PI) / amount;
-        ArrayList<Location> locations = new ArrayList<Location>();
+        ArrayList<Location> locations = new ArrayList<>();
         for (int i = 0; i < amount; i++) {
             double angle = i * increment;
             double x = center.getX() - (radius * Math.cos(angle));
@@ -652,33 +695,33 @@ public class PlayParticles {
 
             @Override
             public void run() {
-                if (!Methods.anyPlayers(l1.clone(), 20)) return;
+                if (Methods.noPlayers(l1.clone(), 20)) return;
                 try {
                     for (int i = 0; i < 3; i++) {
                         Color red = Color.RED;
                         Color white = Color.fromRGB(255, 255, 255);
                         for (Location loc : getCircle(l1, .5, 20))
-                            ParticleEffects.REDSTONE.sendColor(Bukkit.getOnlinePlayers(), loc, white);
+                            loc.getWorld().spawnParticle(Particle.REDSTONE, loc, 1, 0, 0, 0, 0, new Particle.DustOptions(white, 1));
                         for (Location loc : getCircle(l2, .4, 15))
-                            ParticleEffects.REDSTONE.sendColor(Bukkit.getOnlinePlayers(), loc, red);
+                            loc.getWorld().spawnParticle(Particle.REDSTONE, loc, 1, 0, 0, 0, 0, new Particle.DustOptions(red, 1));
                         for (Location loc : getCircle(l3, .35, 15))
-                            ParticleEffects.REDSTONE.sendColor(Bukkit.getOnlinePlayers(), loc, red);
+                            loc.getWorld().spawnParticle(Particle.REDSTONE, loc, 1, 0, 0, 0, 0, new Particle.DustOptions(red, 1));
                         for (Location loc : getCircle(l4, .3, 15))
-                            ParticleEffects.REDSTONE.sendColor(Bukkit.getOnlinePlayers(), loc, red);
+                            loc.getWorld().spawnParticle(Particle.REDSTONE, loc, 1, 0, 0, 0, 0, new Particle.DustOptions(red, 1));
                         for (Location loc : getCircle(l5, .2, 15))
-                            ParticleEffects.REDSTONE.sendColor(Bukkit.getOnlinePlayers(), loc, red);
+                            loc.getWorld().spawnParticle(Particle.REDSTONE, loc, 1, 0, 0, 0, 0, new Particle.DustOptions(red, 1));
                         for (Location loc : getCircle(l6, .15, 15))
-                            ParticleEffects.REDSTONE.sendColor(Bukkit.getOnlinePlayers(), loc, red);
+                            loc.getWorld().spawnParticle(Particle.REDSTONE, loc, 1, 0, 0, 0, 0, new Particle.DustOptions(red, 1));
                         for (Location loc : getCircle(l7, .1, 15))
-                            ParticleEffects.REDSTONE.sendColor(Bukkit.getOnlinePlayers(), loc, red);
+                            loc.getWorld().spawnParticle(Particle.REDSTONE, loc, 1, 0, 0, 0, 0, new Particle.DustOptions(red, 1));
                         for (Location loc : getCircle(l8, .05, 10))
-                            ParticleEffects.REDSTONE.sendColor(Bukkit.getOnlinePlayers(), loc, red);
+                            loc.getWorld().spawnParticle(Particle.REDSTONE, loc, 1, 0, 0, 0, 0, new Particle.DustOptions(red, 1));
                         for (Location loc : getCircle(l9, .05, 10))
-                            ParticleEffects.REDSTONE.sendColor(Bukkit.getOnlinePlayers(), loc, red);
+                            loc.getWorld().spawnParticle(Particle.REDSTONE, loc, 1, 0, 0, 0, 0, new Particle.DustOptions(red, 1));
                         for (Location loc : getCircle(l10, .05, 15))
-                            ParticleEffects.REDSTONE.sendColor(Bukkit.getOnlinePlayers(), loc, white);
+                            loc.getWorld().spawnParticle(Particle.REDSTONE, loc, 1, 0, 0, 0, 0, new Particle.DustOptions(white, 1));
                         for (Location loc : getCircle(l11, .05, 15))
-                            ParticleEffects.REDSTONE.sendColor(Bukkit.getOnlinePlayers(), loc, white);
+                            loc.getWorld().spawnParticle(Particle.REDSTONE, loc, 1, 0, 0, 0, 0, new Particle.DustOptions(white, 1));
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -688,7 +731,7 @@ public class PlayParticles {
     }
 
     public static void playSoulWell(final Location loc, final String L) {
-        final HashMap<Integer, Integer> S = new HashMap<Integer, Integer>();
+        final HashMap<Integer, Integer> S = new HashMap<>();
         Blocks.put(L, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
             Location l = loc.clone().add(.5, 0, .5);
             Random r = new Random();
@@ -704,8 +747,8 @@ public class PlayParticles {
                     public void run() {
                         ArrayList<Location> locs = getCircle(l, 2, 50);
                         ArrayList<Location> locs2 = getCircleReverse(l, 2, 50);
-                        ParticleEffect.SPELL_WITCH.display(0, 0, 0, 0, 1, locs.get(i), 100);
-                        ParticleEffect.SPELL_WITCH.display(0, 0, 0, 0, 1, locs2.get(i), 100);
+                        l.getWorld().spawnParticle(Particle.SPELL_WITCH, locs.get(i), 1, 0, 0, 0, 0);
+                        l.getWorld().spawnParticle(Particle.SPELL_WITCH, locs2.get(i), 1, 0, 0, 0, 0);
                         i++;
                         f++;
                         l.add(0, .035, 0);
@@ -720,14 +763,14 @@ public class PlayParticles {
 
             @Override
             public void run() {
-                if (!Methods.anyPlayers(l.clone(), range)) return;
+                if (Methods.noPlayers(l.clone(), range)) return;
                 startSoulWell(l, L);
             }
         }, 0, 16));
     }
 
     public static void playBigSoulWell(final Location loc, final String L) {
-        final HashMap<Integer, Integer> S = new HashMap<Integer, Integer>();
+        final HashMap<Integer, Integer> S = new HashMap<>();
         Blocks.put(L, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
             Location l = loc.clone().add(.5, 0, .5);
             Random r = new Random();
@@ -743,8 +786,8 @@ public class PlayParticles {
                     public void run() {
                         ArrayList<Location> locs = getCircle(l, 3.5, 75);
                         ArrayList<Location> locs2 = getCircleReverse(l, 3.5, 75);
-                        ParticleEffect.SPELL_WITCH.display(0, 0, 0, 0, 1, locs.get(i), 100);
-                        ParticleEffect.SPELL_WITCH.display(0, 0, 0, 0, 1, locs2.get(i), 100);
+                        l.getWorld().spawnParticle(Particle.SPELL_WITCH, locs.get(i), 1, 0, 0, 0, 0);
+                        l.getWorld().spawnParticle(Particle.SPELL_WITCH, locs2.get(i), 1, 0, 0, 0, 0);
                         i++;
                         f++;
                         l.add(0, .04, 0);
@@ -759,16 +802,16 @@ public class PlayParticles {
 
             @Override
             public void run() {
-                if (!Methods.anyPlayers(l.clone(), range)) return;
+                if (Methods.noPlayers(l.clone(), range)) return;
                 startBigSoulWell(l, L);
             }
         }, 0, 25));
     }
 
-    public static HashMap<String, Integer> R = new HashMap<String, Integer>();
+    public static HashMap<String, Integer> R = new HashMap<>();
 
     public static void playFlameWheel(final Location loc, final String L) {
-        final HashMap<Integer, Integer> S = new HashMap<Integer, Integer>();
+        final HashMap<Integer, Integer> S = new HashMap<>();
         Blocks.put(L, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
             Location l = loc.clone().add(.5, .1, .5);
             Random r = new Random();
@@ -791,7 +834,7 @@ public class PlayParticles {
                         Vector v3 = locs.get(o).toVector().subtract(l.toVector()).normalize();
                         Vector v4 = locs2.get(o).toVector().subtract(l.toVector()).normalize();
 
-                        l.getWorld().spawnParticle(Particle.FLAME, locs.get(i), 1, 0, 0, 0, speed, Particle.FLAME.getDataType());
+                        l.getWorld().spawnParticle(Particle.FLAME, locs.get(i), 1, 0, 0, 0, speed);
                         l.getWorld().spawnParticle(Particle.FLAME, locs2.get(i), 1, 0, 0, 0, speed);
                         l.getWorld().spawnParticle(Particle.FLAME, locs.get(o), 1, 0, 0, 0, speed);
                         l.getWorld().spawnParticle(Particle.FLAME, locs2.get(o), 1, 0, 0, 0, speed);
@@ -814,7 +857,7 @@ public class PlayParticles {
 
             @Override
             public void run() {
-                if (!Methods.anyPlayers(l.clone(), range)) return;
+                if (Methods.noPlayers(l.clone(), range)) return;
                 startFlameWheel(l.clone(), L);
             }
         }, 0, 25));
@@ -823,17 +866,18 @@ public class PlayParticles {
 
             @Override
             public void run() {
-                if (!Methods.anyPlayers(l.clone(), range)) return;
+                if (Methods.noPlayers(l.clone(), range)) return;
                 ArrayList<Location> locs = getCircle(l, 3.5, 75);
-                for (Location i : locs)
-                    ParticleEffect.FLAME.display(0, 0, 0, 0, 1, i, 100);
+                for (Location i : locs) {
+                    //ParticleEffect.FLAME.display(0, 0, 0, 0, 1, i, 100);
+                }
             }
         }, 0, 10));
 
     }
 
     public static void playWitchTornado(final Location loc, final String L) {
-        final HashMap<Integer, Integer> S = new HashMap<Integer, Integer>();
+        final HashMap<Integer, Integer> S = new HashMap<>();
         Blocks.put(L, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
             Location l = loc.clone().add(.5, 0, .5);
             Random r = new Random();
@@ -850,7 +894,7 @@ public class PlayParticles {
                     @Override
                     public void run() {
                         ArrayList<Location> locs = getCircle(l, r, 50);
-                        ParticleEffect.SPELL_WITCH.display(0, 0, 0, 0, 1, locs.get(i), 100);
+                        l.getWorld().spawnParticle(Particle.SPELL_WITCH, locs.get(1), 1, 0, 0, 0, 1);
                         i++;
                         e++;
                         f++;
@@ -870,14 +914,14 @@ public class PlayParticles {
 
             @Override
             public void run() {
-                if (!Methods.anyPlayers(l.clone(), range)) return;
+                if (Methods.noPlayers(l.clone(), range)) return;
                 startWitchTornado(l, L);
             }
         }, 0, 30));
     }
 
     public static void playLoveTornado(final Location loc, final String L) {
-        final HashMap<Integer, Integer> S = new HashMap<Integer, Integer>();
+        final HashMap<Integer, Integer> S = new HashMap<>();
         Blocks.put(L, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
             Location l = loc.clone().add(.5, 0, .5);
             Random r = new Random();
@@ -894,7 +938,7 @@ public class PlayParticles {
                     @Override
                     public void run() {
                         ArrayList<Location> locs = getCircle(l, r, 50);
-                        ParticleEffect.HEART.display(0, 0, 0, 0, 1, locs.get(i), 100);
+                        l.getWorld().spawnParticle(Particle.HEART, locs.get(1), 1, 0, 0, 0, 1);
                         i++;
                         e++;
                         f++;
@@ -914,14 +958,14 @@ public class PlayParticles {
 
             @Override
             public void run() {
-                if (!Methods.anyPlayers(l.clone(), range)) return;
+                if (Methods.noPlayers(l.clone(), range)) return;
                 startLoveTornado(l, L);
             }
         }, 0, 30));
     }
 
     public static void playBigLoveWell(final Location loc, final String L) {
-        final HashMap<Integer, Integer> S = new HashMap<Integer, Integer>();
+        final HashMap<Integer, Integer> S = new HashMap<>();
         Blocks.put(L, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
             Location l = loc.clone().add(.5, 0, .5);
             Random r = new Random();
@@ -937,8 +981,8 @@ public class PlayParticles {
                     public void run() {
                         ArrayList<Location> locs = getCircle(l, 3.5, 75);
                         ArrayList<Location> locs2 = getCircleReverse(l, 3.5, 75);
-                        ParticleEffect.HEART.display(0, 0, 0, 0, 1, locs.get(i), 100);
-                        ParticleEffect.HEART.display(0, 0, 0, 0, 1, locs2.get(i), 100);
+                        l.getWorld().spawnParticle(Particle.HEART, locs.get(1), 1, 0, 0, 0, 0);
+                        l.getWorld().spawnParticle(Particle.HEART, locs2.get(1), 1, 0, 0, 0, 0);
                         i++;
                         f++;
                         l.add(0, .04, 0);
@@ -953,14 +997,14 @@ public class PlayParticles {
 
             @Override
             public void run() {
-                if (!Methods.anyPlayers(l.clone(), range)) return;
+                if (Methods.noPlayers(l.clone(), range)) return;
                 startBigLoveWell(l, L);
             }
         }, 0, 25));
     }
 
     public static void playLoveWell(final Location loc, final String L) {
-        final HashMap<Integer, Integer> S = new HashMap<Integer, Integer>();
+        final HashMap<Integer, Integer> S = new HashMap<>();
         Blocks.put(L, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
             Location l = loc.clone().add(.5, 0, .5);
             Random r = new Random();
@@ -976,8 +1020,8 @@ public class PlayParticles {
                     public void run() {
                         ArrayList<Location> locs = getCircle(l, 2, 50);
                         ArrayList<Location> locs2 = getCircleReverse(l, 2, 50);
-                        ParticleEffect.HEART.display(0, 0, 0, 0, 1, locs.get(i), 100);
-                        ParticleEffect.HEART.display(0, 0, 0, 0, 1, locs2.get(i), 100);
+                        l.getWorld().spawnParticle(Particle.HEART, locs.get(1), 1, 0, 0, 0, 0);
+                        l.getWorld().spawnParticle(Particle.HEART, locs2.get(1), 1, 0, 0, 0, 0);
                         i++;
                         f++;
                         l.add(0, .035, 0);
@@ -992,7 +1036,7 @@ public class PlayParticles {
 
             @Override
             public void run() {
-                if (!Methods.anyPlayers(l.clone(), range)) return;
+                if (Methods.noPlayers(l.clone(), range)) return;
                 startLoveWell(l, L);
             }
         }, 0, 16));

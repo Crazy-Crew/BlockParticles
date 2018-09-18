@@ -1,34 +1,33 @@
 package me.badbones69.blockparticles;
 
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.plugin.PluginDescriptionFile;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.plugin.Plugin;
-import org.bukkit.plugin.PluginDescriptionFile;
-
 public class SettingsManager {
 
-    static SettingsManager instance = new SettingsManager();
+    private static SettingsManager instance = new SettingsManager();
 
-    public static SettingsManager getInstance() {
+    static SettingsManager getInstance() {
         return instance;
     }
 
-    Plugin p;
+    private BlockParticles p;
 
-    FileConfiguration config;
-    File cfile;
+    private FileConfiguration config;
+    private File cfile;
 
-    FileConfiguration data;
-    File dfile;
+    private FileConfiguration data;
+    private File dfile;
 
-    public void setup(Plugin p) {
+    void setup(BlockParticles p) {
         cfile = new File(p.getDataFolder(), "config.yml");
         config = p.getConfig();
         // config.options().copyDefaults(true);
@@ -51,24 +50,13 @@ public class SettingsManager {
         data = YamlConfiguration.loadConfiguration(dfile);
     }
 
-    public static void copyFile(InputStream in, File out) throws Exception { // https://bukkit.org/threads/extracting-file-from-jar.16962/
-        InputStream fis = in;
-        FileOutputStream fos = new FileOutputStream(out);
-        try {
+    private static void copyFile(InputStream in, File out) throws Exception { // https://bukkit.org/threads/extracting-file-from-jar.16962/
+        try (FileOutputStream fos = new FileOutputStream(out)) {
             byte[] buf = new byte[1024];
-            int i = 0;
-            while((i = fis.read(buf)) != -1) {
-                fos.write(buf, 0, i);
-            }
-        }catch(Exception e) {
-            throw e;
-        }finally {
-            if(fis != null) {
-                fis.close();
-            }
-            if(fos != null) {
-                fos.close();
-            }
+            int i;
+            while ((i = in.read(buf)) != -1) fos.write(buf, 0, i);
+        } finally {
+            if (in != null) in.close();
         }
     }
 
@@ -76,7 +64,7 @@ public class SettingsManager {
         return data;
     }
 
-    public void saveData() {
+    void saveData() {
         try {
             data.save(dfile);
         }catch(IOException e) {
@@ -88,7 +76,7 @@ public class SettingsManager {
         data = YamlConfiguration.loadConfiguration(dfile);
     }
 
-    public FileConfiguration getConfig() {
+    FileConfiguration getConfig() {
         return config;
     }
 
@@ -100,7 +88,7 @@ public class SettingsManager {
         }
     }
 
-    public void reloadConfig() {
+    void reloadConfig() {
         config = YamlConfiguration.loadConfiguration(cfile);
     }
 

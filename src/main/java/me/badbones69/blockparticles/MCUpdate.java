@@ -1,7 +1,15 @@
 package me.badbones69.blockparticles;
 
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Server;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.scheduler.BukkitTask;
+
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.lang.reflect.Method;
@@ -10,16 +18,6 @@ import java.net.URLConnection;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Server;
-import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.plugin.Plugin;
-import org.bukkit.scheduler.BukkitTask;
 
 public class MCUpdate implements Listener {
 
@@ -34,7 +32,7 @@ public class MCUpdate implements Listener {
     private static boolean upToDate = true;
     private boolean checkUpdate = true;
 
-    private Plugin pl;
+    private BlockParticles pl;
 
     /**
      * Interval of time to ping (seconds)
@@ -49,12 +47,10 @@ public class MCUpdate implements Listener {
     /**
      * Start up the MCUpdater.
      *
-     * @param plugin
-     *            The plugin using this.
-     * @throws IOException
+     * @param plugin The plugin using this.
      */
-    public MCUpdate(Plugin plugin) throws IOException {
-        if(plugin != null) {
+    public MCUpdate(BlockParticles plugin) {
+        if (plugin != null) {
             this.pl = plugin;
             // I should add a custom configuration for MCUpdate itself
             Bukkit.getPluginManager().registerEvents(this, plugin);
@@ -63,22 +59,18 @@ public class MCUpdate implements Listener {
     }
 
     /**
-     *
      * Start up the MCUpdater.
      *
-     * @param plugin
-     *            The plugin using this.
-     * @param activate
-     *            Toggle if it starts the MCUpdater when used.
-     * @throws IOException
+     * @param plugin   The plugin using this.
+     * @param activate Toggle if it starts the MCUpdater when used.
      */
-    public MCUpdate(Plugin plugin, Boolean activate) throws IOException {
-        if(plugin != null) {
+    MCUpdate(BlockParticles plugin, Boolean activate) {
+        if (plugin != null) {
             this.pl = plugin;
             // I should add a custom configuration for MCUpdate itself
             Bukkit.getPluginManager().registerEvents(this, plugin);
             setPingInterval(900);
-            if(activate) {
+            if (activate) {
                 startLogging();
             }
         }
@@ -89,14 +81,14 @@ public class MCUpdate implements Listener {
      *
      * @return True if everything starts and false if it doesn't start.
      */
-    public boolean startLogging() {
+    private boolean startLogging() {
         // Is MCUpdate already running?
-        if(task == null) {
+        if (task == null) {
             // Begin hitting the server with glorious data
             task = pl.getServer().getScheduler().runTaskTimerAsynchronously(pl, () -> {
                 report();
-                if(!upToDate) {
-                    if(checkUpdate) {
+                if (!upToDate) {
+                    if (checkUpdate) {
                         pl.getServer().getConsoleSender().sendMessage(format(updateMessage));
                     }
                 }
@@ -111,12 +103,13 @@ public class MCUpdate implements Listener {
      * @return True if it successfully stoped and false if couldn't.
      */
     public boolean stopLogging() {
-        if(task != null) {
+        if (task != null) {
             try {
                 task.cancel();
                 return true;
-            }catch(Exception e) {}
-        }else {
+            } catch (Exception ignored) {
+            }
+        } else {
             return true;
         }
         return false;
@@ -134,9 +127,8 @@ public class MCUpdate implements Listener {
     /**
      * Set if the updater uses the internal update checker.
      *
-     * @param checkUpdate
-     *            True if you want to use the internal update checker and false
-     *            if not.
+     * @param checkUpdate True if you want to use the internal update checker and false
+     *                    if not.
      */
     public void checkUpdate(Boolean checkUpdate) {
         this.checkUpdate = checkUpdate;
@@ -154,10 +146,9 @@ public class MCUpdate implements Listener {
     /**
      * Set the rate the information is sent to MCUpdate.org.
      *
-     * @param PING_INTERVAL
-     *            The rate at which the data is sent in seconds.
+     * @param PING_INTERVAL The rate at which the data is sent in seconds.
      */
-    public void setPingInterval(int PING_INTERVAL) {
+    private void setPingInterval(int PING_INTERVAL) {
         this.PING_INTERVAL = PING_INTERVAL;
     }
 
@@ -173,8 +164,8 @@ public class MCUpdate implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent e) {
         Player p = e.getPlayer();
-        if(p.isOp() && !upToDate) {
-            if(checkUpdate) {
+        if (p.isOp() && !upToDate) {
+            if (checkUpdate) {
                 p.sendMessage(format(updateMessage));
             }
         }
@@ -183,12 +174,13 @@ public class MCUpdate implements Listener {
     private int getOnlinePlayers() {
         try {
             Method onlinePlayerMethod = Server.class.getMethod("getOnlinePlayers");
-            if(onlinePlayerMethod.getReturnType().equals(Collection.class)) {
+            if (onlinePlayerMethod.getReturnType().equals(Collection.class)) {
                 return ((Collection<?>) onlinePlayerMethod.invoke(Bukkit.getServer())).size();
-            }else {
+            } else {
                 return ((Player[]) onlinePlayerMethod.invoke(Bukkit.getServer())).length;
             }
-        }catch(Exception ex) {}
+        } catch (Exception ignored) {
+        }
         return 0;
     }
 
@@ -248,10 +240,10 @@ public class MCUpdate implements Listener {
             String cVersion = getString(endData, "pl_Version");
             updateMessage = getString(endData, "update_Message");
 
-            if(serverMessage != null) {
-                if(!serverMessage.equals("ERROR")) {
-                    if(cVersion != null) {
-                        if(!ver.equals(cVersion)) {
+            if (serverMessage != null) {
+                if (!serverMessage.equals("ERROR")) {
+                    if (cVersion != null) {
+                        if (!ver.equals(cVersion)) {
                             upToDate = false;
                         }
                     }
@@ -259,17 +251,18 @@ public class MCUpdate implements Listener {
             }
             br.close();
 
-        }catch(Exception ignored) {}
+        } catch (Exception ignored) {
+        }
     }
 
     private String getString(String data, String key) {
         String dat = data.replace("{ \"Response\": {\"", "");
         dat = dat.replace("\"} }", "");
-        List<String> list = Arrays.asList(dat.split("\",\""));
+        String[] list = dat.split("\",\"");
 
-        for(String stub : list) {
+        for (String stub : list) {
             List<String> list2 = Arrays.asList(stub.split("\":\""));
-            if(key.equals(list2.get(0))) {
+            if (key.equals(list2.get(0))) {
                 return list2.get(1);
             }
         }
@@ -281,9 +274,9 @@ public class MCUpdate implements Listener {
     }
 
     private static String format(String format) {
-        if(format != null) {
+        if (format != null) {
             return ChatColor.translateAlternateColorCodes('&', format);
-        }else {
+        } else {
             return "";
         }
     }

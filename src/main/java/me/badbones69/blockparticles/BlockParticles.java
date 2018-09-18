@@ -1,29 +1,26 @@
 package me.badbones69.blockparticles;
 
-import java.io.IOException;
-import java.util.HashMap;
-
 import me.badbones69.blockparticles.api.BlockParticlesAPI;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
-import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.plugin.PluginManager;
-import org.bukkit.plugin.java.JavaPlugin;
-
 import me.badbones69.blockparticles.api.ParticleType;
 import me.badbones69.blockparticles.api.Particles;
 import me.badbones69.blockparticles.multisupport.Events_v1_11_R1_Down;
 import me.badbones69.blockparticles.multisupport.Events_v1_12_R1_Up;
 import me.badbones69.blockparticles.multisupport.Version;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+import org.bukkit.plugin.PluginManager;
+import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.HashMap;
 
 public class BlockParticles extends JavaPlugin {
 
     public static SettingsManager settings = SettingsManager.getInstance();
     public static BlockParticlesAPI bp = BlockParticlesAPI.getInstance();
-    static HashMap<Player, String> B = new HashMap<Player, String>();
+    static HashMap<Player, String> B = new HashMap<>();
 
     @Override
     public void onDisable() {
@@ -51,16 +48,10 @@ public class BlockParticles extends JavaPlugin {
         Methods.startParticles();
         if (settings.getConfig().contains("Settings.Metrics")) {
             if (settings.getConfig().getBoolean("Settings.Metrics")) {
-                try {
-                    new MCUpdate(this, true);
-                } catch (IOException e) {
-                }
+                new MCUpdate(this, true);
             }
         } else {
-            try {
-                new MCUpdate(this, true);
-            } catch (IOException e) {
-            }
+            new MCUpdate(this, true);
         }
     }
 
@@ -147,7 +138,7 @@ public class BlockParticles extends JavaPlugin {
         return false;
     }
 
-    String color(String msg) {
+    private String color(String msg) {
         msg = msg.replaceAll("(&([a-f0-9]))", "\u00A7$2");
         msg = msg.replaceAll("&l", ChatColor.BOLD + "");
         msg = msg.replaceAll("&o", ChatColor.ITALIC + "");

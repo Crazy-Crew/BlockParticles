@@ -10,12 +10,11 @@ import org.inventivetalent.reflection.resolver.FieldResolver;
 import org.inventivetalent.reflection.resolver.MethodResolver;
 import org.inventivetalent.reflection.resolver.minecraft.NMSClassResolver;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 
 import static org.inventivetalent.reflection.minecraft.Minecraft.Version.*;
+
 
 public enum ParticleEffects {
 
@@ -242,9 +241,7 @@ public enum ParticleEffects {
      */
     public void send(Collection<? extends Player> receivers, Location location, double offsetX, double offsetY, double offsetZ, double speed, int count, double range) {
         receivers = new ArrayList<>(receivers);
-        for (Iterator<? extends Player> iterator = receivers.iterator(); iterator.hasNext(); ) {
-            if (!iterator.next().getWorld().getName().equals(location.getWorld().getName())) { iterator.remove(); }
-        }
+        receivers.removeIf(player -> !player.getWorld().getName().equals(location.getWorld().getName()));
         send(receivers, location.getX(), location.getY(), location.getZ(), offsetX, offsetY, offsetZ, speed, count, range);
     }
 
@@ -278,9 +275,7 @@ public enum ParticleEffects {
      */
     public void send(Collection<? extends Player> receivers, Location location, double offsetX, double offsetY, double offsetZ, double speed, int count) {
         receivers = new ArrayList<>(receivers);
-        for (Iterator<? extends Player> iterator = receivers.iterator(); iterator.hasNext(); ) {
-            if (!iterator.next().getWorld().getName().equals(location.getWorld().getName())) { iterator.remove(); }
-        }
+        receivers.removeIf(player -> !player.getWorld().getName().equals(location.getWorld().getName()));
         this.particle.send(receivers, location.getX(), location.getY(), location.getZ(), offsetX, offsetY, offsetZ, speed, count);
     }
 
@@ -318,17 +313,13 @@ public enum ParticleEffects {
 
     public void sendColor(Collection<? extends Player> receivers, Location location, Color color) {
         receivers = new ArrayList<>(receivers);
-        for (Iterator<? extends Player> iterator = receivers.iterator(); iterator.hasNext(); ) {
-            if (!iterator.next().getWorld().getName().equals(location.getWorld().getName())) { iterator.remove(); }
-        }
+        receivers.removeIf(player -> !player.getWorld().getName().equals(location.getWorld().getName()));
         sendColor(receivers, location.getX(), location.getY(), location.getZ(), color);
     }
 
     public void sendColor(Collection<? extends Player> receivers, Location location, java.awt.Color color) {
         receivers = new ArrayList<>(receivers);
-        for (Iterator<? extends Player> iterator = receivers.iterator(); iterator.hasNext(); ) {
-            if (!iterator.next().getWorld().getName().equals(location.getWorld().getName())) { iterator.remove(); }
-        }
+        receivers.removeIf(player -> !player.getWorld().getName().equals(location.getWorld().getName()));
         sendColor(receivers, location.getX(), location.getY(), location.getZ(), color);
     }
 
@@ -526,9 +517,8 @@ public enum ParticleEffects {
         void send(Collection<? extends Player> receivers, double x, double y, double z, double offsetX, double offsetY, double offsetZ, double speed, int count, int id, byte data) {
             try {
                 if (Minecraft.VERSION.newerThan(v1_8_R1)) {
-                    send_1_8(receivers, x, y, z, offsetX, offsetY, offsetZ, speed, count, new int[] {
-                            id,
-                            id | data << 12 });
+                    send_1_8(receivers, x, y, z, offsetX, offsetY, offsetZ, speed, count, id,
+                            id | data << 12);
                 } else {
                     send_1_7(effect.name + id + (data >= 0 ? "_" + data : ""), receivers, x, y, z, offsetX, offsetY, offsetZ, speed, count);
                 }
@@ -544,7 +534,7 @@ public enum ParticleEffects {
     }
 
     static Enum<?> getEnum(String enumFullName) {
-        String[] x = enumFullName.split("\\.(?=[^\\.]+$)");
+        String[] x = enumFullName.split("\\.(?=[^.]+$)");
         if (x.length == 2) {
             String enumClassName = x[0];
             String enumName = x[1];
@@ -566,7 +556,7 @@ public enum ParticleEffects {
         private static MethodResolver PlayerConnectionMethodResolver;
     }
 
-    protected static void sendPacket(Object packet, Player p) throws IllegalArgumentException, IllegalAccessException, InvocationTargetException, ClassNotFoundException, NoSuchFieldException, NoSuchMethodException {
+    protected static void sendPacket(Object packet, Player p) throws IllegalArgumentException, ClassNotFoundException {
         if (Reflection.EntityPlayerFieldResolver == null) {
             Reflection.EntityPlayerFieldResolver = new FieldResolver(Reflection.NMS_CLASS_RESOLVER.resolve("EntityPlayer"));
         }

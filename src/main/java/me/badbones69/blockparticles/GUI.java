@@ -54,7 +54,7 @@ public class GUI implements Listener {
         player.openInventory(inv);
     }
 
-    static void openGUIPage2(Player player) {
+    private static void openGUIPage2(Player player) {
         Inventory inv = Bukkit.createInventory(null, 54, Methods.color("&8&lBlock &b&lParticles"));
         inv.setItem(20, Methods.makeItem(Material.EMERALD, 1, "&a&lGems"));
         inv.setItem(21, Methods.getPlayerHead("Sloggy_Whopper", "&7&lFood"));
@@ -88,9 +88,8 @@ public class GUI implements Listener {
                                     openGUIPage2((Player) e.getWhoClicked());
                                     return;
                                 }
-                                Methods.setLoc((Player) e.getWhoClicked(), loc, name);
+                                Methods.setLoc(e.getWhoClicked(), loc, name);
                                 e.getWhoClicked().closeInventory();
-                                return;
                             }
                         }
                     }
