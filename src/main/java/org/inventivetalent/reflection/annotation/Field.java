@@ -14,31 +14,31 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Field {
 
-    /**
-     * Name of the class to load this field from
-     *
-     * @return name of the class
-     */
-    String className();
+	/**
+	 * Name of the class to load this field from
+	 *
+	 * @return name of the class
+	 */
+	String className();
 
-    /**
-     * Possible names of the field. Use <code>&gt;</code> or <code>&lt;</code> as a name prefix in combination with {@link #versions()} to specify versions newer- or older-than.
-     *
-     * @return names of the field
-     */
-    String[] value();
+	/**
+	 * Possible names of the field. Use <code>&gt;</code> or <code>&lt;</code> as a name prefix in combination with {@link #versions()} to specify versions newer- or older-than.
+	 *
+	 * @return names of the field
+	 */
+	String[] value();
 
-    /**
-     * Specific versions for the names.
-     *
-     * @return Array of versions for the class names
-     */
-    Minecraft.Version[] versions() default {};
+	/**
+	 * Specific versions for the names.
+	 *
+	 * @return Array of versions for the class names
+	 */
+	Minecraft.Version[] versions() default {};
 
-    /**
-     * Whether to ignore any reflection exceptions thrown. Defaults to <code>true</code>
-     *
-     * @return whether to ignore exceptions
-     */
-    boolean ignoreExceptions() default true;
+	/**
+	 * Whether to ignore any reflection exceptions thrown. Defaults to <code>true</code>
+	 *
+	 * @return whether to ignore exceptions
+	 */
+	boolean ignoreExceptions() default true;
 }

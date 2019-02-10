@@ -14,24 +14,24 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Class {
 
-    /**
-     * Name of the class. Use <code>{nms}.MyClass</code> for NMS classes, or <code>{obc}.MyClass</code> for OBC classes. Use <code>&gt;</code> or <code>&lt;</code> as a name prefix in combination with {@link #versions()} to specify versions newer- or older-than.
-     *
-     * @return the class name
-     */
-    String[] value();
+	/**
+	 * Name of the class. Use <code>{nms}.MyClass</code> for NMS classes, or <code>{obc}.MyClass</code> for OBC classes. Use <code>&gt;</code> or <code>&lt;</code> as a name prefix in combination with {@link #versions()} to specify versions newer- or older-than.
+	 *
+	 * @return the class name
+	 */
+	String[] value();
 
-    /**
-     * Specific versions for the names.
-     *
-     * @return Array of versions for the class names
-     */
-    Minecraft.Version[] versions() default {};
+	/**
+	 * Specific versions for the names.
+	 *
+	 * @return Array of versions for the class names
+	 */
+	Minecraft.Version[] versions() default {};
 
-    /**
-     * Whether to ignore any reflection exceptions thrown. Defaults to <code>true</code>
-     *
-     * @return whether to ignore exceptions
-     */
-    boolean ignoreExceptions() default true;
+	/**
+	 * Whether to ignore any reflection exceptions thrown. Defaults to <code>true</code>
+	 *
+	 * @return whether to ignore exceptions
+	 */
+	boolean ignoreExceptions() default true;
 }

@@ -1,6 +1,7 @@
 name: BlockParticles
+author: BadBones69
 version: ${project.version}
-main: me.badbones69.blockparticles.BlockParticles
+main: me.badbones69.blockparticles.Main
 softdepend: [Multiverse-Core, MultiWorld]
 description: Add particles to blocks!
 api-version: 1.13
