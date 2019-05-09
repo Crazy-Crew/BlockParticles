@@ -78,7 +78,7 @@ public class GUI implements Listener {
 		if(blockParticlesAPI.getSetCommandPlayers().containsKey(e.getWhoClicked())) {
 			String loc = blockParticlesAPI.getSetCommandPlayers().get(e.getWhoClicked());
 			if(inv != null) {
-				if(inv.getName().equals(Methods.color("&8&lBlock &b&lParticles"))) {
+				if(e.getView().getTitle().equals(Methods.color("&8&lBlock &b&lParticles"))) {
 					e.setCancelled(true);
 					if(e.getCurrentItem() != null) {
 						if(e.getCurrentItem().hasItemMeta()) {

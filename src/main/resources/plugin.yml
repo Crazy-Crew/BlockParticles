@@ -4,7 +4,7 @@ version: ${project.version}
 main: me.badbones69.blockparticles.Main
 softdepend: [Multiverse-Core, MultiWorld]
 description: Add particles to blocks!
-api-version: 1.13
+api-version: 1.14
 
 commands:
   BlockParticle:
