@@ -7,6 +7,7 @@ import me.badbones69.blockparticles.api.ParticleType;
 import me.badbones69.blockparticles.api.Particles;
 import me.badbones69.blockparticles.controllers.Fountains;
 import me.badbones69.blockparticles.controllers.GUI;
+import me.badbones69.blockparticles.controllers.Metrics;
 import me.badbones69.blockparticles.controllers.PlayParticles;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -41,6 +42,7 @@ public class Main extends JavaPlugin {
 		}
 		Methods.kill();
 		Methods.startParticles();
+		new Metrics(this);
 	}
 	
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLable, String[] args) {
