@@ -10,12 +10,12 @@ public enum ParticleType {
 		this.name = name;
 	}
 	
-	public String getName() {
-		return name;
-	}
-	
 	public static ParticleType[] getTypes() {
 		return ParticleType.values();
+	}
+	
+	public String getName() {
+		return name;
 	}
 	
 }

@@ -14,12 +14,11 @@ import java.util.HashMap;
 public class BlockParticlesAPI {
 	
 	private static BlockParticlesAPI instance = new BlockParticlesAPI();
+	private HashMap<Player, String> setCommandPlayers = new HashMap<>();
 	
 	public static BlockParticlesAPI getInstance() {
 		return instance;
 	}
-	
-	private HashMap<Player, String> setCommandPlayers = new HashMap<>();
 	
 	public boolean hasParticle(Location loc) {
 		for(String L : Files.DATA.getFile().getConfigurationSection("Locations").getKeys(false)) {

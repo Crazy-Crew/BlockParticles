@@ -34,15 +34,6 @@ public class Fountains implements Listener {
 		return (float) -.1 + (float) (Math.random() * ((.1 - -.1)));
 	}
 	
-	@EventHandler
-	public void onHopperPickUp(InventoryPickupItemEvent e) {
-		if(e.getItem() != null) {
-			if(items.contains(e.getItem())) {
-				e.setCancelled(true);
-			}
-		}
-	}
-	
 	public static void startHalloween(final Location loc, String L) {
 		PlayParticles.locations.put(L, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
 			ItemStack emerald = new ItemStack(Material.ROTTEN_FLESH);
@@ -314,6 +305,15 @@ public class Fountains implements Listener {
 		List<Entity> out = ent.getNearbyEntities(x, y, z);
 		ent.remove();
 		return out;
+	}
+	
+	@EventHandler
+	public void onHopperPickUp(InventoryPickupItemEvent e) {
+		if(e.getItem() != null) {
+			if(items.contains(e.getItem())) {
+				e.setCancelled(true);
+			}
+		}
 	}
 	
 	@EventHandler

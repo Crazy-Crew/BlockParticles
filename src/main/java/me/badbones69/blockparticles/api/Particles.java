@@ -60,13 +60,6 @@ public enum Particles {
 	}
 	
 	/**
-	 * Returns the Particle's name in a String.
-	 */
-	public String toString() {
-		return name;
-	}
-	
-	/**
 	 * @param name The Particle you wish to get.
 	 * @return A Particle.
 	 */
@@ -77,13 +70,6 @@ public enum Particles {
 			}
 		}
 		return null;
-	}
-	
-	/**
-	 * Returns the Particle's type (Particle/Fountain).
-	 */
-	public ParticleType getType() {
-		return type;
 	}
 	
 	/**
@@ -103,6 +89,20 @@ public enum Particles {
 			if(p.getType().equals(type)) i.add(p);
 		}
 		return i;
+	}
+	
+	/**
+	 * Returns the Particle's name in a String.
+	 */
+	public String toString() {
+		return name;
+	}
+	
+	/**
+	 * Returns the Particle's type (Particle/Fountain).
+	 */
+	public ParticleType getType() {
+		return type;
 	}
 	
 }

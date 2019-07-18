@@ -33,16 +33,6 @@ public class PlayParticles {
 		return (float) -.05 + (float) (Math.random() * ((.05 - -.05)));
 	}
 	
-	public void ranLoc(ParticleEffects part, Location loc, double offsetX, double offsetY, double offsetZ, int Amount, Color color) {
-		for(int i = 0; i < Amount; i++) {
-			try {
-				part.sendColor(Bukkit.getOnlinePlayers(), RanSpawn(loc.clone(), offsetX, offsetY, offsetZ), color);
-			}catch(Exception e) {
-				e.printStackTrace();
-			}
-		}
-	}
-	
 	private static Location RanSpawn(Location loc, double X, double Y, double Z) {
 		Random r = new Random();
 		Random rr = new Random();
@@ -312,6 +302,7 @@ public class PlayParticles {
 	public static void playFireStorm(final Location loc, String L) {
 		locations.put(L, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
 			Location l = loc.add(.5, 2, .5);
+			
 			@Override
 			public void run() {
 				try {
@@ -504,6 +495,7 @@ public class PlayParticles {
 	public static void playFireSpew(final Location loc, String L) {
 		locations.put(L, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
 			Location l = loc.add(.5, 1, .5);
+			
 			@Override
 			public void run() {
 				if(Methods.noPlayers(l.clone(), range)) return;
@@ -712,12 +704,14 @@ public class PlayParticles {
 		locations.put(L, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
 			Location l = loc.clone().add(.5, 0, .5);
 			Random r = new Random();
+			
 			void startSoulWell(final Location loc, final String L) {
 				final int num = r.nextInt(Integer.MAX_VALUE);
 				S.put(num, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
 					Location height = loc.clone();
 					int location = 0;
 					int lifeSpan = 0;
+					
 					@Override
 					public void run() {
 						ArrayList<Location> locs = getCircle(height, 2, 50);
@@ -788,6 +782,7 @@ public class PlayParticles {
 		locations.put(L, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
 			Location l = loc.clone().add(.5, .1, .5);
 			Random r = new Random();
+			
 			void startFlameWheel(final Location loc, final String L) {
 				final int num = r.nextInt(Integer.MAX_VALUE);
 				S.put(num, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
@@ -796,6 +791,7 @@ public class PlayParticles {
 					int o = 74;
 					int f = 0;
 					int ringTimer = 0;
+					
 					@Override
 					public void run() {
 						ArrayList<Location> locs = getCircle(l, 3.5, 75);
@@ -834,6 +830,7 @@ public class PlayParticles {
 					}
 				}, 0, 1));
 			}
+			
 			@Override
 			public void run() {
 				if(Methods.noPlayers(l.clone(), range)) return;
@@ -847,6 +844,7 @@ public class PlayParticles {
 		locations.put(L, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
 			Location l = loc.clone().add(.5, 0, .5);
 			Random r = new Random();
+			
 			void startWitchTornado(final Location loc, final String L) {
 				final int num = r.nextInt(Integer.MAX_VALUE);
 				S.put(num, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
@@ -855,6 +853,7 @@ public class PlayParticles {
 					int diamaterSwitch = 0;
 					double radius = 1.5;
 					int lifeSpan = 0;
+					
 					@Override
 					public void run() {
 						ArrayList<Location> locs = getCircle(height, radius, 50);
@@ -898,6 +897,7 @@ public class PlayParticles {
 					double radius = 1.5;
 					int lifeSpan = 0;
 					int nextLocation = 0;
+					
 					@Override
 					public void run() {
 						ArrayList<Location> locs = getCircle(height, radius, 50);
@@ -932,12 +932,14 @@ public class PlayParticles {
 		locations.put(L, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
 			Location l = loc.clone().add(.5, 0, .5);
 			Random r = new Random();
+			
 			void startBigLoveWell(final Location loc, final String L) {
 				final int num = r.nextInt(Integer.MAX_VALUE);
 				S.put(num, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
 					Location height = loc.clone();
 					int location = 0;
 					int lifeSpan = 0;
+					
 					@Override
 					public void run() {
 						ArrayList<Location> locs = getCircle(height, 3.5, 75);
@@ -969,12 +971,14 @@ public class PlayParticles {
 		locations.put(L, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
 			Location l = loc.clone().add(.5, 0, .5);
 			Random r = new Random();
+			
 			void startLoveWell(final Location loc, final String L) {
 				final int num = r.nextInt(Integer.MAX_VALUE);
 				S.put(num, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
 					Location height = loc.clone();
 					int location = 0;
 					int lifeSpan = 0;
+					
 					@Override
 					public void run() {
 						ArrayList<Location> locs = getCircle(height, 2, 50);
@@ -1025,6 +1029,16 @@ public class PlayParticles {
 			locations.add(new Location(world, x, center.getY(), z));
 		}
 		return locations;
+	}
+	
+	public void ranLoc(ParticleEffects part, Location loc, double offsetX, double offsetY, double offsetZ, int Amount, Color color) {
+		for(int i = 0; i < Amount; i++) {
+			try {
+				part.sendColor(Bukkit.getOnlinePlayers(), RanSpawn(loc.clone(), offsetX, offsetY, offsetZ), color);
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
 	}
 	
 }
