@@ -4,3 +4,7 @@
 *.iml
 
 target/
+
+plugin/dependency-reduced-pom\.xml
+
+plugin/\.DS_Store
