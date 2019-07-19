@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>me.badbones69.blockparticles</groupId>
-    <artifactId>block-particles</artifactId>
-    <version>1.9.10</version>
+    <groupId>me.badbones69</groupId>
+    <artifactId>blockparticles-parent</artifactId>
+    <packaging>pom</packaging>
+    <version>1.9.11</version>
+    <modules>
+        <module>v1_13_R1_Up</module>
+        <module>v1_12_R1_Down</module>
+        <module>api</module>
+        <module>plugin</module>
+    </modules>
 
     <name>BlockParticles</name>
-
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
 
     <repositories>
         <repository>
@@ -21,66 +24,19 @@
         </repository>
     </repositories>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.spigotmc</groupId>
-            <artifactId>spigot-api</artifactId>
-            <version>1.14-R0.1-SNAPSHOT</version>
-            <scope>provided</scope>
-        </dependency>
-    </dependencies>
-
     <build>
-        <defaultGoal>clean install package</defaultGoal>
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-                <filtering>true</filtering>
-            </resource>
-        </resources>
+        <defaultGoal>clean package install</defaultGoal>
+        <finalName>${project.name}</finalName>
+        <sourceDirectory>src/main/java</sourceDirectory>
         <plugins>
-            <!-- Set the plugin to Java 8 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
                 </configuration>
-            </plugin>
-            <!-- Generates only the jar -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>2.4</version>
-                <executions>
-                    <execution>
-                        <id>default-jar</id>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>1.5</version>
-                <configuration>
-                    <artifactSet>
-                        <includes>
-                            <include>me.badbones69:*</include>
-                        </includes>
-                    </artifactSet>
-                    <!--<finalName>BlockParticles[v${project.version}]</finalName>-->
-                    <!--<outputFile>/Users/badbones/Desktop/Stuff/Server/plugins/BlockParticles[v${project.version}].jar</outputFile>-->
-                    <outputFile>/Users/badbones/Plugins/Public Plugins/Block Particles/BlockParticles[v${project.version}].jar</outputFile>
-                </configuration>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>shade</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>
