@@ -83,7 +83,6 @@ public class BlockParticles {
 		if(particleControl.getLocations().containsKey(name)) {
 			Bukkit.getServer().getScheduler().cancelTask(particleControl.getLocations().get(name));
 		}
-		
 		switch(type) {
 			case LOVETORNADO:
 				particleControl.playLoveTornado(loc, name);

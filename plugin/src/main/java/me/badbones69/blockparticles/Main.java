@@ -17,6 +17,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
 
 public class Main extends JavaPlugin {
 	
@@ -46,8 +47,13 @@ public class Main extends JavaPlugin {
 			Files.DATA.getFile().set("Locations.clear", null);
 			Files.DATA.saveFile();
 		}
-		Methods.startParticles();
 		new Metrics(this);
+		new BukkitRunnable() {
+			@Override
+			public void run() {
+				Methods.startParticles();
+			}
+		}.runTaskLater(bp.getPlugin(), 200);
 	}
 	
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLable, String[] args) {
