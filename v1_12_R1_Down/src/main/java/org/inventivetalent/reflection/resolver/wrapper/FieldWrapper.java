@@ -65,11 +65,7 @@ public class FieldWrapper<R> extends WrapperAbstract {
 		
 		FieldWrapper<?> that = (FieldWrapper<?>) object;
 		
-		if(field != null ? !field.equals(that.field) : that.field != null) {
-			return false;
-		}
-		
-		return true;
+		return field != null ? field.equals(that.field) : that.field == null;
 	}
 	
 	@Override

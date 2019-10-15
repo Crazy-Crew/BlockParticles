@@ -48,8 +48,7 @@ public class NBTReflectionUtil {
 		Method method;
 		try {
 			method = clazz.getMethod("getTag");
-			Object answer = method.invoke(nmsitem);
-			return answer;
+			return method.invoke(nmsitem);
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -150,8 +149,7 @@ public class NBTReflectionUtil {
 		Method method;
 		try {
 			method = c.getMethod("getCompound", String.class);
-			Object answer = method.invoke(compound, name);
-			return answer;
+			return method.invoke(compound, name);
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -178,7 +176,6 @@ public class NBTReflectionUtil {
 		}catch(Exception ex) {
 			ex.printStackTrace();
 		}
-		return;
 	}
 	
 	public static Boolean valideCompound(NBTCompound comp) {

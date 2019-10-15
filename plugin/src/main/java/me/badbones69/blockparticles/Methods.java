@@ -23,6 +23,10 @@ public class Methods implements Listener {
 	public static HashMap<Location, Location> Locations = new HashMap<>();
 	private static BlockParticles bp = BlockParticles.getInstance();
 	
+	public static String color(String message) {
+		return ChatColor.translateAlternateColorCodes('&', message);
+	}
+	
 	public static String removeColor(String msg) {
 		return ChatColor.stripColor(msg);
 	}
@@ -313,7 +317,10 @@ public class Methods implements Listener {
 		list.add("BigCrit");
 		boolean c = false;
 		for(String l : list) {
-			if(particle.equalsIgnoreCase(l)) c = true;
+			if(particle.equalsIgnoreCase(l)) {
+				c = true;
+				break;
+			}
 		}
 		if(!c) {
 			player.sendMessage(color(Prefix + "&6" + particle + " &cis not a Particle. Please do /BP Help for more information."));
@@ -338,10 +345,6 @@ public class Methods implements Listener {
 			return true;
 		}
 		return false;
-	}
-	
-	public static String color(String msg) {
-		return ChatColor.translateAlternateColorCodes('&', msg);
 	}
 	
 	public static ItemStack getPlayerHead(String name) {

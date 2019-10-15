@@ -1,5 +1,7 @@
 package org.inventivetalent.reflection.resolver.wrapper;
 
+import java.util.Objects;
+
 public class ClassWrapper<R> extends WrapperAbstract {
 	
 	private final Class<R> clazz;
@@ -48,7 +50,7 @@ public class ClassWrapper<R> extends WrapperAbstract {
 		
 		ClassWrapper<?> that = (ClassWrapper<?>) object;
 		
-		return clazz != null ? clazz.equals(that.clazz) : that.clazz == null;
+		return Objects.equals(clazz, that.clazz);
 		
 	}
 	
