@@ -7,13 +7,17 @@
     <groupId>me.badbones69</groupId>
     <artifactId>blockparticles-parent</artifactId>
     <packaging>pom</packaging>
-    <version>1.10</version>
+    <version>1.11</version>
     <modules>
         <module>v1_13_R1_Up</module>
         <module>v1_12_R1_Down</module>
         <module>api</module>
         <module>plugin</module>
     </modules>
+
+    <properties>
+        <build.number>-SNAPSHOT</build.number>
+    </properties>
 
     <name>BlockParticles</name>
 
