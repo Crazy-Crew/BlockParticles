@@ -176,13 +176,19 @@ public class Fountains implements Listener {
 
 
     private static final HeadDatabaseAPI HEAD_DATABASE_API = new HeadDatabaseAPI();
+
     public static void startCustomFountain(Location loc, String id, String fountainId) {
         bp.getParticleControl().getLocations().put(id, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(bp.getPlugin(), () -> {
             for (String head : getRandomHeads(FileManager.Files.CONFIG.getFile().getStringList("settings.heads." + fountainId))) {
 
-                final ItemStack headStack = HEAD_DATABASE_API.getItemHead(head);
+                ItemStack headStack;
+                if (Bukkit.getPluginManager().getPlugin("HeadDatabase") != null) {
+                    headStack = HEAD_DATABASE_API.getItemHead(head);
+                } else {
+                    headStack = Methods.getPlayerHead("http://textures.minecraft.net/texture/" + head);
+                }
 
-                if(headStack == null) {
+                if (headStack == null) {
                     JavaPlugin.getPlugin(BlockParticles.class).getLogger().warning("Head item '" + head + "' for id " + fountainId + " is invalid!");
                     return;
                 }
