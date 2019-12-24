@@ -1,7 +1,8 @@
 package me.badbones69.blockparticles;
 
-import me.badbones69.blockparticles.api.BlockParticles;
+import me.badbones69.blockparticles.api.FileManager;
 import me.badbones69.blockparticles.api.FileManager.Files;
+import me.badbones69.blockparticles.api.ParticleManager;
 import me.badbones69.blockparticles.api.enums.Particles;
 import me.badbones69.blockparticles.api.objects.ItemBuilder;
 import me.badbones69.blockparticles.controllers.Fountains;
@@ -21,7 +22,7 @@ import java.util.*;
 public class Methods implements Listener {
 
     public static HashMap<Location, Location> Locations = new HashMap<>();
-    private static BlockParticles bp = BlockParticles.getInstance();
+    private static ParticleManager bp = ParticleManager.getInstance();
 
     public static String color(String message) {
         return ChatColor.translateAlternateColorCodes('&', message);
@@ -63,7 +64,7 @@ public class Methods implements Listener {
     }
 
     public static ArrayList<String> getLocations() {
-        return new ArrayList<>(Files.DATA.getFile().getConfigurationSection("Locations").getKeys(false));
+        return new ArrayList<>(Files.DATA.getFile().getConfigurationSection("locations").getKeys(false));
     }
 
     public static void kill() {
@@ -79,7 +80,7 @@ public class Methods implements Listener {
             }
         }
         bp.getFountainItem().clear();
-        Bukkit.getScheduler().cancelTasks(BlockParticles.getInstance().getPlugin());
+        Bukkit.getScheduler().cancelTasks(ParticleManager.getInstance().getPlugin());
     }
 
     public static void startParticles() {
@@ -90,10 +91,13 @@ public class Methods implements Listener {
         for (final String id : Files.DATA.getFile().getConfigurationSection("locations").getKeys(false)) {
             World world = Bukkit.getServer().getWorld(Files.DATA.getFile().getString("locations." + id + ".world"));
             String particle = Files.DATA.getFile().getString("locations." + id + ".particle");
-            int X = Integer.parseInt(Files.DATA.getFile().getString("locations." + id + ".x"));
-            int Y = Integer.parseInt(Files.DATA.getFile().getString("locations." + id + ".y"));
-            int Z = Integer.parseInt(Files.DATA.getFile().getString("locations." + id + ".z"));
-            final Location loc = new Location(world, X, Y, Z);
+            int x = Files.DATA.getFile().getInt("locations." + id + ".x");
+            int y = Files.DATA.getFile().getInt("locations." + id + ".y");
+            int z = Files.DATA.getFile().getInt("locations." + id + ".z");
+            final Location loc = new Location(world, x, y, z);
+
+            if (FileManager.Files.CONFIG.getFile().get("settings.heads." + particle) != null)
+                Fountains.startCustomFountain(loc, id, particle);
 
             if (particle.equalsIgnoreCase("LoveWell")) bp.getParticleControl().playLoveWell(loc, id);
             if (particle.equalsIgnoreCase("BigLoveWell")) bp.getParticleControl().playBigLoveWell(loc, id);
@@ -333,10 +337,16 @@ public class Methods implements Listener {
                 break;
             }
         }
+
+        if(FileManager.Files.CONFIG.getFile().get("settings.heads." + particle) != null) {
+            c = true;
+        }
+
         if (!c) {
             player.sendMessage(color(Prefix + "&6" + particle + " &cis not a particle. Please do /bp help for more information."));
             return;
         }
+
         for (String loc : Files.DATA.getFile().getConfigurationSection("locations").getKeys(false)) {
             if (loc.equalsIgnoreCase(name)) {
                 Files.DATA.getFile().set("locations." + loc + ".particle", particle);

@@ -1,6 +1,6 @@
 package me.badbones69.blockparticles;
 
-import me.badbones69.blockparticles.api.BlockParticles;
+import me.badbones69.blockparticles.api.ParticleManager;
 import me.badbones69.blockparticles.api.FileManager;
 import me.badbones69.blockparticles.api.FileManager.Files;
 import me.badbones69.blockparticles.api.enums.ParticleType;
@@ -19,11 +19,11 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
-public class Main extends JavaPlugin {
+public class BlockParticles extends JavaPlugin {
 
     private Boolean updateChecker = false;
     private FileManager fileManager = FileManager.getInstance();
-    private BlockParticles bp = BlockParticles.getInstance();
+    private ParticleManager bp = ParticleManager.getInstance();
 
     @Override
     public void onDisable() {

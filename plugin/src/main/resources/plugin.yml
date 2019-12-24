@@ -1,12 +1,13 @@
 name: BlockParticles
-author: BadBones69
+authors: [BadBones69, Felux]
 version: ${project.version}${build.number}
-main: me.badbones69.blockparticles.Main
-softdepend: [Multiverse-Core, MultiWorld]
+main: me.badbones69.blockparticles.BlockParticles
+softdepend: [Multiverse-Core, MultiWorld, HeadDatabase]
 description: Add particles to blocks!
+website: "https://felux.io/"
 api-version: 1.13
 
 commands:
-  BlockParticle:
+  blockparticles:
     description: Adds particles to blocks!
-    aliases: [bp]
+    aliases: [bp, bparticles]

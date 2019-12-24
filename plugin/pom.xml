@@ -13,6 +13,13 @@
 
     <dependencies>
         <dependency>
+            <groupId>me.arcaniax</groupId>
+            <artifactId>hdb</artifactId>
+            <version>1.0.0</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/../libs/HeadDatabaseAPI.jar</systemPath>
+        </dependency>
+        <dependency>
             <groupId>me.badbones69</groupId>
             <artifactId>blockparticles-api</artifactId>
             <version>1.11</version>

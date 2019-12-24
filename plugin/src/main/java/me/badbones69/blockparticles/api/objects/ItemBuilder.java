@@ -1,6 +1,6 @@
 package me.badbones69.blockparticles.api.objects;
 
-import me.badbones69.blockparticles.api.BlockParticles;
+import me.badbones69.blockparticles.api.ParticleManager;
 import me.badbones69.blockparticles.multisupport.SkullCreator;
 import me.badbones69.blockparticles.multisupport.Version;
 import me.badbones69.blockparticles.multisupport.itemnbtapi.NBTItem;
@@ -45,7 +45,7 @@ public class ItemBuilder {
 	private EntityType entityType;
 	private HashMap<String, String> namePlaceholders;
 	private HashMap<String, String> lorePlaceholders;
-	private BlockParticles bp = BlockParticles.getInstance();
+	private ParticleManager bp = ParticleManager.getInstance();
 	
 	/**
 	 * The initial starting point for making an item.

@@ -19,15 +19,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class BlockParticles {
+public class ParticleManager {
 
-    private static BlockParticles instance = new BlockParticles();
+    private static ParticleManager instance = new ParticleManager();
     private Plugin plugin;
     private List<Entity> fountainItems = new ArrayList<>();
     private HashMap<Player, String> setCommandPlayers = new HashMap<>();
     private ParticleControl particleControl;
 
-    public static BlockParticles getInstance() {
+    public static ParticleManager getInstance() {
         return instance;
     }
 

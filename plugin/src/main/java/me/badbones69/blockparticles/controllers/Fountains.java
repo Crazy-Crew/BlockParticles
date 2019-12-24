@@ -1,7 +1,10 @@
 package me.badbones69.blockparticles.controllers;
 
+import me.arcaniax.hdb.api.HeadDatabaseAPI;
+import me.badbones69.blockparticles.BlockParticles;
 import me.badbones69.blockparticles.Methods;
-import me.badbones69.blockparticles.api.BlockParticles;
+import me.badbones69.blockparticles.api.FileManager;
+import me.badbones69.blockparticles.api.ParticleManager;
 import me.badbones69.blockparticles.multisupport.Version;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -15,6 +18,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
@@ -25,7 +29,7 @@ import java.util.Random;
 public class Fountains implements Listener {
 
     private static Random random = new Random();
-    private static BlockParticles bp = BlockParticles.getInstance();
+    private static ParticleManager bp = ParticleManager.getInstance();
     private static List<String> pokemonHeads = Arrays.asList(
             "4a786e4e35b59d91eb6454ef26b7b0683761d6b11f1d63c7740af17aa3f",
             "f4a224d1753fddd25f5bd6b4b6ac879efdb4e978c046e7fa8120a07a8e4ab4d8",
@@ -168,6 +172,34 @@ public class Fountains implements Listener {
 
     private static float randomVector() {
         return (float) -.1 + (float) (Math.random() * ((.1 - -.1)));
+    }
+
+
+    private static final HeadDatabaseAPI HEAD_DATABASE_API = new HeadDatabaseAPI();
+    public static void startCustomFountain(Location loc, String id, String fountainId) {
+        bp.getParticleControl().getLocations().put(id, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(bp.getPlugin(), () -> {
+            for (String head : getRandomHeads(FileManager.Files.CONFIG.getFile().getStringList("settings.heads." + fountainId))) {
+
+                final ItemStack headStack = HEAD_DATABASE_API.getItemHead(head);
+
+                if(headStack == null) {
+                    JavaPlugin.getPlugin(BlockParticles.class).getLogger().warning("Head item '" + head + "' for id " + fountainId + " is invalid!");
+                    return;
+                }
+
+                final Item headItem = Bukkit.getWorld(loc.getWorld().getName()).dropItem(loc.clone().add(.8, .10, .8), headStack);
+                if (Version.getCurrentVersion().isNewer(Version.v1_8_R3)) {
+                    headItem.setVelocity(new Vector(randomVector(), .01, randomVector()));
+                } else {
+                    headItem.setVelocity(new Vector(randomVector(), .3, randomVector()));
+                }
+                bp.addFountainItem(headItem);
+                Bukkit.getScheduler().scheduleSyncDelayedTask(bp.getPlugin(), () -> {
+                    bp.removeFountainItem(headItem);
+                    headItem.remove();
+                }, 2 * 20);
+            }
+        }, 0, 3));
     }
 
     public static void startHalloween(final Location loc, String id) {
