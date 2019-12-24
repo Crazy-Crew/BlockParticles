@@ -105,7 +105,7 @@ public class GUI implements Listener {
 									openGUIPage1((Player) e.getWhoClicked());
 									return;
 								}
-								if(e.getCurrentItem().getItemMeta().getDisplayName().equals(Methods.color("&e&lFountians"))) {
+								if(e.getCurrentItem().getItemMeta().getDisplayName().equals(Methods.color("&e&lFountains"))) {
 									openGUIPage2((Player) e.getWhoClicked());
 									return;
 								}
