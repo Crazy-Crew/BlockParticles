@@ -1,8 +1,8 @@
 package me.badbones69.blockparticles;
 
-import me.badbones69.blockparticles.api.ParticleManager;
 import me.badbones69.blockparticles.api.FileManager;
 import me.badbones69.blockparticles.api.FileManager.Files;
+import me.badbones69.blockparticles.api.ParticleManager;
 import me.badbones69.blockparticles.api.enums.ParticleType;
 import me.badbones69.blockparticles.api.enums.Particles;
 import me.badbones69.blockparticles.controllers.Fountains;
@@ -10,6 +10,7 @@ import me.badbones69.blockparticles.controllers.GUI;
 import me.badbones69.blockparticles.controllers.Metrics;
 import me.badbones69.blockparticles.events.Events_v1_11_R1_Down;
 import me.badbones69.blockparticles.events.Events_v1_12_R1_Up;
+import me.badbones69.blockparticles.hook.HeadDatabaseHook;
 import me.badbones69.blockparticles.multisupport.Version;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -38,6 +39,7 @@ public class BlockParticles extends JavaPlugin {
         pm.registerEvents(new GUI(), this);
         pm.registerEvents(new Methods(), this);
         pm.registerEvents(new Fountains(), this);
+        new HeadDatabaseHook();
         if (Version.getCurrentVersion().isNewer(Version.v1_11_R1)) {
             pm.registerEvents(new Events_v1_12_R1_Up(), this);
         } else {

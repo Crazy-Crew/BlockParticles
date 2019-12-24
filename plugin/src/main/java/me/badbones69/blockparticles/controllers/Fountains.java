@@ -1,10 +1,10 @@
 package me.badbones69.blockparticles.controllers;
 
-import me.arcaniax.hdb.api.HeadDatabaseAPI;
 import me.badbones69.blockparticles.BlockParticles;
 import me.badbones69.blockparticles.Methods;
 import me.badbones69.blockparticles.api.FileManager;
 import me.badbones69.blockparticles.api.ParticleManager;
+import me.badbones69.blockparticles.hook.HeadDatabaseHook;
 import me.badbones69.blockparticles.multisupport.Version;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -174,19 +174,11 @@ public class Fountains implements Listener {
         return (float) -.1 + (float) (Math.random() * ((.1 - -.1)));
     }
 
-
-    private static final HeadDatabaseAPI HEAD_DATABASE_API = new HeadDatabaseAPI();
-
     public static void startCustomFountain(Location loc, String id, String fountainId) {
         bp.getParticleControl().getLocations().put(id, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(bp.getPlugin(), () -> {
             for (String head : getRandomHeads(FileManager.Files.CONFIG.getFile().getStringList("settings.heads." + fountainId))) {
 
-                ItemStack headStack;
-                if (Bukkit.getPluginManager().getPlugin("HeadDatabase") != null) {
-                    headStack = HEAD_DATABASE_API.getItemHead(head);
-                } else {
-                    headStack = Methods.getPlayerHead("http://textures.minecraft.net/texture/" + head);
-                }
+                ItemStack headStack = HeadDatabaseHook.getHead(head);
 
                 if (headStack == null) {
                     JavaPlugin.getPlugin(BlockParticles.class).getLogger().warning("Head item '" + head + "' for id " + fountainId + " is invalid!");
