@@ -56,8 +56,8 @@ public class Main extends JavaPlugin {
         }.runTaskLater(bp.getPlugin(), 200);
     }
 
-    public boolean onCommand(CommandSender sender, Command cmd, String commandLable, String[] args) {
-        if (commandLable.equalsIgnoreCase("blockparticle") || commandLable.equalsIgnoreCase("bp")) {
+    public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
+        if (commandLabel.equalsIgnoreCase("blockparticle") || commandLabel.equalsIgnoreCase("bp")) {
             String Prefix = Files.CONFIG.getFile().getString("settings.prefix");
             if (sender instanceof Player) if (Methods.permCheck((Player) sender, "Admin")) return true;
             if (args.length == 0) {
@@ -68,14 +68,14 @@ public class Main extends JavaPlugin {
                 if (args[0].equalsIgnoreCase("show")) {
                     int items = bp.getFountainItem().size();
                     int Blocks = bp.getParticleControl().getLocations().size();
-                    sender.sendMessage(Methods.color(Prefix + "&3There are &6" + items + " &3Items in the List."));
-                    sender.sendMessage(Methods.color(Prefix + "&3There are &6" + Blocks + " &3Particles/Fountains Running."));
+                    sender.sendMessage(Methods.color(Prefix + "&3There are &6" + items + " &3items in the List."));
+                    sender.sendMessage(Methods.color(Prefix + "&3There are &6" + Blocks + " &3particles/fountains running."));
                     return true;
                 }
                 if (args[0].equalsIgnoreCase("types")) {
                     int p = Particles.getParticles(ParticleType.PARTICLE).size();
                     int f = Particles.getParticles(ParticleType.FOUNTAIN).size();
-                    sender.sendMessage(Methods.color(Prefix + "&3List of all Particle Types."));
+                    sender.sendMessage(Methods.color(Prefix + "&3List of all particle types."));
                     sender.sendMessage(Methods.color("&6&lParticles&8: &3Total " + p + "."));
                     sender.sendMessage(Methods.color("&aSpiral&8, &aDoubleSpiral&8, &aCrit&8, &aBigCrit&8, &aFlame&8, &aBigFlame&8, &aVolcano" + "&8, &aFog&8, &aEnchant&8, &aStorm&8, &aChains&8, &aFireStorm&8, &aSnow&8, &aPotion&8, &aMusic&8, &aSpew&8," + "&aMagic&8, &aWitch&8, &aDoubleWitch&8, &aSnowStorm&8, &aFireSpew&8, &aFootPrint&8, &aWater&8, &aHappyVillager" + "&8, &aAngryVillager&8, &aMobSpawner&8, &aEnderSignal&8, &aRainbow&8," + "&aSnowBlast&8, &aHalo&8, &aSoulWell&8, &aBigSoulWell&8, &aLoveWell&8, &aBigLoveWell&8," + "&aFlameWheel&8, &aWitchTornado&8, &aLoveTornado"));
                     sender.sendMessage(Methods.color("&6&lFountains&8: &3Total " + f + "."));
@@ -86,9 +86,9 @@ public class Main extends JavaPlugin {
                     sender.sendMessage(Methods.color(Prefix + "&6List of all Block Particle Commands."));
                     sender.sendMessage(Methods.color("&8- &6/bp help &3Lists all Block Particle Commands."));
                     sender.sendMessage(Methods.color("&8- &6/bp list &3Lists all Block Particle Locations."));
-                    sender.sendMessage(Methods.color("&8- &6/bp add <Location Name> &3Create a new Block Particle Location."));
-                    sender.sendMessage(Methods.color("&8- &6/bp delete <Location Name> &3Delete a Block Particle Location."));
-                    sender.sendMessage(Methods.color("&8- &6/bp set <Location Name> <Type> &3Set the Block Particle Locations Particle."));
+                    sender.sendMessage(Methods.color("&8- &6/bp add <id> &3Create a new Block Particle Location."));
+                    sender.sendMessage(Methods.color("&8- &6/bp delete <id> &3Delete a Block Particle Location."));
+                    sender.sendMessage(Methods.color("&8- &6/bp set <id> <Type> &3Set the Block Particle Locations Particle."));
                     sender.sendMessage(Methods.color("&8- &6/bp types &3Shows all Types of Particles that can be used."));
                     sender.sendMessage(Methods.color("&8- &6/bp reload &3Reload all Block Particle Locations."));
                     return true;

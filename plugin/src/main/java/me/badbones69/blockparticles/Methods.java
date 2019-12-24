@@ -83,17 +83,18 @@ public class Methods implements Listener {
     }
 
     public static void startParticles() {
-        if (Files.DATA.getFile().getConfigurationSection("Locations") == null) {
+        if (Files.DATA.getFile().getConfigurationSection("locations") == null) {
             Files.DATA.getFile().set("locations.clear", null);
             Files.DATA.saveFile();
         }
-        for (final String id : Files.DATA.getFile().getConfigurationSection("Locations").getKeys(false)) {
-            World world = Bukkit.getServer().getWorld(Files.DATA.getFile().getString("locations." + id + ".World"));
-            String particle = Files.DATA.getFile().getString("locations." + id + ".Particle");
-            int X = Integer.parseInt(Files.DATA.getFile().getString("locations." + id + ".X"));
-            int Y = Integer.parseInt(Files.DATA.getFile().getString("locations." + id + ".Y"));
-            int Z = Integer.parseInt(Files.DATA.getFile().getString("locations." + id + ".Z"));
+        for (final String id : Files.DATA.getFile().getConfigurationSection("locations").getKeys(false)) {
+            World world = Bukkit.getServer().getWorld(Files.DATA.getFile().getString("locations." + id + ".world"));
+            String particle = Files.DATA.getFile().getString("locations." + id + ".particle");
+            int X = Integer.parseInt(Files.DATA.getFile().getString("locations." + id + ".x"));
+            int Y = Integer.parseInt(Files.DATA.getFile().getString("locations." + id + ".y"));
+            int Z = Integer.parseInt(Files.DATA.getFile().getString("locations." + id + ".z"));
             final Location loc = new Location(world, X, Y, Z);
+
             if (particle.equalsIgnoreCase("LoveWell")) bp.getParticleControl().playLoveWell(loc, id);
             if (particle.equalsIgnoreCase("BigLoveWell")) bp.getParticleControl().playBigLoveWell(loc, id);
             if (particle.equalsIgnoreCase("LoveTornado")) bp.getParticleControl().playLoveTornado(loc, id);
@@ -102,10 +103,13 @@ public class Methods implements Listener {
             if (particle.equalsIgnoreCase("SoulWell")) bp.getParticleControl().playSoulWell(loc, id);
             if (particle.equalsIgnoreCase("BigSoulWell")) bp.getParticleControl().playBigSoulWell(loc, id);
             if (particle.equalsIgnoreCase("SantaHat")) bp.getParticleControl().playSantaHat(loc, id);
+
+            // TODO: Convert this from hard coded types.
             if (particle.equalsIgnoreCase("Mario")) Fountains.startMario(loc, id);
             if (particle.equalsIgnoreCase("Pokemon")) Fountains.startPokemon(loc, id);
             if (particle.equalsIgnoreCase("Food")) Fountains.startFood(loc, id);
             if (particle.equalsIgnoreCase("Mobs")) Fountains.startMobs(loc, id);
+
             if (particle.equalsIgnoreCase("Halo")) bp.getParticleControl().playHalo(loc, id);
             if (particle.equalsIgnoreCase("Snow Blast") || particle.equalsIgnoreCase("SnowBlast"))
                 bp.getParticleControl().playSnowBlast(loc, id);
@@ -128,6 +132,8 @@ public class Methods implements Listener {
                 bp.getParticleControl().playDoubleSpiral(loc, id, Particles.DOUBLEWITCH, 5);
             if (particle.equalsIgnoreCase("Witch")) bp.getParticleControl().playSpiral(loc, id, Particles.WITCH, 5);
             if (particle.equalsIgnoreCase("Magic")) bp.getParticleControl().playMagic(loc, id);
+
+            // TODO: Convert this from hard coded types.
             if (particle.equalsIgnoreCase("Presents")) Fountains.startPresents(loc, id);
             if (particle.equalsIgnoreCase("Spew")) bp.getParticleControl().playSpew(loc, id);
             if (particle.equalsIgnoreCase("Music")) bp.getParticleControl().playMusic(loc, id);
@@ -140,12 +146,17 @@ public class Methods implements Listener {
             if (particle.equalsIgnoreCase("Enchant")) bp.getParticleControl().playEnchant(loc, id);
             if (particle.equalsIgnoreCase("Fog")) bp.getParticleControl().playFog(loc, id);
             if (particle.equalsIgnoreCase("Storm")) bp.getParticleControl().playStorm(loc, id);
+
+            // TODO: Convert this from hard coded types.
             if (particle.equalsIgnoreCase("Heads")) Fountains.startHeads(loc, id);
             if (particle.equalsIgnoreCase("Big Flame") || particle.equalsIgnoreCase("BigFlame"))
                 bp.getParticleControl().playBigFlame(loc, id);
             if (particle.equalsIgnoreCase("Flame")) bp.getParticleControl().playFlame(loc, id);
+
+            // TODO: Convert this from hard coded types.
             if (particle.equalsIgnoreCase("Halloween")) Fountains.startHalloween(loc, id);
             if (particle.equalsIgnoreCase("Gems")) Fountains.startGems(loc, id);
+
             if (particle.equalsIgnoreCase("Valcano") || particle.equalsIgnoreCase("Volcano"))
                 bp.getParticleControl().playVolcano(loc, id);
             if (particle.equalsIgnoreCase("Spiral")) bp.getParticleControl().playSpiral(loc, id, Particles.SPIRAL, 1);
@@ -196,7 +207,7 @@ public class Methods implements Listener {
             Files.DATA.getFile().set("locations.clear", null);
             Files.DATA.saveFile();
         }
-        for (String loc : Files.DATA.getFile().getConfigurationSection("Locations").getKeys(false)) {
+        for (String loc : Files.DATA.getFile().getConfigurationSection("locations").getKeys(false)) {
             if (loc.equalsIgnoreCase(name)) {
                 Files.DATA.getFile().set("locations." + loc, null);
                 Files.DATA.saveFile();
@@ -205,7 +216,7 @@ public class Methods implements Listener {
                 return;
             }
         }
-        player.sendMessage(color(Prefix + "&3There are no Locations called &6" + name + "&3."));
+        player.sendMessage(color(Prefix + "&3There are no locations called &6" + name + "&3."));
     }
 
     public static void listLoc(Player player) {
