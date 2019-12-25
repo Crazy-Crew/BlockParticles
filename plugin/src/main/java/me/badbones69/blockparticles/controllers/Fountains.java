@@ -182,7 +182,7 @@ public class Fountains implements Listener {
                     JavaPlugin.getPlugin(BlockParticles.class).getLogger().warning("Head item '" + head + "' for id " + fountainId + " is invalid!");
                     return;
                 }
-                final Item headItem = Bukkit.getWorld(loc.getWorld().getName()).dropItem(loc.clone().add(.8, .10, .8), headStack);
+                final Item headItem = Bukkit.getWorld(loc.getWorld().getName()).dropItem(loc.clone().add(.5, .8, .5), headStack);
                 if (Version.getCurrentVersion().isNewer(Version.v1_8_R3)) {
                     headItem.setVelocity(new Vector(randomVector(), .01, randomVector()));
                 } else {
