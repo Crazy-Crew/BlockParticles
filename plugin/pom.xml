@@ -13,6 +13,13 @@
 
     <dependencies>
         <dependency>
+            <groupId>me.arcaniax</groupId>
+            <artifactId>hdb</artifactId>
+            <version>1.0.0</version>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/../libs/HeadDatabaseAPI.jar</systemPath>
+        </dependency>
+        <dependency>
             <groupId>me.badbones69</groupId>
             <artifactId>blockparticles-api</artifactId>
             <version>1.11</version>
@@ -39,7 +46,7 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.15-R0.1-SNAPSHOT</version>
+            <version>1.15.1-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
