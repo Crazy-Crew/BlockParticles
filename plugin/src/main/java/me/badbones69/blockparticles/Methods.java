@@ -338,7 +338,7 @@ public class Methods implements Listener {
             }
         }
 
-        if(FileManager.Files.CONFIG.getFile().get("settings.heads." + particle) != null) {
+        if (FileManager.Files.CONFIG.getFile().get("settings.heads." + particle) != null) {
             c = true;
         }
 
@@ -374,10 +374,10 @@ public class Methods implements Listener {
 
     public static ItemStack getPlayerHead(String playerName, String displayName) {
         return new ItemBuilder()
-                .setMaterial("PLAYER_HEAD", "SKULL_ITEM:3")
-                .setPlayer(playerName)
-                .setName(displayName != null ? color(displayName) : new Random().nextInt(Integer.MAX_VALUE) + "")
-                .build();
+        .setMaterial("PLAYER_HEAD", "SKULL_ITEM:3")
+        .setPlayer(playerName)
+        .setName(displayName != null ? color(displayName) : new Random().nextInt(Integer.MAX_VALUE) + "")
+        .build();
     }
 
 }

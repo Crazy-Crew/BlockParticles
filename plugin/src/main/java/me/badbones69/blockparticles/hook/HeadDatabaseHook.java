@@ -22,4 +22,5 @@ public class HeadDatabaseHook {
 
         return Methods.getPlayerHead("http://textures.minecraft.net/texture/" + head);
     }
+
 }
