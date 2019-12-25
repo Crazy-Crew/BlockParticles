@@ -3,6 +3,7 @@ package me.badbones69.blockparticles.api;
 import me.badbones69.blockparticles.api.FileManager.Files;
 import me.badbones69.blockparticles.api.enums.ParticleType;
 import me.badbones69.blockparticles.api.enums.Particles;
+import me.badbones69.blockparticles.api.objects.Particle;
 import me.badbones69.blockparticles.controllers.Fountains;
 import me.badbones69.blockparticles.controllers.ParticleControl;
 import me.badbones69.blockparticles.multisupport.NMS_v1_12_Down;
@@ -11,6 +12,7 @@ import me.badbones69.blockparticles.multisupport.Version;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
@@ -22,6 +24,7 @@ import java.util.List;
 public class ParticleManager {
 
     private static ParticleManager instance = new ParticleManager();
+    private FileManager fileManager = FileManager.getInstance();
     private Plugin plugin;
     private List<Entity> fountainItems = new ArrayList<>();
     private HashMap<Player, String> setCommandPlayers = new HashMap<>();
@@ -33,6 +36,14 @@ public class ParticleManager {
 
     public void load() {
         particleControl = Version.getCurrentVersion().isNewer(Version.v1_12_R1) ? new NMS_v1_13_Up() : new NMS_v1_12_Down();
+        if (hasOldFiles()) {
+            String prefix = fileManager.getPrefix();
+            boolean isLogging = fileManager.isLogging();
+            if (isLogging) System.out.println(prefix + "Old files have been detected!");
+            if (isLogging) System.out.println(prefix + "Converting old files.");
+            convertOldFiles();
+            if (isLogging) System.out.println(prefix + "Finished converting old files.");
+        }
     }
 
     public Plugin getPlugin() {
@@ -46,15 +57,57 @@ public class ParticleManager {
         return particleControl;
     }
 
+    public boolean hasOldFiles() {
+        return Files.CONFIG.getFile().contains("Settings") || Files.DATA.getFile().contains("Locations");
+    }
+
+    public void convertOldFiles() {
+        String prefix = fileManager.getPrefix();
+        boolean isLogging = fileManager.isLogging();
+        FileConfiguration config = Files.CONFIG.getFile();
+        if (config.contains("Settings")) {
+            config.set("settings.prefix", config.getString("Settings.Prefix"));
+            config.set("Settings", null);
+            Files.CONFIG.saveFile();
+            if (isLogging) System.out.println(prefix + "Finished converting config.yml.");
+        }
+        FileConfiguration data = Files.DATA.getFile();
+        if (data.contains("Locations")) {
+            List<Particle> particles = new ArrayList<>();
+            for (String id : data.getConfigurationSection("Locations").getKeys(false)) {
+                particles.add(new Particle(id,
+                data.getString("Locations." + id + ".World"),
+                data.getInt("Locations." + id + ".X"),
+                data.getInt("Locations." + id + ".Y"),
+                data.getInt("Locations." + id + ".Z"),
+                data.getString("Locations." + id + ".Particle")));
+            }
+            data.set("Locations", null);
+            for (Particle particle : particles) {
+                String id = particle.getID();
+                data.set("locations." + id + ".world", particle.getWorld());
+                data.set("locations." + id + ".x", particle.getX());
+                data.set("locations." + id + ".y", particle.getY());
+                data.set("locations." + id + ".z", particle.getZ());
+                data.set("locations." + id + ".particle", particle.getParticleTypeName());
+            }
+            Files.DATA.saveFile();
+            if (isLogging) System.out.println(prefix + "Finished converting data.yml.");
+        }
+    }
+
     public boolean hasParticle(Location loc) {
-        for (String id : Files.DATA.getFile().getConfigurationSection("locations").getKeys(false)) {
-            World world = Bukkit.getServer().getWorld(Files.DATA.getFile().getString("locations." + id + ".World"));
-            int X = Integer.parseInt(Files.DATA.getFile().getString("locations." + id + ".X"));
-            int Y = Integer.parseInt(Files.DATA.getFile().getString("locations." + id + ".Y"));
-            int Z = Integer.parseInt(Files.DATA.getFile().getString("locations." + id + ".Z"));
-            Location l = new Location(world, X, Y, Z);
-            if (l.equals(loc)) {
-                return true;
+        FileConfiguration data = Files.DATA.getFile();
+        if (data.contains("locations")) {
+            for (String id : data.getConfigurationSection("locations").getKeys(false)) {
+                World world = Bukkit.getServer().getWorld(data.getString("locations." + id + ".World"));
+                int X = data.getInt("locations." + id + ".X");
+                int Y = data.getInt("locations." + id + ".Y");
+                int Z = data.getInt("locations." + id + ".Z");
+                Location l = new Location(world, X, Y, Z);
+                if (l.equals(loc)) {
+                    return true;
+                }
             }
         }
         return false;

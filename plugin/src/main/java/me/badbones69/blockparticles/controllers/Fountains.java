@@ -177,14 +177,11 @@ public class Fountains implements Listener {
     public static void startCustomFountain(Location loc, String id, String fountainId) {
         bp.getParticleControl().getLocations().put(id, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(bp.getPlugin(), () -> {
             for (String head : getRandomHeads(FileManager.Files.CONFIG.getFile().getStringList("settings.heads." + fountainId))) {
-
                 ItemStack headStack = HeadDatabaseHook.getHead(head);
-
                 if (headStack == null) {
                     JavaPlugin.getPlugin(BlockParticles.class).getLogger().warning("Head item '" + head + "' for id " + fountainId + " is invalid!");
                     return;
                 }
-
                 final Item headItem = Bukkit.getWorld(loc.getWorld().getName()).dropItem(loc.clone().add(.8, .10, .8), headStack);
                 if (Version.getCurrentVersion().isNewer(Version.v1_8_R3)) {
                     headItem.setVelocity(new Vector(randomVector(), .01, randomVector()));

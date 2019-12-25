@@ -33,7 +33,7 @@ public class BlockParticles extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        fileManager.setup(this);
+        fileManager.logInfo(true).setup(this);
         bp.load();
         PluginManager pm = Bukkit.getServer().getPluginManager();
         pm.registerEvents(new GUI(), this);
@@ -44,10 +44,6 @@ public class BlockParticles extends JavaPlugin {
             pm.registerEvents(new Events_v1_12_R1_Up(), this);
         } else {
             pm.registerEvents(new Events_v1_11_R1_Down(), this);
-        }
-        if (!Files.DATA.getFile().contains("locations")) {
-            Files.DATA.getFile().set("locations.clear", null);
-            Files.DATA.saveFile();
         }
         new Metrics(this);
         new BukkitRunnable() {
