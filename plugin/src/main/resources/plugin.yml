@@ -4,7 +4,6 @@ version: ${project.version}${build.number}
 main: me.badbones69.blockparticles.BlockParticles
 softdepend: [Multiverse-Core, MultiWorld, HeadDatabase]
 description: Add particles to blocks!
-website: "https://felux.io/"
 api-version: 1.13
 
 commands:
