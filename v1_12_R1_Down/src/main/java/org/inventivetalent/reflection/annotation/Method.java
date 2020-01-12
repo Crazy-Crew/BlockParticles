@@ -14,33 +14,33 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Method {
-	
-	/**
-	 * Name of the class to load this method from
-	 *
-	 * @return name of the class
-	 */
-	String className();
-	
-	/**
-	 * Possible names of the method. Use <code>&gt;</code> or <code>&lt;</code> as a name prefix in combination with {@link #versions()} to specify versions newer- or older-than.
-	 *
-	 * @return method names
-	 */
-	String[] value();
-	
-	/**
-	 * Specific versions for the names.
-	 *
-	 * @return Array of versions for the class names
-	 */
-	Version[] versions() default {};
-	
-	/**
-	 * Whether to ignore any reflection exceptions thrown. Defaults to <code>true</code>
-	 *
-	 * @return whether to ignore exceptions
-	 */
-	boolean ignoreExceptions() default true;
-	
+    
+    /**
+     * Name of the class to load this method from
+     *
+     * @return name of the class
+     */
+    String className();
+    
+    /**
+     * Possible names of the method. Use <code>&gt;</code> or <code>&lt;</code> as a name prefix in combination with {@link #versions()} to specify versions newer- or older-than.
+     *
+     * @return method names
+     */
+    String[] value();
+    
+    /**
+     * Specific versions for the names.
+     *
+     * @return Array of versions for the class names
+     */
+    Version[] versions() default {};
+    
+    /**
+     * Whether to ignore any reflection exceptions thrown. Defaults to <code>true</code>
+     *
+     * @return whether to ignore exceptions
+     */
+    boolean ignoreExceptions() default true;
+    
 }

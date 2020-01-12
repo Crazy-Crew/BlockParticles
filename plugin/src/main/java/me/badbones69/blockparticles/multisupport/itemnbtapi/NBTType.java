@@ -20,20 +20,20 @@ public enum NBTType {
     NBTTagString(8),
     NBTTagList(9),
     NBTTagCompound(10);
-
+    
     NBTType(int i) {
         id = i;
     }
-
+    
     private final int id;
-
+    
     /**
      * @return Id used by Minecraft internally
      */
     public int getId() {
         return id;
     }
-
+    
     /**
      * @param id Internal Minecraft id
      * @return Enum representing the id, NBTTagEnd for invalide ids
@@ -44,5 +44,5 @@ public enum NBTType {
                 return t;
         return NBTType.NBTTagEnd;
     }
-
+    
 }

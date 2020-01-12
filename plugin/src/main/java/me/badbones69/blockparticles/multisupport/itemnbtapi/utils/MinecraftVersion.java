@@ -27,7 +27,7 @@ public enum MinecraftVersion {
     MC1_13_R2(1132),
     MC1_14_R1(1141),
     MC1_15_R1(1151);
-
+    
     private static MinecraftVersion version;
     private static Boolean hasGsonSupport;
     private static boolean bStatsDisabled = false;
@@ -36,20 +36,20 @@ public enum MinecraftVersion {
      * Logger used by the api
      */
     public static final Logger logger = Logger.getLogger("NBTAPI");
-
+    
     private final int versionId;
-
+    
     MinecraftVersion(int versionId) {
         this.versionId = versionId;
     }
-
+    
     /**
      * @return A simple comparable Integer, representing the version.
      */
     public int getVersionId() {
         return versionId;
     }
-
+    
     /**
      * Getter for this servers MinecraftVersion. Also init's bStats and checks the
      * shading.
@@ -75,7 +75,7 @@ public enum MinecraftVersion {
         init();
         return version;
     }
-
+    
     private static void init() {
         try {
             if (!bStatsDisabled)
@@ -101,7 +101,7 @@ public enum MinecraftVersion {
             "#########################################- NBTAPI -#########################################");
         }
     }
-
+    
     /**
      * @return True, if Gson is usable
      */
@@ -118,7 +118,7 @@ public enum MinecraftVersion {
         }
         return hasGsonSupport;
     }
-
+    
     /**
      * Calling this function before the NBT-Api is used will disable bStats stats
      * collection. Please consider not to do that, since it won't affect your plugin
@@ -127,7 +127,7 @@ public enum MinecraftVersion {
     public static void disableBStats() {
         bStatsDisabled = true;
     }
-
+    
     /**
      * Forcefully disables the log message for plugins not shading the API to
      * another location. This may be helpful for networks or development
@@ -137,5 +137,5 @@ public enum MinecraftVersion {
     public static void disablePackageWarning() {
         disablePackageWarning = true;
     }
-
+    
 }

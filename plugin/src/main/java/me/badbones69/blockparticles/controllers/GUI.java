@@ -12,11 +12,11 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 
 public class GUI implements Listener {
-
+    
     private static Inventory inventory1;
     private static Inventory inventory2;
     private ParticleManager bp = ParticleManager.getInstance();
-
+    
     public static void openGUIPage1(Player player) {
         if (inventory1 == null) {
             inventory1 = Bukkit.createInventory(null, 54, Methods.color("&8Block &bParticles"));
@@ -62,7 +62,7 @@ public class GUI implements Listener {
         }
         player.openInventory(inventory1);
     }
-
+    
     private static void openGUIPage2(Player player) {
         if (inventory2 == null) {
             inventory2 = Bukkit.createInventory(null, 54, Methods.color("&8Block &bParticles"));
@@ -88,7 +88,7 @@ public class GUI implements Listener {
         }
         player.openInventory(inventory2);
     }
-
+    
     @EventHandler
     public void invClick(InventoryClickEvent e) {
         Inventory inv = e.getInventory();
@@ -118,5 +118,5 @@ public class GUI implements Listener {
             }
         }
     }
-
+    
 }

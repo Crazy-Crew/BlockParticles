@@ -26,7 +26,7 @@ import java.util.List;
  *
  */
 public class ItemBuilder {
-
+    
     private Material material;
     private int damage;
     private String name;
@@ -46,7 +46,7 @@ public class ItemBuilder {
     private HashMap<String, String> namePlaceholders;
     private HashMap<String, String> lorePlaceholders;
     private ParticleManager bp = ParticleManager.getInstance();
-
+    
     /**
      * The initial starting point for making an item.
      */
@@ -69,7 +69,7 @@ public class ItemBuilder {
         this.namePlaceholders = new HashMap<>();
         this.lorePlaceholders = new HashMap<>();
     }
-
+    
     /**
      * Convert an ItemStack to an ItemBuilder to allow easier editing of the ItemStack.
      * @param item The ItemStack you wish to convert into an ItemBuilder.
@@ -99,7 +99,7 @@ public class ItemBuilder {
         }
         return itemBuilder;
     }
-
+    
     /**
      * Get the type of item as a Material the builder is set to.
      * @return The type of material the builder is set to.
@@ -107,7 +107,7 @@ public class ItemBuilder {
     public Material getMaterial() {
         return material;
     }
-
+    
     /**
      * Set the type of item the builder is set to.
      * @param material The material you wish to set.
@@ -118,7 +118,7 @@ public class ItemBuilder {
         this.isHead = material == (bp.useNewMaterial() ? Material.matchMaterial("PLAYER_HEAD") : Material.matchMaterial("SKULL_ITEM"));
         return this;
     }
-
+    
     /**
      * Set the type of item and its metadata in the builder.
      * @param material The string must be in this form: %Material% or %Material%:%MetaData%
@@ -144,7 +144,7 @@ public class ItemBuilder {
         this.isHead = this.material == (bp.useNewMaterial() ? Material.matchMaterial("PLAYER_HEAD") : Material.matchMaterial("SKULL_ITEM"));
         return this;
     }
-
+    
     /**
      * Set the type of item and its metadata in the builder.
      * @param newMaterial The 1.13+ string must be in this form: %Material% or %Material%:%MetaData%
@@ -154,7 +154,7 @@ public class ItemBuilder {
     public ItemBuilder setMaterial(String newMaterial, String oldMaterial) {
         return setMaterial(bp.useNewMaterial() ? newMaterial : oldMaterial);
     }
-
+    
     /**
      * Get the damage of the item.
      * @return The damage of the item as an int.
@@ -162,7 +162,7 @@ public class ItemBuilder {
     public int getDamage() {
         return damage;
     }
-
+    
     /**
      * Set the items damage value.
      * @param damage The damage value of the item.
@@ -171,7 +171,7 @@ public class ItemBuilder {
         this.damage = damage;
         return this;
     }
-
+    
     /**
      * Get the name the of the item in the builder.
      * @return The name as a string that is already been color converted.
@@ -179,7 +179,7 @@ public class ItemBuilder {
     public String getName() {
         return name;
     }
-
+    
     /**
      * Set the name of the item in the builder. This will auto force color the name if it contains color code. (&a, &c, &7, etc...)
      * @param name The name of the item in the builder.
@@ -191,7 +191,7 @@ public class ItemBuilder {
         }
         return this;
     }
-
+    
     /**
      * Set the placeholders for the name of the item.
      * @param placeholders The placeholders that will be used.
@@ -201,7 +201,7 @@ public class ItemBuilder {
         this.namePlaceholders = placeholders;
         return this;
     }
-
+    
     /**
      * Add a placeholder to the name of the item.
      * @param placeholder The placeholder that will be replaced.
@@ -212,7 +212,7 @@ public class ItemBuilder {
         this.namePlaceholders.put(placeholder, argument);
         return this;
     }
-
+    
     /**
      * Remove a placeholder from the list.
      * @param placeholder The placeholder you wish to remove.
@@ -222,7 +222,7 @@ public class ItemBuilder {
         this.namePlaceholders.remove(placeholder);
         return this;
     }
-
+    
     /**
      * Get the item's name with all the placeholders added to it.
      * @return The name with all the placeholders in it.
@@ -234,7 +234,7 @@ public class ItemBuilder {
         }
         return newName;
     }
-
+    
     /**
      * Get the lore of the item in the builder.
      * @return The lore of the item in the builder. This will already be color coded.
@@ -242,7 +242,7 @@ public class ItemBuilder {
     public List<String> getLore() {
         return lore;
     }
-
+    
     /**
      * Set the lore of the item in the builder. This will auto force color in all the lores that contains color code. (&a, &c, &7, etc...)
      * @param lore The lore of the item in the builder.
@@ -257,7 +257,7 @@ public class ItemBuilder {
         }
         return this;
     }
-
+    
     /**
      * Add a line to the current lore of the item. This will auto force color in the lore that contains color code. (&a, &c, &7, etc...)
      * @param lore The new line you wish to add.
@@ -269,7 +269,7 @@ public class ItemBuilder {
         }
         return this;
     }
-
+    
     /**
      * Set the placeholders that are in the lore of the item.
      * @param placeholders The placeholders that you wish to use.
@@ -279,7 +279,7 @@ public class ItemBuilder {
         this.lorePlaceholders = placeholders;
         return this;
     }
-
+    
     /**
      * Add a placeholder to the lore of the item.
      * @param placeholder The placeholder you wish to replace.
@@ -290,7 +290,7 @@ public class ItemBuilder {
         this.lorePlaceholders.put(placeholder, argument);
         return this;
     }
-
+    
     /**
      * Remove a placeholder from the lore.
      * @param placeholder The placeholder you wish to remove.
@@ -300,7 +300,7 @@ public class ItemBuilder {
         this.lorePlaceholders.remove(placeholder);
         return this;
     }
-
+    
     /**
      * Get the lore with all the placeholders added to it.
      * @return The lore with all placeholders in it.
@@ -315,7 +315,7 @@ public class ItemBuilder {
         }
         return newLore;
     }
-
+    
     /**
      * Get the entity type of the mob egg.
      * @return The EntityType of the mob egg.
@@ -323,7 +323,7 @@ public class ItemBuilder {
     public EntityType getEntityType() {
         return entityType;
     }
-
+    
     /**
      * Sets the type of mob egg.
      * @param entityType The entity type the mob egg will be.
@@ -333,7 +333,7 @@ public class ItemBuilder {
         this.entityType = entityType;
         return this;
     }
-
+    
     /**
      * Check if the current item is a mob egg.
      * @return True if it is and false if not.
@@ -341,7 +341,7 @@ public class ItemBuilder {
     public boolean isMobEgg() {
         return isMobEgg;
     }
-
+    
     /**
      * The amount of the item stack in the builder.
      * @return The amount that is set in the builder.
@@ -349,7 +349,7 @@ public class ItemBuilder {
     public Integer getAmount() {
         return amount;
     }
-
+    
     /**
      * Get the amount of the item stack in the builder.
      * @param amount The amount that is in the item stack.
@@ -359,7 +359,7 @@ public class ItemBuilder {
         this.amount = amount;
         return this;
     }
-
+    
     /**
      * Get the name of the player being used as a head.
      * @return The name of the player being used on the head.
@@ -367,7 +367,7 @@ public class ItemBuilder {
     public String getPlayer() {
         return player;
     }
-
+    
     /**
      * Set the player that will be displayed on the head.
      * @param player The player being displayed on the head.
@@ -381,7 +381,7 @@ public class ItemBuilder {
         }
         return this;
     }
-
+    
     /**
      * Check if the item is a player heads.
      * @return True if it is a player head and false if not.
@@ -389,7 +389,7 @@ public class ItemBuilder {
     public Boolean isHead() {
         return isHead;
     }
-
+    
     /**
      * Check if the player name is a Base64.
      * @return True if it is a Base64 and false if not.
@@ -397,7 +397,7 @@ public class ItemBuilder {
     public Boolean isHash() {
         return isHash;
     }
-
+    
     /**
      * Check if the hash is a url or a Base64.
      * @return True if it is a url and false if it is a Base64.
@@ -405,7 +405,7 @@ public class ItemBuilder {
     public Boolean isURL() {
         return isURL;
     }
-
+    
     /**
      * Get the enchantments that are on the item in the builder.
      * @return The enchantments that are on the item in the builder.
@@ -413,7 +413,7 @@ public class ItemBuilder {
     public HashMap<Enchantment, Integer> getEnchantments() {
         return enchantments;
     }
-
+    
     /**
      * Set a list of enchantments that will go onto the item in the builder. These can have unsafe levels.
      * It will also override any enchantments used in the "ItemBuilder#addEnchantment()" method.
@@ -426,7 +426,7 @@ public class ItemBuilder {
         }
         return this;
     }
-
+    
     /**
      * Add an enchantment to the item in the builder.
      * @param enchantment The enchantment you wish to add.
@@ -437,7 +437,7 @@ public class ItemBuilder {
         this.enchantments.put(enchantment, level);
         return this;
     }
-
+    
     /**
      * Remove an enchantment from the item in the builder.
      * @param enchantment The enchantment you wish to remove.
@@ -447,7 +447,7 @@ public class ItemBuilder {
         this.enchantments.remove(enchantment);
         return this;
     }
-
+    
     /**
      * Check if the item in the builder is unbreakable.
      * @return The ItemBuilder with updated info.
@@ -455,7 +455,7 @@ public class ItemBuilder {
     public Boolean isUnbreakable() {
         return unbreakable;
     }
-
+    
     /**
      * Set if the item in the builder to be unbreakable or not.
      * @param unbreakable True will set it to be unbreakable and false will make it able to take damage.
@@ -465,7 +465,7 @@ public class ItemBuilder {
         this.unbreakable = unbreakable;
         return this;
     }
-
+    
     /**
      * Set if the item should hide item flags or not
      * @param hideItemFlags true the item will hide item flags. false will show them.
@@ -475,7 +475,7 @@ public class ItemBuilder {
         this.hideItemFlags = hideItemFlags;
         return this;
     }
-
+    
     /**
      * Check if the item in the builder has hidden item flags.
      * @return The ItemBuilder with updated info.
@@ -483,7 +483,7 @@ public class ItemBuilder {
     public Boolean areItemFlagsHidden() {
         return hideItemFlags;
     }
-
+    
     /**
      * Check if the item in the builder is glowing.
      * @return The ItemBuilder with updated info.
@@ -491,7 +491,7 @@ public class ItemBuilder {
     public Boolean isGlowing() {
         return glowing;
     }
-
+    
     /**
      * Set if the item in the builder to be glowing or not.
      * @param glowing True will set the item to have a glowing effect.
@@ -501,7 +501,7 @@ public class ItemBuilder {
         this.glowing = glowing;
         return this;
     }
-
+    
     /**
      * Builder the item from all the information that was given to the builder.
      * @return The result of all the info that was given to the builder as an ItemStack.
@@ -555,7 +555,7 @@ public class ItemBuilder {
             return item;
         }
     }
-
+    
     /**
      * Sets the converted item as a reference to try and save NBT tags and stuff.
      * @param referenceItem The item that is being referenced.
@@ -565,11 +565,11 @@ public class ItemBuilder {
         this.referenceItem = referenceItem;
         return this;
     }
-
+    
     private String color(String msg) {
         return ChatColor.translateAlternateColorCodes('&', msg);
     }
-
+    
     private ItemStack hideFlags(ItemStack item) {
         if (hideItemFlags) {
             if (item != null && item.hasItemMeta()) {
@@ -581,7 +581,7 @@ public class ItemBuilder {
         }
         return item;
     }
-
+    
     private ItemStack addGlow(ItemStack item) {
         if (glowing) {
             try {
@@ -603,5 +603,5 @@ public class ItemBuilder {
         }
         return item;
     }
-
+    
 }

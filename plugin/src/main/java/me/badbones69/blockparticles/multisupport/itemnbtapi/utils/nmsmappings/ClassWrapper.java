@@ -33,16 +33,16 @@ public enum ClassWrapper {
     NMS_REGISTRYMATERIALS(PackageWrapper.NMS, "RegistryMaterials"),
     NMS_IREGISTRY(PackageWrapper.NMS, "IRegistry"),
     NMS_MINECRAFTKEY(PackageWrapper.NMS, "MinecraftKey"),
-
+    
     ;
-
+    
     private Class<?> clazz;
     private boolean enabled = false;
-
+    
     ClassWrapper(PackageWrapper packageId, String suffix) {
         this(packageId, suffix, null, null);
     }
-
+    
     ClassWrapper(PackageWrapper packageId, String suffix, MinecraftVersion from, MinecraftVersion to) {
         if (from != null && MinecraftVersion.getVersion().getVersionId() < from.getVersionId()) {
             return;
@@ -57,19 +57,19 @@ public enum ClassWrapper {
         } catch (Exception ex) {
         }
     }
-
+    
     /**
      * @return The wrapped class
      */
     public Class<?> getClazz() {
         return clazz;
     }
-
+    
     /**
      * @return Is this class available in this Version
      */
     public boolean isEnabled() {
         return enabled;
     }
-
+    
 }

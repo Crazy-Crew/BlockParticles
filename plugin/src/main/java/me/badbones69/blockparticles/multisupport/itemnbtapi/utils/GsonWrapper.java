@@ -10,16 +10,16 @@ import me.badbones69.blockparticles.multisupport.itemnbtapi.NbtApiException;
  *
  */
 public class GsonWrapper {
-
+    
     /**
      * Private constructor
      */
     private GsonWrapper() {
-
+    
     }
-
+    
     private static final Gson gson = new Gson();
-
+    
     /**
      * Turns Objects into Json Strings
      *
@@ -29,7 +29,7 @@ public class GsonWrapper {
     public static String getString(Object obj) {
         return gson.toJson(obj);
     }
-
+    
     /**
      * Creates an Object of the given type using the Json String
      *
@@ -42,12 +42,12 @@ public class GsonWrapper {
             if (json == null) {
                 return null;
             }
-
+            
             T obj = gson.fromJson(json, type);
             return type.cast(obj);
         } catch (Exception ex) {
             throw new NbtApiException("Error while converting json to " + type.getName(), ex);
         }
     }
-
+    
 }

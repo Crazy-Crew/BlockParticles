@@ -6,9 +6,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 
 public class Events_v1_11_R1_Down implements Listener {
-
+    
     private ParticleManager bp = ParticleManager.getInstance();
-
+    
     @SuppressWarnings("deprecation")
     @EventHandler
     public void onItemPickUp(PlayerPickupItemEvent e) {
@@ -16,5 +16,5 @@ public class Events_v1_11_R1_Down implements Listener {
             e.setCancelled(true);
         }
     }
-
+    
 }

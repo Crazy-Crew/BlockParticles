@@ -11,9 +11,9 @@ import me.badbones69.blockparticles.multisupport.itemnbtapi.utils.nmsmappings.Re
  *
  */
 public class NBTContainer extends NBTCompound {
-
+    
     private Object nbt;
-
+    
     /**
      * Creates an empty, standalone NBTCompound
      */
@@ -21,7 +21,7 @@ public class NBTContainer extends NBTCompound {
         super(null, null);
         nbt = ObjectCreator.NMS_NBTTAGCOMPOUND.getInstance();
     }
-
+    
     /**
      * Takes in any NMS Compound to wrap it
      *
@@ -31,7 +31,7 @@ public class NBTContainer extends NBTCompound {
         super(null, null);
         this.nbt = nbt;
     }
-
+    
     /**
      * Parses in a NBT String to a standalone {@link NBTCompound}. Can throw a
      * {@link NbtApiException} in case something goes wrong.
@@ -46,15 +46,15 @@ public class NBTContainer extends NBTCompound {
             throw new NbtApiException("Unable to parse Malformed Json!", ex);
         }
     }
-
+    
     @Override
     public Object getCompound() {
         return nbt;
     }
-
+    
     @Override
     public void setCompound(Object tag) {
         nbt = tag;
     }
-
+    
 }

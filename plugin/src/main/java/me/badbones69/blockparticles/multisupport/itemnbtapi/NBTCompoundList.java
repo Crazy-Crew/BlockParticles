@@ -12,11 +12,11 @@ import org.apache.commons.lang.NotImplementedException;
  *
  */
 public class NBTCompoundList extends NBTList<NBTListCompound> {
-
+    
     protected NBTCompoundList(NBTCompound owner, String name, NBTType type, Object list) {
         super(owner, name, type, list);
     }
-
+    
     /**
      * Adds a new Compound to the end of the List and returns it.
      *
@@ -35,7 +35,7 @@ public class NBTCompoundList extends NBTList<NBTListCompound> {
             throw new NbtApiException(ex);
         }
     }
-
+    
     /**
      * Adds a new Compound to the end of the List.
      *
@@ -59,7 +59,7 @@ public class NBTCompoundList extends NBTList<NBTListCompound> {
             throw new NbtApiException(ex);
         }
     }
-
+    
     @Override
     public void add(int index, NBTListCompound element) {
         if (element != null) {
@@ -76,7 +76,7 @@ public class NBTCompoundList extends NBTList<NBTListCompound> {
             throw new NbtApiException(ex);
         }
     }
-
+    
     @Override
     public NBTListCompound get(int index) {
         try {
@@ -86,15 +86,15 @@ public class NBTCompoundList extends NBTList<NBTListCompound> {
             throw new NbtApiException(ex);
         }
     }
-
+    
     @Override
     public NBTListCompound set(int index, NBTListCompound element) {
         throw new NotImplementedException("This method doesn't work in the ListCompound context.");
     }
-
+    
     @Override
     protected Object asTag(NBTListCompound object) {
         return null;
     }
-
+    
 }

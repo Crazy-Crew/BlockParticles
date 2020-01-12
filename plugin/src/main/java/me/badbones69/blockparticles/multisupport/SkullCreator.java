@@ -21,7 +21,7 @@ import java.util.UUID;
  * @author Dean B on 12/28/2016.
  */
 public class SkullCreator {
-
+    
     /**
      * Creates a player skull based on a player's name.
      *
@@ -33,10 +33,10 @@ public class SkullCreator {
     @Deprecated
     public static ItemStack itemFromName(String name) {
         ItemStack item = getPlayerSkullItem();
-
+        
         return itemWithName(item, name);
     }
-
+    
     /**
      * Creates a player skull based on a player's name.
      *
@@ -50,12 +50,12 @@ public class SkullCreator {
     public static ItemStack itemWithName(ItemStack item, String name) {
         notNull(item, "item");
         notNull(name, "name");
-
+        
         return Bukkit.getUnsafe().modifyItemStack(item,
         "{SkullOwner:\"" + name + "\"}"
         );
     }
-
+    
     /**
      * Creates a player skull with a UUID. 1.13 only.
      *
@@ -64,10 +64,10 @@ public class SkullCreator {
      */
     public static ItemStack itemFromUuid(UUID id) {
         ItemStack item = getPlayerSkullItem();
-
+        
         return itemWithUuid(item, id);
     }
-
+    
     /**
      * Creates a player skull based on a UUID. 1.13 only.
      *
@@ -78,14 +78,14 @@ public class SkullCreator {
     public static ItemStack itemWithUuid(ItemStack item, UUID id) {
         notNull(item, "item");
         notNull(id, "id");
-
+        
         SkullMeta meta = (SkullMeta) item.getItemMeta();
         meta.setOwningPlayer(Bukkit.getOfflinePlayer(id));
         item.setItemMeta(meta);
-
+        
         return item;
     }
-
+    
     /**
      * Creates a player skull based on a Mojang server URL.
      *
@@ -94,10 +94,10 @@ public class SkullCreator {
      */
     public static ItemStack itemFromUrl(String url) {
         ItemStack item = getPlayerSkullItem();
-
+        
         return itemWithUrl(item, url);
     }
-
+    
     /**
      * Creates a player skull based on a Mojang server URL.
      *
@@ -108,10 +108,10 @@ public class SkullCreator {
     public static ItemStack itemWithUrl(ItemStack item, String url) {
         notNull(item, "item");
         notNull(url, "url");
-
+        
         return itemWithBase64(item, urlToBase64(url));
     }
-
+    
     /**
      * Creates a player skull based on a base64 string containing the link to the skin.
      *
@@ -122,7 +122,7 @@ public class SkullCreator {
         ItemStack item = getPlayerSkullItem();
         return itemWithBase64(item, base64);
     }
-
+    
     /**
      * Applies the base64 string to the ItemStack.
      *
@@ -133,13 +133,13 @@ public class SkullCreator {
     public static ItemStack itemWithBase64(ItemStack item, String base64) {
         notNull(item, "item");
         notNull(base64, "base64");
-
+        
         UUID hashAsId = new UUID(base64.hashCode(), base64.hashCode());
         return Bukkit.getUnsafe().modifyItemStack(item,
         "{SkullOwner:{Id:\"" + hashAsId + "\",Properties:{textures:[{Value:\"" + base64 + "\"}]}}}"
         );
     }
-
+    
     /**
      * Sets the block to a skull with the given name.
      *
@@ -152,11 +152,11 @@ public class SkullCreator {
     public static void blockWithName(Block block, String name) {
         notNull(block, "block");
         notNull(name, "name");
-
+        
         setBlockType(block);
         ((Skull) block.getState()).setOwningPlayer(Bukkit.getOfflinePlayer(name));
     }
-
+    
     /**
      * Sets the block to a skull with the given UUID.
      *
@@ -166,11 +166,11 @@ public class SkullCreator {
     public static void blockWithUuid(Block block, UUID id) {
         notNull(block, "block");
         notNull(id, "id");
-
+        
         setBlockType(block);
         ((Skull) block.getState()).setOwningPlayer(Bukkit.getOfflinePlayer(id));
     }
-
+    
     /**
      * Sets the block to a skull with the given UUID.
      *
@@ -180,10 +180,10 @@ public class SkullCreator {
     public static void blockWithUrl(Block block, String url) {
         notNull(block, "block");
         notNull(url, "url");
-
+        
         blockWithBase64(block, urlToBase64(url));
     }
-
+    
     /**
      * Sets the block to a skull with the given UUID.
      *
@@ -193,9 +193,9 @@ public class SkullCreator {
     public static void blockWithBase64(Block block, String base64) {
         notNull(block, "block");
         notNull(base64, "base64");
-
+        
         UUID hashAsId = new UUID(base64.hashCode(), base64.hashCode());
-
+        
         String args = String.format(
         "%d %d %d %s",
         block.getX(),
@@ -203,24 +203,24 @@ public class SkullCreator {
         block.getZ(),
         "{Owner:{Id:\"" + hashAsId + "\",Properties:{textures:[{Value:\"" + base64 + "\"}]}}}"
         );
-
+        
         if (newerApi()) {
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "data merge block " + args);
         } else {
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "blockdata " + args);
         }
     }
-
+    
     private static boolean newerApi() {
         try {
             Material.valueOf("PLAYER_HEAD");
             return true;
-
+            
         } catch (IllegalArgumentException e) { // If PLAYER_HEAD doesn't exist
             return false;
         }
     }
-
+    
     private static ItemStack getPlayerSkullItem() {
         if (newerApi()) {
             return new ItemStack(Material.valueOf("PLAYER_HEAD"));
@@ -228,7 +228,7 @@ public class SkullCreator {
             return new ItemStack(Material.valueOf("SKULL_ITEM"), 1, (byte) 3);
         }
     }
-
+    
     private static void setBlockType(Block block) {
         try {
             block.setType(Material.valueOf("PLAYER_HEAD"), false);
@@ -236,15 +236,15 @@ public class SkullCreator {
             block.setType(Material.valueOf("SKULL"), false);
         }
     }
-
+    
     private static void notNull(Object o, String name) {
         if (o == null) {
             throw new NullPointerException(name + " should not be null!");
         }
     }
-
+    
     private static String urlToBase64(String url) {
-
+        
         URI actualUrl;
         try {
             actualUrl = new URI(url);
@@ -254,7 +254,7 @@ public class SkullCreator {
         String toEncode = "{\"textures\":{\"SKIN\":{\"url\":\"" + actualUrl.toString() + "\"}}}";
         return Base64.getEncoder().encodeToString(toEncode.getBytes());
     }
-
+    
 }
 
 /* Format for skull

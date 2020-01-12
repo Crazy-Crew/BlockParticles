@@ -13,11 +13,11 @@ import java.lang.reflect.InvocationTargetException;
  *
  */
 public class NBTStringList extends NBTList<String> {
-
+    
     protected NBTStringList(NBTCompound owner, String name, NBTType type, Object list) {
         super(owner, name, type, list);
     }
-
+    
     @Override
     public String get(int index) {
         try {
@@ -26,7 +26,7 @@ public class NBTStringList extends NBTList<String> {
             throw new NbtApiException(ex);
         }
     }
-
+    
     @Override
     protected Object asTag(String object) {
         try {
@@ -38,5 +38,5 @@ public class NBTStringList extends NBTList<String> {
             throw new NbtApiException("Error while wrapping the Object " + object + " to it's NMS object!", e);
         }
     }
-
+    
 }

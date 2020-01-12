@@ -30,44 +30,44 @@ import java.util.zip.GZIPOutputStream;
  * This class is modified by tr7zw to work when the api is shaded into other peoples plugins.
  */
 public class ApiMetricsLite {
-
+    
     private static final String PLUGINNAME = "ItemNBTAPI"; // DO NOT CHANGE THE NAME! else it won't link the data on bStats
     private static final String PLUGINVERSION = "2.1.1"; // In case you fork the nbt-api for internal use in your network, plugins and so on, you *may* add that to the version here. (2.x.x-Timolia or something like that?)
     // Not sure how good of an idea that is, so maybe just leave it as is ¯\_(ツ)_/¯
-
+    
     // The version of this bStats class
     public static final int B_STATS_VERSION = 1;
-
+    
     // The version of the NBT-Api bStats
     public static final int NBT_BSTATS_VERSION = 1;
-
+    
     // The url to which the data is sent
     private static final String URL = "https://bStats.org/submitData/bukkit";
-
+    
     // Is bStats enabled on this server?
     private boolean enabled;
-
+    
     // Should failed requests be logged?
     private static boolean logFailedRequests;
-
+    
     // Should the sent data be logged?
     private static boolean logSentData;
-
+    
     // Should the response text be logged?
     private static boolean logResponseStatusText;
-
+    
     // The uuid of the server
     private static String serverUUID;
-
+    
     // The plugin
     private Plugin plugin;
-
+    
     /**
      * Class constructor.
      *
      */
     public ApiMetricsLite() {
-
+        
         // The register method just uses any enabled plugin it can find to register. This *shouldn't* cause any problems, since the plugin isn't used any other way.
         // Register our service
         for (Plugin plug : Bukkit.getPluginManager().getPlugins()) {
@@ -78,15 +78,15 @@ public class ApiMetricsLite {
         if (plugin == null) {
             return;// Didn't find any plugin that could work
         }
-
+        
         // Get the config file
         File bStatsFolder = new File(plugin.getDataFolder().getParentFile(), "bStats");
         File configFile = new File(bStatsFolder, "config.yml");
         YamlConfiguration config = YamlConfiguration.loadConfiguration(configFile);
-
+        
         // Check if the config file exists
         if (!config.isSet("serverUuid")) {
-
+            
             // Add default values
             config.addDefault("enabled", true);
             // Every server gets it's unique random id.
@@ -97,7 +97,7 @@ public class ApiMetricsLite {
             config.addDefault("logSentData", false);
             // Should the response text be logged?
             config.addDefault("logResponseStatusText", false);
-
+            
             // Inform the server owners about bStats
             config.options().header(
             "bStats collects some data for plugin authors like how many servers are using their plugins.\n" +
@@ -110,7 +110,7 @@ public class ApiMetricsLite {
             } catch (IOException ignored) {
             }
         }
-
+        
         // Load the data
         serverUUID = config.getString("serverUuid");
         logFailedRequests = config.getBoolean("logFailedRequests", false);
@@ -141,7 +141,7 @@ public class ApiMetricsLite {
             }
         }
     }
-
+    
     /**
      * Checks if bStats is enabled.
      *
@@ -150,7 +150,7 @@ public class ApiMetricsLite {
     public boolean isEnabled() {
         return enabled;
     }
-
+    
     /**
      * Starts the Scheduler which submits our data every 30 minutes.
      */
@@ -172,7 +172,7 @@ public class ApiMetricsLite {
         // WARNING: Changing the frequency has no effect but your plugin WILL be blocked/deleted!
         // WARNING: Just don't do it!
     }
-
+    
     /**
      * Gets the plugin specific data.
      * This method is called using Reflection.
@@ -181,14 +181,14 @@ public class ApiMetricsLite {
      */
     public JsonObject getPluginData() {
         JsonObject data = new JsonObject();
-
+        
         data.addProperty("pluginName", PLUGINNAME); // Append the name of the plugin
         data.addProperty("pluginVersion", PLUGINVERSION); // Append the version of the plugin
         data.add("customCharts", new JsonArray());
-
+        
         return data;
     }
-
+    
     /**
      * Gets the server specific data.
      *
@@ -210,44 +210,44 @@ public class ApiMetricsLite {
         int onlineMode = Bukkit.getOnlineMode() ? 1 : 0;
         String bukkitVersion = Bukkit.getVersion();
         String bukkitName = Bukkit.getName();
-
+        
         // OS/Java specific data
         String javaVersion = System.getProperty("java.version");
         String osName = System.getProperty("os.name");
         String osArch = System.getProperty("os.arch");
         String osVersion = System.getProperty("os.version");
         int coreCount = Runtime.getRuntime().availableProcessors();
-
+        
         JsonObject data = new JsonObject();
-
+        
         data.addProperty("serverUUID", serverUUID);
-
+        
         data.addProperty("playerAmount", playerAmount);
         data.addProperty("onlineMode", onlineMode);
         data.addProperty("bukkitVersion", bukkitVersion);
         data.addProperty("bukkitName", bukkitName);
-
+        
         data.addProperty("javaVersion", javaVersion);
         data.addProperty("osName", osName);
         data.addProperty("osArch", osArch);
         data.addProperty("osVersion", osVersion);
         data.addProperty("coreCount", coreCount);
-
+        
         return data;
     }
-
+    
     /**
      * Collects the data and sends it afterwards.
      */
     private void submitData() {
         final JsonObject data = getServerData();
-
+        
         JsonArray pluginData = new JsonArray();
         // Search for all other bStats Metrics classes to get their plugin data
         for (Class<?> service : Bukkit.getServicesManager().getKnownServices()) {
             try {
                 service.getField("B_STATS_VERSION"); // Our identifier :)
-
+                
                 for (RegisteredServiceProvider<?> provider : Bukkit.getServicesManager().getRegistrations(service)) {
                     try {
                         Object plugin = provider.getService().getMethod("getPluginData").invoke(provider.getProvider());
@@ -278,9 +278,9 @@ public class ApiMetricsLite {
             } catch (NoSuchFieldException ignored) {
             }
         }
-
+        
         data.add("plugins", pluginData);
-
+        
         // Create a new thread for the connection to the bStats server
         new Thread(new Runnable() {
             @Override
@@ -298,7 +298,7 @@ public class ApiMetricsLite {
             }
         }).start();
     }
-
+    
     /**
      * Sends the data to the bStats server.
      *
@@ -319,10 +319,10 @@ public class ApiMetricsLite {
             //plugin.getLogger().info("Sending data to bStats: " + data.toString());
         }
         HttpsURLConnection connection = (HttpsURLConnection) new URL(URL).openConnection();
-
+        
         // Compress the data to save bandwidth
         byte[] compressedData = compress(data.toString());
-
+        
         // Add headers
         connection.setRequestMethod("POST");
         connection.addRequestProperty("Accept", "application/json");
@@ -331,17 +331,17 @@ public class ApiMetricsLite {
         connection.addRequestProperty("Content-Length", String.valueOf(compressedData.length));
         connection.setRequestProperty("Content-Type", "application/json"); // We send our data in JSON format
         connection.setRequestProperty("User-Agent", "MC-Server/" + B_STATS_VERSION);
-
+        
         // Send data
         connection.setDoOutput(true);
         DataOutputStream outputStream = new DataOutputStream(connection.getOutputStream());
         outputStream.write(compressedData);
         outputStream.flush();
         outputStream.close();
-
+        
         InputStream inputStream = connection.getInputStream();
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-
+        
         StringBuilder builder = new StringBuilder();
         String line;
         while ((line = bufferedReader.readLine()) != null) {
@@ -353,7 +353,7 @@ public class ApiMetricsLite {
             //plugin.getLogger().info("Sent data to bStats and received response: " + builder.toString());
         }
     }
-
+    
     /**
      * Gzips the given String.
      *
@@ -371,5 +371,5 @@ public class ApiMetricsLite {
         gzip.close();
         return outputStream.toByteArray();
     }
-
+    
 }

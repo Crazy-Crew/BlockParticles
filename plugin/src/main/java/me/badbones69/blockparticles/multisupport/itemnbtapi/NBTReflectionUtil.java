@@ -23,14 +23,14 @@ import java.util.Set;
  *
  */
 public class NBTReflectionUtil {
-
+    
     /**
      * Hidden constructor
      */
     private NBTReflectionUtil() {
-
+    
     }
-
+    
     /**
      * Gets the NMS Entity for a given Bukkit Entity
      *
@@ -44,7 +44,7 @@ public class NBTReflectionUtil {
             throw new NbtApiException("Exception while getting the NMS Entity from a Bukkit Entity!", e);
         }
     }
-
+    
     /**
      * Reads in a FileInputStream as NMS Compound
      *
@@ -58,7 +58,7 @@ public class NBTReflectionUtil {
             throw new NbtApiException("Exception while reading a NBT File!", e);
         }
     }
-
+    
     /**
      * Writes a NMS Compound to a FileOutputStream
      *
@@ -73,7 +73,7 @@ public class NBTReflectionUtil {
             throw new NbtApiException("Exception while saving a NBT File!", e);
         }
     }
-
+    
     /**
      * Simulates getOrCreateTag. If an Item doesn't yet have a Tag, it will return a
      * new empty tag.
@@ -89,7 +89,7 @@ public class NBTReflectionUtil {
             throw new NbtApiException("Exception while getting an Itemstack's NBTCompound!", e);
         }
     }
-
+    
     /**
      * Converts {@link NBTCompound} to NMS ItemStacks
      *
@@ -107,7 +107,7 @@ public class NBTReflectionUtil {
             throw new NbtApiException("Exception while converting NBTCompound to NMS ItemStack!", e);
         }
     }
-
+    
     /**
      * Converts NMS ItemStacks to {@link NBTContainer}
      *
@@ -122,7 +122,7 @@ public class NBTReflectionUtil {
             throw new NbtApiException("Exception while converting NMS ItemStack to NBTCompound!", e);
         }
     }
-
+    
     /**
      * Gets the Vanilla NBT Compound from a given NMS Entity
      *
@@ -140,7 +140,7 @@ public class NBTReflectionUtil {
             throw new NbtApiException("Exception while getting NBTCompound from NMS Entity!", e);
         }
     }
-
+    
     /**
      * Loads all Vanilla tags from a NMS Compound into a NMS Entity
      *
@@ -156,7 +156,7 @@ public class NBTReflectionUtil {
             throw new NbtApiException("Exception while setting the NBTCompound of an Entity", ex);
         }
     }
-
+    
     /**
      * Gets the NMS Compound from a given TileEntity
      *
@@ -178,7 +178,7 @@ public class NBTReflectionUtil {
             throw new NbtApiException("Exception while getting NBTCompound from TileEntity!", e);
         }
     }
-
+    
     /**
      * Sets Vanilla tags from a NMS Compound to a TileEntity
      *
@@ -196,7 +196,7 @@ public class NBTReflectionUtil {
             throw new NbtApiException("Exception while setting NBTData for a TileEntity!", e);
         }
     }
-
+    
     /**
      * Gets the subCompound with a given name from a NMS Compound
      *
@@ -215,7 +215,7 @@ public class NBTReflectionUtil {
             throw new NbtApiException("Exception while getting NBT subcompounds!", e);
         }
     }
-
+    
     /**
      * Creates a subCompound with a given name in the given NMS Compound
      *
@@ -242,7 +242,7 @@ public class NBTReflectionUtil {
             throw new NbtApiException("Exception while adding a Compound!", e);
         }
     }
-
+    
     /**
      * Checks if the Compound is correctly linked to it's roots
      *
@@ -256,7 +256,7 @@ public class NBTReflectionUtil {
         }
         return (gettoCompount(root, comp)) != null;
     }
-
+    
     protected static Object gettoCompount(Object nbttag, NBTCompound comp) {
         Deque<String> structure = new ArrayDeque<>();
         while (comp.getParent() != null) {
@@ -272,7 +272,7 @@ public class NBTReflectionUtil {
         }
         return nbttag;
     }
-
+    
     /**
      * Merges the second {@link NBTCompound} into the first one
      *
@@ -294,7 +294,7 @@ public class NBTReflectionUtil {
             throw new NbtApiException("Exception while merging two NBTCompounds!", e);
         }
     }
-
+    
     /**
      * Returns the content for a given key inside a Compound
      *
@@ -316,7 +316,7 @@ public class NBTReflectionUtil {
             throw new NbtApiException("Exception while getting the Content for key '" + key + "'!", e);
         }
     }
-
+    
     /**
      * Sets a key in a {@link NBTCompound} to a given value
      *
@@ -344,7 +344,7 @@ public class NBTReflectionUtil {
             throw new NbtApiException("Exception while setting key '" + key + "' to '" + val + "'!", e);
         }
     }
-
+    
     /**
      * Returns the List saved with a given key.
      *
@@ -378,7 +378,7 @@ public class NBTReflectionUtil {
             throw new NbtApiException("Exception while getting a list with the type '" + type + "'!", ex);
         }
     }
-
+    
     /**
      * Uses Gson to set a {@link Serializable} value in a Compound
      *
@@ -396,7 +396,7 @@ public class NBTReflectionUtil {
             throw new NbtApiException("Exception while setting the Object '" + value + "'!", e);
         }
     }
-
+    
     /**
      * Uses Gson to load back a {@link Serializable} object from the Compound
      *
@@ -414,7 +414,7 @@ public class NBTReflectionUtil {
         }
         return GsonWrapper.deserializeJson(json, type);
     }
-
+    
     /**
      * Deletes the given key
      *
@@ -432,7 +432,7 @@ public class NBTReflectionUtil {
         ReflectionMethod.COMPOUND_REMOVE_KEY.run(workingtag, key);
         comp.setCompound(rootnbttag);
     }
-
+    
     /**
      * Gets the Keyset inside this Compound
      *
@@ -450,7 +450,7 @@ public class NBTReflectionUtil {
         Object workingtag = gettoCompount(rootnbttag, comp);
         return (Set<String>) ReflectionMethod.COMPOUND_GET_KEYS.run(workingtag);
     }
-
+    
     /**
      * Sets data inside the Compound
      *
@@ -474,7 +474,7 @@ public class NBTReflectionUtil {
         type.run(workingtag, key, data);
         comp.setCompound(rootnbttag);
     }
-
+    
     /**
      * Gets data from the Compound
      *
@@ -493,5 +493,5 @@ public class NBTReflectionUtil {
         Object workingtag = gettoCompount(rootnbttag, comp);
         return type.run(workingtag, key);
     }
-
+    
 }

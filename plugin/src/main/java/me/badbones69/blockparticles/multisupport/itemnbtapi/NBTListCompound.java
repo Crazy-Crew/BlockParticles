@@ -14,15 +14,15 @@ import java.util.Set;
  *
  */
 public class NBTListCompound {
-
+    
     private NBTList<?> owner;
     private Object compound;
-
+    
     protected NBTListCompound(NBTList<?> parent, Object obj) {
         owner = parent;
         compound = obj;
     }
-
+    
     /**
      * String setter
      *
@@ -41,7 +41,7 @@ public class NBTListCompound {
             throw new NbtApiException(ex);
         }
     }
-
+    
     /**
      * int setter
      *
@@ -56,7 +56,7 @@ public class NBTListCompound {
             throw new NbtApiException(ex);
         }
     }
-
+    
     /**
      * int getter
      *
@@ -70,7 +70,7 @@ public class NBTListCompound {
             throw new NbtApiException(ex);
         }
     }
-
+    
     /**
      * double setter
      *
@@ -85,7 +85,7 @@ public class NBTListCompound {
             throw new NbtApiException(ex);
         }
     }
-
+    
     /**
      * double getter
      *
@@ -99,7 +99,7 @@ public class NBTListCompound {
             throw new NbtApiException(ex);
         }
     }
-
+    
     /**
      * String getter
      *
@@ -113,7 +113,7 @@ public class NBTListCompound {
             throw new NbtApiException(ex);
         }
     }
-
+    
     /**
      * Checks for a given key
      *
@@ -127,7 +127,7 @@ public class NBTListCompound {
             throw new NbtApiException(ex);
         }
     }
-
+    
     /**
      * @return Set containing all keys
      */
@@ -139,7 +139,7 @@ public class NBTListCompound {
             throw new NbtApiException(ex);
         }
     }
-
+    
     /**
      * Removes a key from the Compound
      *
@@ -152,5 +152,5 @@ public class NBTListCompound {
             throw new NbtApiException(ex);
         }
     }
-
+    
 }

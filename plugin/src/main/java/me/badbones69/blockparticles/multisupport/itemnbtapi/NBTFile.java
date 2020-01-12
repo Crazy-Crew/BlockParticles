@@ -14,10 +14,10 @@ import java.io.IOException;
  *
  */
 public class NBTFile extends NBTCompound {
-
+    
     private final File file;
     private Object nbt;
-
+    
     /**
      * Creates a NBTFile that uses @param file to store it's data. If this file
      * exists, the data will be loaded.
@@ -36,7 +36,7 @@ public class NBTFile extends NBTCompound {
             save();
         }
     }
-
+    
     /**
      * Saves the data to the file
      *
@@ -51,22 +51,22 @@ public class NBTFile extends NBTCompound {
         FileOutputStream outStream = new FileOutputStream(file);
         NBTReflectionUtil.saveNBTFile(nbt, outStream);
     }
-
+    
     /**
      * @return The File used to store the data
      */
     public File getFile() {
         return file;
     }
-
+    
     @Override
     public Object getCompound() {
         return nbt;
     }
-
+    
     @Override
     protected void setCompound(Object compound) {
         nbt = compound;
     }
-
+    
 }
