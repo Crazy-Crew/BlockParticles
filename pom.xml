@@ -7,7 +7,7 @@
     <groupId>me.badbones69</groupId>
     <artifactId>blockparticles-parent</artifactId>
     <packaging>pom</packaging>
-    <version>1.11</version>
+    <version>1.11.1</version>
     <modules>
         <module>v1_13_R1_Up</module>
         <module>v1_12_R1_Down</module>
