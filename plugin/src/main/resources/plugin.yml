@@ -7,6 +7,6 @@ description: Add particles to blocks!
 api-version: 1.13
 
 commands:
-  blockparticles:
+  blockparticle:
     description: Adds particles to blocks!
-    aliases: [bp, bparticles]
+    aliases: [blockparticles,bp, bparticle, bparticles]

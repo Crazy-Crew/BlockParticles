@@ -1,10 +1,8 @@
 package me.badbones69.blockparticles.controllers;
 
-import me.badbones69.blockparticles.BlockParticles;
 import me.badbones69.blockparticles.Methods;
-import me.badbones69.blockparticles.api.FileManager;
 import me.badbones69.blockparticles.api.ParticleManager;
-import me.badbones69.blockparticles.hook.HeadDatabaseHook;
+import me.badbones69.blockparticles.api.objects.CustomFountain;
 import me.badbones69.blockparticles.multisupport.Version;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -18,7 +16,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
@@ -27,7 +24,7 @@ import java.util.List;
 import java.util.Random;
 
 public class Fountains implements Listener {
-
+    
     private static Random random = new Random();
     private static ParticleManager bp = ParticleManager.getInstance();
     private static List<String> pokemonHeads = Arrays.asList(
@@ -169,20 +166,19 @@ public class Fountains implements Listener {
     "32f0489ca126a6e9f9afa59eb491b1853395b582b454fc2ad48027226252d121",
     "b5651a18f54714b0b8f7f011c018373b33fd1541ca6f1cfe7a6c97b65241f5",
     "f5612dc7b86d71afc1197301c15fd979e9f39e7b1f41d8f1ebdf8115576e2e");
-
+    
     private static float randomVector() {
         return (float) -.1 + (float) (Math.random() * ((.1 - -.1)));
     }
-
-    public static void startCustomFountain(Location loc, String id, String fountainId) {
+    
+    public static void startCustomFountain(Location loc, String id, String fountainName) {
+        startCustomFountain(loc, id, bp.getCustomFountain(fountainName));
+    }
+    
+    public static void startCustomFountain(Location loc, String id, CustomFountain fountain) {
         bp.getParticleControl().getLocations().put(id, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(bp.getPlugin(), () -> {
-            for (String head : getRandomHeads(FileManager.Files.CONFIG.getFile().getStringList("settings.heads." + fountainId))) {
-                ItemStack headStack = HeadDatabaseHook.getHead(head);
-                if (headStack == null) {
-                    JavaPlugin.getPlugin(BlockParticles.class).getLogger().warning("Head item '" + head + "' for id " + fountainId + " is invalid!");
-                    return;
-                }
-                final Item headItem = Bukkit.getWorld(loc.getWorld().getName()).dropItem(loc.clone().add(.5, .8, .5), headStack);
+            for (ItemStack head : getRandomCustomHead(fountain.getHeads())) {
+                final Item headItem = Bukkit.getWorld(loc.getWorld().getName()).dropItem(loc.clone().add(.5, .8, .5), head);
                 if (Version.getCurrentVersion().isNewer(Version.v1_8_R3)) {
                     headItem.setVelocity(new Vector(randomVector(), .01, randomVector()));
                 } else {
@@ -196,7 +192,7 @@ public class Fountains implements Listener {
             }
         }, 0, 3));
     }
-
+    
     public static void startHalloween(final Location loc, String id) {
         bp.getParticleControl().getLocations().put(id, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(bp.getPlugin(), () -> {
             ItemStack flesh = new ItemStack(Material.ROTTEN_FLESH);
@@ -233,7 +229,7 @@ public class Fountains implements Listener {
             }, 2 * 20);
         }, 0, 2));
     }
-
+    
     public static void startGems(final Location loc, String id) {
         bp.getParticleControl().getLocations().put(id, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(bp.getPlugin(), () -> {
             ItemStack emerald = new ItemStack(Material.EMERALD);
@@ -263,7 +259,7 @@ public class Fountains implements Listener {
             }, 2 * 20);
         }, 0, 2));
     }
-
+    
     public static void startHeads(final Location loc, String id) {
         bp.getParticleControl().getLocations().put(id, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(bp.getPlugin(), () -> {
             String name;
@@ -286,7 +282,7 @@ public class Fountains implements Listener {
             }
         }, 0, 3));
     }
-
+    
     public static void startPresents(final Location loc, String id) {
         bp.getParticleControl().getLocations().put(id, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(bp.getPlugin(), () -> {
             for (String head : getRandomHeads(presentHeads)) {
@@ -304,7 +300,7 @@ public class Fountains implements Listener {
             }
         }, 0, 3));
     }
-
+    
     public static void startMobs(final Location loc, String id) {
         bp.getParticleControl().getLocations().put(id, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(bp.getPlugin(), () -> {
             for (String head : getRandomHeads(mobHeads)) {
@@ -322,7 +318,7 @@ public class Fountains implements Listener {
             }
         }, 0, 3));
     }
-
+    
     public static void startFood(final Location loc, String id) {
         bp.getParticleControl().getLocations().put(id, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(bp.getPlugin(), () -> {
             for (String head : getRandomHeads(foodHeads)) {
@@ -340,7 +336,7 @@ public class Fountains implements Listener {
             }
         }, 0, 3));
     }
-
+    
     public static void startPokemon(final Location loc, String id) {
         bp.getParticleControl().getLocations().put(id, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(bp.getPlugin(), () -> {
             for (String head : getRandomHeads(pokemonHeads)) {
@@ -358,7 +354,7 @@ public class Fountains implements Listener {
             }
         }, 0, 3));
     }
-
+    
     public static void startMario(final Location loc, String id) {
         bp.getParticleControl().getLocations().put(id, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(bp.getPlugin(), () -> {
             for (String head : getRandomHeads(marioHeads)) {
@@ -376,7 +372,7 @@ public class Fountains implements Listener {
             }
         }, 0, 3));
     }
-
+    
     private static List<String> getRandomHeads(List<String> headList) {
         List<String> pickedHeads = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
@@ -385,7 +381,16 @@ public class Fountains implements Listener {
         }
         return pickedHeads;
     }
-
+    
+    private static List<ItemStack> getRandomCustomHead(List<ItemStack> headList) {
+        List<ItemStack> pickedHeads = new ArrayList<>();
+        for (int i = 0; i < 3; i++) {
+            int p = random.nextInt(headList.size());
+            pickedHeads.add(headList.get(p));
+        }
+        return pickedHeads;
+    }
+    
     @SuppressWarnings("deprecation")
     private static List<Entity> getNearbyEntities(Location loc, double x, double y, double z) {
         if (loc == null || loc.getWorld() == null) return new ArrayList<>();
@@ -394,12 +399,12 @@ public class Fountains implements Listener {
         ent.remove();
         return out;
     }
-
+    
     @EventHandler
     public void onHopperPickUp(InventoryPickupItemEvent e) {
         if (bp.getFountainItem().contains(e.getItem())) {
             e.setCancelled(true);
         }
     }
-
+    
 }

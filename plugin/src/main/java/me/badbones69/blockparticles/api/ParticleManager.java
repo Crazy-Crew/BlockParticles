@@ -3,6 +3,7 @@ package me.badbones69.blockparticles.api;
 import me.badbones69.blockparticles.api.FileManager.Files;
 import me.badbones69.blockparticles.api.enums.ParticleType;
 import me.badbones69.blockparticles.api.enums.Particles;
+import me.badbones69.blockparticles.api.objects.CustomFountain;
 import me.badbones69.blockparticles.api.objects.Particle;
 import me.badbones69.blockparticles.controllers.Fountains;
 import me.badbones69.blockparticles.controllers.ParticleControl;
@@ -22,20 +23,22 @@ import java.util.HashMap;
 import java.util.List;
 
 public class ParticleManager {
-
+    
     private static ParticleManager instance = new ParticleManager();
     private FileManager fileManager = FileManager.getInstance();
     private Plugin plugin;
     private List<Entity> fountainItems = new ArrayList<>();
+    private List<CustomFountain> customFountains = new ArrayList<>();
     private HashMap<Player, String> setCommandPlayers = new HashMap<>();
     private ParticleControl particleControl;
-
+    
     public static ParticleManager getInstance() {
         return instance;
     }
-
+    
     public void load() {
         particleControl = Version.getCurrentVersion().isNewer(Version.v1_12_R1) ? new NMS_v1_13_Up() : new NMS_v1_12_Down();
+        customFountains.clear();
         if (hasOldFiles()) {
             String prefix = fileManager.getPrefix();
             boolean isLogging = fileManager.isLogging();
@@ -44,23 +47,42 @@ public class ParticleManager {
             convertOldFiles();
             if (isLogging) System.out.println(prefix + "Finished converting old files.");
         }
+        FileConfiguration config = Files.CONFIG.getFile();
+        if (config.contains("settings.heads")) {
+            for (String customFountain : config.getConfigurationSection("settings.heads").getKeys(false)) {
+                customFountains.add(new CustomFountain(customFountain, config.getStringList("settings.heads." + customFountain)));
+            }
+        }
     }
-
+    
     public Plugin getPlugin() {
         if (plugin == null) {
             plugin = Bukkit.getServer().getPluginManager().getPlugin("BlockParticles");
         }
         return plugin;
     }
-
+    
     public ParticleControl getParticleControl() {
         return particleControl;
     }
-
+    
+    public List<CustomFountain> getCustomFountains() {
+        return customFountains;
+    }
+    
+    public CustomFountain getCustomFountain(String name) {
+        for (CustomFountain fountain : customFountains) {
+            if (fountain.getName().equalsIgnoreCase(name)) {
+                return fountain;
+            }
+        }
+        return null;
+    }
+    
     public boolean hasOldFiles() {
         return Files.CONFIG.getFile().contains("Settings") || Files.DATA.getFile().contains("Locations");
     }
-
+    
     public void convertOldFiles() {
         String prefix = fileManager.getPrefix();
         boolean isLogging = fileManager.isLogging();
@@ -95,7 +117,7 @@ public class ParticleManager {
             if (isLogging) System.out.println(prefix + "Finished converting data.yml.");
         }
     }
-
+    
     public boolean hasParticle(Location loc) {
         FileConfiguration data = Files.DATA.getFile();
         if (data.contains("locations")) {
@@ -112,19 +134,19 @@ public class ParticleManager {
         }
         return false;
     }
-
+    
     public List<Entity> getFountainItem() {
         return fountainItems;
     }
-
+    
     public void addFountainItem(Entity item) {
         fountainItems.add(item);
     }
-
+    
     public void removeFountainItem(Entity item) {
         fountainItems.remove(item);
     }
-
+    
     /**
      * Set a Particle to a specified Location;
      *
@@ -277,7 +299,7 @@ public class ParticleManager {
                 break;
         }
     }
-
+    
     /**
      * Remove a Particle;
      *
@@ -289,7 +311,7 @@ public class ParticleManager {
             particleControl.getLocations().remove(name);
         }
     }
-
+    
     /**
      * Get the Particle Type of a Particle (Particle/Fountain).
      *
@@ -299,17 +321,17 @@ public class ParticleManager {
     public ParticleType getType(Particles particle) {
         return particle.getType();
     }
-
+    
     public void addSetCommandPlayer(Player player, String type) {
         setCommandPlayers.put(player, type);
     }
-
+    
     public HashMap<Player, String> getSetCommandPlayers() {
         return setCommandPlayers;
     }
-
+    
     public boolean useNewMaterial() {
         return Version.getCurrentVersion().isNewer(Version.v1_12_R1);
     }
-
+    
 }
