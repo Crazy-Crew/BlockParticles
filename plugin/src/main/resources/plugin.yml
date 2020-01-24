@@ -9,4 +9,4 @@ api-version: 1.13
 commands:
   blockparticle:
     description: Adds particles to blocks!
-    aliases: [blockparticles,bp, bparticle, bparticles]
+    aliases: [blockparticles, bp, bparticle, bparticles]
