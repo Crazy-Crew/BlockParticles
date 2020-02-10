@@ -17,7 +17,7 @@
             <artifactId>hdb</artifactId>
             <version>1.0.0</version>
             <scope>system</scope>
-            <systemPath>${pom.basedir}/../libs/HeadDatabaseAPI.jar</systemPath>
+            <systemPath>${project.basedir}/../libs/HeadDatabaseAPI.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>me.badbones69</groupId>
@@ -46,7 +46,7 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.15.1-R0.1-SNAPSHOT</version>
+            <version>1.15.2-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
