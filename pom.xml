@@ -15,6 +15,19 @@
         <module>plugin</module>
     </modules>
 
+    <distributionManagement>
+        <repository>
+            <id>nexus</id>
+            <name>maven-releases</name>
+            <url>https://nexus.badbones69.com/repository/maven-releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>nexus</id>
+            <name>maven-snapshots</name>
+            <url>https://nexus.badbones69.com/repository/maven-snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
+
     <properties>
         <build.number>-SNAPSHOT</build.number>
     </properties>
