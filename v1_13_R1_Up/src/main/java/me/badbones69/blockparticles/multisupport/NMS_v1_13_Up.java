@@ -16,10 +16,10 @@ import java.util.Random;
 
 public class NMS_v1_13_Up implements ParticleControl {
     
-    private HashMap<String, Integer> locations = new HashMap<>();
-    private Plugin plugin = Bukkit.getPluginManager().getPlugin("BlockParticles");
-    private int range = 25;
-    private Random random = new Random();
+    private final HashMap<String, Integer> locations = new HashMap<>();
+    private final Plugin plugin = Bukkit.getPluginManager().getPlugin("BlockParticles");
+    private final int range = 25;
+    private final Random random = new Random();
     
     private Location randomDrop(Location location) {
         double x = random.nextInt(100) / 100.0 - .50;
@@ -37,7 +37,7 @@ public class NMS_v1_13_Up implements ParticleControl {
     
     public void playVolcano(final Location location, String id) {
         locations.put(id, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-            Location l = location.add(.5, .8, .5);
+            final Location l = location.add(.5, .8, .5);
             
             @Override
             public void run() {
@@ -49,7 +49,7 @@ public class NMS_v1_13_Up implements ParticleControl {
     
     public void playBigFlame(final Location location, String id) {
         locations.put(id, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-            Location l = location.clone().add(.5, .1, .5);
+            final Location l = location.clone().add(.5, .1, .5);
             
             @Override
             public void run() {
@@ -64,7 +64,7 @@ public class NMS_v1_13_Up implements ParticleControl {
     
     public void playFlame(final Location location, String id) {
         locations.put(id, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-            Location l = location.add(.5, .1, .5);
+            final Location l = location.add(.5, .1, .5);
             
             @Override
             public void run() {
@@ -79,9 +79,9 @@ public class NMS_v1_13_Up implements ParticleControl {
     
     public void playDoubleSpiral(final Location location, String id, Particles particles, int amount) {
         locations.put(id, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-            Location l = location.add(.5, .7, .5);
+            final Location l = location.add(.5, .7, .5);
             int time = 16;
-            Particle particle = particles == Particles.DOUBLEWITCH ? Particle.SPELL_WITCH : Particle.FIREWORKS_SPARK;
+            final Particle particle = particles == Particles.DOUBLEWITCH ? Particle.SPELL_WITCH : Particle.FIREWORKS_SPARK;
             
             @Override
             public void run() {
@@ -158,9 +158,9 @@ public class NMS_v1_13_Up implements ParticleControl {
     
     public void playSpiral(final Location location, String id, Particles particles, int amount) {
         locations.put(id, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-            Location l = location.add(.5, .7, .5);
+            final Location l = location.add(.5, .7, .5);
             int time = 16;
-            Particle particle = particles == Particles.WITCH ? Particle.SPELL_WITCH : Particle.FIREWORKS_SPARK;
+            final Particle particle = particles == Particles.WITCH ? Particle.SPELL_WITCH : Particle.FIREWORKS_SPARK;
             
             @Override
             public void run() {
@@ -191,7 +191,7 @@ public class NMS_v1_13_Up implements ParticleControl {
     
     public void playCrit(final Location location, String id) {
         locations.put(id, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-            Location l = location.add(.5, 1.1, .5);
+            final Location l = location.add(.5, 1.1, .5);
             
             @Override
             public void run() {
@@ -203,7 +203,7 @@ public class NMS_v1_13_Up implements ParticleControl {
     
     public void playBigCrit(final Location location, String id) {
         locations.put(id, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-            Location l = location.add(.5, .5, .5);
+            final Location l = location.add(.5, .5, .5);
             
             @Override
             public void run() {
@@ -216,7 +216,7 @@ public class NMS_v1_13_Up implements ParticleControl {
     
     public void playStorm(final Location location, String id) {
         locations.put(id, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-            Location l = location.add(.5, 2, .5);
+            final Location l = location.add(.5, 2, .5);
             
             @Override
             public void run() {
@@ -229,7 +229,7 @@ public class NMS_v1_13_Up implements ParticleControl {
     
     public void playFog(final Location location, String id) {
         locations.put(id, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-            Location l = location.add(.5, .5, .5);
+            final Location l = location.add(.5, .5, .5);
             
             @Override
             public void run() {
@@ -241,7 +241,7 @@ public class NMS_v1_13_Up implements ParticleControl {
     
     public void playEnchant(final Location location, String id) {
         locations.put(id, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-            Location l = location.add(.5, 1.5, .5);
+            final Location l = location.add(.5, 1.5, .5);
             
             @Override
             public void run() {
@@ -253,7 +253,7 @@ public class NMS_v1_13_Up implements ParticleControl {
     
     public void playChains(final Location location, String id) {
         locations.put(id, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-            Location l = location.add(.5, .1, .5);
+            final Location l = location.add(.5, .1, .5);
             
             @Override
             public void run() {
@@ -295,7 +295,7 @@ public class NMS_v1_13_Up implements ParticleControl {
     
     public void playFireStorm(final Location location, String id) {
         locations.put(id, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-            Location l = location.add(.5, 2, .5);
+            final Location l = location.add(.5, 2, .5);
             
             @Override
             public void run() {
@@ -315,7 +315,7 @@ public class NMS_v1_13_Up implements ParticleControl {
     
     public void playSnow(final Location location, String id) {
         locations.put(id, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-            Location l = location.add(.5, 2, .5);
+            final Location l = location.add(.5, 2, .5);
             
             @Override
             public void run() {
@@ -327,7 +327,7 @@ public class NMS_v1_13_Up implements ParticleControl {
     
     public void playSpew(final Location location, String id) {
         locations.put(id, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-            Location l = location.add(.5, 1, .5);
+            final Location l = location.add(.5, 1, .5);
             
             @Override
             public void run() {
@@ -339,7 +339,7 @@ public class NMS_v1_13_Up implements ParticleControl {
     
     public void playPotion(final Location location, String id) {
         locations.put(id, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-            Location l = location.add(.5, .2, .5);
+            final Location l = location.add(.5, .2, .5);
             
             @Override
             public void run() {
@@ -353,8 +353,8 @@ public class NMS_v1_13_Up implements ParticleControl {
     
     public void playMusic(final Location location, String id) {
         locations.put(id, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-            Location l = location.add(.5, .2, .5);
-            ArrayList<Location> locs = getCircle(l, 1, 16);
+            final Location l = location.add(.5, .2, .5);
+            final ArrayList<Location> locs = getCircle(l, 1, 16);
             int time = 0;
             
             @Override
@@ -402,7 +402,7 @@ public class NMS_v1_13_Up implements ParticleControl {
     
     public void playMagic(final Location location, String id) {
         locations.put(id, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-            Location l = location.add(.5, .5, .5);
+            final Location l = location.add(.5, .5, .5);
             int time = 16;
             
             @Override
@@ -475,7 +475,7 @@ public class NMS_v1_13_Up implements ParticleControl {
     
     public void playSnowStorm(final Location location, String id) {
         locations.put(id, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-            Location l = location.add(.5, 2, .5);
+            final Location l = location.add(.5, 2, .5);
             
             @Override
             public void run() {
@@ -488,7 +488,7 @@ public class NMS_v1_13_Up implements ParticleControl {
     
     public void playFireSpew(final Location location, String id) {
         locations.put(id, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-            Location l = location.add(.5, 1, .5);
+            final Location l = location.add(.5, 1, .5);
             
             @Override
             public void run() {
@@ -502,7 +502,7 @@ public class NMS_v1_13_Up implements ParticleControl {
     
     public void playFootPrint(final Location location, String id) {
         locations.put(id, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-            Location l = location.add(.5, .1, .5);
+            final Location l = location.add(.5, .1, .5);
             
             @Override
             public void run() {
@@ -514,7 +514,7 @@ public class NMS_v1_13_Up implements ParticleControl {
     
     public void playHappyVillager(final Location location, String id) {
         locations.put(id, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-            Location l = location.add(.5, .1, .5);
+            final Location l = location.add(.5, .1, .5);
             
             @Override
             public void run() {
@@ -526,7 +526,7 @@ public class NMS_v1_13_Up implements ParticleControl {
     
     public void playAngryVillager(final Location location, String id) {
         locations.put(id, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-            Location l = location.add(.5, .1, .5);
+            final Location l = location.add(.5, .1, .5);
             
             @Override
             public void run() {
@@ -538,7 +538,7 @@ public class NMS_v1_13_Up implements ParticleControl {
     
     public void playMobSpawner(final Location location, String id) {
         locations.put(id, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-            Location l = location.add(.5, .1, .5);
+            final Location l = location.add(.5, .1, .5);
             
             @Override
             public void run() {
@@ -550,7 +550,7 @@ public class NMS_v1_13_Up implements ParticleControl {
     
     public void startWater(final Location location, String id) {
         locations.put(id, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-            Location l = location.add(.5, .8, .6);
+            final Location l = location.add(.5, .8, .6);
             
             @Override
             public void run() {
@@ -567,7 +567,7 @@ public class NMS_v1_13_Up implements ParticleControl {
     
     public void playEnderSignal(final Location location, String id) {
         locations.put(id, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-            Location l = location.add(.5, 0, .5);
+            final Location l = location.add(.5, 0, .5);
             
             @Override
             public void run() {
@@ -582,7 +582,7 @@ public class NMS_v1_13_Up implements ParticleControl {
     
     public void playRainbow(final Location location, String id) {
         locations.put(id, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-            Location l = location.add(.5, .1, .5);
+            final Location l = location.add(.5, .1, .5);
             
             @Override
             public void run() {
@@ -598,7 +598,7 @@ public class NMS_v1_13_Up implements ParticleControl {
     
     public void playSnowBlast(final Location location, String id) {
         locations.put(id, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-            Location l = location.add(.5, .5, .5);
+            final Location l = location.add(.5, .5, .5);
             
             @Override
             public void run() {
@@ -610,7 +610,7 @@ public class NMS_v1_13_Up implements ParticleControl {
     
     public void playHalo(final Location location, String id) {
         locations.put(id, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-            Location l = location.add(.5, 1.3, .5);
+            final Location l = location.add(.5, 1.3, .5);
             
             @Override
             public void run() {
@@ -643,17 +643,17 @@ public class NMS_v1_13_Up implements ParticleControl {
     
     public void playSantaHat(final Location location, String id) {
         locations.put(id, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-            Location l1 = location.clone().add(.5, 1, .5);
-            Location l2 = l1.clone().add(0, .05, 0);
-            Location l3 = l2.clone().add(0, .05, 0);
-            Location l4 = l3.clone().add(0, .05, 0);
-            Location l5 = l4.clone().add(0, .05, 0);
-            Location l6 = l5.clone().add(0, .05, 0);
-            Location l7 = l6.clone().add(0, .05, 0);
-            Location l8 = l7.clone().add(0, .05, 0);
-            Location l9 = l8.clone().add(0, .05, 0);
-            Location l10 = l9.clone().add(0, .1, 0);
-            Location l11 = l10.clone().add(0, .05, 0);
+            final Location l1 = location.clone().add(.5, 1, .5);
+            final Location l2 = l1.clone().add(0, .05, 0);
+            final Location l3 = l2.clone().add(0, .05, 0);
+            final Location l4 = l3.clone().add(0, .05, 0);
+            final Location l5 = l4.clone().add(0, .05, 0);
+            final Location l6 = l5.clone().add(0, .05, 0);
+            final Location l7 = l6.clone().add(0, .05, 0);
+            final Location l8 = l7.clone().add(0, .05, 0);
+            final Location l9 = l8.clone().add(0, .05, 0);
+            final Location l10 = l9.clone().add(0, .1, 0);
+            final Location l11 = l10.clone().add(0, .05, 0);
             
             @Override
             public void run() {
@@ -695,12 +695,12 @@ public class NMS_v1_13_Up implements ParticleControl {
     public void playSoulWell(final Location location, final String id) {
         final HashMap<Integer, Integer> S = new HashMap<>();
         locations.put(id, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-            Location l = location.clone().add(.5, 0, .5);
+            final Location l = location.clone().add(.5, 0, .5);
             
             void startSoulWell(final Location location, final String id) {
                 final int num = random.nextInt(Integer.MAX_VALUE);
                 S.put(num, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-                    Location height = location.clone();
+                    final Location height = location.clone();
                     int loc = 0;
                     int lifeSpan = 0;
                     
@@ -733,12 +733,12 @@ public class NMS_v1_13_Up implements ParticleControl {
     public void playBigSoulWell(final Location location, final String id) {
         final HashMap<Integer, Integer> S = new HashMap<>();
         locations.put(id, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-            Location l = location.clone().add(.5, 0, .5);
+            final Location l = location.clone().add(.5, 0, .5);
             
             void startBigSoulWell(final Location location, final String id) {
                 final int num = random.nextInt(Integer.MAX_VALUE);
                 S.put(num, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-                    Location height = location.clone();
+                    final Location height = location.clone();
                     int loc = 0;
                     int lifeSpan = 0;
                     
@@ -771,12 +771,12 @@ public class NMS_v1_13_Up implements ParticleControl {
     public void playFlameWheel(final Location location, final String id) {
         final HashMap<Integer, Integer> S = new HashMap<>();
         locations.put(id, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-            Location l = location.clone().add(.5, .1, .5);
+            final Location l = location.clone().add(.5, .1, .5);
             
             void startFlameWheel(final Location location, final String id) {
                 final int num = random.nextInt(Integer.MAX_VALUE);
                 S.put(num, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-                    Location l = location.clone();
+                    final Location l = location.clone();
                     int i = 0;
                     int o = 74;
                     int f = 0;
@@ -832,12 +832,12 @@ public class NMS_v1_13_Up implements ParticleControl {
     public void playWitchTornado(final Location location, final String id) {
         final HashMap<Integer, Integer> S = new HashMap<>();
         locations.put(id, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-            Location l = location.clone().add(.5, 0, .5);
+            final Location l = location.clone().add(.5, 0, .5);
             
             void startWitchTornado(final Location location, final String id) {
                 final int num = random.nextInt(Integer.MAX_VALUE);
                 S.put(num, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-                    Location height = location.clone().add(0, 5, 0);
+                    final Location height = location.clone().add(0, 5, 0);
                     int nextLocation = 0;
                     int diamaterSwitch = 0;
                     double radius = 1.5;
@@ -875,12 +875,12 @@ public class NMS_v1_13_Up implements ParticleControl {
     public void playLoveTornado(final Location location, final String id) {
         final HashMap<Integer, Integer> S = new HashMap<>();
         locations.put(id, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-            Location l = location.clone().add(.5, 0, .5);
+            final Location l = location.clone().add(.5, 0, .5);
             
             void startLoveTornado(final Location location, final String id) {
                 final int num = random.nextInt(Integer.MAX_VALUE);
                 S.put(num, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-                    Location height = location.clone().add(0, 5, 0);
+                    final Location height = location.clone().add(0, 5, 0);
                     int diameterShrink = 0;
                     double radius = 1.5;
                     int lifeSpan = 0;
@@ -918,12 +918,12 @@ public class NMS_v1_13_Up implements ParticleControl {
     public void playBigLoveWell(final Location location, final String id) {
         final HashMap<Integer, Integer> S = new HashMap<>();
         locations.put(id, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-            Location l = location.clone().add(.5, 0, .5);
+            final Location l = location.clone().add(.5, 0, .5);
             
             void startBigLoveWell(final Location location, final String id) {
                 final int num = random.nextInt(Integer.MAX_VALUE);
                 S.put(num, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-                    Location height = location.clone();
+                    final Location height = location.clone();
                     int loc = 0;
                     int lifeSpan = 0;
                     
@@ -956,12 +956,12 @@ public class NMS_v1_13_Up implements ParticleControl {
     public void playLoveWell(final Location location, final String id) {
         final HashMap<Integer, Integer> S = new HashMap<>();
         locations.put(id, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-            Location l = location.clone().add(.5, 0, .5);
+            final Location l = location.clone().add(.5, 0, .5);
             
             void startLoveWell(final Location location, final String id) {
                 final int num = random.nextInt(Integer.MAX_VALUE);
                 S.put(num, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-                    Location height = location.clone();
+                    final Location height = location.clone();
                     int loc = 0;
                     int lifeSpan = 0;
                     

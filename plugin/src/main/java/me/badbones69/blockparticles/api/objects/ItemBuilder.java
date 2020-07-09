@@ -1,9 +1,9 @@
 package me.badbones69.blockparticles.api.objects;
 
+import de.tr7zw.changeme.nbtapi.NBTItem;
 import me.badbones69.blockparticles.api.ParticleManager;
 import me.badbones69.blockparticles.multisupport.SkullCreator;
 import me.badbones69.blockparticles.multisupport.Version;
-import me.badbones69.blockparticles.multisupport.itemnbtapi.NBTItem;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;

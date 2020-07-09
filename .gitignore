@@ -8,3 +8,5 @@ target/
 plugin/dependency-reduced-pom\.xml
 
 plugin/\.DS_Store
+
+.DS_Store
