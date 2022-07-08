@@ -19,7 +19,7 @@ Join us on [Discord](https://discord.badbones69.com)
 Downloads can be obtained from the [spigot page](https://www.spigotmc.org/resources/block-particles.13877/) or the [Jenkins](https://jenkins.badbones69.com/view/Stable/job/Block-Particles/).
 
 ## Plugin Data
-[![bStats Graph Data](https://bstats.org/signatures/bukkit/BlockParticles.svg)](https://bstats.org/signatures/bukkit/BlockParticles)
+[![bStats Graph Data](https://bstats.org/signatures/bukkit/BlockParticles.svg)](https://bstats.org/plugin/bukkit/BlockParticles/4625)
 
 ## API
 In Progress.
