@@ -1,6 +1,6 @@
 <br />
 
-[![crazycrates](https://raw.githubusercontent.com/RyderBelserion/Assets/main/crazycrew/new/crazycrates/Banner.png)](https://modrinth.com/plugin/crazycrates)
+[![CrazyParticles](https://raw.githubusercontent.com/RyderBelserion/Assets/main/crazycrew/new/CrazyParticles/Banner.png)](https://modrinth.com/plugin/CrazyParticles)
 
 <div align="center">
 
@@ -18,14 +18,14 @@
   <p align="center">
     A crates plugin that offers quality crates with ease!
     <br />
-    <a href="https://github.com/Crazy-Crew/CrazyCrates/wiki"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/Crazy-Crew/CrazyParticles/wiki"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/Crazy-Crew/CrazyCrates/issues">Report Bug</a>
+    <a href="https://github.com/Crazy-Crew/CrazyParticles/issues">Report Bug</a>
     ·
-    <a href="https://github.com/orgs/Crazy-Crew/discussions/categories/features?discussions_q=label%3Acrazycrates+category%3AFeatures">Request Feature</a>
+    <a href="https://github.com/Crazy-Crew/CrazyParticles/discussions">Request Feature</a>
     ·
-    <a href="https://github.com/orgs/Crazy-Crew/discussions/categories/support?discussions_q=label%3Acrazycrates+category%3ASupport">Get Support</a>
+    <a href="https://discord.gg/crazycrew">Get Support</a>
   </p>
 </div>
 
@@ -52,15 +52,15 @@
 ### Beta Builds
 All beta builds will be on Modrinth marked as beta.<br>
 
-<a href="https://modrinth.com/plugin/crazycrates">![Modrinth](https://raw.githubusercontent.com/intergrav/devins-badges/v3/assets/cozy/available/modrinth_64h.png)</a>
+<a href="https://modrinth.com/plugin/crazyparticles">![Modrinth](https://raw.githubusercontent.com/intergrav/devins-badges/v3/assets/cozy/available/modrinth_64h.png)</a>
 
 ## Getting Started
 
-How to get started with contributing / maintaining your own version of CrazyCrates!
+How to get started with contributing / maintaining your own version of CrazyParticles!
 
 ### Prerequisites
 
-A list of things necessary to make sure you can build CrazyCrates properly.
+A list of things necessary to make sure you can build CrazyParticles properly.
 * Intellij IDEA
     * > https://www.jetbrains.com/idea/download/
 * Gradle
@@ -69,7 +69,7 @@ A list of things necessary to make sure you can build CrazyCrates properly.
 
 1. Clone the repo
    ```sh
-   git clone https://github.com/Crazy-Crew/CrazyCrates.git
+   git clone https://github.com/Crazy-Crew/CrazyParticles.git
    ```
 2. Open the repository using Intellij IDEA & wait until it finishes downloading/indexing.
 3. Run the shadowJar task.
@@ -79,7 +79,7 @@ A list of things necessary to make sure you can build CrazyCrates properly.
 
 ## Roadmap
 
-Check our public [trello board](https://trello.com/b/bzQ5TwXo) for our current plans, any bugs and general tracking of the project progress.
+Check our public [trello board](https://trello.com/b/Ki2GnGRY/) for our current plans, any bugs and general tracking of the project progress.
 
 ## Contributing
 
@@ -99,15 +99,15 @@ Distributed under the MIT License. See [`LICENSE`](/LICENSE) for more informatio
 [discord-shield]: https://img.shields.io/discord/182615261403283459.svg?style=flat&logo=appveyor
 [discord-url]: https://discord.gg/crazycrew
 
-[contributors-shield]: https://img.shields.io/github/contributors/Crazy-Crew/CrazyCrates.svg?style=flat&logo=appveyor
-[contributors-url]: https://github.com/Crazy-Crew/CrazyCrates/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/Crazy-Crew/CrazyCrates.svg?style=flat&logo=appveyor
-[forks-url]: https://github.com/Crazy-Crew/CrazyCrates/network/members
-[stars-shield]: https://img.shields.io/github/stars/Crazy-Crew/CrazyCrates.svg?style=flat&logo=appveyor
-[stars-url]: https://github.com/Crazy-Crew/CrazyCrates/stargazers
-[issues-shield]: https://img.shields.io/github/issues/Crazy-Crew/CrazyCrates.svg?style=flat&logo=appveyor
-[issues-url]: https://github.com/Crazy-Crew/CrazyCrates/issues
-[license-shield]: https://img.shields.io/github/license/Crazy-Crew/CrazyCrates.svg?style=flat&logo=appveyor
-[license-url]: https://github.com/Crazy-Crew/CrazyCrates/blob/master/LICENSE
+[contributors-shield]: https://img.shields.io/github/contributors/Crazy-Crew/CrazyParticles.svg?style=flat&logo=appveyor
+[contributors-url]: https://github.com/Crazy-Crew/CrazyParticles/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/Crazy-Crew/CrazyParticles.svg?style=flat&logo=appveyor
+[forks-url]: https://github.com/Crazy-Crew/CrazyParticles/network/members
+[stars-shield]: https://img.shields.io/github/stars/Crazy-Crew/CrazyParticles.svg?style=flat&logo=appveyor
+[stars-url]: https://github.com/Crazy-Crew/CrazyParticles/stargazers
+[issues-shield]: https://img.shields.io/github/issues/Crazy-Crew/CrazyParticles.svg?style=flat&logo=appveyor
+[issues-url]: https://github.com/Crazy-Crew/CrazyParticles/issues
+[license-shield]: https://img.shields.io/github/license/Crazy-Crew/CrazyParticles.svg?style=flat&logo=appveyor
+[license-url]: https://github.com/Crazy-Crew/CrazyParticles/blob/master/LICENSE
 
-[codefactor-shield]: https://img.shields.io/codefactor/grade/github/crazy-crew/crazycrates/main?style=flat&logo=appveyor
+[codefactor-shield]: https://img.shields.io/codefactor/grade/github/crazy-crew/CrazyParticles/main?style=flat&logo=appveyor
