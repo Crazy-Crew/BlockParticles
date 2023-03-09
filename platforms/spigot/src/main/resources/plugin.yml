@@ -1,0 +1,20 @@
+name: CrazyParticles
+
+main: ${group}.CrazyParticles
+
+authors: [BadBones69, RyderBelserion, Felux]
+
+version: ${version}
+api-version: '1.19'
+description: ${description}
+website: ${website}
+
+softdepend:
+  - Multiverse-Core
+  - MultiWorld
+  - HeadDatabase
+
+commands:
+  blockparticle:
+    description: Adds particles to blocks!
+    aliases: [blockparticles, bp, bparticle, bparticles]
