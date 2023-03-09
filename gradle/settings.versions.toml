@@ -1,0 +1,15 @@
+[versions]
+
+# Project Settings
+projectVersion = "0.0.1.0"
+
+projectGroup = "me.badbones69.blockparticles"
+projectName = "CrazyParticles"
+projectDescription = "Add fancy particles to your blocks or person."
+projectGithub = "https://github.com/Crazy-Crew/CrazyParticles"
+projectBeta = "true"
+projectExtension = "plugin"
+
+[plugins]
+
+minotaur = { id = "com.modrinth.minotaur", version = "2.7.2" }

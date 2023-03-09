@@ -1,0 +1,9 @@
+name: ${name}
+main: us.crazycrew.crazyparticles.CrazyParticles
+
+version: ${version}
+api-version: '1.19'
+description: ${description}
+
+bootstrapper: us.crazycrew.crazyparticles.loader.CrazyStarter
+loader: us.crazycrew.crazyparticles.loader.CrazyLoader
