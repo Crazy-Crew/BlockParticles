@@ -1,6 +1,6 @@
-name: CrazyParticles
+name: BlockParticles
 
-main: ${group}.CrazyParticles
+main: ${group}.BlockParticles
 
 authors: [BadBones69, RyderBelserion, Felux]
 
