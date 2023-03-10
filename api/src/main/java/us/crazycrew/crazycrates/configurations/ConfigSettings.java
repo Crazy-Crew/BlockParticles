@@ -29,8 +29,8 @@ public class ConfigSettings implements SettingsHolder {
                 "Support: https://discord.gg/crazycrew",
                 "Github: https://github.com/Crazy-Crew",
                 "",
-                "Issues: https://github.com/Crazy-Crew/CrazyCrates/issues",
-                "Features: https://github.com/Crazy-Crew/CrazyCrates/discussions",
+                "Issues: https://github.com/Crazy-Crew/CrazyParticles/issues",
+                "Features: https://github.com/Crazy-Crew/CrazyParticles/discussions",
                 "",
                 "Legacy color codes such as &7,&c no longer work. You must use MiniMessage",
                 "https://docs.advntr.dev/minimessage/format.html#color"
@@ -38,7 +38,7 @@ public class ConfigSettings implements SettingsHolder {
 
         String[] deprecation = {
                 "",
-                "Warning: This section is subject to change so it is considered deprecated.",
+                "Warning: This section is subject to change so it is considered deprecated and marked for removal.",
                 "This is your warning before the change happens.",
                 ""
         };

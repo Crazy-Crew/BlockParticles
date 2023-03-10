@@ -75,5 +75,6 @@ public class PluginSettings implements SettingsHolder {
             "",
             "Warning: any changes requires a restart!"
     })
+
     public static final Property<String> PLUGIN_ALIASES = newProperty("settings.plugin-aliases", "crazyparticles:particles");
 }

@@ -20,8 +20,8 @@ dependencies {
 
     compileOnly(libs.crazycore.paper)
 
-//    implementation(libs.triumph.cmds)
-//    implementation(libs.triumph.gui)
+    compileOnly(libs.triumph.cmds)
+//    compileOnly(libs.triumph.gui)
 
     compileOnly(libs.config.me)
 
@@ -63,7 +63,7 @@ tasks {
 
         versionType.set(type)
 
-        //uploadFile.set(shadowJar.get())
+        uploadFile.set(shadowJar.get())
 
         autoAddDependsOn.set(true)
 

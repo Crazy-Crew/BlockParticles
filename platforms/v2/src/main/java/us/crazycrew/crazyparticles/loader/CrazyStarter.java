@@ -14,7 +14,6 @@ import us.crazycrew.crazycrates.configurations.ConfigSettings;
 import us.crazycrew.crazycrates.configurations.PluginSettings;
 import us.crazycrew.crazycrates.configurations.migrations.PluginMigrationService;
 import us.crazycrew.crazyparticles.CrazyParticles;
-
 import java.io.File;
 import java.util.logging.LogManager;
 
