@@ -1,50 +1,33 @@
-import java.awt.Color
-
 plugins {
-    id("crazyparticles.root-plugin")
+    id("root-plugin")
 }
 
-val releaseUpdate = Color(27, 217, 106)
-val betaUpdate = Color(255, 163, 71)
+defaultTasks("build")
 
-val isBeta = settings.versions.projectBeta.get().toBoolean()
-val projectVersion = settings.versions.projectVersion.get()
-val projectName = settings.versions.projectName.get()
-val projectExt = settings.versions.projectExtension.get()
+rootProject.group = "com.badbones69.blockparticles"
+rootProject.description = "Sick of boring blocks? Today the day that changes, Add particles to your blocks now!"
+rootProject.version = "1.12"
 
-val finalVersion = if (isBeta) "$projectVersion+beta" else projectVersion
+tasks {
+    assemble {
+        val jarsDir = File("$rootDir/jars")
+        if (jarsDir.exists()) jarsDir.delete()
 
-val color = if (isBeta) betaUpdate else releaseUpdate
-val repo = if (isBeta) "beta" else "releases"
+        subprojects.forEach { project ->
+            dependsOn(":${project.name}:build")
 
-webhook {
-    this.avatar("https://en.gravatar.com/avatar/${task.WebhookExtension.Gravatar().md5Hex("no-reply@ryderbelserion.com")}.jpeg")
+            doLast {
+                if (!jarsDir.exists()) jarsDir.mkdirs()
 
-    this.username("Ryder Belserion")
+                if (project.name == "common") return@doLast
 
-    this.content("New version of $projectName is ready! <@&929463441159254066>")
+                val file = file("${project.buildDir}/libs/${rootProject.name}-${rootProject.version}.jar")
 
-    this.embeds {
-        this.embed {
-            this.color(color)
-
-            this.fields {
-                this.field(
-                    "Version $finalVersion",
-                    "Download Link: https://modrinth.com/$projectExt/${projectName.lowercase()}/version/$finalVersion"
-                )
-
-                this.field(
-                    "API Update",
-                    "Version $finalVersion has been pushed to https://repo.crazycrew.us/#/$repo"
-                )
+                copy {
+                    from(file)
+                    into(jarsDir)
+                }
             }
-
-            this.author(
-                projectName,
-                "https://modrinth.com/$projectExt/${projectName.lowercase()}/versions",
-                "https://cdn-raw.modrinth.com/data/r3BBZyf3/4522ef0f83143c4803473d356160a3e877c2499c.png"
-            )
         }
     }
 }

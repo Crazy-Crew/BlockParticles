@@ -1,0 +1,14 @@
+name: '${name}'
+
+main: '${group}.${name}'
+
+authors: '${authors}'
+
+version: '${version}'
+api-version: '${apiVersion}'
+description: '${description}'
+website: '${website}'
+
+commands:
+  blockparticle:
+    description: Add fancy particles to blocks!

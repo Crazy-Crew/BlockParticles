@@ -1,15 +1,14 @@
-.gradle
 .idea
-.DS_Store
+.gradle
 
-build
+buildSrc/build
+buildSrc/.gradle
 
-build-src/.gradle
-build-src/build
+paper/.gradle
+paper/build
 
+api/.gradle
 api/build
 
-platforms/paper/build
-platforms/paper/run/*
-
-platforms/spigot/build
+common/.gradle
+common/build

@@ -1,16 +1,7 @@
-pluginManagement {
+dependencyResolutionManagement {
     repositories {
         maven("https://repo.papermc.io/repository/maven-public/")
 
         gradlePluginPortal()
     }
-}
-
-rootProject.name = "BlockParticles"
-
-listOf(
-    "common",
-    "paper"
-).forEach {
-    include(it)
 }
