@@ -4,13 +4,13 @@ import com.badbones69.common.BlockParticlesPlugin;
 import com.badbones69.common.plugin.registry.BlockParticleProvider;
 import org.jetbrains.annotations.NotNull;
 
-public class Logger {
+public class FancyLogger {
 
     private final @NotNull BlockParticlesPlugin blockPlugin = BlockParticleProvider.get();
 
     private final String pluginName;
 
-    public Logger(String pluginName) {
+    public FancyLogger(String pluginName) {
         this.pluginName = pluginName;
     }
 

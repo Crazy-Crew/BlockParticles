@@ -2,7 +2,7 @@ name: '${name}'
 
 main: '${group}.${name}'
 
-authors: '${authors}'
+authors: ${authors}
 
 version: '${version}'
 api-version: '${apiVersion}'

@@ -1,7 +1,7 @@
 package com.badbones69.common;
 
-import com.badbones69.common.plugin.Adventure;
-import com.badbones69.common.plugin.Logger;
+import com.badbones69.common.utils.AdvUtil;
+import com.badbones69.common.plugin.FancyLogger;
 import com.badbones69.common.plugin.Platform;
 import com.badbones69.common.plugin.registry.BlockParticleRegistration;
 import com.badbones69.common.utils.FileUtil;
@@ -13,11 +13,11 @@ public abstract class BlockParticlesPlugin {
 
     public abstract Platform.Type getPlatform();
 
-    public abstract Adventure getAdventure();
+    public abstract AdvUtil getAdventure();
 
     public abstract FileUtil getFileUtil();
 
-    public abstract Logger getFancyLogger();
+    public abstract FancyLogger getFancyLogger();
 
     public abstract boolean isLegacy();
 

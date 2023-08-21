@@ -1,19 +1,23 @@
 package com.badbones69.blockparticles.commands;
 
+import com.badbones69.blockparticles.BlockParticles;
 import com.badbones69.blockparticles.api.CrazyManager;
 import com.badbones69.blockparticles.api.enums.BPFountains;
 import com.badbones69.blockparticles.api.enums.BPParticles;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.StringUtil;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class BPTab implements TabCompleter {
-    
-    private final CrazyManager bp = CrazyManager.getInstance();
+
+    private final BlockParticles plugin = JavaPlugin.getPlugin(BlockParticles.class);
+
+    private final CrazyManager crazyManager = this.plugin.getCrazyManager();
     
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String commandLabel, String[] args) {
@@ -45,7 +49,7 @@ public class BPTab implements TabCompleter {
                         completions.add(fountain.name().toLowerCase());
                     }
                 }
-                bp.getCustomFountains().forEach(fountain -> completions.add(fountain.getName()));
+                crazyManager.getCustomFountains().forEach(fountain -> completions.add(fountain.getName()));
             }
 
             return StringUtil.copyPartialMatches(args[2], completions, new ArrayList<>());

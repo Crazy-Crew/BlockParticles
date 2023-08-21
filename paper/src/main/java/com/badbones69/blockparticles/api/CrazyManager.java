@@ -7,6 +7,7 @@ import com.badbones69.blockparticles.api.enums.types.ParticleType;
 import com.badbones69.blockparticles.api.enums.types.Particles;
 import com.badbones69.blockparticles.api.objects.CustomFountain;
 import com.badbones69.blockparticles.api.objects.Particle;
+import com.badbones69.blockparticles.api.storage.StorageManager;
 import com.badbones69.blockparticles.controllers.Fountains;
 import com.badbones69.blockparticles.controllers.ParticleTasks;
 import org.bukkit.Bukkit;
@@ -24,13 +25,43 @@ public class CrazyManager {
 
     private final BlockParticles plugin = JavaPlugin.getPlugin(BlockParticles.class);
 
+    private StorageManager storageManager;
+
+    public void load(boolean serverStart) {
+        if (serverStart) {
+            this.storageManager = new StorageManager();
+            this.storageManager.init();
+        }
+
+        this.storageManager.getParticleDataManager().loadFile();
+    }
+
+    public void reload(boolean serverStop) {
+        if (serverStop) {
+            this.storageManager.getParticleDataManager().saveFile();
+
+            this.storageManager.getParticleDataManager().purge();
+
+            return;
+        }
+
+        this.storageManager.getParticleDataManager().reload();
+    }
+
+    public StorageManager getStorageManager() {
+        return this.storageManager;
+    }
+
+    /**
+     * v1
+     */
     private final Fountains fountains = this.plugin.getFountains();
 
     private final List<Entity> fountainItems = new ArrayList<>();
     private final List<CustomFountain> customFountains = new ArrayList<>();
     private final HashMap<Player, String> setCommandPlayers = new HashMap<>();
     private ParticleControl particleControl;
-    
+
     public void load() {
         this.particleControl = new ParticleTasks();
         this.customFountains.clear();

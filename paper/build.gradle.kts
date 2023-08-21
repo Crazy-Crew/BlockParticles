@@ -26,7 +26,7 @@ tasks {
     processResources {
         val props = mapOf(
             "name" to rootProject.name,
-            "group" to project.group,
+            "group" to rootProject.group,
             "version" to rootProject.version,
             "description" to rootProject.description,
             "authors" to rootProject.properties["authors"],

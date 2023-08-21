@@ -1,8 +1,8 @@
 package com.badbones69.blockparticles.plugin;
 
 import com.badbones69.common.BlockParticlesPlugin;
-import com.badbones69.common.plugin.Adventure;
-import com.badbones69.common.plugin.Logger;
+import com.badbones69.common.utils.AdvUtil;
+import com.badbones69.common.plugin.FancyLogger;
 import com.badbones69.common.plugin.Platform;
 import com.badbones69.common.utils.FileUtil;
 import com.badbones69.blockparticles.plugin.builder.commands.PaperCommandManager;
@@ -20,12 +20,12 @@ public class PaperImpl extends BlockParticlesPlugin {
     private SkullCreator skullCreator;
     private BukkitAudiences audience;
     private LegacyUtil legacyUtil;
-    private Adventure adventure;
+    private AdvUtil advUtil;
     private JavaPlugin plugin;
     private ItemUtil itemUtil;
     private FileUtil fileUtil;
     private boolean isLegacy;
-    private Logger logger;
+    private FancyLogger fancyLogger;
 
     public PaperImpl(JavaPlugin plugin) {
         this.plugin = plugin;
@@ -45,9 +45,9 @@ public class PaperImpl extends BlockParticlesPlugin {
         }
 
         // Create adventure/logger instance.
-        this.adventure = new Adventure();
+        this.advUtil = new AdvUtil();
         this.legacyUtil = new LegacyUtil();
-        this.logger = new Logger(this.plugin.getName());
+        this.fancyLogger = new FancyLogger(this.plugin.getName());
 
         this.itemUtil = new ItemUtil();
         this.skullCreator = new SkullCreator();
@@ -89,8 +89,8 @@ public class PaperImpl extends BlockParticlesPlugin {
     }
 
     @Override
-    public Adventure getAdventure() {
-        return this.adventure;
+    public AdvUtil getAdventure() {
+        return this.advUtil;
     }
 
     @Override
@@ -99,8 +99,8 @@ public class PaperImpl extends BlockParticlesPlugin {
     }
 
     @Override
-    public Logger getFancyLogger() {
-        return this.logger;
+    public FancyLogger getFancyLogger() {
+        return this.fancyLogger;
     }
 
     @Override

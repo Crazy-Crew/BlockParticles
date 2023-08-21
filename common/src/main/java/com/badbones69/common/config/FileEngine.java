@@ -23,10 +23,6 @@ public abstract class FileEngine {
         this.fileType = fileType;
     }
 
-    public abstract void load();
-
-    public abstract void save();
-
     public void setGsonBuilder(GsonBuilder gson) {
         if (this.fileType != FileType.JSON) {
             this.blockPlugin.getFancyLogger().error("You cannot use json if the file type isn't " + FileType.JSON.getName());

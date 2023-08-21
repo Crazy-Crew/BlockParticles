@@ -3,23 +3,22 @@ package com.badbones69.blockparticles;
 import com.badbones69.blockparticles.api.CrazyManager;
 import com.badbones69.blockparticles.api.FileManager;
 import com.badbones69.blockparticles.controllers.Fountains;
-import com.badbones69.blockparticles.persist.Locations;
 import com.badbones69.blockparticles.plugin.PaperImpl;
 import com.badbones69.common.config.FileHandler;
+import org.bukkit.Location;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class BlockParticles extends JavaPlugin {
 
     private PaperImpl paper;
-    private FileHandler fileHandler;
-
-    private FileManager fileManager;
+    private FileHandler handler;
 
     private CrazyManager crazyManager;
 
-    private Methods methods;
-
+    // v1
+    private FileManager fileManager;
     private Fountains fountains;
+    private Methods methods;
     
     @Override
     public void onEnable() {
@@ -27,32 +26,19 @@ public class BlockParticles extends JavaPlugin {
 
         this.paper.enable(false);
 
-        this.fileHandler = new FileHandler();
+        this.handler = new FileHandler();
 
-        Locations locations = new Locations(getDataFolder().toPath());
+        this.crazyManager = new CrazyManager();
+        this.crazyManager.load(true);
 
-        this.fileHandler.addFile(locations);
-
-        locations.addLocation("extra", "extra2");
-        locations.addLocation("other", "other2");
-
-        this.fileHandler.saveFile(locations);
-
-        this.paper.getFancyLogger().info(String.valueOf(locations.getLocations().size()));
-
-        //this.fileManager = new FileManager();
-        //this.fileManager.setup();
-
-        //this.methods = new Methods();
-
-        //this.crazyManager = new CrazyManager();
-
-        //getServer().getPluginManager().registerEvents(this.fountains = new Fountains(), this);
-        //getServer().getPluginManager().registerEvents(new FountainListener(), this);
+        this.crazyManager.getStorageManager().getParticleDataManager().addParticleData("love_well", new Location(getServer().getWorld("world"), 3.0, 3.3, 3.5));
+        this.crazyManager.getStorageManager().getParticleDataManager().addParticleData("small_love_well", new Location(getServer().getWorld("world"), 3.3, 5.4, 1.1));
     }
 
     @Override
     public void onDisable() {
+        this.crazyManager.reload(true);
+
         this.paper.disable();
 
         //this.methods.kill();
@@ -60,6 +46,10 @@ public class BlockParticles extends JavaPlugin {
 
     public PaperImpl getPaper() {
         return this.paper;
+    }
+
+    public FileHandler getHandler() {
+        return this.handler;
     }
 
     public FileManager getFileManager() {

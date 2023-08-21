@@ -1,4 +1,4 @@
-package com.badbones69.common.plugin;
+package com.badbones69.common.utils;
 
 import com.badbones69.common.BlockParticlesPlugin;
 import com.badbones69.common.plugin.registry.BlockParticleProvider;
@@ -10,7 +10,7 @@ import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.jetbrains.annotations.NotNull;
 
-public class Adventure {
+public class AdvUtil {
 
     private final @NotNull BlockParticlesPlugin blockPlugin = BlockParticleProvider.get();
 
