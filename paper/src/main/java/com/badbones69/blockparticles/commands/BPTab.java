@@ -17,7 +17,7 @@ public class BPTab implements TabCompleter {
 
     private final BlockParticles plugin = JavaPlugin.getPlugin(BlockParticles.class);
 
-    private final CrazyManager crazyManager = this.plugin.getCrazyManager();
+    private final CrazyManager crazyManager = null;
     
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String commandLabel, String[] args) {

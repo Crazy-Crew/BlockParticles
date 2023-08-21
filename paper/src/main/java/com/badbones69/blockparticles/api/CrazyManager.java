@@ -55,7 +55,7 @@ public class CrazyManager {
     /**
      * v1
      */
-    private final Fountains fountains = this.plugin.getFountains();
+    private final Fountains fountains = null;
 
     private final List<Entity> fountainItems = new ArrayList<>();
     private final List<CustomFountain> customFountains = new ArrayList<>();

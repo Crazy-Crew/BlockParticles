@@ -27,9 +27,9 @@ public class Fountains implements Listener {
     
     private final BlockParticles plugin = JavaPlugin.getPlugin(BlockParticles.class);
 
-    private final CrazyManager crazyManager = this.plugin.getCrazyManager();
+    private final CrazyManager crazyManager = null;
 
-    private final Methods methods = this.plugin.getMethods();
+    private final Methods methods = null;
 
     private final List<String> pokemonHeads = Arrays.asList(
     "4a786e4e35b59d91eb6454ef26b7b0683761d6b11f1d63c7740af17aa3f",

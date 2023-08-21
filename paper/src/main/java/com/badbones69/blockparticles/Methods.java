@@ -24,9 +24,9 @@ public class Methods {
 
     private final BlockParticles plugin = JavaPlugin.getPlugin(BlockParticles.class);
     
-    private final CrazyManager crazyManager = this.plugin.getCrazyManager();
+    private final CrazyManager crazyManager = null;
 
-    private final Fountains fountains = this.plugin.getFountains();
+    private final Fountains fountains = null;
     
     public void reset() {
         kill();

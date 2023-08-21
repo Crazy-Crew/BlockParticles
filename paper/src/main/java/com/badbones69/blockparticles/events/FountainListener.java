@@ -11,7 +11,7 @@ public class FountainListener implements Listener {
 
     private final BlockParticles plugin = JavaPlugin.getPlugin(BlockParticles.class);
     
-    private final CrazyManager crazyManager = this.plugin.getCrazyManager();
+    private final CrazyManager crazyManager = null;
     
     @EventHandler
     public void onItemPickUp(EntityPickupItemEvent e) {

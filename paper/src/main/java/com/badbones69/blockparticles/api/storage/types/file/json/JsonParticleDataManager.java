@@ -1,17 +1,19 @@
 package com.badbones69.blockparticles.api.storage.types.file.json;
 
-import com.badbones69.blockparticles.BlockParticles;
+import com.badbones69.blockparticles.api.plugin.InternalPlugin;
+import com.badbones69.blockparticles.api.plugin.registry.BlockParticlesProvider;
 import com.badbones69.blockparticles.api.storage.interfaces.ParticleDataManager;
 import com.badbones69.blockparticles.api.storage.objects.CustomLocation;
 import com.badbones69.blockparticles.api.storage.objects.ParticleData;
 import org.bukkit.Location;
-import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.NotNull;
 import java.nio.file.Path;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public non-sealed class JsonParticleDataManager extends JsonParticleData implements ParticleDataManager {
 
-    private final BlockParticles plugin = JavaPlugin.getPlugin(BlockParticles.class);
+    private final @NotNull InternalPlugin plugin = BlockParticlesProvider.get();
 
     public JsonParticleDataManager(Path path) {
         super(path);
@@ -19,12 +21,12 @@ public non-sealed class JsonParticleDataManager extends JsonParticleData impleme
 
     @Override
     public void load() {
-        this.plugin.getFileManager().addFile(new JsonParticleData(this.plugin.getDataFolder().toPath()));
+        this.plugin.getFileManager().addFile(new JsonParticleData(this.plugin.getPlugin().getDataFolder().toPath()));
     }
 
     @Override
     public void save() {
-        this.plugin.getFileManager().saveFile(new JsonParticleData(this.plugin.getDataFolder().toPath()));
+        this.plugin.getFileManager().saveFile(new JsonParticleData(this.plugin.getPlugin().getDataFolder().toPath()));
     }
 
     @Override
@@ -42,6 +44,11 @@ public non-sealed class JsonParticleDataManager extends JsonParticleData impleme
         ParticleData particleData = new ParticleData();
 
         if (!particleData.getLocations().isEmpty()) {
+            List<Integer> amount = particleData.getLocations().stream().map(CustomLocation::id).toList();
+
+            amount.forEach(value -> {
+                this.plugin.getFancyLogger().debug("Guten Tag!");
+            });
             //particleData.getLocations().stream().map()
         }
 
@@ -84,7 +91,7 @@ public non-sealed class JsonParticleDataManager extends JsonParticleData impleme
         // Check if we already have stored the object.
         if (particleData.hasLocation(customLocation)) {
             //TODO() Add a proper message for the sender.
-            this.plugin.getPaper().getFancyLogger().debug("We already have this location.");
+            this.plugin.getFancyLogger().debug("This location is already in the map.");
             // Return since we don't want to double up.
             return;
         }
