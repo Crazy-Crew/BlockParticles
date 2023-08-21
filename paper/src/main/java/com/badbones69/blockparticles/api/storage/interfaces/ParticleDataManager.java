@@ -5,9 +5,9 @@ import org.bukkit.Location;
 
 public interface ParticleDataManager {
 
-    void loadFile();
+    void load();
 
-    void saveFile();
+    void save();
 
     void reload();
 

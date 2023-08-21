@@ -7,7 +7,7 @@ import com.badbones69.blockparticles.api.enums.BPParticles;
 import com.badbones69.blockparticles.api.enums.types.Particles;
 import com.badbones69.blockparticles.api.objects.CustomFountain;
 import com.badbones69.blockparticles.controllers.Fountains;
-import com.badbones69.blockparticles.plugin.items.ItemBuilder;
+import com.ryderbelserion.ruby.paper.plugin.items.ItemBuilder;
 import org.bukkit.*;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;

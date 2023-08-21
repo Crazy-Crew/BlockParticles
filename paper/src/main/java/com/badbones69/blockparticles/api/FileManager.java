@@ -311,7 +311,7 @@ public class FileManager {
 
         private final BlockParticles plugin = JavaPlugin.getPlugin(BlockParticles.class);
 
-        private final FileManager fileManager = this.plugin.getFileManager();
+        private final FileManager fileManager = null;
 
         /**
          * The files that the server will try and load.

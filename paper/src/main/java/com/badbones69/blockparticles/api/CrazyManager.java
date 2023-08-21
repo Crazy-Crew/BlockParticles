@@ -33,12 +33,12 @@ public class CrazyManager {
             this.storageManager.init();
         }
 
-        this.storageManager.getParticleDataManager().loadFile();
+        this.storageManager.getParticleDataManager().load();
     }
 
     public void reload(boolean serverStop) {
         if (serverStop) {
-            this.storageManager.getParticleDataManager().saveFile();
+            this.storageManager.getParticleDataManager().save();
 
             this.storageManager.getParticleDataManager().purge();
 

@@ -3,20 +3,23 @@ plugins {
 }
 
 repositories {
+    maven("https://repo.crazycrew.us/snapshots/")
+
     maven("https://repo.crazycrew.us/releases/")
 }
 
 dependencies {
-    implementation("net.kyori", "adventure-platform-bukkit", "4.3.0")
+    implementation("com.ryderbelserion.ruby", "ruby-paper", "1.2-snapshot")
 
     implementation("org.bstats", "bstats-bukkit", "3.0.2")
 
-    implementation(project(":common"))
+    //api(project(":common"))
 }
 
 tasks {
     shadowJar {
         listOf(
+            "com.ryderbelserion.ruby",
             "org.bstats"
         ).forEach {
             relocate(it, "libs.$it")

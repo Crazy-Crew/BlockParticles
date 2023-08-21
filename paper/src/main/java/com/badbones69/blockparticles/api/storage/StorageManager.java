@@ -2,7 +2,7 @@ package com.badbones69.blockparticles.api.storage;
 
 import com.badbones69.blockparticles.BlockParticles;
 import com.badbones69.blockparticles.api.storage.interfaces.ParticleDataManager;
-import com.badbones69.blockparticles.api.storage.json.JsonParticleDataManager;
+import com.badbones69.blockparticles.api.storage.types.file.json.JsonParticleDataManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class StorageManager {

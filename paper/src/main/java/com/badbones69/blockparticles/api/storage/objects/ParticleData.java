@@ -7,18 +7,22 @@ import java.util.List;
 
 public class ParticleData {
 
-    @Expose
-    private final ArrayList<CustomLocation> locations = new ArrayList<>();
+        @Expose
+        private static ArrayList<CustomLocation> locations = new ArrayList<>();
 
-    public void addLocation(CustomLocation location) {
-        this.locations.add(location);
-    }
+        public void addLocation(CustomLocation location) {
+            locations.add(location);
+        }
 
-    public void removeLocation(CustomLocation location) {
-        this.locations.add(location);
-    }
+        public void removeLocation(CustomLocation location) {
+            locations.add(location);
+        }
 
-    public List<CustomLocation> getLocations() {
-        return Collections.unmodifiableList(this.locations);
+        public boolean hasLocation(CustomLocation location) {
+            return locations.contains(location);
+        }
+
+        public List<CustomLocation> getLocations() {
+            return Collections.unmodifiableList(locations);
+        }
     }
-}
