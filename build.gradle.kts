@@ -6,7 +6,7 @@ defaultTasks("build")
 
 rootProject.group = "com.badbones69.blockparticles"
 rootProject.description = "Sick of boring blocks? Today the day that changes, Add particles to your blocks now!"
-rootProject.version = "1.12"
+rootProject.version = "2.0"
 
 tasks {
     assemble {
