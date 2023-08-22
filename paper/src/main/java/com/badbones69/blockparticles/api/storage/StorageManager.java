@@ -1,13 +1,17 @@
 package com.badbones69.blockparticles.api.storage;
 
 import com.badbones69.blockparticles.BlockParticles;
+import com.badbones69.blockparticles.api.plugin.BlockParticlesPlugin;
+import com.badbones69.blockparticles.api.plugin.registry.BlockParticlesProvider;
 import com.badbones69.blockparticles.api.storage.interfaces.ParticleDataManager;
 import com.badbones69.blockparticles.api.storage.types.file.json.DataManager;
-import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.NotNull;
 
 public class StorageManager {
 
-    private final BlockParticles plugin = JavaPlugin.getPlugin(BlockParticles.class);
+    private final @NotNull BlockParticlesPlugin blockParticlesPlugin = BlockParticlesProvider.get();
+
+    private final @NotNull BlockParticles plugin = this.blockParticlesPlugin.getPlugin();
 
     private ParticleDataManager particleDataManager;
 

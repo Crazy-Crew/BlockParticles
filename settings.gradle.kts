@@ -9,7 +9,6 @@ pluginManagement {
 rootProject.name = "BlockParticles"
 
 listOf(
-    "common",
     "paper"
 ).forEach {
     include(it)

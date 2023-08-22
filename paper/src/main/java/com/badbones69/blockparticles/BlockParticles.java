@@ -1,25 +1,24 @@
 package com.badbones69.blockparticles;
 
-import com.badbones69.blockparticles.api.plugin.BlockParticlesPlugin;
-import org.bukkit.Location;
+import com.badbones69.blockparticles.api.plugin.BlockParticlesLoader;
+import com.badbones69.blockparticles.commands.ParticleCommand;
+import com.ryderbelserion.ruby.paper.plugin.builder.commands.PaperCommandManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class BlockParticles extends JavaPlugin {
 
-    private BlockParticlesPlugin plugin;
-    
+    private BlockParticlesLoader plugin;
+
     @Override
     public void onEnable() {
-        this.plugin = new BlockParticlesPlugin(this);
+        this.plugin = new BlockParticlesLoader(this);
         this.plugin.enable();
 
-        this.plugin.getCrazyManager().getStorageManager().getParticleDataManager().load();
+        PaperCommandManager manager = this.plugin.getPaperPlugin().getManager();
 
-        this.plugin.getCrazyManager().getStorageManager().getParticleDataManager().addParticleData("love_well", new Location(getServer().getWorld("world"), 3.0, 3.3, 3.5));
-        this.plugin.getCrazyManager().getStorageManager().getParticleDataManager().addParticleData("love_well", new Location(getServer().getWorld("world_the_end"), 5.1, 71.0, 90.3));
+        manager.setNamespace("blockparticles");
 
-        this.plugin.getCrazyManager().getStorageManager().getParticleDataManager().addParticleData("small_love_well", new Location(getServer().getWorld("world"), 3.3, 5.4, 1.1));
-        this.plugin.getCrazyManager().getStorageManager().getParticleDataManager().addParticleData("small_love_well", new Location(getServer().getWorld("world"), 5.3, 8.4, 1.3));
+        manager.addCommand(new ParticleCommand());
     }
 
     @Override

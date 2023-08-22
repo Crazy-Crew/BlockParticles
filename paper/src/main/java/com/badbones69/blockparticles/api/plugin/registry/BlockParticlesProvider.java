@@ -1,28 +1,28 @@
 package com.badbones69.blockparticles.api.plugin.registry;
 
-import com.badbones69.blockparticles.api.plugin.InternalPlugin;
+import com.badbones69.blockparticles.api.plugin.BlockParticlesPlugin;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
 public class BlockParticlesProvider {
 
-    private static InternalPlugin internalPlugin = null;
+    private static BlockParticlesPlugin blockParticlesPlugin = null;
 
-    public static @NotNull InternalPlugin get() {
-        InternalPlugin instance = BlockParticlesProvider.internalPlugin;
+    public static @NotNull BlockParticlesPlugin get() {
+        BlockParticlesPlugin instance = BlockParticlesProvider.blockParticlesPlugin;
 
         if (instance == null) throw new RuntimeException("Failed to use the get() method. Contact the developer.");
 
-        return internalPlugin;
+        return blockParticlesPlugin;
     }
 
     @ApiStatus.Internal
-    public static void start(InternalPlugin plugin) {
-        BlockParticlesProvider.internalPlugin = plugin;
+    public static void start(BlockParticlesPlugin plugin) {
+        BlockParticlesProvider.blockParticlesPlugin = plugin;
     }
 
     @ApiStatus.Internal
     public static void stop() {
-        BlockParticlesProvider.internalPlugin = null;
+        BlockParticlesProvider.blockParticlesPlugin = null;
     }
 }

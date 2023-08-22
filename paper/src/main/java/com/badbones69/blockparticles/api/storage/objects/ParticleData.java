@@ -15,7 +15,7 @@ public class ParticleData {
     }
 
     public void removeLocation(CustomLocation location) {
-        locations.add(location);
+        locations.remove(location);
     }
 
     public boolean hasLocation(CustomLocation location) {

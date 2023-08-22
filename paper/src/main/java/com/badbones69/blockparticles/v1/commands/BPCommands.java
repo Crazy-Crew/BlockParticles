@@ -1,4 +1,4 @@
-package com.badbones69.blockparticles.commands;
+package com.badbones69.blockparticles.v1.commands;
 
 import com.badbones69.blockparticles.api.FileManager.Files;
 import org.bukkit.command.Command;

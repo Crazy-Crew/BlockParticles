@@ -15,7 +15,7 @@ public interface ParticleDataManager {
 
     ParticleData getParticleData(String name);
 
-    void removeParticleData(String name, int id);
+    void removeParticleData(String name, Location location);
 
     boolean hasParticleData(String name);
 

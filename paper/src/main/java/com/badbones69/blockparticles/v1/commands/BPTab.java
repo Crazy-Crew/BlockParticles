@@ -1,9 +1,7 @@
-package com.badbones69.blockparticles.commands;
+package com.badbones69.blockparticles.v1.commands;
 
 import com.badbones69.blockparticles.BlockParticles;
 import com.badbones69.blockparticles.api.CrazyManager;
-import com.badbones69.blockparticles.api.enums.BPFountains;
-import com.badbones69.blockparticles.api.enums.BPParticles;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
@@ -40,7 +38,7 @@ public class BPTab implements TabCompleter {
             //}
             return StringUtil.copyPartialMatches(args[1], completions, new ArrayList<>());
         } else {// /bp arg1 arg2
-            if (args[0].equalsIgnoreCase("set")) {
+            /*if (args[0].equalsIgnoreCase("set")) {
                 for (BPParticles particle : BPParticles.values()) {
                     completions.add(particle.name().toLowerCase());
                 }
@@ -50,7 +48,7 @@ public class BPTab implements TabCompleter {
                     }
                 }
                 crazyManager.getCustomFountains().forEach(fountain -> completions.add(fountain.getName()));
-            }
+            }*/
 
             return StringUtil.copyPartialMatches(args[2], completions, new ArrayList<>());
         }

@@ -1,7 +1,7 @@
 package com.badbones69.blockparticles.api.plugin.registry;
 
 import com.badbones69.blockparticles.BlockParticles;
-import com.badbones69.blockparticles.api.plugin.InternalPlugin;
+import com.badbones69.blockparticles.api.plugin.BlockParticlesPlugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.ApiStatus;
 import java.lang.reflect.Method;
@@ -15,7 +15,7 @@ public class BlockParticlesRegistry {
 
     static {
         try {
-            start = BlockParticlesProvider.class.getDeclaredMethod("start", InternalPlugin.class);
+            start = BlockParticlesProvider.class.getDeclaredMethod("start", BlockParticlesPlugin.class);
             start.setAccessible(true);
 
             stop = BlockParticlesProvider.class.getDeclaredMethod("stop");
@@ -26,9 +26,9 @@ public class BlockParticlesRegistry {
     }
 
     @ApiStatus.Internal
-    public static void start(InternalPlugin internalPlugin) {
+    public static void start(BlockParticlesPlugin blockParticlesPlugin) {
         try {
-            start.invoke(null, internalPlugin);
+            start.invoke(null, blockParticlesPlugin);
         } catch (Exception exception) {
             plugin.getLogger().severe("Failed to enable the block particles plugin.");
             plugin.getLogger().severe("Reason: " + exception.getMessage());
