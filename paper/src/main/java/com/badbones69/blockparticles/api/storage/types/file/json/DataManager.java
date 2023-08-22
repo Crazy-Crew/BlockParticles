@@ -11,28 +11,27 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public non-sealed class JsonParticleDataManager extends JsonParticleData implements ParticleDataManager {
+public non-sealed class DataManager extends ParticleJson implements ParticleDataManager {
 
     private final @NotNull InternalPlugin plugin = BlockParticlesProvider.get();
 
-    public JsonParticleDataManager(Path path) {
+    public DataManager(Path path) {
         super(path);
     }
 
     @Override
     public void load() {
-        this.plugin.getFileManager().addFile(new JsonParticleData(this.plugin.getPlugin().getDataFolder().toPath()));
+        this.plugin.getFileManager().addFile(new ParticleJson(this.plugin.getPlugin().getDataFolder().toPath()));
     }
 
     @Override
     public void save() {
-        this.plugin.getFileManager().saveFile(new JsonParticleData(this.plugin.getPlugin().getDataFolder().toPath()));
+        this.plugin.getFileManager().saveFile(new ParticleJson(this.plugin.getPlugin().getDataFolder().toPath()));
     }
 
     @Override
     public void reload() {
-        save();
-        load();
+        save();load();
     }
 
     @Override
@@ -43,23 +42,14 @@ public non-sealed class JsonParticleDataManager extends JsonParticleData impleme
         // Create new particle data instance.
         ParticleData particleData = new ParticleData();
 
-        if (!particleData.getLocations().isEmpty()) {
-            List<Integer> amount = particleData.getLocations().stream().map(CustomLocation::id).toList();
-
-            amount.forEach(value -> {
-                this.plugin.getFancyLogger().debug("Guten Tag!");
-            });
-            //particleData.getLocations().stream().map()
-        }
-
-        // Create custom location.
-        CustomLocation customLocation = new CustomLocation(
-                id.get(),
-                location.getWorld().getName(),
-                location.x(), location.y(), location.z());
-
         // Check if the location for the particle name exists.
         if (!hasParticleData(name)) {
+            // Create custom location.
+            CustomLocation customLocation = new CustomLocation(
+                    id.get(),
+                    location.getWorld().getName(),
+                    location.x(), location.y(), location.z());
+
             // Adds the particle location.
             particleData.addLocation(customLocation);
 
@@ -69,27 +59,34 @@ public non-sealed class JsonParticleDataManager extends JsonParticleData impleme
             // Reload the file and concurrent hashmap.
             reload();
 
-            // Return since we're done.
             return;
         }
 
+        // Create custom location.
+        CustomLocation customLocation = new CustomLocation(
+                id.get(),
+                location.getWorld().getName(),
+                location.x(), location.y(), location.z());
+
+        ParticleData data = getParticleData(name);
+
         // This runs if we found that the concurrent hashmap has data.
         // If the locations aren't empty.
-        if (!particleData.getLocations().isEmpty()) {
-            // We loop through the locations.
-            for (CustomLocation custom : particleData.getLocations()) {
-                // Check if an object matches an object above.
-                if (custom.equals(customLocation)) {
-                    // Set the atomic integer id to the one we have in the file.
-                    id.set(customLocation.id());
-                    // Break since we found it.
-                    break;
+            /*if (!data.getLocations().isEmpty()) {
+                // We loop through the locations.
+                for (CustomLocation custom : data.getLocations()) {
+                    // Check if an object matches an object above.
+                    if (custom.equals(customLocation)) {
+                        // Set the atomic integer id to the one we have in the file.
+                        id.set(customLocation.id());
+                        // Break since we found it.
+                        break;
+                    }
                 }
-            }
-        }
+            }*/
 
         // Check if we already have stored the object.
-        if (particleData.hasLocation(customLocation)) {
+        if (data.hasLocation(customLocation)) {
             //TODO() Add a proper message for the sender.
             this.plugin.getFancyLogger().debug("This location is already in the map.");
             // Return since we don't want to double up.
@@ -97,7 +94,7 @@ public non-sealed class JsonParticleDataManager extends JsonParticleData impleme
         }
 
         // Add the new location.
-        particleData.addLocation(customLocation);
+        data.addLocation(customLocation);
 
         // Reload the contents.
         reload();
@@ -112,26 +109,24 @@ public non-sealed class JsonParticleDataManager extends JsonParticleData impleme
 
     @Override
     public void removeParticleData(String name, int id) {
-        ParticleData particleData = getParticleData(name);
+        //ParticleData particleData = getParticleData(name);
 
-        CustomLocation customLocation = null;
+        //CustomLocation customLocation = null;
 
-        if (!particleData.getLocations().isEmpty()) {
+        /*if (!particleData.getLocations().isEmpty()) {
             for (CustomLocation location : particleData.getLocations()) {
                 if (location.id() == id) {
                     customLocation = location;
                     break;
                 }
             }
-        }
+        }*/
 
-        if (customLocation != null) particleData.removeLocation(customLocation);
+        //if (customLocation != null) particleData.removeLocation(customLocation);
     }
 
     @Override
     public boolean hasParticleData(String name) {
-        if (particles.isEmpty()) return false;
-
         return particles.containsKey(name);
     }
 

@@ -13,16 +13,16 @@ import java.lang.reflect.Modifier;
 import java.nio.file.Path;
 import java.util.concurrent.ConcurrentHashMap;
 
-public sealed class JsonParticleData extends FileEngine permits JsonParticleDataManager {
+public sealed class ParticleJson extends FileEngine permits DataManager {
 
     final BlockParticles plugin = JavaPlugin.getPlugin(BlockParticles.class);
 
-    public JsonParticleData(Path path) {
+    public ParticleJson(Path path) {
         super("locations.json", path, FileType.JSON);
 
         GsonBuilder builder = new GsonBuilder()
-                .setPrettyPrinting()
                 .disableHtmlEscaping()
+                .setPrettyPrinting()
                 .excludeFieldsWithoutExposeAnnotation()
                 .excludeFieldsWithModifiers(Modifier.TRANSIENT)
                 .registerTypeAdapter(Location.class, new LocationTypeAdapter());

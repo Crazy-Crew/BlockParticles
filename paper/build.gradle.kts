@@ -1,11 +1,15 @@
 plugins {
+    id("xyz.jpenilla.run-paper") version "2.1.0"
+
     id("paper-plugin")
 }
 
 repositories {
-    maven("https://repo.crazycrew.us/snapshots/")
+    //maven("https://repo.crazycrew.us/snapshots/")
 
-    maven("https://repo.crazycrew.us/releases/")
+    //maven("https://repo.crazycrew.us/releases/")
+
+    mavenLocal()
 }
 
 dependencies {
@@ -24,6 +28,15 @@ tasks {
         ).forEach {
             relocate(it, "libs.$it")
         }
+    }
+
+    runServer {
+        // Configure the Minecraft version for our task.
+        // This is the only required configuration besides applying the plugin.
+        // Your plugin's jar (or shadowJar if present) will be used automatically.
+        minecraftVersion("1.20.1")
+
+        jvmArgs("-Dnet.kyori.ansi.colorLevel=truecolor")
     }
 
     processResources {

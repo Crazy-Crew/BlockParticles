@@ -16,3 +16,8 @@ common/build
 jars
 
 build
+
+paper/run
+
+!paper/run/eula.txt
+!paper/run/server.properties
