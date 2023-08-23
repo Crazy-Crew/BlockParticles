@@ -1,32 +1,30 @@
-package com.badbones69.blockparticles.commands.admin;
+package com.badbones69.blockparticles.commands.player;
 
 import com.ryderbelserion.ruby.other.builder.commands.args.Argument;
 import com.ryderbelserion.ruby.other.builder.commands.args.types.IntArgument;
 import com.ryderbelserion.ruby.paper.plugin.builder.commands.PaperCommandContext;
 import com.ryderbelserion.ruby.paper.plugin.builder.commands.PaperCommandEngine;
+import com.ryderbelserion.ruby.paper.plugin.builder.commands.PaperCommandHelpEntry;
 import com.ryderbelserion.ruby.paper.plugin.builder.commands.reqs.PaperRequirements;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
+
 import java.util.Collections;
 import java.util.List;
 
-public class ReloadCommand extends PaperCommandEngine {
+public class HelpCommand extends PaperCommandEngine {
 
-    public ReloadCommand() {
-        super("reload", "The reload commands for block particles", "particles reload", Collections.emptyList());
+    public HelpCommand() {
+        super("help", "The help command for block particles", "particles help", Collections.emptyList());
 
-        addRequiredArgument(this, new Argument("page", 0, new IntArgument(5)));
-
-        this.paperRequirements = new PaperRequirements(
-                true,
-                null,
-                "blockparticles.reload"
-        );
+        addRequiredArgument(this, new Argument("page", 0, new IntArgument(3)));
     }
 
     @Override
     public void perform(PaperCommandContext context, String[] args) {
-        context.reply("<red>This is a reload command</red>");
+        PaperCommandHelpEntry helpEntry = new PaperCommandHelpEntry();
+
+        helpEntry.showHelp(context);
     }
 
     @Override

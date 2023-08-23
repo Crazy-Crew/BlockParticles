@@ -5,9 +5,11 @@ plugins {
 }
 
 repositories {
-    maven("https://repo.crazycrew.us/snapshots/")
+    //maven("https://repo.crazycrew.us/snapshots/")
 
-    maven("https://repo.crazycrew.us/releases/")
+    //maven("https://repo.crazycrew.us/releases/")
+
+    mavenLocal()
 }
 
 dependencies {
