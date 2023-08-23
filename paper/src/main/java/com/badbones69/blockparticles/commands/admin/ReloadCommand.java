@@ -1,10 +1,10 @@
 package com.badbones69.blockparticles.commands.admin;
 
-import com.ryderbelserion.ruby.other.builder.commands.args.Argument;
-import com.ryderbelserion.ruby.other.builder.commands.args.types.IntArgument;
-import com.ryderbelserion.ruby.paper.plugin.builder.commands.PaperCommandContext;
-import com.ryderbelserion.ruby.paper.plugin.builder.commands.PaperCommandEngine;
-import com.ryderbelserion.ruby.paper.plugin.builder.commands.reqs.PaperRequirements;
+import com.ryderbelserion.ruby.other.commands.args.Argument;
+import com.ryderbelserion.ruby.other.commands.args.types.IntArgument;
+import com.ryderbelserion.ruby.paper.plugin.commands.PaperCommandContext;
+import com.ryderbelserion.ruby.paper.plugin.commands.PaperCommandEngine;
+import com.ryderbelserion.ruby.paper.plugin.commands.reqs.PaperRequirements;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 import java.util.Collections;

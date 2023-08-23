@@ -3,7 +3,7 @@ package com.badbones69.blockparticles.commands;
 import ch.jalu.configme.SettingsManager;
 import com.badbones69.blockparticles.api.config.ConfigManager;
 import com.badbones69.blockparticles.api.config.types.PluginSupport;
-import com.ryderbelserion.ruby.other.builder.commands.CommandHelpProvider;
+import com.ryderbelserion.ruby.other.commands.CommandHelpProvider;
 
 public class ParticleHelpData implements CommandHelpProvider {
 
