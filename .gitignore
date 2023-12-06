@@ -1,23 +1,22 @@
-.idea
+build
 .gradle
+.idea
+jars
 
-buildSrc/build
-buildSrc/.gradle
-
-paper/.gradle
+common/build
 paper/build
-
-api/.gradle
 api/build
 
 common/.gradle
-common/build
-
-jars
-
-build
+api/.gradle
+paper/.gradle
 
 paper/run
 
+!paper/run/config
+!paper/run/spigot.yml
+!paper/run/bukkit.yml
 !paper/run/eula.txt
 !paper/run/server.properties
+!paper/run/plugins
+!paper/run/ops.json

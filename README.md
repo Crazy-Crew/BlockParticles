@@ -2,7 +2,7 @@
 
 <div align="center">
 
-[![BlockParticles](https://raw.githubusercontent.com/RyderBelserion/Assets/main/crazycrew/webp/BlockParticlesBanner.webp)](https://modrinth.com/plugin/BlockParticles)
+[![blockparticles](https://raw.githubusercontent.com/RyderBelserion/Assets/main/crazycrew/webp/BlockParticlesBanner.webp)](https://modrinth.com/plugin/BlockParticles)
 
 [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
@@ -16,14 +16,14 @@
 ![Purpur](https://cdn.jsdelivr.net/gh/intergrav/devins-badges/assets/compact/supported/purpur_vector.svg)
 
   <p align="center">
-    A crates plugin that offers quality crates with ease!
+    Add particles to your blocks!
     <br />
     <a href="https://docs.crazycrew.us/blockparticles/home"><strong>Explore the docs »</strong></a>
     <br />
     <br />
     <a href="https://github.com/Crazy-Crew/BlockParticles/issues">Report Bug</a>
     ·
-    <a href="https://github.com/Crazy-Crew/BlockParticles/discussions/categories/features">Request Feature</a>
+    <a href="https://github.com/Crazy-Crew/BlockParticles/issues">Request Feature</a>
     ·
     <a href="https://discord.gg/badbones-s-live-chat-182615261403283459">Get Support</a>
   </p>
@@ -75,7 +75,7 @@ A list of things necessary to make sure you can build BlockParticles properly.
 
 ## Roadmap
 
-Check our public [trello board](https://trello.com/b/1aHy2EF2/) for our current plans, any bugs and general tracking of the project progress.
+Check our public [trello board](https://trello.com/b/bzQ5TwXo) for our current plans, any bugs and general tracking of the project progress.
 
 ## Contributing
 
@@ -90,7 +90,7 @@ Check our public [trello board](https://trello.com/b/1aHy2EF2/) for our current 
 Distributed under the MIT License. See [`LICENSE`](/LICENSE) for more information.
 
 [discord-shield]: https://img.shields.io/discord/182615261403283459.svg?style=flat&logo=appveyor
-[discord-url]: https://discord.gg/crazycrew
+[discord-url]: https://discord.gg/badbones-s-live-chat-182615261403283459
 
 [contributors-shield]: https://img.shields.io/github/contributors/Crazy-Crew/BlockParticles.svg?style=flat&logo=appveyor
 [contributors-url]: https://github.com/Crazy-Crew/BlockParticles/graphs/contributors
@@ -103,4 +103,4 @@ Distributed under the MIT License. See [`LICENSE`](/LICENSE) for more informatio
 [license-shield]: https://img.shields.io/github/license/Crazy-Crew/BlockParticles.svg?style=flat&logo=appveyor
 [license-url]: https://github.com/Crazy-Crew/BlockParticles/blob/master/LICENSE
 
-[codefactor-shield]: https://img.shields.io/codefactor/grade/github/crazy-crew/BlockParticles/main?style=flat&logo=appveyor
+[codefactor-shield]: https://img.shields.io/codefactor/grade/github/crazy-crew/blockparticles/main?style=flat&logo=appveyor
