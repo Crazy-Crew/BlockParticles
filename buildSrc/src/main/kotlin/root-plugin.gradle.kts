@@ -1,9 +1,5 @@
-import org.gradle.kotlin.dsl.support.uppercaseFirstChar
-
 plugins {
     id("com.github.johnrengelman.shadow")
-
-    id("com.modrinth.minotaur")
 
     `java-library`
 
@@ -38,27 +34,6 @@ tasks {
         archiveClassifier.set("")
 
         exclude("META-INF/**")
-    }
-
-    val directory = File("$rootDir/jars")
-    val mcVersion = rootProject.properties["minecraftVersion"] as String
-
-    modrinth {
-        autoAddDependsOn.set(false)
-
-        token.set(System.getenv("modrinth_token"))
-
-        projectId.set(rootProject.name.lowercase())
-
-        versionName.set("${rootProject.name} ${project.version}")
-
-        versionNumber.set("${project.version}")
-
-        uploadFile.set("$directory/${rootProject.name}-${project.name.uppercaseFirstChar()}-${project.version}.jar")
-
-        gameVersions.add(mcVersion)
-
-        changelog.set(rootProject.file("CHANGELOG.md").readText())
     }
 }
 

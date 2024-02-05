@@ -5,9 +5,7 @@ plugins {
 val mcVersion = rootProject.properties["minecraftVersion"] as String
 
 dependencies {
-    implementation(libs.metrics)
-
-    compileOnly(fileTree("libs").include("*.jar"))
+    implementation("org.bstats", "bstats-bukkit", "3.0.2")
 }
 
 tasks {
