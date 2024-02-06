@@ -5,12 +5,15 @@ plugins {
 val mcVersion = rootProject.properties["minecraftVersion"] as String
 
 dependencies {
+    implementation(project(":common"))
+
     implementation("org.bstats", "bstats-bukkit", "3.0.2")
 }
 
 tasks {
     shadowJar {
         listOf(
+            "com.h2database",
             "org.bstats"
         ).forEach {
             relocate(it, "libs.$it")

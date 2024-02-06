@@ -8,3 +8,7 @@ version: '${version}'
 api-version: '${apiVersion}'
 description: '${description}'
 website: '${website}'
+
+commands:
+  bp:
+    description: A test command for particles

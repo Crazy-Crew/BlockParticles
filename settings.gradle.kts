@@ -9,4 +9,5 @@ pluginManagement {
 
 rootProject.name = "BlockParticles"
 
+include("common")
 include("paper")
