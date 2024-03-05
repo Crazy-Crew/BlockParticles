@@ -1,5 +1,3 @@
-import org.gradle.kotlin.dsl.support.uppercaseFirstChar
-
 plugins {
     id("io.papermc.paperweight.userdev")
 
@@ -9,7 +7,7 @@ plugins {
 }
 
 base {
-    archivesName.set("${rootProject.name}-${project.name.uppercaseFirstChar()}")
+    archivesName.set(rootProject.name)
 }
 
 repositories {
@@ -26,10 +24,9 @@ repositories {
     flatDir { dirs("libs") }
 }
 
-val mcVersion = rootProject.properties["minecraftVersion"] as String
-val paperVersion = rootProject.properties["paperVersion"] as String
+val mcVersion = providers.gradleProperty("mcVersion").get()
 
-project.version = if (System.getenv("BUILD_NUMBER") != null) "$paperVersion-${System.getenv("BUILD_NUMBER")}" else paperVersion
+project.version = if (System.getenv("BUILD_NUMBER") != null) "${rootProject.version}-${System.getenv("BUILD_NUMBER")}" else rootProject.version
 
 dependencies {
     paperweight.paperDevBundle("$mcVersion-R0.1-SNAPSHOT")
@@ -43,6 +40,12 @@ tasks {
     runServer {
         jvmArgs("-Dnet.kyori.ansi.colorLevel=truecolor")
 
+        defaultCharacterEncoding = Charsets.UTF_8.name()
+
         minecraftVersion(mcVersion)
+    }
+
+    modrinth {
+        loaders.addAll("paper", "purpur")
     }
 }
