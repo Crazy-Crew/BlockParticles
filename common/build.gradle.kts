@@ -3,9 +3,15 @@ plugins {
 }
 
 dependencies {
-    implementation("com.h2database", "h2", "2.2.224")
-}
+    compileOnlyApi(libs.bundles.adventure)
 
-tasks {
+    compileOnly(libs.cluster.api)
 
+    api(libs.cloud.core)
+    api(libs.cloud.brig)
+    api(libs.cloud.extras)
+
+    api(libs.configme) {
+        exclude(group = "org.yaml", module = "snakeyaml")
+    }
 }

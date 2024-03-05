@@ -5,7 +5,9 @@ plugins {
 dependencies {
     api(project(":common"))
 
-    //implementation(libs.metrics)
+    implementation(libs.cluster.paper)
+
+    implementation(libs.cloud.paper)
 
     compileOnly(fileTree("libs").include("*.jar"))
 }
