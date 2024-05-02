@@ -7,9 +7,6 @@ import me.badbones69.blockparticles.api.objects.CustomFountain;
 import me.badbones69.blockparticles.api.objects.Particle;
 import me.badbones69.blockparticles.controllers.Fountains;
 import me.badbones69.blockparticles.controllers.ParticleControl;
-import me.badbones69.blockparticles.multisupport.NMS_v1_12_Down;
-import me.badbones69.blockparticles.multisupport.NMS_v1_13_Up;
-import me.badbones69.blockparticles.multisupport.Version;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -17,7 +14,6 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -37,7 +33,7 @@ public class ParticleManager {
     }
     
     public void load() {
-        particleControl = Version.getCurrentVersion().isNewer(Version.v1_12_R1) ? new NMS_v1_13_Up() : new NMS_v1_12_Down();
+        particleControl = new me.badbones69.blockparticles.Particles();
         customFountains.clear();
         if (hasOldFiles()) {
             String prefix = fileManager.getPrefix();
@@ -329,9 +325,4 @@ public class ParticleManager {
     public HashMap<Player, String> getSetCommandPlayers() {
         return setCommandPlayers;
     }
-    
-    public boolean useNewMaterial() {
-        return Version.getCurrentVersion().isNewer(Version.v1_12_R1);
-    }
-    
 }

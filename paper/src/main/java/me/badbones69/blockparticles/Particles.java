@@ -1,6 +1,5 @@
-package me.badbones69.blockparticles.multisupport;
+package me.badbones69.blockparticles;
 
-import me.badbones69.blockparticles.api.enums.Particles;
 import me.badbones69.blockparticles.controllers.ParticleControl;
 import org.bukkit.*;
 import org.bukkit.entity.Entity;
@@ -8,13 +7,12 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.util.Vector;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Random;
 
-public class NMS_v1_13_Up implements ParticleControl {
+public class Particles implements ParticleControl {
     
     private HashMap<String, Integer> locations = new HashMap<>();
     private Plugin plugin = Bukkit.getPluginManager().getPlugin("BlockParticles");
@@ -77,11 +75,11 @@ public class NMS_v1_13_Up implements ParticleControl {
         }, 0, 5));
     }
     
-    public void playDoubleSpiral(final Location location, String id, Particles particles, int amount) {
+    public void playDoubleSpiral(final Location location, String id, me.badbones69.blockparticles.api.enums.Particles particles, int amount) {
         locations.put(id, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
             Location l = location.add(.5, .7, .5);
             int time = 16;
-            Particle particle = particles == Particles.DOUBLEWITCH ? Particle.SPELL_WITCH : Particle.FIREWORKS_SPARK;
+            Particle particle = particles == me.badbones69.blockparticles.api.enums.Particles.DOUBLEWITCH ? Particle.WITCH : Particle.FIREWORK;
             
             @Override
             public void run() {
@@ -156,11 +154,11 @@ public class NMS_v1_13_Up implements ParticleControl {
         }, 0, 2));
     }
     
-    public void playSpiral(final Location location, String id, Particles particles, int amount) {
+    public void playSpiral(final Location location, String id, me.badbones69.blockparticles.api.enums.Particles particles, int amount) {
         locations.put(id, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
             Location l = location.add(.5, .7, .5);
             int time = 16;
-            Particle particle = particles == Particles.WITCH ? Particle.SPELL_WITCH : Particle.FIREWORKS_SPARK;
+            Particle particle = particles == me.badbones69.blockparticles.api.enums.Particles.WITCH ? Particle.WITCH : Particle.FIREWORK;
             
             @Override
             public void run() {
@@ -222,7 +220,7 @@ public class NMS_v1_13_Up implements ParticleControl {
             public void run() {
                 if (noPlayers(l.clone(), range)) return;
                 l.getWorld().spawnParticle(Particle.CLOUD, l.clone(), 15, .3f, 0, 0.3f, 0);
-                l.getWorld().spawnParticle(Particle.WATER_DROP, l.clone().add(0, 0, .1), 10, 0.2f, 0, 0.2f, 0);
+                l.getWorld().spawnParticle(Particle.FALLING_WATER, l.clone().add(0, 0, .1), 10, 0.2f, 0, 0.2f, 0);
             }
         }, 0, 2));
     }
@@ -246,7 +244,7 @@ public class NMS_v1_13_Up implements ParticleControl {
             @Override
             public void run() {
                 if (noPlayers(l.clone(), range)) return;
-                l.getWorld().spawnParticle(Particle.ENCHANTMENT_TABLE, l, 20, 0, 0, 0, 2);
+                l.getWorld().spawnParticle(Particle.ENCHANT, l, 20, 0, 0, 0, 2);
             }
         }, 0, 2));
     }
@@ -301,7 +299,7 @@ public class NMS_v1_13_Up implements ParticleControl {
             public void run() {
                 try {
                     if (!noPlayers(l.clone(), range)) {
-                        l.getWorld().spawnParticle(Particle.SMOKE_LARGE, l, 15, 0.3f, 0, 0.3f, 0);
+                        l.getWorld().spawnParticle(Particle.LARGE_SMOKE, l, 15, 0.3f, 0, 0.3f, 0);
                         l.getWorld().spawnParticle(Particle.FLAME, randomDrop(l.clone()), 0, 0, -0.2f, 0, 1);
                         l.getWorld().spawnParticle(Particle.FLAME, randomDrop(l.clone()), 0, 0, -0.2f, 0, 1);
                     }
@@ -320,7 +318,7 @@ public class NMS_v1_13_Up implements ParticleControl {
             @Override
             public void run() {
                 if (noPlayers(l.clone(), range)) return;
-                l.getWorld().spawnParticle(Particle.FIREWORKS_SPARK, l, 1, .7f, .7f, .7f, 0);
+                l.getWorld().spawnParticle(Particle.FIREWORK, l, 1, .7f, .7f, .7f, 0);
             }
         }, 0, 2));
     }
@@ -332,7 +330,7 @@ public class NMS_v1_13_Up implements ParticleControl {
             @Override
             public void run() {
                 if (noPlayers(l.clone(), range)) return;
-                l.getWorld().spawnParticle(Particle.FIREWORKS_SPARK, l, 0, randomVector(), .1f, randomVector(), 1);
+                l.getWorld().spawnParticle(Particle.FIREWORK, l, 0, randomVector(), .1f, randomVector(), 1);
             }
         }, 0, 2));
     }
@@ -344,9 +342,9 @@ public class NMS_v1_13_Up implements ParticleControl {
             @Override
             public void run() {
                 if (noPlayers(l.clone(), range)) return;
-                l.getWorld().spawnParticle(Particle.SPELL_MOB, l, 6, .3f, 0, .3f, randomColor());
-                l.getWorld().spawnParticle(Particle.SPELL_MOB, l, 6, .3f, 0, .3f, randomColor());
-                l.getWorld().spawnParticle(Particle.SPELL_MOB, l, 6, .3f, 0, .3f, randomColor());
+                l.getWorld().spawnParticle(Particle.INSTANT_EFFECT, l, 6, .3f, 0, .3f, randomColor());
+                l.getWorld().spawnParticle(Particle.INSTANT_EFFECT, l, 6, .3f, 0, .3f, randomColor());
+                l.getWorld().spawnParticle(Particle.INSTANT_EFFECT, l, 6, .3f, 0, .3f, randomColor());
             }
         }, 0, 2));
     }
@@ -408,64 +406,64 @@ public class NMS_v1_13_Up implements ParticleControl {
             @Override
             public void run() {
                 if (noPlayers(l.clone(), range)) return;
-                if (time == 15) l.getWorld().spawnParticle(Particle.CRIT_MAGIC, l.clone().add(0, .8, 0), 5, 0, 0, 0, 0);
+                if (time == 15) l.getWorld().spawnParticle(Particle.CRIT, l.clone().add(0, .8, 0), 5, 0, 0, 0, 0);
                 if (time == 0)
-                    l.getWorld().spawnParticle(Particle.CRIT_MAGIC, l.clone().add(0, .75, .43), 5, 0, 0, 0, 0);
+                    l.getWorld().spawnParticle(Particle.CRIT, l.clone().add(0, .75, .43), 5, 0, 0, 0, 0);
                 if (time == 1)
-                    l.getWorld().spawnParticle(Particle.CRIT_MAGIC, l.clone().add(0, .65, .65), 5, 0, 0, 0, 0);
+                    l.getWorld().spawnParticle(Particle.CRIT, l.clone().add(0, .65, .65), 5, 0, 0, 0, 0);
                 if (time == 2)
-                    l.getWorld().spawnParticle(Particle.CRIT_MAGIC, l.clone().add(0, .43, .75), 5, 0, 0, 0, 0);
-                if (time == 3) l.getWorld().spawnParticle(Particle.CRIT_MAGIC, l.clone().add(0, 0, .8), 5, 0, 0, 0, 0);
+                    l.getWorld().spawnParticle(Particle.CRIT, l.clone().add(0, .43, .75), 5, 0, 0, 0, 0);
+                if (time == 3) l.getWorld().spawnParticle(Particle.CRIT, l.clone().add(0, 0, .8), 5, 0, 0, 0, 0);
                 if (time == 4)
-                    l.getWorld().spawnParticle(Particle.CRIT_MAGIC, l.clone().add(0, -.43, .75), 5, 0, 0, 0, 0);
+                    l.getWorld().spawnParticle(Particle.CRIT, l.clone().add(0, -.43, .75), 5, 0, 0, 0, 0);
                 if (time == 5)
-                    l.getWorld().spawnParticle(Particle.CRIT_MAGIC, l.clone().add(0, -.65, .65), 5, 0, 0, 0, 0);
+                    l.getWorld().spawnParticle(Particle.CRIT, l.clone().add(0, -.65, .65), 5, 0, 0, 0, 0);
                 if (time == 86)
-                    l.getWorld().spawnParticle(Particle.CRIT_MAGIC, l.clone().add(0, -.75, .43), 5, 0, 0, 0, 0);
-                if (time == 7) l.getWorld().spawnParticle(Particle.CRIT_MAGIC, l.clone().add(0, -.8, 0), 5, 0, 0, 0, 0);
+                    l.getWorld().spawnParticle(Particle.CRIT, l.clone().add(0, -.75, .43), 5, 0, 0, 0, 0);
+                if (time == 7) l.getWorld().spawnParticle(Particle.CRIT, l.clone().add(0, -.8, 0), 5, 0, 0, 0, 0);
                 if (time == 8)
-                    l.getWorld().spawnParticle(Particle.CRIT_MAGIC, l.clone().add(0, -.75, -.43), 5, 0, 0, 0, 0);
+                    l.getWorld().spawnParticle(Particle.CRIT, l.clone().add(0, -.75, -.43), 5, 0, 0, 0, 0);
                 if (time == 9)
-                    l.getWorld().spawnParticle(Particle.CRIT_MAGIC, l.clone().add(0, -.65, -.65), 5, 0, 0, 0, 0);
+                    l.getWorld().spawnParticle(Particle.CRIT, l.clone().add(0, -.65, -.65), 5, 0, 0, 0, 0);
                 if (time == 10)
-                    l.getWorld().spawnParticle(Particle.CRIT_MAGIC, l.clone().add(0, -.43, -.75), 5, 0, 0, 0, 0);
+                    l.getWorld().spawnParticle(Particle.CRIT, l.clone().add(0, -.43, -.75), 5, 0, 0, 0, 0);
                 if (time == 11)
-                    l.getWorld().spawnParticle(Particle.CRIT_MAGIC, l.clone().add(0, 0, -.8), 5, 0, 0, 0, 0);
+                    l.getWorld().spawnParticle(Particle.CRIT, l.clone().add(0, 0, -.8), 5, 0, 0, 0, 0);
                 if (time == 12)
-                    l.getWorld().spawnParticle(Particle.CRIT_MAGIC, l.clone().add(0, .43, -.75), 5, 0, 0, 0, 0);
+                    l.getWorld().spawnParticle(Particle.CRIT, l.clone().add(0, .43, -.75), 5, 0, 0, 0, 0);
                 if (time == 13)
-                    l.getWorld().spawnParticle(Particle.CRIT_MAGIC, l.clone().add(0, .65, -.65), 5, 0, 0, 0, 0);
+                    l.getWorld().spawnParticle(Particle.CRIT, l.clone().add(0, .65, -.65), 5, 0, 0, 0, 0);
                 if (time == 14)
-                    l.getWorld().spawnParticle(Particle.CRIT_MAGIC, l.clone().add(0, .75, -.43), 5, 0, 0, 0, 0);
+                    l.getWorld().spawnParticle(Particle.CRIT, l.clone().add(0, .75, -.43), 5, 0, 0, 0, 0);
                 
-                if (time == 15) l.getWorld().spawnParticle(Particle.CRIT_MAGIC, l.clone().add(.8, 0, 0), 5, 0, 0, 0, 0);
+                if (time == 15) l.getWorld().spawnParticle(Particle.CRIT, l.clone().add(.8, 0, 0), 5, 0, 0, 0, 0);
                 if (time == 14)
-                    l.getWorld().spawnParticle(Particle.CRIT_MAGIC, l.clone().add(.75, 0, .43), 5, 0, 0, 0, 0);
+                    l.getWorld().spawnParticle(Particle.CRIT, l.clone().add(.75, 0, .43), 5, 0, 0, 0, 0);
                 if (time == 13)
-                    l.getWorld().spawnParticle(Particle.CRIT_MAGIC, l.clone().add(.65, 0, .65), 5, 0, 0, 0, 0);
+                    l.getWorld().spawnParticle(Particle.CRIT, l.clone().add(.65, 0, .65), 5, 0, 0, 0, 0);
                 if (time == 12)
-                    l.getWorld().spawnParticle(Particle.CRIT_MAGIC, l.clone().add(.43, 0, .75), 5, 0, 0, 0, 0);
-                if (time == 11) l.getWorld().spawnParticle(Particle.CRIT_MAGIC, l.clone().add(0, 0, .8), 5, 0, 0, 0, 0);
+                    l.getWorld().spawnParticle(Particle.CRIT, l.clone().add(.43, 0, .75), 5, 0, 0, 0, 0);
+                if (time == 11) l.getWorld().spawnParticle(Particle.CRIT, l.clone().add(0, 0, .8), 5, 0, 0, 0, 0);
                 if (time == 10)
-                    l.getWorld().spawnParticle(Particle.CRIT_MAGIC, l.clone().add(-.43, 0, .75), 5, 0, 0, 0, 0);
+                    l.getWorld().spawnParticle(Particle.CRIT, l.clone().add(-.43, 0, .75), 5, 0, 0, 0, 0);
                 if (time == 9)
-                    l.getWorld().spawnParticle(Particle.CRIT_MAGIC, l.clone().add(-.65, 0, .65), 5, 0, 0, 0, 0);
+                    l.getWorld().spawnParticle(Particle.CRIT, l.clone().add(-.65, 0, .65), 5, 0, 0, 0, 0);
                 if (time == 8)
-                    l.getWorld().spawnParticle(Particle.CRIT_MAGIC, l.clone().add(-.75, 0, .43), 5, 0, 0, 0, 0);
-                if (time == 7) l.getWorld().spawnParticle(Particle.CRIT_MAGIC, l.clone().add(-.8, 0, 0), 5, 0, 0, 0, 0);
+                    l.getWorld().spawnParticle(Particle.CRIT, l.clone().add(-.75, 0, .43), 5, 0, 0, 0, 0);
+                if (time == 7) l.getWorld().spawnParticle(Particle.CRIT, l.clone().add(-.8, 0, 0), 5, 0, 0, 0, 0);
                 if (time == 6)
-                    l.getWorld().spawnParticle(Particle.CRIT_MAGIC, l.clone().add(-.75, 0, -.43), 5, 0, 0, 0, 0);
+                    l.getWorld().spawnParticle(Particle.CRIT, l.clone().add(-.75, 0, -.43), 5, 0, 0, 0, 0);
                 if (time == 5)
-                    l.getWorld().spawnParticle(Particle.CRIT_MAGIC, l.clone().add(-.65, 0, -.65), 5, 0, 0, 0, 0);
+                    l.getWorld().spawnParticle(Particle.CRIT, l.clone().add(-.65, 0, -.65), 5, 0, 0, 0, 0);
                 if (time == 4)
-                    l.getWorld().spawnParticle(Particle.CRIT_MAGIC, l.clone().add(-.43, 0, -.75), 5, 0, 0, 0, 0);
-                if (time == 3) l.getWorld().spawnParticle(Particle.CRIT_MAGIC, l.clone().add(0, 0, -.8), 5, 0, 0, 0, 0);
+                    l.getWorld().spawnParticle(Particle.CRIT, l.clone().add(-.43, 0, -.75), 5, 0, 0, 0, 0);
+                if (time == 3) l.getWorld().spawnParticle(Particle.CRIT, l.clone().add(0, 0, -.8), 5, 0, 0, 0, 0);
                 if (time == 2)
-                    l.getWorld().spawnParticle(Particle.CRIT_MAGIC, l.clone().add(.43, 0, -.75), 5, 0, 0, 0, 0);
+                    l.getWorld().spawnParticle(Particle.CRIT, l.clone().add(.43, 0, -.75), 5, 0, 0, 0, 0);
                 if (time == 1)
-                    l.getWorld().spawnParticle(Particle.CRIT_MAGIC, l.clone().add(.65, 0, -.65), 5, 0, 0, 0, 0);
+                    l.getWorld().spawnParticle(Particle.CRIT, l.clone().add(.65, 0, -.65), 5, 0, 0, 0, 0);
                 if (time == 0) {
-                    l.getWorld().spawnParticle(Particle.CRIT_MAGIC, l.clone().add(.75, 0, -.43), 5, 0, 0, 0, 0);
+                    l.getWorld().spawnParticle(Particle.CRIT, l.clone().add(.75, 0, -.43), 5, 0, 0, 0, 0);
                     time = 16;
                 }
                 time--;
@@ -481,7 +479,7 @@ public class NMS_v1_13_Up implements ParticleControl {
             public void run() {
                 if (noPlayers(l.clone(), range)) return;
                 l.getWorld().spawnParticle(Particle.CLOUD, l, 15, .3f, 0, .3f, 0);
-                l.getWorld().spawnParticle(Particle.FIREWORKS_SPARK, l, 2, .3f, 0, .3f, 0);
+                l.getWorld().spawnParticle(Particle.FIREWORK, l, 2, .3f, 0, .3f, 0);
             }
         }, 0, 2));
     }
@@ -507,7 +505,7 @@ public class NMS_v1_13_Up implements ParticleControl {
             @Override
             public void run() {
                 if (noPlayers(l.clone(), range)) return;
-                l.getWorld().spawnParticle(Particle.TOWN_AURA, l, 3, 1, 0, 1, 0);
+                l.getWorld().spawnParticle(Particle.EGG_CRACK, l, 3, 1, 0, 1, 0);
             }
         }, 0, 20));
     }
@@ -519,7 +517,7 @@ public class NMS_v1_13_Up implements ParticleControl {
             @Override
             public void run() {
                 if (noPlayers(l.clone(), range)) return;
-                location.getWorld().spawnParticle(Particle.VILLAGER_HAPPY, l, 10, .5f, .5f, .5f, 0);
+                location.getWorld().spawnParticle(Particle.HAPPY_VILLAGER, l, 10, .5f, .5f, .5f, 0);
             }
         }, 0, 5));
     }
@@ -531,7 +529,7 @@ public class NMS_v1_13_Up implements ParticleControl {
             @Override
             public void run() {
                 if (noPlayers(l.clone(), range)) return;
-                l.getWorld().spawnParticle(Particle.VILLAGER_ANGRY, l, 5, .5f, .5f, .5f, 0);
+                l.getWorld().spawnParticle(Particle.ANGRY_VILLAGER, l, 5, .5f, .5f, .5f, 0);
             }
         }, 0, 10));
     }
@@ -555,12 +553,12 @@ public class NMS_v1_13_Up implements ParticleControl {
             @Override
             public void run() {
                 if (noPlayers(l.clone(), range)) return;
-                location.getWorld().spawnParticle(Particle.WATER_DROP, l.clone().add(0, .1, 0), 10, 0, 0, 0, 0);
-                location.getWorld().spawnParticle(Particle.WATER_DROP, l.clone().add(0, .5, 0), 10, 0, 0, 0, 0);
-                location.getWorld().spawnParticle(Particle.WATER_DROP, l.clone().add(.2, .3, .2), 10, 0, 0, 0, 0);
-                location.getWorld().spawnParticle(Particle.WATER_DROP, l.clone().add(-.2, .3, .2), 10, 0, 0, 0, 0);
-                location.getWorld().spawnParticle(Particle.WATER_DROP, l.clone().add(.2, .3, -.2), 10, 0, 0, 0, 0);
-                location.getWorld().spawnParticle(Particle.WATER_DROP, l.clone().add(-.2, .3, -.2), 10, 0, 0, 0, 0);
+                location.getWorld().spawnParticle(Particle.FALLING_WATER, l.clone().add(0, .1, 0), 10, 0, 0, 0, 0);
+                location.getWorld().spawnParticle(Particle.FALLING_WATER, l.clone().add(0, .5, 0), 10, 0, 0, 0, 0);
+                location.getWorld().spawnParticle(Particle.FALLING_WATER, l.clone().add(.2, .3, .2), 10, 0, 0, 0, 0);
+                location.getWorld().spawnParticle(Particle.FALLING_WATER, l.clone().add(-.2, .3, .2), 10, 0, 0, 0, 0);
+                location.getWorld().spawnParticle(Particle.FALLING_WATER, l.clone().add(.2, .3, -.2), 10, 0, 0, 0, 0);
+                location.getWorld().spawnParticle(Particle.FALLING_WATER, l.clone().add(-.2, .3, -.2), 10, 0, 0, 0, 0);
             }
         }, 0, 2));
     }
@@ -591,7 +589,7 @@ public class NMS_v1_13_Up implements ParticleControl {
                 int g = random.nextInt(255);
                 int b = random.nextInt(255);
                 Particle.DustOptions dustOptions = new Particle.DustOptions(Color.fromRGB(r, g, b), 1);
-                l.getWorld().spawnParticle(Particle.REDSTONE, l, 10, .5f, .5f, .5f, 1, dustOptions);
+                l.getWorld().spawnParticle(Particle.DUST, l, 10, .5f, .5f, .5f, 1, dustOptions);
             }
         }, 0, 5));
     }
@@ -603,7 +601,7 @@ public class NMS_v1_13_Up implements ParticleControl {
             @Override
             public void run() {
                 if (noPlayers(l.clone(), range)) return;
-                l.getWorld().spawnParticle(Particle.SNOW_SHOVEL, l, 40, 0, 0, 0, .2f);
+                l.getWorld().spawnParticle(Particle.SNOWFLAKE, l, 40, 0, 0, 0, .2f);
             }
         }, 0, 2));
     }
@@ -617,22 +615,22 @@ public class NMS_v1_13_Up implements ParticleControl {
                 if (noPlayers(l.clone(), range)) return;
                 try {
                     for (int i = 0; i < 3; i++) {
-                        l.getWorld().spawnParticle(Particle.REDSTONE, l.clone().add(.5, 0, 0), 1, 0, 0, 0, 1, new Particle.DustOptions(Color.fromRGB(255, 255, 0), 1));
-                        l.getWorld().spawnParticle(Particle.REDSTONE, l.clone().add(.45, 0, .13), 1, 0, 0, 0, 1, new Particle.DustOptions(Color.fromRGB(255, 255, 0), 1));
-                        l.getWorld().spawnParticle(Particle.REDSTONE, l.clone().add(.35, 0, .35), 1, 0, 0, 0, 1, new Particle.DustOptions(Color.fromRGB(255, 255, 0), 1));
-                        l.getWorld().spawnParticle(Particle.REDSTONE, l.clone().add(.13, 0, .45), 1, 0, 0, 0, 1, new Particle.DustOptions(Color.fromRGB(255, 255, 0), 1));
-                        l.getWorld().spawnParticle(Particle.REDSTONE, l.clone().add(0, 0, .5), 1, 0, 0, 0, 1, new Particle.DustOptions(Color.fromRGB(255, 255, 0), 1));
-                        l.getWorld().spawnParticle(Particle.REDSTONE, l.clone().add(-.13, 0, .45), 1, 0, 0, 0, 1, new Particle.DustOptions(Color.fromRGB(255, 255, 0), 1));
-                        l.getWorld().spawnParticle(Particle.REDSTONE, l.clone().add(-.35, 0, .35), 1, 0, 0, 0, 1, new Particle.DustOptions(Color.fromRGB(255, 255, 0), 1));
-                        l.getWorld().spawnParticle(Particle.REDSTONE, l.clone().add(-.45, 0, .13), 1, 0, 0, 0, 1, new Particle.DustOptions(Color.fromRGB(255, 255, 0), 1));
-                        l.getWorld().spawnParticle(Particle.REDSTONE, l.clone().add(-.5, 0, 0), 1, 0, 0, 0, 1, new Particle.DustOptions(Color.fromRGB(255, 255, 0), 1));
-                        l.getWorld().spawnParticle(Particle.REDSTONE, l.clone().add(-.45, 0, -.13), 1, 0, 0, 0, 1, new Particle.DustOptions(Color.fromRGB(255, 255, 0), 1));
-                        l.getWorld().spawnParticle(Particle.REDSTONE, l.clone().add(-.35, 0, -.35), 1, 0, 0, 0, 1, new Particle.DustOptions(Color.fromRGB(255, 255, 0), 1));
-                        l.getWorld().spawnParticle(Particle.REDSTONE, l.clone().add(-.13, 0, -.45), 1, 0, 0, 0, 1, new Particle.DustOptions(Color.fromRGB(255, 255, 0), 1));
-                        l.getWorld().spawnParticle(Particle.REDSTONE, l.clone().add(0, 0, -.5), 1, 0, 0, 0, 1, new Particle.DustOptions(Color.fromRGB(255, 255, 0), 1));
-                        l.getWorld().spawnParticle(Particle.REDSTONE, l.clone().add(.13, 0, -.45), 1, 0, 0, 0, 1, new Particle.DustOptions(Color.fromRGB(255, 255, 0), 1));
-                        l.getWorld().spawnParticle(Particle.REDSTONE, l.clone().add(.35, 0, -.35), 1, 0, 0, 0, 1, new Particle.DustOptions(Color.fromRGB(255, 255, 0), 1));
-                        l.getWorld().spawnParticle(Particle.REDSTONE, l.clone().add(.45, 0, -.13), 1, 0, 0, 0, 1, new Particle.DustOptions(Color.fromRGB(255, 255, 0), 1));
+                        l.getWorld().spawnParticle(Particle.DUST, l.clone().add(.5, 0, 0), 1, 0, 0, 0, 1, new Particle.DustOptions(Color.fromRGB(255, 255, 0), 1));
+                        l.getWorld().spawnParticle(Particle.DUST, l.clone().add(.45, 0, .13), 1, 0, 0, 0, 1, new Particle.DustOptions(Color.fromRGB(255, 255, 0), 1));
+                        l.getWorld().spawnParticle(Particle.DUST, l.clone().add(.35, 0, .35), 1, 0, 0, 0, 1, new Particle.DustOptions(Color.fromRGB(255, 255, 0), 1));
+                        l.getWorld().spawnParticle(Particle.DUST, l.clone().add(.13, 0, .45), 1, 0, 0, 0, 1, new Particle.DustOptions(Color.fromRGB(255, 255, 0), 1));
+                        l.getWorld().spawnParticle(Particle.DUST, l.clone().add(0, 0, .5), 1, 0, 0, 0, 1, new Particle.DustOptions(Color.fromRGB(255, 255, 0), 1));
+                        l.getWorld().spawnParticle(Particle.DUST, l.clone().add(-.13, 0, .45), 1, 0, 0, 0, 1, new Particle.DustOptions(Color.fromRGB(255, 255, 0), 1));
+                        l.getWorld().spawnParticle(Particle.DUST, l.clone().add(-.35, 0, .35), 1, 0, 0, 0, 1, new Particle.DustOptions(Color.fromRGB(255, 255, 0), 1));
+                        l.getWorld().spawnParticle(Particle.DUST, l.clone().add(-.45, 0, .13), 1, 0, 0, 0, 1, new Particle.DustOptions(Color.fromRGB(255, 255, 0), 1));
+                        l.getWorld().spawnParticle(Particle.DUST, l.clone().add(-.5, 0, 0), 1, 0, 0, 0, 1, new Particle.DustOptions(Color.fromRGB(255, 255, 0), 1));
+                        l.getWorld().spawnParticle(Particle.DUST, l.clone().add(-.45, 0, -.13), 1, 0, 0, 0, 1, new Particle.DustOptions(Color.fromRGB(255, 255, 0), 1));
+                        l.getWorld().spawnParticle(Particle.DUST, l.clone().add(-.35, 0, -.35), 1, 0, 0, 0, 1, new Particle.DustOptions(Color.fromRGB(255, 255, 0), 1));
+                        l.getWorld().spawnParticle(Particle.DUST, l.clone().add(-.13, 0, -.45), 1, 0, 0, 0, 1, new Particle.DustOptions(Color.fromRGB(255, 255, 0), 1));
+                        l.getWorld().spawnParticle(Particle.DUST, l.clone().add(0, 0, -.5), 1, 0, 0, 0, 1, new Particle.DustOptions(Color.fromRGB(255, 255, 0), 1));
+                        l.getWorld().spawnParticle(Particle.DUST, l.clone().add(.13, 0, -.45), 1, 0, 0, 0, 1, new Particle.DustOptions(Color.fromRGB(255, 255, 0), 1));
+                        l.getWorld().spawnParticle(Particle.DUST, l.clone().add(.35, 0, -.35), 1, 0, 0, 0, 1, new Particle.DustOptions(Color.fromRGB(255, 255, 0), 1));
+                        l.getWorld().spawnParticle(Particle.DUST, l.clone().add(.45, 0, -.13), 1, 0, 0, 0, 1, new Particle.DustOptions(Color.fromRGB(255, 255, 0), 1));
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -663,27 +661,27 @@ public class NMS_v1_13_Up implements ParticleControl {
                         Color red = Color.RED;
                         Color white = Color.fromRGB(255, 255, 255);
                         for (Location location : getCircle(l1, .5, 20))
-                            location.getWorld().spawnParticle(Particle.REDSTONE, location, 1, 0, 0, 0, 0, new Particle.DustOptions(white, 1));
+                            location.getWorld().spawnParticle(Particle.DUST, location, 1, 0, 0, 0, 0, new Particle.DustOptions(white, 1));
                         for (Location location : getCircle(l2, .4, 15))
-                            location.getWorld().spawnParticle(Particle.REDSTONE, location, 1, 0, 0, 0, 0, new Particle.DustOptions(red, 1));
+                            location.getWorld().spawnParticle(Particle.DUST, location, 1, 0, 0, 0, 0, new Particle.DustOptions(red, 1));
                         for (Location location : getCircle(l3, .35, 15))
-                            location.getWorld().spawnParticle(Particle.REDSTONE, location, 1, 0, 0, 0, 0, new Particle.DustOptions(red, 1));
+                            location.getWorld().spawnParticle(Particle.DUST, location, 1, 0, 0, 0, 0, new Particle.DustOptions(red, 1));
                         for (Location location : getCircle(l4, .3, 15))
-                            location.getWorld().spawnParticle(Particle.REDSTONE, location, 1, 0, 0, 0, 0, new Particle.DustOptions(red, 1));
+                            location.getWorld().spawnParticle(Particle.DUST, location, 1, 0, 0, 0, 0, new Particle.DustOptions(red, 1));
                         for (Location location : getCircle(l5, .2, 15))
-                            location.getWorld().spawnParticle(Particle.REDSTONE, location, 1, 0, 0, 0, 0, new Particle.DustOptions(red, 1));
+                            location.getWorld().spawnParticle(Particle.DUST, location, 1, 0, 0, 0, 0, new Particle.DustOptions(red, 1));
                         for (Location location : getCircle(l6, .15, 15))
-                            location.getWorld().spawnParticle(Particle.REDSTONE, location, 1, 0, 0, 0, 0, new Particle.DustOptions(red, 1));
+                            location.getWorld().spawnParticle(Particle.DUST, location, 1, 0, 0, 0, 0, new Particle.DustOptions(red, 1));
                         for (Location location : getCircle(l7, .1, 15))
-                            location.getWorld().spawnParticle(Particle.REDSTONE, location, 1, 0, 0, 0, 0, new Particle.DustOptions(red, 1));
+                            location.getWorld().spawnParticle(Particle.DUST, location, 1, 0, 0, 0, 0, new Particle.DustOptions(red, 1));
                         for (Location location : getCircle(l8, .05, 10))
-                            location.getWorld().spawnParticle(Particle.REDSTONE, location, 1, 0, 0, 0, 0, new Particle.DustOptions(red, 1));
+                            location.getWorld().spawnParticle(Particle.DUST, location, 1, 0, 0, 0, 0, new Particle.DustOptions(red, 1));
                         for (Location location : getCircle(l9, .05, 10))
-                            location.getWorld().spawnParticle(Particle.REDSTONE, location, 1, 0, 0, 0, 0, new Particle.DustOptions(red, 1));
+                            location.getWorld().spawnParticle(Particle.DUST, location, 1, 0, 0, 0, 0, new Particle.DustOptions(red, 1));
                         for (Location location : getCircle(l10, .05, 15))
-                            location.getWorld().spawnParticle(Particle.REDSTONE, location, 1, 0, 0, 0, 0, new Particle.DustOptions(white, 1));
+                            location.getWorld().spawnParticle(Particle.DUST, location, 1, 0, 0, 0, 0, new Particle.DustOptions(white, 1));
                         for (Location location : getCircle(l11, .05, 15))
-                            location.getWorld().spawnParticle(Particle.REDSTONE, location, 1, 0, 0, 0, 0, new Particle.DustOptions(white, 1));
+                            location.getWorld().spawnParticle(Particle.DUST, location, 1, 0, 0, 0, 0, new Particle.DustOptions(white, 1));
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -708,8 +706,8 @@ public class NMS_v1_13_Up implements ParticleControl {
                     public void run() {
                         ArrayList<Location> locs = getCircle(height, 2, 50);
                         ArrayList<Location> locs2 = getCircleReverse(height, 2, 50);
-                        height.getWorld().spawnParticle(Particle.SPELL_WITCH, locs.get(loc), 1, 0, 0, 0, 0);
-                        height.getWorld().spawnParticle(Particle.SPELL_WITCH, locs2.get(loc), 1, 0, 0, 0, 0);
+                        height.getWorld().spawnParticle(Particle.WITCH, locs.get(loc), 1, 0, 0, 0, 0);
+                        height.getWorld().spawnParticle(Particle.WITCH, locs2.get(loc), 1, 0, 0, 0, 0);
                         loc++;
                         lifeSpan++;
                         height.add(0, .035, 0);
@@ -746,8 +744,8 @@ public class NMS_v1_13_Up implements ParticleControl {
                     public void run() {
                         ArrayList<Location> locs = getCircle(height, 3.5, 75);
                         ArrayList<Location> locs2 = getCircleReverse(height, 3.5, 75);
-                        height.getWorld().spawnParticle(Particle.SPELL_WITCH, locs.get(loc), 1, 0, 0, 0, 0);
-                        height.getWorld().spawnParticle(Particle.SPELL_WITCH, locs2.get(loc), 1, 0, 0, 0, 0);
+                        height.getWorld().spawnParticle(Particle.WITCH, locs.get(loc), 1, 0, 0, 0, 0);
+                        height.getWorld().spawnParticle(Particle.WITCH, locs2.get(loc), 1, 0, 0, 0, 0);
                         loc++;
                         lifeSpan++;
                         height.add(0, .04, 0);
@@ -846,7 +844,7 @@ public class NMS_v1_13_Up implements ParticleControl {
                     @Override
                     public void run() {
                         ArrayList<Location> locs = getCircle(height, radius, 50);
-                        height.getWorld().spawnParticle(Particle.SPELL_WITCH, locs.get(nextLocation), 0, 0, 0, 0, 1);
+                        height.getWorld().spawnParticle(Particle.WITCH, locs.get(nextLocation), 0, 0, 0, 0, 1);
                         nextLocation++;
                         diamaterSwitch++;
                         lifeSpan++;

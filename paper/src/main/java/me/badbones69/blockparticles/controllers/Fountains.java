@@ -3,7 +3,6 @@ package me.badbones69.blockparticles.controllers;
 import me.badbones69.blockparticles.Methods;
 import me.badbones69.blockparticles.api.ParticleManager;
 import me.badbones69.blockparticles.api.objects.CustomFountain;
-import me.badbones69.blockparticles.multisupport.Version;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -17,7 +16,6 @@ import org.bukkit.event.inventory.InventoryPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.util.Vector;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -179,11 +177,7 @@ public class Fountains implements Listener {
         bp.getParticleControl().getLocations().put(id, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(bp.getPlugin(), () -> {
             for (ItemStack head : getRandomCustomHead(fountain.getHeads())) {
                 final Item headItem = Bukkit.getWorld(loc.getWorld().getName()).dropItem(loc.clone().add(.5, .8, .5), head);
-                if (Version.getCurrentVersion().isNewer(Version.v1_8_R3)) {
-                    headItem.setVelocity(new Vector(randomVector(), .01, randomVector()));
-                } else {
-                    headItem.setVelocity(new Vector(randomVector(), .3, randomVector()));
-                }
+                headItem.setVelocity(new Vector(randomVector(), .01, randomVector()));
                 bp.addFountainItem(headItem);
                 Bukkit.getScheduler().scheduleSyncDelayedTask(bp.getPlugin(), () -> {
                     bp.removeFountainItem(headItem);
@@ -268,11 +262,7 @@ public class Fountains implements Listener {
                 if (entity instanceof Player) {
                     name = entity.getName();
                     final Item head = Bukkit.getWorld(loc.getWorld().getName()).dropItem(loc.clone().add(.5, .8, .5), Methods.getPlayerHead(name));
-                    if (Version.getCurrentVersion().isNewer(Version.v1_8_R3)) {
-                        head.setVelocity(new Vector(randomVector(), .01, randomVector()));
-                    } else {
-                        head.setVelocity(new Vector(randomVector(), .3, randomVector()));
-                    }
+                    head.setVelocity(new Vector(randomVector(), .01, randomVector()));
                     bp.addFountainItem(head);
                     Bukkit.getScheduler().scheduleSyncDelayedTask(bp.getPlugin(), () -> {
                         bp.removeFountainItem(head);
@@ -287,11 +277,7 @@ public class Fountains implements Listener {
         bp.getParticleControl().getLocations().put(id, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(bp.getPlugin(), () -> {
             for (String head : getRandomHeads(presentHeads)) {
                 final Item headItem = Bukkit.getWorld(loc.getWorld().getName()).dropItem(loc.clone().add(.5, .8, .5), Methods.getPlayerHead("http://textures.minecraft.net/texture/" + head));
-                if (Version.getCurrentVersion().isNewer(Version.v1_8_R3)) {
-                    headItem.setVelocity(new Vector(randomVector(), .01, randomVector()));
-                } else {
-                    headItem.setVelocity(new Vector(randomVector(), .3, randomVector()));
-                }
+                headItem.setVelocity(new Vector(randomVector(), .01, randomVector()));
                 bp.addFountainItem(headItem);
                 Bukkit.getScheduler().scheduleSyncDelayedTask(bp.getPlugin(), () -> {
                     bp.removeFountainItem(headItem);
@@ -305,11 +291,7 @@ public class Fountains implements Listener {
         bp.getParticleControl().getLocations().put(id, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(bp.getPlugin(), () -> {
             for (String head : getRandomHeads(mobHeads)) {
                 final Item headItem = Bukkit.getWorld(loc.getWorld().getName()).dropItem(loc.clone().add(.5, .8, .5), Methods.getPlayerHead("http://textures.minecraft.net/texture/" + head));
-                if (Version.getCurrentVersion().isNewer(Version.v1_8_R3)) {
-                    headItem.setVelocity(new Vector(randomVector(), .01, randomVector()));
-                } else {
-                    headItem.setVelocity(new Vector(randomVector(), .3, randomVector()));
-                }
+                headItem.setVelocity(new Vector(randomVector(), .01, randomVector()));
                 bp.addFountainItem(headItem);
                 Bukkit.getScheduler().scheduleSyncDelayedTask(bp.getPlugin(), () -> {
                     bp.removeFountainItem(headItem);
@@ -323,11 +305,7 @@ public class Fountains implements Listener {
         bp.getParticleControl().getLocations().put(id, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(bp.getPlugin(), () -> {
             for (String head : getRandomHeads(foodHeads)) {
                 final Item headItem = Bukkit.getWorld(loc.getWorld().getName()).dropItem(loc.clone().add(.5, .8, .5), Methods.getPlayerHead("http://textures.minecraft.net/texture/" + head));
-                if (Version.getCurrentVersion().isNewer(Version.v1_8_R3)) {
-                    headItem.setVelocity(new Vector(randomVector(), .01, randomVector()));
-                } else {
-                    headItem.setVelocity(new Vector(randomVector(), .3, randomVector()));
-                }
+                headItem.setVelocity(new Vector(randomVector(), .01, randomVector()));
                 bp.addFountainItem(headItem);
                 Bukkit.getScheduler().scheduleSyncDelayedTask(bp.getPlugin(), () -> {
                     bp.removeFountainItem(headItem);
@@ -341,11 +319,7 @@ public class Fountains implements Listener {
         bp.getParticleControl().getLocations().put(id, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(bp.getPlugin(), () -> {
             for (String head : getRandomHeads(pokemonHeads)) {
                 final Item headItem = Bukkit.getWorld(loc.getWorld().getName()).dropItem(loc.clone().add(.5, .8, .5), Methods.getPlayerHead("http://textures.minecraft.net/texture/" + head));
-                if (Version.getCurrentVersion().isNewer(Version.v1_8_R3)) {
-                    headItem.setVelocity(new Vector(randomVector(), .01, randomVector()));
-                } else {
-                    headItem.setVelocity(new Vector(randomVector(), .3, randomVector()));
-                }
+                headItem.setVelocity(new Vector(randomVector(), .01, randomVector()));
                 bp.addFountainItem(headItem);
                 Bukkit.getScheduler().scheduleSyncDelayedTask(bp.getPlugin(), () -> {
                     bp.removeFountainItem(headItem);
@@ -359,11 +333,7 @@ public class Fountains implements Listener {
         bp.getParticleControl().getLocations().put(id, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(bp.getPlugin(), () -> {
             for (String head : getRandomHeads(marioHeads)) {
                 final Item headItem = Bukkit.getWorld(loc.getWorld().getName()).dropItem(loc.clone().add(.5, .8, .5), Methods.getPlayerHead("http://textures.minecraft.net/texture/" + head));
-                if (Version.getCurrentVersion().isNewer(Version.v1_8_R3)) {
-                    headItem.setVelocity(new Vector(randomVector(), .01, randomVector()));
-                } else {
-                    headItem.setVelocity(new Vector(randomVector(), .3, randomVector()));
-                }
+                headItem.setVelocity(new Vector(randomVector(), .01, randomVector()));
                 bp.addFountainItem(headItem);
                 Bukkit.getScheduler().scheduleSyncDelayedTask(bp.getPlugin(), () -> {
                     bp.removeFountainItem(headItem);

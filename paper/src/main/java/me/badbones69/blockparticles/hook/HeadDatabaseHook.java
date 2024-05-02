@@ -20,6 +20,6 @@ public class HeadDatabaseHook {
             return headDatabaseAPI.getItemHead(head);
         }
         
-        return Methods.getPlayerHead("http://textures.minecraft.net/texture/" + head);
+        return Methods.getPlayerHead("https://textures.minecraft.net/texture/" + head);
     }
 }

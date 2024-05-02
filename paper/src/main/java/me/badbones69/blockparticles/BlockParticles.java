@@ -6,19 +6,15 @@ import me.badbones69.blockparticles.commands.BPCommands;
 import me.badbones69.blockparticles.commands.BPTab;
 import me.badbones69.blockparticles.controllers.Fountains;
 import me.badbones69.blockparticles.controllers.GUI;
-import me.badbones69.blockparticles.controllers.Metrics;
-import me.badbones69.blockparticles.events.Events_v1_11_R1_Down;
 import me.badbones69.blockparticles.events.Events_v1_12_R1_Up;
 import me.badbones69.blockparticles.hook.HeadDatabaseHook;
-import me.badbones69.blockparticles.multisupport.Version;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class BlockParticles extends JavaPlugin {
-    
-    private Boolean updateChecker = false;
+
     private FileManager fileManager = FileManager.getInstance();
     private ParticleManager bp = ParticleManager.getInstance();
     
@@ -39,7 +35,6 @@ public class BlockParticles extends JavaPlugin {
         getCommand("blockparticle").setTabCompleter(new BPTab());
         new HeadDatabaseHook();
         pm.registerEvents(new Events_v1_12_R1_Up(), this);
-        new Metrics(this);
         new BukkitRunnable() {
             @Override
             public void run() {

@@ -15,5 +15,4 @@ public class Events_v1_12_R1_Up implements Listener {
             e.setCancelled(true);
         }
     }
-    
 }
