@@ -1,10 +1,22 @@
+.gradle
+.idea
 
-\.idea/
+build
 
-*.iml
+buildSrc/.gradle
+buildSrc/build
 
-target/
+paper/.gradle
+paper/build
 
-plugin/dependency-reduced-pom\.xml
+paper/run/
 
-plugin/\.DS_Store
+!paper/run/config/paper-global.yml
+!paper/run/config/paper-world-defaults.yml
+!paper/run/bukkit.yml
+!paper/run/eula.txt
+!paper/run/ops.json
+!paper/run/server.properties
+!paper/run/spigot.yml
+
+jars
