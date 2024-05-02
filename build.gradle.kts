@@ -1,3 +1,7 @@
+import git.formatLog
+import git.latestCommitHash
+import git.latestCommitMessage
+
 plugins {
     id("io.papermc.hangar-publish-plugin") version "0.1.2"
     id("com.modrinth.minotaur") version "2.+"
@@ -7,9 +11,17 @@ plugins {
     `root-plugin`
 }
 
-val buildNumber: String = System.getenv("NEXT_BUILD_NUMBER") ?: "SNAPSHOT"
+val buildNumber: String? = System.getenv("NEXT_BUILD_NUMBER")
 
-rootProject.version = "1.20.6-$buildNumber"
+rootProject.version = if (buildNumber != null) "1.0-$buildNumber" else "1.0"
+
+val isSnapshot = false
+
+val content: String = if (isSnapshot) {
+    formatLog(latestCommitHash(), latestCommitMessage(), rootProject.name)
+} else {
+    rootProject.file("CHANGELOG.md").readText(Charsets.UTF_8)
+}
 
 subprojects.filter { it.name != "api" }.forEach {
     it.project.version = rootProject.version
@@ -25,7 +37,7 @@ modrinth {
     versionName.set("${rootProject.name} ${rootProject.version}")
     versionNumber.set(rootProject.version as String)
 
-    changelog.set(System.getenv("COMMIT_MESSAGE"))
+    changelog.set(content)
 
     uploadFile.set(rootProject.projectDir.resolve("jars/${rootProject.name}-${rootProject.version}.jar"))
 
