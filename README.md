@@ -21,9 +21,9 @@
     <a href="#"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/Crazy-Crew/BlockParticles/discussions/categories/features">Report Bug</a>
+    <a href="https://github.com/Crazy-Crew/BlockParticles/discussions/categories/features">Request Feature</a>
     ·
-    <a href="https://github.com/Crazy-Crew/BlockParticles/issues">Request Feature</a>
+    <a href="https://github.com/Crazy-Crew/BlockParticles/issues">Report Bug</a>
     ·
     <a href="https://discord.gg/badbones-s-live-chat-182615261403283459">Get Support</a>
   </p>
