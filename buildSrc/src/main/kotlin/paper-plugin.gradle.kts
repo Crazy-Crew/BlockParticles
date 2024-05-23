@@ -1,13 +1,22 @@
-plugins {
-    id("io.papermc.paperweight.userdev")
+import com.ryderbelserion.feather.enums.Repository
+import org.gradle.accessors.dm.LibrariesForLibs
 
-    id("root-plugin")
+val libs = the<LibrariesForLibs>()
+
+plugins {
+    id("java-plugin")
 }
 
 dependencies {
-    paperweight.paperDevBundle("1.20.6-R0.1-SNAPSHOT")
+    compileOnly(libs.paper)
 }
 
-paperweight {
-    reobfArtifactConfiguration = io.papermc.paperweight.userdev.ReobfArtifactConfiguration.MOJANG_PRODUCTION
+feather {
+    repository("https://repo.extendedclip.com/content/repositories/placeholderapi")
+
+    repository("https://repo.triumphteam.dev/snapshots")
+
+    repository("https://maven.enginehub.org/repo")
+
+    repository(Repository.Paper.url)
 }

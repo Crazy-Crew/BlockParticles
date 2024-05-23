@@ -2,7 +2,7 @@
 
 <div align="center">
 
-[![crazycrates](https://raw.githubusercontent.com/RyderBelserion/Assets/main/crazycrew/webp/CrazyCratesBanner.webp)](https://modrinth.com/project/blockparticles)
+[![blockparticles](https://raw.githubusercontent.com/RyderBelserion/Assets/main/crazycrew/webp/BlockParticlesBanner.webp)](https://modrinth.com/plugin/blockparticles)
 
 [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
@@ -21,7 +21,7 @@
     <a href="#"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/Crazy-Crew/BlockParticles/issues">Report Bug</a>
+    <a href="https://github.com/Crazy-Crew/BlockParticles/discussions/categories/features">Report Bug</a>
     ·
     <a href="https://github.com/Crazy-Crew/BlockParticles/issues">Request Feature</a>
     ·
@@ -48,8 +48,8 @@
 </details>
 
 ### Resource Page
-[![Hangar](https://raw.githubusercontent.com/intergrav/devins-badges/v3/assets/compact/available/hangar_46h.png)](https://hangar.papermc.io/CrazyCrew/BlockParticles)
-[![Modrinth](https://raw.githubusercontent.com/intergrav/devins-badges/v3/assets/compact/available/modrinth_46h.png)](https://modrinth.com/project/blockparticles)
+~~[![Hangar](https://raw.githubusercontent.com/intergrav/devins-badges/v3/assets/compact/available/hangar_46h.png)](https://hangar.papermc.io/CrazyCrew/BlockParticles)~~
+[![Modrinth](https://raw.githubusercontent.com/intergrav/devins-badges/v3/assets/compact/available/modrinth_46h.png)](https://modrinth.com/plugin/blockparticles)
 
 ## Getting Started
 How to get started with contributing / maintaining your own version of BlockParticles!
@@ -91,15 +91,15 @@ Distributed under the MIT License. See [`LICENSE`](/LICENSE) for more informatio
 [discord-shield]: https://img.shields.io/discord/182615261403283459.svg?style=flat&logo=appveyor
 [discord-url]: https://discord.gg/badbones-s-live-chat-182615261403283459
 
-[contributors-shield]: https://img.shields.io/github/contributors/Crazy-Crew/CrazyCrates.svg?style=flat&logo=appveyor
-[contributors-url]: https://github.com/Crazy-Crew/CrazyCrates/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/Crazy-Crew/CrazyCrates.svg?style=flat&logo=appveyor
-[forks-url]: https://github.com/Crazy-Crew/CrazyCrates/network/members
-[stars-shield]: https://img.shields.io/github/stars/Crazy-Crew/CrazyCrates.svg?style=flat&logo=appveyor
-[stars-url]: https://github.com/Crazy-Crew/CrazyCrates/stargazers
-[issues-shield]: https://img.shields.io/github/issues/Crazy-Crew/CrazyCrates.svg?style=flat&logo=appveyor
-[issues-url]: https://github.com/Crazy-Crew/CrazyCrates/issues
-[license-shield]: https://img.shields.io/github/license/Crazy-Crew/CrazyCrates.svg?style=flat&logo=appveyor
-[license-url]: https://github.com/Crazy-Crew/CrazyCrates/blob/master/LICENSE
+[contributors-shield]: https://img.shields.io/github/contributors/Crazy-Crew/BlockParticles.svg?style=flat&logo=appveyor
+[contributors-url]: https://github.com/Crazy-Crew/BlockParticles/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/Crazy-Crew/BlockParticles.svg?style=flat&logo=appveyor
+[forks-url]: https://github.com/Crazy-Crew/BlockParticles/network/members
+[stars-shield]: https://img.shields.io/github/stars/Crazy-Crew/BlockParticles.svg?style=flat&logo=appveyor
+[stars-url]: https://github.com/Crazy-Crew/BlockParticles/stargazers
+[issues-shield]: https://img.shields.io/github/issues/Crazy-Crew/BlockParticles.svg?style=flat&logo=appveyor
+[issues-url]: https://github.com/Crazy-Crew/BlockParticles/issues
+[license-shield]: https://img.shields.io/github/license/Crazy-Crew/BlockParticles.svg?style=flat&logo=appveyor
+[license-url]: https://github.com/Crazy-Crew/BlockParticles/blob/master/LICENSE
 
-[codefactor-shield]: https://img.shields.io/codefactor/grade/github/crazy-crew/crazycrates/main?style=flat&logo=appveyor
+[codefactor-shield]: https://img.shields.io/codefactor/grade/github/crazy-crew/blockparticles/main?style=flat&logo=appveyor

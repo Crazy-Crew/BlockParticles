@@ -1,0 +1,16 @@
+name: '${name}'
+main: '${group}.${name}'
+
+authors: ${authors}
+
+version: '${version}'
+description: '${description}'
+api-version: '1.20'
+website: '${website}'
+
+softdepend: [HeadDatabase]
+
+commands:
+  blockparticle:
+    description: Adds particles to blocks!
+    aliases: [blockparticles, bp, bparticle, bparticles]

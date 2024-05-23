@@ -1,17 +1,17 @@
 plugins {
-    id("io.github.goooler.shadow")
-
-    alias(libs.plugins.run.paper)
+    alias(libs.plugins.shadowJar)
+    alias(libs.plugins.runPaper)
 
     `paper-plugin`
 }
 
 dependencies {
-    implementation(libs.vital)
+    // org.yaml is already bundled with Paper
+    implementation(libs.vital.paper) {
+        exclude("org.yaml")
+    }
 
-    compileOnly(libs.head.database.api)
-
-    //compileOnly(libs.triumph.cmds)
+    compileOnly(libs.headdatabaseapi)
 }
 
 tasks {
@@ -24,6 +24,8 @@ tasks {
     }
 
     assemble {
+        dependsOn(shadowJar)
+
         doLast {
             copy {
                 from(shadowJar.get())
@@ -47,10 +49,11 @@ tasks {
         inputs.properties("name" to rootProject.name)
         inputs.properties("version" to project.version)
         inputs.properties("group" to project.group)
+        inputs.properties("authors" to project.properties["authors"])
         inputs.properties("description" to project.properties["description"])
         inputs.properties("website" to project.properties["website"])
 
-        filesMatching("paper-plugin.yml") {
+        filesMatching("plugin.yml") {
             expand(inputs.properties)
         }
     }
