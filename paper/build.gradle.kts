@@ -12,6 +12,7 @@ dependencies {
     }
 
     compileOnly(libs.headdatabaseapi)
+    api(projects.blockparticlesCore)
 }
 
 tasks {
