@@ -14,6 +14,9 @@ dependencies {
     implementation(libs.triumph.cmds)
 
     compileOnly(libs.headdatabaseapi)
+
+    compileOnly(libs.placeholderapi)
+
     api(projects.blockparticlesCore)
 }
 
