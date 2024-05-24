@@ -9,6 +9,7 @@ import com.badbones69.blockparticles.config.impl.MessageKeys;
 import com.badbones69.blockparticles.config.impl.locale.ErrorKeys;
 import com.badbones69.blockparticles.config.impl.locale.MiscKeys;
 import com.badbones69.blockparticles.config.impl.locale.PlayerKeys;
+import com.badbones69.blockparticles.config.migrate.ConfigMigration;
 import com.ryderbelserion.vital.core.config.YamlManager;
 import com.ryderbelserion.vital.core.util.FileUtil;
 import java.io.File;
@@ -35,7 +36,7 @@ public class ConfigManager {
         // Create config.yml
         config = SettingsManagerBuilder
                 .withYamlFile(yamlManager.getDataFolder().resolve("config.yml"), builder)
-                .useDefaultMigrationService()
+                .migrationService(new ConfigMigration())
                 .configurationData(ConfigKeys.class)
                 .create();
 
