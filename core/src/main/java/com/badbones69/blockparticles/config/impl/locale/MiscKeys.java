@@ -35,6 +35,6 @@ public class MiscKeys implements SettingsHolder {
             "<dark_gray>- <gold>/bp add [page] <dark_aqua>Adds a new particle location.",
             "<dark_gray>- <gold>/bp delete <dark_aqua>Deletes a particle location.",
             "<dark_gray>- <gold>/bp set [amount] [player] <dark_aqua>Sets a location to use a particle.",
-            "<dark_gray>- <gold>/bp types <dark_aqua>Shows all available particle types to use."
+            "<dark_gray>- <gold>/bp stats <dark_aqua>Shows multiple statistics of the plugin."
     ));
 }

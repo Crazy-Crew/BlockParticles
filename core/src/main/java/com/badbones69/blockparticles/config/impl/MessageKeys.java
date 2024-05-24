@@ -4,9 +4,7 @@ import ch.jalu.configme.Comment;
 import ch.jalu.configme.SettingsHolder;
 import ch.jalu.configme.configurationdata.CommentsConfiguration;
 import ch.jalu.configme.properties.Property;
-
 import java.util.List;
-
 import static ch.jalu.configme.properties.PropertyInitializer.newListProperty;
 import static ch.jalu.configme.properties.PropertyInitializer.newProperty;
 
@@ -29,7 +27,7 @@ public class MessageKeys implements SettingsHolder {
     }
 
     @Comment("A list of available placeholders: {prefix}, {fountains_total}, {particles_total}")
-    public static final Property<List<String>> particle_types = newListProperty("particle.types", List.of(
+    public static final Property<List<String>> particle_types = newListProperty("particle.stats.format", List.of(
             "<bold><gold>━━━━━━━━━━━━━━━━━━━ Particle Stats ━━━━━━━━━━━━━━━━━━━</gold></bold>",
             "<dark_gray>»</dark_gray> <red>Particle Types: </red>",
             " ⤷ <green>Spiral, DoubleSpiral, Crit, BigCrit, Flame, BigFlames, Volcano, Fog, Enchant, Storm</green>",
@@ -49,8 +47,13 @@ public class MessageKeys implements SettingsHolder {
             "<dark_gray>»</dark_gray> <yellow>Other: </yellow>",
             " ⤷ <red>Fountain Items: {fountain_items}",
             "",
+            "{locations}",
+            "",
             "<bold><gold>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</gold></bold>"
     ));
+
+    @Comment("A list of available placeholders: {id}, {task_id}, {particle_name}, {world}, {x}, {y}, {z}")
+    public static final Property<String> location_format = newProperty("particles.stats.per-particle", "<dark_gray>[<blue>{id}<dark_gray>]: <red>{particle_name}<dark_gray>, <green>{task_id}<dark_gray>, <red>{world}<dark_gray>, <red>{x}<dark_gray>, <red>{y}<dark_gray>, <red>{z}");
 
     @Comment("A list of available placeholders: {prefix}")
     public static final Property<String> location_empty = newProperty("particle.location.empty", "{prefix}<dark_aqua>There are no locations set!");
@@ -62,7 +65,7 @@ public class MessageKeys implements SettingsHolder {
     public static final Property<String> location_added = newProperty("particle.location.added", "{prefix}<dark_aqua>You have added <gold>{name} <dark_aqua>to the block.");
 
     @Comment("A list of available placeholders: {prefix}, {name}")
-    public static final Property<String> location_set = newProperty("particle.location.added", "{prefix}<dark_aqua>You have set <gold>{name} <dark_aqua>to <gold>{particle}.");
+    public static final Property<String> location_set = newProperty("particle.location.set", "{prefix}<dark_aqua>You have set <gold>{name} <dark_aqua>to <gold>{particle}.");
 
     @Comment("A list of available placeholders: {prefix}, {name}")
     public static final Property<String> location_deleted = newProperty("particle.location.deleted", "{prefix}<dark_aqua>You have deleted <gold>{name}.");

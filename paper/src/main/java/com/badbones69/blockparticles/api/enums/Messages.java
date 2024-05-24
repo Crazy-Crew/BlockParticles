@@ -41,6 +41,7 @@ public enum Messages {
     correct_usage(MiscKeys.correct_usage),
     reloaded(MiscKeys.plugin_reloaded),
     help(MiscKeys.help, true),
+    particle_format(MessageKeys.location_format),
     particle_types(MessageKeys.particle_types, true);
 
     private Property<String> property;
