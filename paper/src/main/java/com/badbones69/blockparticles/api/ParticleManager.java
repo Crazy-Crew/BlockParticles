@@ -31,9 +31,11 @@ public class ParticleManager {
     private final List<ParticleLocation> locations = new ArrayList<>();
     
     public void load() {
-        if (!this.customFountains.isEmpty()) this.customFountains.clear();
+        this.customFountains.clear();
 
         ConfigManager.getHeads().getProperty(CategoryKeys.heads).getHeads().forEach((name, values) -> this.customFountains.add(new CustomFountain(name, values)));
+
+        this.locations.clear();
 
         YamlFile data = CustomFiles.data.getYamlFile();
 
