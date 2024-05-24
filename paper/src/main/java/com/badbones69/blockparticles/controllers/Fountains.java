@@ -184,7 +184,7 @@ public class Fountains implements Listener {
     }
     
     public static void startCustomFountain(final Location loc, final String id, final CustomFountain fountain) {
-        particleControl.getLocations().put(id, plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
+        particleControl.addParticle(loc, id, "custom", plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
             for (ItemStack head : getRandomCustomHead(fountain.getHeads())) {
                 
                 final Item headItem = plugin.getServer().getWorld(loc.getWorld().getUID()).dropItem(loc.clone().add(.5, .8, .5), head);
@@ -201,7 +201,7 @@ public class Fountains implements Listener {
     }
     
     public static void startHalloween(final Location loc, final String id) {
-        particleControl.getLocations().put(id, plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
+        particleControl.addParticle(loc, id, "halloween", plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
             ItemStack flesh = new ItemStack(Material.ROTTEN_FLESH);
             ItemMeta m = flesh.getItemMeta();
             m.setDisplayName(new Random().nextInt(Integer.MAX_VALUE) + "");
@@ -252,7 +252,7 @@ public class Fountains implements Listener {
     }
     
     public static void startGems(final Location loc, final String id) {
-        particleControl.getLocations().put(id, plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
+        particleControl.addParticle(loc, id, "gems", plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
             ItemStack emerald = new ItemStack(Material.EMERALD);
             ItemMeta m = emerald.getItemMeta();
             m.setDisplayName(ThreadLocalRandom.current().nextInt(Integer.MAX_VALUE) + "");
@@ -293,59 +293,56 @@ public class Fountains implements Listener {
     }
     
     public static void startHeads(final Location loc, final String id) {
-        particleControl.getLocations().put(id, plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
+        particleControl.addParticle(loc, id, "heads", plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
             String name;
             int radius = 10;
             for (final Entity entity : getNearbyEntities(loc.clone(), radius, radius, radius)) {
                 if (entity instanceof Player player) {
                     name = player.getName();
 
-                    final Item head = plugin.getServer().getWorld(loc.getWorld().getUID()).dropItem(loc.clone().add(.5, .8, .5), Methods.getPlayerHead(name));
-                    head.setVelocity(new Vector(randomVector(), .01, randomVector()));
-
-                    particleManager.addFountainItem(head);
-                    plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                        particleManager.removeFountainItem(head);
-                        head.remove();
-                    }, 2 * 20);
+                    buildHead(loc, name);
                 }
             }
         }, 0, 3));
     }
     
     public static void startPresents(final Location loc, final String id) {
-        startParticle(loc, id, presentHeads);
+        startParticle(loc, id, "presents", presentHeads);
     }
     
     public static void startMobs(final Location loc, final String id) {
-        startParticle(loc, id, mobHeads);
+        startParticle(loc, id, "mobs", mobHeads);
     }
     
     public static void startFood(final Location loc, final String id) {
-        startParticle(loc, id, foodHeads);
+        startParticle(loc, id, "food", foodHeads);
     }
     
     public static void startPokemon(final Location loc, final String id) {
-        startParticle(loc, id, pokemonHeads);
+        startParticle(loc, id, "pokemon", pokemonHeads);
     }
 
-    private static void startParticle(final Location loc, final String id, final List<String> pokemonHeads) {
-        particleControl.getLocations().put(id, plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
+    private static void startParticle(final Location loc, final String id, final String particle, final List<String> pokemonHeads) {
+        particleControl.addParticle(loc, id, particle, plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
             for (final String head : getRandomHeads(pokemonHeads)) {
-                final Item headItem = plugin.getServer().getWorld(loc.getWorld().getUID()).dropItem(loc.clone().add(.5, .8, .5), Methods.getPlayerHead("http://textures.minecraft.net/texture/" + head));
-                headItem.setVelocity(new Vector(randomVector(), .01, randomVector()));
-
-                particleManager.addFountainItem(headItem);
-                plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                    particleManager.removeFountainItem(headItem);
-                    headItem.remove();
-                }, 2 * 20);
+                buildHead(loc, head);
             }
         }, 0, 3));
     }
 
+    private static void buildHead(Location loc, String head) {
+        final Item headItem = plugin.getServer().getWorld(loc.getWorld().getUID()).dropItem(loc.clone().add(.5, .8, .5), Methods.getPlayerHead(head));
+        headItem.setVelocity(new Vector(randomVector(), .01, randomVector()));
+
+        particleManager.addFountainItem(headItem);
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+            particleManager.removeFountainItem(headItem);
+            headItem.remove();
+        }, 2 * 20);
+    }
+
     public static void startMario(final Location loc, final String id) {
-        startParticle(loc, id, marioHeads);
+        startParticle(loc, id, "mario", marioHeads);
     }
     
     private static List<String> getRandomHeads(final List<String> headList) {

@@ -1,22 +1,27 @@
 package com.badbones69.blockparticles.controllers;
 
-import com.badbones69.blockparticles.api.enums.particles.Particles;
+import com.badbones69.blockparticles.api.enums.particles.ParticleData;
+import com.badbones69.blockparticles.api.objects.ParticleLocation;
 import org.bukkit.Location;
 import java.util.Map;
 
 public interface ParticleControl {
     
-    Map<String, Integer> getLocations();
-    
+    Map<ParticleLocation, Integer> getLocations();
+
+    void addParticle(final Location location, final String id, final String particle, final int runnable);
+
+    void removeParticle(final String id);
+
     void playVolcano(final Location location, final String id);
     
     void playBigFlame(final Location location, final String id);
     
     void playFlame(final Location location, final String id);
     
-    void playDoubleSpiral(final Location location, final String id, Particles particle, int amount);
+    void playDoubleSpiral(final Location location, final String id, ParticleData particle, int amount);
     
-    void playSpiral(final Location location, final String id, Particles particle, int amount);
+    void playSpiral(final Location location, final String id, ParticleData particle, int amount);
     
     void playCrit(final Location location, final String id);
     

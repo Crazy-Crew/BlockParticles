@@ -7,7 +7,6 @@ import com.badbones69.blockparticles.api.enums.fountains.BPFountains;
 import com.badbones69.blockparticles.api.enums.particles.BPParticles;
 import com.badbones69.blockparticles.commands.envoys.types.admin.CommandReload;
 import com.badbones69.blockparticles.commands.envoys.types.admin.CommandStats;
-import com.badbones69.blockparticles.commands.envoys.types.player.CommandList;
 import com.badbones69.blockparticles.commands.envoys.types.admin.particle.CommandAdd;
 import com.badbones69.blockparticles.commands.envoys.types.admin.particle.CommandRemove;
 import com.badbones69.blockparticles.commands.envoys.types.admin.particle.CommandSet;
@@ -55,7 +54,13 @@ public class CommandManager {
             return completions;
         });
 
-        commandManager.registerSuggestion(SuggestionKey.of("locations"), (sender, context) -> Methods.getLocations());
+        commandManager.registerSuggestion(SuggestionKey.of("locations"), (sender, context) -> {
+            List<String> completions = new ArrayList<>();
+
+            Methods.getLocations().forEach(particleLocation -> completions.add(particleLocation.getID()));
+
+            return completions;
+        });
 
         commandManager.registerSuggestion(SuggestionKey.of("players"), (sender, context) -> plugin.getServer().getOnlinePlayers().stream().map(Player::getName).toList());
 
@@ -70,14 +75,12 @@ public class CommandManager {
         commandManager.registerArgument(PlayerBuilder.class, (sender, context) -> new PlayerBuilder(context));
 
         List.of(
-                new CommandAdd(),
                 new CommandRemove(),
-                new CommandSet(),
                 new CommandReload(),
                 new CommandStats(),
-                new CommandList(),
                 new CommandHelp(),
-                new CommandList()
+                new CommandAdd(),
+                new CommandSet()
         ).forEach(commandManager::registerCommand);
     }
 

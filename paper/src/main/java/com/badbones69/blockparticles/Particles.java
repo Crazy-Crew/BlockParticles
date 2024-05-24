@@ -1,11 +1,18 @@
 package com.badbones69.blockparticles;
 
+import com.badbones69.blockparticles.api.enums.particles.ParticleData;
+import com.badbones69.blockparticles.api.objects.ParticleLocation;
 import com.badbones69.blockparticles.controllers.ParticleControl;
-import org.bukkit.*;
+import org.bukkit.Color;
+import org.bukkit.Effect;
+import org.bukkit.Location;
+import org.bukkit.Particle;
+import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitScheduler;
 import org.bukkit.util.Vector;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -18,7 +25,7 @@ public class Particles implements ParticleControl {
 
     private final BlockParticles plugin = JavaPlugin.getPlugin(BlockParticles.class);
     
-    private final HashMap<String, Integer> locations = new HashMap<>();
+    private final HashMap<ParticleLocation, Integer> locations = new HashMap<>();
     private final int range = 25;
     
     private Location randomDrop(final Location location) {
@@ -34,15 +41,42 @@ public class Particles implements ParticleControl {
         return (float) -.05 + (float) (Math.random() * ((.05 - -.05)));
     }
     
-    public final HashMap<String, Integer> getLocations() {
+    @Override
+    public final HashMap<ParticleLocation, Integer> getLocations() {
         return this.locations;
     }
-    
+
+    @Override
+    public void addParticle(final Location location, final String id, final String particle, final int runnable) {
+        this.locations.put(new ParticleLocation(id, particle, location), runnable);
+    }
+
+    @Override
+    public void removeParticle(String id) {
+        ParticleLocation foundYou = null;
+        
+        for (final ParticleLocation key : this.locations.keySet()) {
+            if (!key.getID().equalsIgnoreCase(id)) continue;
+            
+            foundYou = key;
+            
+            break;
+        }
+        
+        if (foundYou != null) {
+            int taskId = this.locations.remove(foundYou);
+
+            BukkitScheduler scheduler = this.plugin.getServer().getScheduler();
+
+            scheduler.cancelTask(taskId);
+        }
+    }
+
     public void playVolcano(final Location location, final String id) {
-        this.locations.put(id, this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
+        addParticle(location, id, ParticleData.VOLCANO.toString(), this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
             final Location copy = location.add(.5, .8, .5).clone();
             final World world = copy.getWorld();
-            
+
             @Override
             public void run() {
                 if (noPlayers(copy, range)) return;
@@ -52,10 +86,10 @@ public class Particles implements ParticleControl {
     }
     
     public void playBigFlame(final Location location, final String id) {
-        this.locations.put(id, this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
+        addParticle(location, id, ParticleData.BIGFLAME.toString(), this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
             final Location copy = location.add(.5, .1, .5).clone();
             final World world = copy.getWorld();
-            
+
             @Override
             public void run() {
                 if (noPlayers(copy, range)) return;
@@ -67,7 +101,7 @@ public class Particles implements ParticleControl {
     }
     
     public void playFlame(final Location location, final String id) {
-        this.locations.put(id, this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
+        addParticle(location, id, ParticleData.FLAME.toString(), this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
             final Location copy = location.add(.5, .1, .5).clone();
             final World world = copy.getWorld();
 
@@ -81,14 +115,14 @@ public class Particles implements ParticleControl {
         }, 0, 5));
     }
     
-    public void playDoubleSpiral(final Location location, final String id, final com.badbones69.blockparticles.api.enums.particles.Particles particles, final int amount) {
-        this.locations.put(id, this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
+    public void playDoubleSpiral(final Location location, final String id, final ParticleData particles, final int amount) {
+        addParticle(location, id, ParticleData.DOUBLESPIRAL.toString(), this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
             final Location copy = location.add(.5, .7, .5).clone();
             final World world = copy.getWorld();
 
             int time = 16;
 
-            final Particle particle = particles == com.badbones69.blockparticles.api.enums.particles.Particles.DOUBLEWITCH ? Particle.WITCH : Particle.FIREWORK;
+            final Particle particle = particles == ParticleData.DOUBLEWITCH ? Particle.WITCH : Particle.FIREWORK;
             
             @Override
             public void run() {
@@ -163,14 +197,14 @@ public class Particles implements ParticleControl {
         }, 0, 2));
     }
     
-    public void playSpiral(final Location location, final String id, final com.badbones69.blockparticles.api.enums.particles.Particles particles, final int amount) {
-        this.locations.put(id, this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
+    public void playSpiral(final Location location, final String id, final ParticleData particles, final int amount) {
+        addParticle(location, id, ParticleData.SPIRAL.toString(), this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
             final Location copy = location.add(.5, .7, .5);
             final World world = copy.getWorld();
 
             int time = 16;
 
-            final Particle particle = particles == com.badbones69.blockparticles.api.enums.particles.Particles.WITCH ? Particle.WITCH : Particle.FIREWORK;
+            final Particle particle = particles == ParticleData.WITCH ? Particle.WITCH : Particle.FIREWORK;
             
             @Override
             public void run() {
@@ -203,7 +237,7 @@ public class Particles implements ParticleControl {
     }
     
     public void playCrit(final Location location, final String id) {
-        this.locations.put(id, this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
+        addParticle(location, id, ParticleData.CRIT.toString(), this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
             final Location copy = location.add(.5, 1.1, .5);
             final World world = copy.getWorld();
             
@@ -217,7 +251,7 @@ public class Particles implements ParticleControl {
     }
     
     public void playBigCrit(final Location location, final String id) {
-        this.locations.put(id, this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
+        addParticle(location, id, ParticleData.BIGCRIT.toString(), this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
             final Location copy = location.add(.5, .5, .5);
             final World world = copy.getWorld();
             
@@ -231,7 +265,7 @@ public class Particles implements ParticleControl {
     }
 
     public void playStorm(final Location location, final String id) {
-        this.locations.put(id, this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
+        addParticle(location, id, ParticleData.STORM.toString(), this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
             final Location copy = location.add(.5, 2, .5);
             final World world = copy.getWorld();
             
@@ -246,7 +280,7 @@ public class Particles implements ParticleControl {
     }
     
     public void playFog(final Location location, final String id) {
-        this.locations.put(id, this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
+        addParticle(location, id, ParticleData.FOG.toString(), this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
             final Location copy = location.add(.5, .5, .5);
             final World world = copy.getWorld();
             
@@ -260,7 +294,7 @@ public class Particles implements ParticleControl {
     }
     
     public void playEnchant(final Location location, final String id) {
-        this.locations.put(id, this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
+        addParticle(location, id, ParticleData.ENCHANT.toString(), this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
             final Location copy = location.add(.5, 1.5, .5);
             final World world = copy.getWorld();
             
@@ -274,7 +308,7 @@ public class Particles implements ParticleControl {
     }
     
     public void playChains(final Location location, final String id) {
-        this.locations.put(id, this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
+        addParticle(location, id, ParticleData.CHAINS.toString(), this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
             final Location copy = location.add(.5, .1, .5);
             final World world = copy.getWorld();
             
@@ -318,7 +352,7 @@ public class Particles implements ParticleControl {
     }
     
     public void playFireStorm(final Location location, final String id) {
-        this.locations.put(id, this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
+        addParticle(location, id, ParticleData.FIRESTORM.toString(), this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
             final Location copy = location.add(.5, 2, .5);
 
             final World world = copy.getWorld();
@@ -341,7 +375,7 @@ public class Particles implements ParticleControl {
     }
     
     public void playSnow(final Location location, final String id) {
-        this.locations.put(id, this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
+        addParticle(location, id, ParticleData.SNOW.toString(), this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
             final Location copy = location.add(.5, 2, .5);
             final World world = copy.getWorld();
             
@@ -355,7 +389,7 @@ public class Particles implements ParticleControl {
     }
     
     public void playSpew(final Location location, final String id) {
-        this.locations.put(id, this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
+        addParticle(location, id, ParticleData.SPEW.toString(), this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
             final Location copy = location.add(.5, 1, .5);
             final World world = copy.getWorld();
             
@@ -369,7 +403,7 @@ public class Particles implements ParticleControl {
     }
     
     public void playPotion(final Location location, final String id) {
-        this.locations.put(id, this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
+        addParticle(location, id, ParticleData.POTION.toString(), this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
             final Location copy = location.add(.5, .2, .5);
             final World world = copy.getWorld();
 
@@ -385,7 +419,7 @@ public class Particles implements ParticleControl {
     }
     
     public void playMusic(final Location location, final String id) {
-        this.locations.put(id, this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
+        addParticle(location, id, ParticleData.MUSIC.toString(), this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
             final Location copy = location.add(.5, .2, .5);
             final World world = copy.getWorld();
             final List<Location> locs = getCircle(copy, 1, 16);
@@ -426,7 +460,7 @@ public class Particles implements ParticleControl {
     }
     
     public void playMagic(final Location location, final String id) {
-        this.locations.put(id, this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
+        addParticle(location, id, ParticleData.MAGIC.toString(), this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
             final Location copy = location.add(.5, .5, .5);
             final World world = copy.getWorld();
             int time = 16;
@@ -480,7 +514,7 @@ public class Particles implements ParticleControl {
     }
     
     public void playSnowStorm(final Location location, final String id) {
-        this.locations.put(id, this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
+        addParticle(location, id, ParticleData.SNOWSTORM.toString(), this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
             final Location copy = location.add(.5, 2, .5);
             final World world = copy.getWorld();
             
@@ -495,7 +529,7 @@ public class Particles implements ParticleControl {
     }
     
     public void playFireSpew(final Location location, final String id) {
-        this.locations.put(id, this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
+        addParticle(location, id, ParticleData.FIRESPEW.toString(), this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
             final Location copy = location.add(.5, 1, .5);
             final World world = copy.getWorld();
             
@@ -511,7 +545,7 @@ public class Particles implements ParticleControl {
     }
     
     public void playFootPrint(final Location location, final String id) {
-        this.locations.put(id, this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
+        addParticle(location, id, ParticleData.FOOTPRINT.toString(), this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
             final Location copy = location.add(.5, .1, .5);
             final World world = copy.getWorld();
             
@@ -525,7 +559,7 @@ public class Particles implements ParticleControl {
     }
     
     public void playHappyVillager(final Location location, final String id) {
-        this.locations.put(id, this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
+        addParticle(location, id, ParticleData.HAPPYVILLAGER.toString(), this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
             final Location copy = location.add(.5, .1, .5);
             final World world = copy.getWorld();
             
@@ -539,7 +573,7 @@ public class Particles implements ParticleControl {
     }
     
     public void playAngryVillager(final Location location, final String id) {
-        this.locations.put(id, this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
+        addParticle(location, id, ParticleData.ANGRYVILLAGER.toString(), this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
             final Location copy = location.add(.5, .1, .5);
             final World world = copy.getWorld();
             
@@ -552,7 +586,7 @@ public class Particles implements ParticleControl {
     }
     
     public void playMobSpawner(final Location location, final String id) {
-        this.locations.put(id, this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
+        addParticle(location, id, ParticleData.MOBSPAWNER.toString(), this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
             final Location copy = location.add(.5, .1, .5);
             final World world = copy.getWorld();
             
@@ -565,7 +599,7 @@ public class Particles implements ParticleControl {
     }
     
     public void startWater(final Location location, final String id) {
-        this.locations.put(id, this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
+        addParticle(location, id, ParticleData.WATER.toString(), this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
             final Location copy = location.add(.5, .8, .6);
             final World world = copy.getWorld();
             
@@ -584,7 +618,7 @@ public class Particles implements ParticleControl {
     }
     
     public void playEnderSignal(final Location location, final String id) {
-        this.locations.put(id, this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
+        addParticle(location, id, ParticleData.ENDERSIGNAL.toString(), this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
             final Location copy = location.add(.5, 0, .5);
             final World world = copy.getWorld();
             
@@ -603,7 +637,7 @@ public class Particles implements ParticleControl {
     public void playRainbow(final Location location, final String id) {
         ThreadLocalRandom random = ThreadLocalRandom.current();
 
-        this.locations.put(id, this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
+        addParticle(location, id, ParticleData.RAINBOW.toString(), this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
             final Location copy = location.add(.5, .1, .5);
             final World world = copy.getWorld();
             
@@ -622,7 +656,7 @@ public class Particles implements ParticleControl {
     }
     
     public void playSnowBlast(final Location location, final String id) {
-        this.locations.put(id, this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
+        addParticle(location, id, ParticleData.SNOWBLAST.toString(), this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
             final Location copy = location.add(.5, .5, .5);
             final World world = copy.getWorld();
             
@@ -635,7 +669,7 @@ public class Particles implements ParticleControl {
     }
     
     public void playHalo(final Location location, final String id) {
-        this.locations.put(id, this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
+        addParticle(location, id, ParticleData.HALO.toString(), this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
             final Location copy = location.add(.5, 1.3, .5);
             final World world = copy.getWorld();
             
@@ -669,7 +703,7 @@ public class Particles implements ParticleControl {
     }
     
     public void playSantaHat(final Location location, final String id) {
-        this.locations.put(id, this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
+        addParticle(location, id, ParticleData.SANTAHAT.toString(), this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
             final Location l1 = location.clone().add(.5, 1, .5);
             final Location l2 = l1.clone().add(0, .05, 0);
             final Location l3 = l2.clone().add(0, .05, 0);
@@ -715,7 +749,7 @@ public class Particles implements ParticleControl {
     public void playSoulWell(final Location location, final String id) {
         final Map<Integer, Integer> keys = new HashMap<>();
 
-        this.locations.put(id, this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
+        addParticle(location, id, ParticleData.SOULWELL.toString(), this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
             final Location copy = location.clone().add(.5, 0, .5);
             
             void startSoulWell(final Location location, final String id) {
@@ -762,7 +796,7 @@ public class Particles implements ParticleControl {
     public void playBigSoulWell(final Location location, final String id) {
         final Map<Integer, Integer> keys = new HashMap<>();
 
-        this.locations.put(id, plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
+        addParticle(location, id, ParticleData.BIGSOULWELL.toString(), plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
             final Location copy = location.clone().add(.5, 0, .5);
             
             void startBigSoulWell(final Location location, final String id) {
@@ -807,7 +841,7 @@ public class Particles implements ParticleControl {
     public void playFlameWheel(final Location location, final String id) {
         final HashMap<Integer, Integer> keys = new HashMap<>();
 
-        this.locations.put(id, this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
+        addParticle(location, id, ParticleData.FLAMEWHEEL.toString(), this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
             final Location copy = location.clone().add(.5, .1, .5);
             
             void startFlameWheel(final Location location, final String id) {
@@ -874,7 +908,7 @@ public class Particles implements ParticleControl {
     public void playWitchTornado(final Location location, final String id) {
         final HashMap<Integer, Integer> keys = new HashMap<>();
 
-        this.locations.put(id, this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
+        addParticle(location, id, ParticleData.WITCHTORNADO.toString(), this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
             final Location copy = location.clone().add(.5, 0, .5);
             
             void startWitchTornado(final Location location, final String id) {
@@ -925,7 +959,7 @@ public class Particles implements ParticleControl {
     public void playLoveTornado(final Location location, final String id) {
         final Map<Integer, Integer> keys = new HashMap<>();
         
-        this.locations.put(id, this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
+        addParticle(location, id, ParticleData.LOVETORNADO.toString(), this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
             final Location copy = location.clone().add(.5, 0, .5);
             
             void startLoveTornado(final Location location, final String id) {
@@ -977,7 +1011,7 @@ public class Particles implements ParticleControl {
     public void playBigLoveWell(final Location location, final String id) {
         final HashMap<Integer, Integer> keys = new HashMap<>();
 
-        this.locations.put(id, this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
+        addParticle(location, id, ParticleData.BIGLOVEWELL.toString(), this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
             final Location copy = location.clone().add(.5, 0, .5);
             
             void startBigLoveWell(final Location location, final String id) {
@@ -1024,7 +1058,7 @@ public class Particles implements ParticleControl {
     public void playLoveWell(final Location location, final String id) {
         final HashMap<Integer, Integer> keys = new HashMap<>();
 
-        this.locations.put(id, this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
+        addParticle(location, id, ParticleData.LOVEWELL.toString(), this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
             final Location copy = location.clone().add(.5, 0, .5);
             
             void startLoveWell(final Location location, final String id) {

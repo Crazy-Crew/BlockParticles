@@ -1,6 +1,7 @@
 package com.badbones69.blockparticles.commands.envoys.types.admin;
 
 import com.badbones69.blockparticles.Methods;
+import com.badbones69.blockparticles.api.ParticleManager;
 import com.badbones69.blockparticles.api.enums.Messages;
 import com.badbones69.blockparticles.commands.envoys.BaseCommand;
 import com.badbones69.blockparticles.config.ConfigManager;
@@ -8,8 +9,11 @@ import dev.triumphteam.cmd.bukkit.annotation.Permission;
 import dev.triumphteam.cmd.core.annotations.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.permissions.PermissionDefault;
+import org.jetbrains.annotations.NotNull;
 
 public class CommandReload extends BaseCommand {
+
+    private @NotNull final ParticleManager particleManager = this.plugin.getParticleManager();
 
     @Command("reload")
     @Permission(value = "blockparticles.reload", def = PermissionDefault.OP)
