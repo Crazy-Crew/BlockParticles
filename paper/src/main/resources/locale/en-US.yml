@@ -1,0 +1,91 @@
+# Support: https://discord.gg/badbones-s-live-chat-182615261403283459
+# Github: https://github.com/Crazy-Crew
+# 
+# Features: https://github.com/Crazy-Crew/BlockParticles/discussions/categories/feature-requests
+# Issues: https://github.com/Crazy-Crew/BlockParticles/issues
+# 
+particle:
+  stats:
+    # A list of available placeholders: {prefix}, {fountains_total}, {particles_total}
+    format:
+    - '<bold><gold>━━━━━━━━━━━━━━━━━━━ Particle Stats ━━━━━━━━━━━━━━━━━━━</gold></bold>'
+    - '<dark_gray>»</dark_gray> <red>Particle Types: </red>'
+    - ' ⤷ <green>Spiral, DoubleSpiral, Crit, BigCrit, Flame, BigFlames, Volcano, Fog,
+      Enchant, Storm</green>'
+    - ' ⤷ <green>Chains, FireStorm, Snow, Potion, Music, Spew, Witch, DoubleWitch,
+      SnowStorm, FireSpew</green>'
+    - ' ⤷ <green>FootPrint, Water, HappyVillager, AngryVillager, MobSpawner, EnderSignal,
+      Rainbow</green>'
+    - ' ⤷ <green>SnowBlast, Halo, SoulWell, BigSoulWell, LoveWell, BigLoveWell, FlameWheel</green>'
+    - ' ⤷ <green>WitchTornado, LoveTornado</green>'
+    - ' ⤷ <red>Total Particles: {particles_total}</red>'
+    - ''
+    - '<dark_gray>»</dark_gray> <yellow>Fountain Types: </yellow>'
+    - ' ⤷ <green>Gems, Halloween, Heads, Presents, Mobs, Food, Pokemon, Mario</green>'
+    - ' ⤷ <red>Total Fountains: {fountains_total}</red>'
+    - ''
+    - '<dark_gray>»</dark_gray> <yellow>Active Stats: </yellow>'
+    - ' ⤷ <red>Active Particles/Fountains: {particles_active}'
+    - ''
+    - '<dark_gray>»</dark_gray> <yellow>Other: </yellow>'
+    - ' ⤷ <red>Fountain Items: {fountain_items}'
+    - ''
+    - '{locations}'
+    - ''
+    - '<bold><gold>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</gold></bold>'
+  location:
+    # A list of available placeholders: {prefix}
+    empty: '{prefix}<dark_aqua>There are no locations set!'
+    # A list of available placeholders: {prefix}
+    exists: '{prefix}<dark_aqua>That location name is taken, You cannot re-use it
+      until you remove it!'
+    # A list of available placeholders: {prefix}, {name}, {particle}
+    added: '{prefix}<dark_aqua>You have added <gold>{name} <dark_aqua>to the block.'
+    # A list of available placeholders: {prefix}, {name}
+    set: '{prefix}<dark_aqua>You have set <gold>{name} <dark_aqua>to <gold>{particle}.'
+    # A list of available placeholders: {prefix}, {name}
+    deleted: '{prefix}<dark_aqua>You have deleted <gold>{name}.'
+    # A list of available placeholders: {prefix}, {name}
+    does-not-exist: '{prefix}<dark_aqua>There are no locations called <gold>{name}.'
+particles:
+  stats:
+    # A list of available placeholders: {id}, {task_id}, {particle_name}, {world}, {x}, {y}, {z}
+    per-particle: '<dark_gray>[<blue>{id}<dark_gray>]: <red>{particle_name}<dark_gray>,
+      <green>{task_id}<dark_gray>, <red>{world}<dark_gray>, <red>{x}<dark_gray>, <red>{y}<dark_gray>,
+      <red>{z}'
+# All messages related to players things.
+player:
+  requirements:
+    # A list of available placeholders: {prefix}
+    must-be-console-sender: '{prefix}<red>You must be using console to use this command.'
+    # A list of available placeholders: {prefix}
+    must-be-player: '{prefix}<red>You must be a player to use this command.'
+  # A list of available placeholders: {prefix}
+  no-permission: '{prefix}<red>You do not have permission to use that command/menu!'
+# All messages related to errors.
+errors:
+  # A list of available placeholders: {prefix}
+  internal-error: '{prefix}<red>An internal error has occurred. Please check the console
+    for the full error.'
+  # A list of available placeholders: {prefix}, {particle}
+  not-a-particle: '{prefix}<gold>{particle} <red>is not a particle. Please do <gold>/blockparticles
+    help <red>for more information.'
+  # A list of available placeholders: {prefix}
+  not-looking-at-block: '{prefix}<red>You are not looking at a block.'
+# All messages related to misc things.
+misc:
+  # A list of available placeholders: {prefix}, {usage}
+  correct-usage: '{prefix}<red>The correct usage for this command is <yellow>{usage}'
+  # A list of available placeholders: {prefix}, {command}
+  command-not-found: '{prefix}<red>{command} is not a known command.'
+  # A list of available placeholders: {prefix}
+  config-reload: '{prefix}<gray>You have reloaded all the files.'
+  help:
+  - '<dark_gray>- <gold>/bp help <dark_aqua>Shows the particle help menu.'
+  - '<dark_gray>- <gold>/bp reload <dark_aqua>Reloads all the config files.'
+  - '<dark_gray>- <gold>/bp list <dark_aqua>Shows all active particle locations..'
+  - '<dark_gray>- <gold>/bp add [page] <dark_aqua>Adds a new particle location.'
+  - '<dark_gray>- <gold>/bp delete <dark_aqua>Deletes a particle location.'
+  - '<dark_gray>- <gold>/bp set [amount] [player] <dark_aqua>Sets a location to use
+    a particle.'
+  - '<dark_gray>- <gold>/bp stats <dark_aqua>Shows multiple statistics of the plugin.'
