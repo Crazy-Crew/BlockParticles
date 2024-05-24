@@ -40,7 +40,8 @@ public enum Messages {
     unknown_command(MiscKeys.unknown_command),
     correct_usage(MiscKeys.correct_usage),
     reloaded(MiscKeys.plugin_reloaded),
-    help(MiscKeys.help, true);
+    help(MiscKeys.help, true),
+    particle_types(MessageKeys.particle_types, true);
 
     private Property<String> property;
 
