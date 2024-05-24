@@ -124,8 +124,7 @@ public class MainMenu extends InventoryBuilder {
 
         if (event.getClickedInventory() != view.getTopInventory()) return;
 
-        //todo() register permission at runtime.
-        if (!player.hasPermission("blockparticles.admin")) {
+        if (!player.hasPermission("blockparticles.set")) {
             Messages.no_permission.getMessage();
 
             return;
