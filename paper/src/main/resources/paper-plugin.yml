@@ -1,0 +1,16 @@
+name: '${name}'
+main: '${group}.BlockParticles'
+
+version: '${version}'
+api-version: '1.20'
+description: '${description}'
+website: '${website}'
+
+#folia-supported: true
+
+dependencies:
+  server:
+    HeadDatabase:
+      load: BEFORE
+      required: false
+      join-classpath: true

@@ -60,7 +60,7 @@ tasks {
         inputs.properties("description" to project.properties["description"])
         inputs.properties("website" to project.properties["website"])
 
-        filesMatching("plugin.yml") {
+        filesMatching("paper-plugin.yml") {
             expand(inputs.properties)
         }
     }
