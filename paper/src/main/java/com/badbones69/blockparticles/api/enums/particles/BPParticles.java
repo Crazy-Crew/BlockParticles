@@ -1,4 +1,4 @@
-package com.badbones69.blockparticles.api.enums;
+package com.badbones69.blockparticles.api.enums.particles;
 
 public enum BPParticles {
     
@@ -41,13 +41,13 @@ public enum BPParticles {
     CRIT(),
     BIGCRIT();
     
-    public static BPParticles getFromName(String name) {
-        for (BPParticles fountain : values()) {
+    public static BPParticles getFromName(final String name) {
+        for (final BPParticles fountain : values()) {
             if (fountain.name().equalsIgnoreCase(name.replace(" ", ""))) {
                 return fountain;
             }
         }
+
         return null;
     }
-    
 }

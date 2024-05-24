@@ -1,41 +1,40 @@
 package com.badbones69.blockparticles;
 
-import com.badbones69.blockparticles.api.FileManager;
 import com.badbones69.blockparticles.api.ParticleManager;
-import com.badbones69.blockparticles.commands.BPCommands;
-import com.badbones69.blockparticles.commands.BPTab;
+import com.badbones69.blockparticles.api.builders.menus.MainMenu;
+import com.badbones69.blockparticles.commands.CommandManager;
 import com.badbones69.blockparticles.controllers.Fountains;
-import com.badbones69.blockparticles.controllers.GUI;
-import com.badbones69.blockparticles.events.Events_v1_12_R1_Up;
-import com.badbones69.blockparticles.hook.HeadDatabaseHook;
-import org.bukkit.Bukkit;
-import org.bukkit.plugin.PluginManager;
+import com.badbones69.blockparticles.controllers.ParticleControl;
+import com.badbones69.blockparticles.events.ItemPickUp;
+import com.ryderbelserion.vital.paper.VitalPaper;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.PluginCommand;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class BlockParticles extends JavaPlugin {
 
-    private FileManager fileManager = FileManager.getInstance();
-    private ParticleManager bp = ParticleManager.getInstance();
-    
-    @Override
-    public void onDisable() {
-        Methods.kill();
-    }
+    private ParticleManager particleManager;
+    private ParticleControl particleControl;
     
     @Override
     public void onEnable() {
-        fileManager.logInfo(true).setup(this);
-        bp.load();
-        PluginManager pm = Bukkit.getServer().getPluginManager();
+        new VitalPaper(this);
+
+        Server server = new Server(getDataFolder(), getLogger());
         server.apply();
-        pm.registerEvents(new Methods(), this);
-        pm.registerEvents(new Fountains(), this);
-        getCommand("blockparticle").setExecutor(new BPCommands());
-        getCommand("blockparticle").setTabCompleter(new BPTab());
-        new HeadDatabaseHook();
-        pm.registerEvents(new Events_v1_12_R1_Up(), this);
+
+        this.particleManager = new ParticleManager();
+        this.particleManager.load();
+
+        this.particleControl = this.particleManager.getParticleControl();
+
         getServer().getPluginManager().registerEvents(new MainMenu(), this);
+        getServer().getPluginManager().registerEvents(new Methods(), this);
+        getServer().getPluginManager().registerEvents(new Fountains(), this);
+        getServer().getPluginManager().registerEvents(new ItemPickUp(), this);
+
         // Load the commands.
         CommandManager.load();
 
@@ -44,7 +43,29 @@ public class BlockParticles extends JavaPlugin {
             public void run() {
                 Methods.startParticles();
             }
-        }.runTaskLater(bp.getPlugin(), 200);
+        }.runTaskLater(this, 200);
     }
-    
+
+    @Override
+    public void onDisable() {
+        Methods.kill();
+    }
+
+    public final ParticleManager getParticleManager() {
+        return this.particleManager;
+    }
+
+    public final ParticleControl getParticleControl() {
+        return this.particleControl;
+    }
+
+    private void registerCommand(final PluginCommand command, final CommandExecutor executor, final TabCompleter tabCompleter) {
+        if (command != null) {
+            if (executor != null) {
+                command.setExecutor(executor);
+
+                if (tabCompleter != null) command.setTabCompleter(tabCompleter);
+            }
+        }
+    }
 }

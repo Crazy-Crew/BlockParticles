@@ -5,23 +5,28 @@ import org.bukkit.*;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.Random;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Particles implements ParticleControl {
+
+    private final BlockParticles plugin = JavaPlugin.getPlugin(BlockParticles.class);
     
-    private HashMap<String, Integer> locations = new HashMap<>();
-    private Plugin plugin = Bukkit.getPluginManager().getPlugin("BlockParticles");
-    private int range = 25;
-    private Random random = new Random();
+    private final HashMap<String, Integer> locations = new HashMap<>();
+    private final int range = 25;
     
-    private Location randomDrop(Location location) {
+    private Location randomDrop(final Location location) {
+        ThreadLocalRandom random = ThreadLocalRandom.current();
+
         double x = random.nextInt(100) / 100.0 - .50;
         double z = random.nextInt(100) / 100.0 - .50;
+
         return location.add(x, 0, z);
     }
     
@@ -29,124 +34,128 @@ public class Particles implements ParticleControl {
         return (float) -.05 + (float) (Math.random() * ((.05 - -.05)));
     }
     
-    public HashMap<String, Integer> getLocations() {
-        return locations;
+    public final HashMap<String, Integer> getLocations() {
+        return this.locations;
     }
     
-    public void playVolcano(final Location location, String id) {
-        locations.put(id, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-            Location l = location.add(.5, .8, .5);
+    public void playVolcano(final Location location, final String id) {
+        this.locations.put(id, this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
+            final Location copy = location.add(.5, .8, .5).clone();
+            final World world = copy.getWorld();
             
             @Override
             public void run() {
-                if (noPlayers(l.clone(), range)) return;
-                l.getWorld().spawnParticle(Particle.LAVA, l, 10, 0, 0, 0, 0);
+                if (noPlayers(copy, range)) return;
+                world.spawnParticle(Particle.LAVA, copy, 10, 0, 0, 0, 0);
             }
         }, 0, 4));
     }
     
-    public void playBigFlame(final Location location, String id) {
-        locations.put(id, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-            Location l = location.clone().add(.5, .1, .5);
+    public void playBigFlame(final Location location, final String id) {
+        this.locations.put(id, this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
+            final Location copy = location.add(.5, .1, .5).clone();
+            final World world = copy.getWorld();
             
             @Override
             public void run() {
-                if (noPlayers(l.clone(), range)) return;
-                for (Location location : getCircle(l, 1, 15))
-                    l.getWorld().spawnParticle(Particle.FLAME, location, 1, 0, 0, 0, 0);
-                for (Location location : getCircle(l, 2, 25))
-                    l.getWorld().spawnParticle(Particle.FLAME, location, 1, 0, 0, 0, 0);
+                if (noPlayers(copy, range)) return;
+
+                for (Location location : getCircle(copy, 1, 15)) world.spawnParticle(Particle.FLAME, location, 1, 0, 0, 0, 0);
+                for (Location location : getCircle(copy, 2, 25)) world.spawnParticle(Particle.FLAME, location, 1, 0, 0, 0, 0);
             }
         }, 0, 5));
     }
     
-    public void playFlame(final Location location, String id) {
-        locations.put(id, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-            Location l = location.add(.5, .1, .5);
-            
+    public void playFlame(final Location location, final String id) {
+        this.locations.put(id, this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
+            final Location copy = location.add(.5, .1, .5).clone();
+            final World world = copy.getWorld();
+
             @Override
             public void run() {
-                if (noPlayers(l.clone(), range)) return;
-                for (Location location : getCircle(l, .6, 15))
-                    l.getWorld().spawnParticle(Particle.FLAME, location, 1, 0, 0, 0, 0);
-                for (Location location : getCircle(l, 1, 20))
-                    l.getWorld().spawnParticle(Particle.FLAME, location, 1, 0, 0, 0, 0);
+                if (noPlayers(copy, range)) return;
+
+                for (Location location : getCircle(copy, .6, 15)) world.spawnParticle(Particle.FLAME, location, 1, 0, 0, 0, 0);
+                for (Location location : getCircle(copy, 1, 20)) world.spawnParticle(Particle.FLAME, location, 1, 0, 0, 0, 0);
             }
         }, 0, 5));
     }
     
-    public void playDoubleSpiral(final Location location, String id, com.badbones69.blockparticles.api.enums.Particles particles, int amount) {
-        locations.put(id, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-            Location l = location.add(.5, .7, .5);
+    public void playDoubleSpiral(final Location location, final String id, final com.badbones69.blockparticles.api.enums.particles.Particles particles, final int amount) {
+        this.locations.put(id, this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
+            final Location copy = location.add(.5, .7, .5).clone();
+            final World world = copy.getWorld();
+
             int time = 16;
-            Particle particle = particles == com.badbones69.blockparticles.api.enums.Particles.DOUBLEWITCH ? Particle.WITCH : Particle.FIREWORK;
+
+            final Particle particle = particles == com.badbones69.blockparticles.api.enums.particles.Particles.DOUBLEWITCH ? Particle.WITCH : Particle.FIREWORK;
             
             @Override
             public void run() {
-                if (noPlayers(l.clone(), range)) return;
+                if (noPlayers(copy, range)) return;
                 if (time == 15) {
-                    l.getWorld().spawnParticle(particle, l.clone().add(.8, 0, 0), amount, 0, 0, 0, 0);
-                    l.getWorld().spawnParticle(particle, l.clone().add(-.8, 0, 0), amount, 0, 0, 0, 0);
+                    world.spawnParticle(particle, copy.add(.8, 0, 0), amount, 0, 0, 0, 0);
+                    world.spawnParticle(particle, copy.add(-.8, 0, 0), amount, 0, 0, 0, 0);
                 }
                 if (time == 14) {
-                    l.getWorld().spawnParticle(particle, l.clone().add(.75, 0, .43), amount, 0, 0, 0, 0);
-                    l.getWorld().spawnParticle(particle, l.clone().add(-.75, 0, -.43), amount, 0, 0, 0, 0);
+                    world.spawnParticle(particle, copy.add(.75, 0, .43), amount, 0, 0, 0, 0);
+                    world.spawnParticle(particle, copy.add(-.75, 0, -.43), amount, 0, 0, 0, 0);
                 }
                 if (time == 13) {
-                    l.getWorld().spawnParticle(particle, l.clone().add(.65, 0, .65), amount, 0, 0, 0, 0);
-                    l.getWorld().spawnParticle(particle, l.clone().add(-.65, 0, -.65), amount, 0, 0, 0, 0);
+                    world.spawnParticle(particle, copy.add(.65, 0, .65), amount, 0, 0, 0, 0);
+                    world.spawnParticle(particle, copy.add(-.65, 0, -.65), amount, 0, 0, 0, 0);
                 }
                 if (time == 12) {
-                    l.getWorld().spawnParticle(particle, l.clone().add(.43, 0, .75), amount, 0, 0, 0, 0);
-                    l.getWorld().spawnParticle(particle, l.clone().add(-.43, 0, -.75), amount, 0, 0, 0, 0);
+                    world.spawnParticle(particle, copy.add(.43, 0, .75), amount, 0, 0, 0, 0);
+                    world.spawnParticle(particle, copy.add(-.43, 0, -.75), amount, 0, 0, 0, 0);
                 }
                 if (time == 11) {
-                    l.getWorld().spawnParticle(particle, l.clone().add(0, 0, .8), amount, 0, 0, 0, 0);
-                    l.getWorld().spawnParticle(particle, l.clone().add(0, 0, -.8), amount, 0, 0, 0, 0);
+                    world.spawnParticle(particle, copy.add(0, 0, .8), amount, 0, 0, 0, 0);
+                    world.spawnParticle(particle, copy.add(0, 0, -.8), amount, 0, 0, 0, 0);
                 }
                 if (time == 10) {
-                    l.getWorld().spawnParticle(particle, l.clone().add(-.43, 0, .75), amount, 0, 0, 0, 0);
-                    l.getWorld().spawnParticle(particle, l.clone().add(.43, 0, -.75), amount, 0, 0, 0, 0);
+                    world.spawnParticle(particle, copy.add(-.43, 0, .75), amount, 0, 0, 0, 0);
+                    world.spawnParticle(particle, copy.add(.43, 0, -.75), amount, 0, 0, 0, 0);
                 }
                 if (time == 9) {
-                    l.getWorld().spawnParticle(particle, l.clone().add(-.65, 0, .65), amount, 0, 0, 0, 0);
-                    l.getWorld().spawnParticle(particle, l.clone().add(.65, 0, -.65), amount, 0, 0, 0, 0);
+                    world.spawnParticle(particle, copy.add(-.65, 0, .65), amount, 0, 0, 0, 0);
+                    world.spawnParticle(particle, copy.add(.65, 0, -.65), amount, 0, 0, 0, 0);
                 }
                 if (time == 8) {
-                    l.getWorld().spawnParticle(particle, l.clone().add(-.75, 0, .43), amount, 0, 0, 0, 0);
-                    l.getWorld().spawnParticle(particle, l.clone().add(.75, 0, -.43), amount, 0, 0, 0, 0);
+                    world.spawnParticle(particle, copy.add(-.75, 0, .43), amount, 0, 0, 0, 0);
+                    world.spawnParticle(particle, copy.add(.75, 0, -.43), amount, 0, 0, 0, 0);
                 }
                 if (time == 7) {
-                    l.getWorld().spawnParticle(particle, l.clone().add(-.8, 0, 0), amount, 0, 0, 0, 0);
-                    l.getWorld().spawnParticle(particle, l.clone().add(.8, 0, 0), amount, 0, 0, 0, 0);
+                    world.spawnParticle(particle, copy.add(-.8, 0, 0), amount, 0, 0, 0, 0);
+                    world.spawnParticle(particle, copy.add(.8, 0, 0), amount, 0, 0, 0, 0);
                 }
                 if (time == 6) {
-                    l.getWorld().spawnParticle(particle, l.clone().add(-.75, 0, -.43), amount, 0, 0, 0, 0);
-                    l.getWorld().spawnParticle(particle, l.clone().add(.75, 0, .43), amount, 0, 0, 0, 0);
+                    world.spawnParticle(particle, copy.add(-.75, 0, -.43), amount, 0, 0, 0, 0);
+                    world.spawnParticle(particle, copy.add(.75, 0, .43), amount, 0, 0, 0, 0);
                 }
                 if (time == 5) {
-                    l.getWorld().spawnParticle(particle, l.clone().add(-.65, 0, -.65), amount, 0, 0, 0, 0);
-                    l.getWorld().spawnParticle(particle, l.clone().add(.65, 0, .65), amount, 0, 0, 0, 0);
+                    world.spawnParticle(particle, copy.add(-.65, 0, -.65), amount, 0, 0, 0, 0);
+                    world.spawnParticle(particle, copy.add(.65, 0, .65), amount, 0, 0, 0, 0);
                 }
                 if (time == 4) {
-                    l.getWorld().spawnParticle(particle, l.clone().add(-.43, 0, -.75), amount, 0, 0, 0, 0);
-                    l.getWorld().spawnParticle(particle, l.clone().add(.43, 0, .75), amount, 0, 0, 0, 0);
+                    world.spawnParticle(particle, copy.add(-.43, 0, -.75), amount, 0, 0, 0, 0);
+                    world.spawnParticle(particle, copy.add(.43, 0, .75), amount, 0, 0, 0, 0);
                 }
                 if (time == 3) {
-                    l.getWorld().spawnParticle(particle, l.clone().add(0, 0, -.8), amount, 0, 0, 0, 0);
-                    l.getWorld().spawnParticle(particle, l.clone().add(0, 0, .8), amount, 0, 0, 0, 0);
+                    world.spawnParticle(particle, copy.add(0, 0, -.8), amount, 0, 0, 0, 0);
+                    world.spawnParticle(particle, copy.add(0, 0, .8), amount, 0, 0, 0, 0);
                 }
                 if (time == 2) {
-                    l.getWorld().spawnParticle(particle, l.clone().add(.43, 0, -.75), amount, 0, 0, 0, 0);
-                    l.getWorld().spawnParticle(particle, l.clone().add(-.43, 0, .75), amount, 0, 0, 0, 0);
+                    world.spawnParticle(particle, copy.add(.43, 0, -.75), amount, 0, 0, 0, 0);
+                    world.spawnParticle(particle, copy.add(-.43, 0, .75), amount, 0, 0, 0, 0);
                 }
                 if (time == 1) {
-                    l.getWorld().spawnParticle(particle, l.clone().add(.65, 0, -.65), amount, 0, 0, 0, 0);
-                    l.getWorld().spawnParticle(particle, l.clone().add(-.65, 0, .65), amount, 0, 0, 0, 0);
+                    world.spawnParticle(particle, copy.add(.65, 0, -.65), amount, 0, 0, 0, 0);
+                    world.spawnParticle(particle, copy.add(-.65, 0, .65), amount, 0, 0, 0, 0);
                 }
                 if (time == 0) {
-                    l.getWorld().spawnParticle(particle, l.clone().add(.75, 0, -.43), amount, 0, 0, 0, 0);
-                    l.getWorld().spawnParticle(particle, l.clone().add(-.75, 0, .43), amount, 0, 0, 0, 0);
+                    world.spawnParticle(particle, copy.add(.75, 0, -.43), amount, 0, 0, 0, 0);
+                    world.spawnParticle(particle, copy.add(-.75, 0, .43), amount, 0, 0, 0, 0);
                     time = 16;
                 }
                 time--;
@@ -154,483 +163,503 @@ public class Particles implements ParticleControl {
         }, 0, 2));
     }
     
-    public void playSpiral(final Location location, String id, com.badbones69.blockparticles.api.enums.Particles particles, int amount) {
-        locations.put(id, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-            Location l = location.add(.5, .7, .5);
+    public void playSpiral(final Location location, final String id, final com.badbones69.blockparticles.api.enums.particles.Particles particles, final int amount) {
+        this.locations.put(id, this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
+            final Location copy = location.add(.5, .7, .5);
+            final World world = copy.getWorld();
+
             int time = 16;
-            Particle particle = particles == com.badbones69.blockparticles.api.enums.Particles.WITCH ? Particle.WITCH : Particle.FIREWORK;
+
+            final Particle particle = particles == com.badbones69.blockparticles.api.enums.particles.Particles.WITCH ? Particle.WITCH : Particle.FIREWORK;
             
             @Override
             public void run() {
-                if (noPlayers(l.clone(), range)) return;
-                if (time == 15) l.getWorld().spawnParticle(particle, l.clone().add(.8, 0, 0), amount, 0, 0, 0, 0);
-                if (time == 14) l.getWorld().spawnParticle(particle, l.clone().add(.75, 0, .43), amount, 0, 0, 0, 0);
-                if (time == 13) l.getWorld().spawnParticle(particle, l.clone().add(.65, 0, .65), amount, 0, 0, 0, 0);
-                if (time == 12) l.getWorld().spawnParticle(particle, l.clone().add(.43, 0, .75), amount, 0, 0, 0, 0);
-                if (time == 11) l.getWorld().spawnParticle(particle, l.clone().add(0, 0, .8), amount, 0, 0, 0, 0);
-                if (time == 10) l.getWorld().spawnParticle(particle, l.clone().add(-.43, 0, .75), amount, 0, 0, 0, 0);
-                if (time == 9) l.getWorld().spawnParticle(particle, l.clone().add(-.65, 0, .65), amount, 0, 0, 0, 0);
-                if (time == 8) l.getWorld().spawnParticle(particle, l.clone().add(-.75, 0, .43), amount, 0, 0, 0, 0);
-                if (time == 7) l.getWorld().spawnParticle(particle, l.clone().add(-.8, 0, 0), amount, 0, 0, 0, 0);
-                if (time == 6) l.getWorld().spawnParticle(particle, l.clone().add(-.75, 0, -.43), amount, 0, 0, 0, 0);
-                if (time == 5) l.getWorld().spawnParticle(particle, l.clone().add(-.65, 0, -.65), amount, 0, 0, 0, 0);
-                if (time == 4) l.getWorld().spawnParticle(particle, l.clone().add(-.43, 0, -.75), amount, 0, 0, 0, 0);
-                if (time == 3) l.getWorld().spawnParticle(particle, l.clone().add(0, 0, -.8), amount, 0, 0, 0, 0);
-                if (time == 2) l.getWorld().spawnParticle(particle, l.clone().add(.43, 0, -.75), amount, 0, 0, 0, 0);
-                if (time == 1) l.getWorld().spawnParticle(particle, l.clone().add(.65, 0, -.65), amount, 0, 0, 0, 0);
+                if (noPlayers(copy, range)) return;
+
+                if (time == 15) world.spawnParticle(particle, copy.add(.8, 0, 0), amount, 0, 0, 0, 0);
+                if (time == 14) world.spawnParticle(particle, copy.add(.75, 0, .43), amount, 0, 0, 0, 0);
+                if (time == 13) world.spawnParticle(particle, copy.add(.65, 0, .65), amount, 0, 0, 0, 0);
+                if (time == 12) world.spawnParticle(particle, copy.add(.43, 0, .75), amount, 0, 0, 0, 0);
+                if (time == 11) world.spawnParticle(particle, copy.add(0, 0, .8), amount, 0, 0, 0, 0);
+                if (time == 10) world.spawnParticle(particle, copy.add(-.43, 0, .75), amount, 0, 0, 0, 0);
+                if (time == 9) world.spawnParticle(particle, copy.add(-.65, 0, .65), amount, 0, 0, 0, 0);
+                if (time == 8) world.spawnParticle(particle, copy.add(-.75, 0, .43), amount, 0, 0, 0, 0);
+                if (time == 7) world.spawnParticle(particle, copy.add(-.8, 0, 0), amount, 0, 0, 0, 0);
+                if (time == 6) world.spawnParticle(particle, copy.add(-.75, 0, -.43), amount, 0, 0, 0, 0);
+                if (time == 5) world.spawnParticle(particle, copy.add(-.65, 0, -.65), amount, 0, 0, 0, 0);
+                if (time == 4) world.spawnParticle(particle, copy.add(-.43, 0, -.75), amount, 0, 0, 0, 0);
+                if (time == 3) world.spawnParticle(particle, copy.add(0, 0, -.8), amount, 0, 0, 0, 0);
+                if (time == 2) world.spawnParticle(particle, copy.add(.43, 0, -.75), amount, 0, 0, 0, 0);
+                if (time == 1) world.spawnParticle(particle, copy.add(.65, 0, -.65), amount, 0, 0, 0, 0);
+
                 if (time == 0) {
-                    l.getWorld().spawnParticle(particle, l.clone().add(.75, 0, -.43), amount, 0, 0, 0, 0);
+                    world.spawnParticle(particle, copy.add(.75, 0, -.43), amount, 0, 0, 0, 0);
                     time = 16;
                 }
+
                 time--;
             }
         }, 0, 2));
     }
     
-    public void playCrit(final Location location, String id) {
-        locations.put(id, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-            Location l = location.add(.5, 1.1, .5);
+    public void playCrit(final Location location, final String id) {
+        this.locations.put(id, this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
+            final Location copy = location.add(.5, 1.1, .5);
+            final World world = copy.getWorld();
             
             @Override
             public void run() {
-                if (noPlayers(l.clone(), range)) return;
-                l.getWorld().spawnParticle(Particle.CRIT, l.clone(), 1, 0, 0, 0, 0);
+                if (noPlayers(copy, range)) return;
+
+                world.spawnParticle(Particle.CRIT, copy, 1, 0, 0, 0, 0);
             }
         }, 0, 2));
     }
     
-    public void playBigCrit(final Location location, String id) {
-        locations.put(id, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-            Location l = location.add(.5, .5, .5);
+    public void playBigCrit(final Location location, final String id) {
+        this.locations.put(id, this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
+            final Location copy = location.add(.5, .5, .5);
+            final World world = copy.getWorld();
             
             @Override
             public void run() {
-                if (noPlayers(l.clone(), range)) return;
-                for (Location location : getCircle(l, 2, 20))
-                    l.getWorld().spawnParticle(Particle.CRIT, location, 1, 0, 0, 0, 0);
+                if (noPlayers(copy, range)) return;
+
+                for (Location location : getCircle(copy, 2, 20)) world.spawnParticle(Particle.CRIT, location, 1, 0, 0, 0, 0);
+            }
+        }, 0, 2));
+    }
+
+    public void playStorm(final Location location, final String id) {
+        this.locations.put(id, this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
+            final Location copy = location.add(.5, 2, .5);
+            final World world = copy.getWorld();
+            
+            @Override
+            public void run() {
+                if (noPlayers(copy, range)) return;
+
+                world.spawnParticle(Particle.CLOUD, copy, 15, .3f, 0, 0.3f, 0);
+                world.spawnParticle(Particle.FALLING_WATER, copy.add(0, 0, .1), 10, 0.2f, 0, 0.2f, 0);
             }
         }, 0, 2));
     }
     
-    public void playStorm(final Location location, String id) {
-        locations.put(id, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-            Location l = location.add(.5, 2, .5);
+    public void playFog(final Location location, final String id) {
+        this.locations.put(id, this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
+            final Location copy = location.add(.5, .5, .5);
+            final World world = copy.getWorld();
             
             @Override
             public void run() {
-                if (noPlayers(l.clone(), range)) return;
-                l.getWorld().spawnParticle(Particle.CLOUD, l.clone(), 15, .3f, 0, 0.3f, 0);
-                l.getWorld().spawnParticle(Particle.FALLING_WATER, l.clone().add(0, 0, .1), 10, 0.2f, 0, 0.2f, 0);
+                if (noPlayers(copy, range)) return;
+
+                world.spawnParticle(Particle.CLOUD, copy, 20, .3f, 0, .3f, 0.05f);
             }
         }, 0, 2));
     }
     
-    public void playFog(final Location location, String id) {
-        locations.put(id, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-            Location l = location.add(.5, .5, .5);
+    public void playEnchant(final Location location, final String id) {
+        this.locations.put(id, this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
+            final Location copy = location.add(.5, 1.5, .5);
+            final World world = copy.getWorld();
             
             @Override
             public void run() {
-                if (noPlayers(l.clone(), range)) return;
-                l.getWorld().spawnParticle(Particle.CLOUD, l, 20, .3f, 0, .3f, 0.05f);
+                if (noPlayers(copy, range)) return;
+
+                world.spawnParticle(Particle.ENCHANT, copy, 20, 0, 0, 0, 2);
             }
         }, 0, 2));
     }
     
-    public void playEnchant(final Location location, String id) {
-        locations.put(id, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-            Location l = location.add(.5, 1.5, .5);
+    public void playChains(final Location location, final String id) {
+        this.locations.put(id, this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
+            final Location copy = location.add(.5, .1, .5);
+            final World world = copy.getWorld();
             
             @Override
             public void run() {
-                if (noPlayers(l.clone(), range)) return;
-                l.getWorld().spawnParticle(Particle.ENCHANT, l, 20, 0, 0, 0, 2);
-            }
-        }, 0, 2));
-    }
-    
-    public void playChains(final Location location, String id) {
-        locations.put(id, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-            Location l = location.add(.5, .1, .5);
-            
-            @Override
-            public void run() {
-                if (noPlayers(l.clone(), range)) return;
-                l.getWorld().spawnParticle(Particle.FLAME, l.clone().add(1, 0, 1), 1, 0, 0, 0, 0);
-                l.getWorld().spawnParticle(Particle.FLAME, l.clone().add(.9, .1, .9), 1, 0, 0, 0, 0);
-                l.getWorld().spawnParticle(Particle.FLAME, l.clone().add(.8, .2, .8), 1, 0, 0, 0, 0);
-                l.getWorld().spawnParticle(Particle.FLAME, l.clone().add(.7, .3, .7), 1, 0, 0, 0, 0);
-                l.getWorld().spawnParticle(Particle.FLAME, l.clone().add(.6, .4, .6), 1, 0, 0, 0, 0);
-                l.getWorld().spawnParticle(Particle.FLAME, l.clone().add(.5, .6, .5), 1, 0, 0, 0, 0);
-                l.getWorld().spawnParticle(Particle.FLAME, l.clone().add(.4, .8, .4), 1, 0, 0, 0, 0);
+                if (noPlayers(copy, range)) return;
+
+                world.spawnParticle(Particle.FLAME, copy.add(1, 0, 1), 1, 0, 0, 0, 0);
+                world.spawnParticle(Particle.FLAME, copy.add(.9, .1, .9), 1, 0, 0, 0, 0);
+                world.spawnParticle(Particle.FLAME, copy.add(.8, .2, .8), 1, 0, 0, 0, 0);
+                world.spawnParticle(Particle.FLAME, copy.add(.7, .3, .7), 1, 0, 0, 0, 0);
+                world.spawnParticle(Particle.FLAME, copy.add(.6, .4, .6), 1, 0, 0, 0, 0);
+                world.spawnParticle(Particle.FLAME, copy.add(.5, .6, .5), 1, 0, 0, 0, 0);
+                world.spawnParticle(Particle.FLAME, copy.add(.4, .8, .4), 1, 0, 0, 0, 0);
                 
-                l.getWorld().spawnParticle(Particle.FLAME, l.clone().add(-1, 0, 1), 1, 0, 0, 0, 0);
-                l.getWorld().spawnParticle(Particle.FLAME, l.clone().add(-.9, .1, .9), 1, 0, 0, 0, 0);
-                l.getWorld().spawnParticle(Particle.FLAME, l.clone().add(-.8, .2, .8), 1, 0, 0, 0, 0);
-                l.getWorld().spawnParticle(Particle.FLAME, l.clone().add(-.7, .3, .7), 1, 0, 0, 0, 0);
-                l.getWorld().spawnParticle(Particle.FLAME, l.clone().add(-.6, .4, .6), 1, 0, 0, 0, 0);
-                l.getWorld().spawnParticle(Particle.FLAME, l.clone().add(-.5, .6, .5), 1, 0, 0, 0, 0);
-                l.getWorld().spawnParticle(Particle.FLAME, l.clone().add(-.4, .8, .4), 1, 0, 0, 0, 0);
+                world.spawnParticle(Particle.FLAME, copy.add(-1, 0, 1), 1, 0, 0, 0, 0);
+                world.spawnParticle(Particle.FLAME, copy.add(-.9, .1, .9), 1, 0, 0, 0, 0);
+                world.spawnParticle(Particle.FLAME, copy.add(-.8, .2, .8), 1, 0, 0, 0, 0);
+                world.spawnParticle(Particle.FLAME, copy.add(-.7, .3, .7), 1, 0, 0, 0, 0);
+                world.spawnParticle(Particle.FLAME, copy.add(-.6, .4, .6), 1, 0, 0, 0, 0);
+                world.spawnParticle(Particle.FLAME, copy.add(-.5, .6, .5), 1, 0, 0, 0, 0);
+                world.spawnParticle(Particle.FLAME, copy.add(-.4, .8, .4), 1, 0, 0, 0, 0);
                 
-                l.getWorld().spawnParticle(Particle.FLAME, l.clone().add(-1, 0, -1), 1, 0, 0, 0, 0);
-                l.getWorld().spawnParticle(Particle.FLAME, l.clone().add(-.9, .1, -.9), 1, 0, 0, 0, 0);
-                l.getWorld().spawnParticle(Particle.FLAME, l.clone().add(-.8, .2, -.8), 1, 0, 0, 0, 0);
-                l.getWorld().spawnParticle(Particle.FLAME, l.clone().add(-.7, .3, -.7), 1, 0, 0, 0, 0);
-                l.getWorld().spawnParticle(Particle.FLAME, l.clone().add(-.6, .4, -.6), 1, 0, 0, 0, 0);
-                l.getWorld().spawnParticle(Particle.FLAME, l.clone().add(-.5, .6, -.5), 1, 0, 0, 0, 0);
-                l.getWorld().spawnParticle(Particle.FLAME, l.clone().add(-.4, .8, -.4), 1, 0, 0, 0, 0);
+                world.spawnParticle(Particle.FLAME, copy.add(-1, 0, -1), 1, 0, 0, 0, 0);
+                world.spawnParticle(Particle.FLAME, copy.add(-.9, .1, -.9), 1, 0, 0, 0, 0);
+                world.spawnParticle(Particle.FLAME, copy.add(-.8, .2, -.8), 1, 0, 0, 0, 0);
+                world.spawnParticle(Particle.FLAME, copy.add(-.7, .3, -.7), 1, 0, 0, 0, 0);
+                world.spawnParticle(Particle.FLAME, copy.add(-.6, .4, -.6), 1, 0, 0, 0, 0);
+                world.spawnParticle(Particle.FLAME, copy.add(-.5, .6, -.5), 1, 0, 0, 0, 0);
+                world.spawnParticle(Particle.FLAME, copy.add(-.4, .8, -.4), 1, 0, 0, 0, 0);
                 
-                l.getWorld().spawnParticle(Particle.FLAME, l.clone().add(1, 0, -1), 1, 0, 0, 0, 0);
-                l.getWorld().spawnParticle(Particle.FLAME, l.clone().add(.9, .1, -.9), 1, 0, 0, 0, 0);
-                l.getWorld().spawnParticle(Particle.FLAME, l.clone().add(.8, .2, -.8), 1, 0, 0, 0, 0);
-                l.getWorld().spawnParticle(Particle.FLAME, l.clone().add(.7, .3, -.7), 1, 0, 0, 0, 0);
-                l.getWorld().spawnParticle(Particle.FLAME, l.clone().add(.6, .4, -.6), 1, 0, 0, 0, 0);
-                l.getWorld().spawnParticle(Particle.FLAME, l.clone().add(.5, .6, -.5), 1, 0, 0, 0, 0);
-                l.getWorld().spawnParticle(Particle.FLAME, l.clone().add(.4, .8, -.4), 1, 0, 0, 0, 0);
+                world.spawnParticle(Particle.FLAME, copy.add(1, 0, -1), 1, 0, 0, 0, 0);
+                world.spawnParticle(Particle.FLAME, copy.add(.9, .1, -.9), 1, 0, 0, 0, 0);
+                world.spawnParticle(Particle.FLAME, copy.add(.8, .2, -.8), 1, 0, 0, 0, 0);
+                world.spawnParticle(Particle.FLAME, copy.add(.7, .3, -.7), 1, 0, 0, 0, 0);
+                world.spawnParticle(Particle.FLAME, copy.add(.6, .4, -.6), 1, 0, 0, 0, 0);
+                world.spawnParticle(Particle.FLAME, copy.add(.5, .6, -.5), 1, 0, 0, 0, 0);
+                world.spawnParticle(Particle.FLAME, copy.add(.4, .8, -.4), 1, 0, 0, 0, 0);
             }
         }, 0, 5));
     }
     
-    public void playFireStorm(final Location location, String id) {
-        locations.put(id, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-            Location l = location.add(.5, 2, .5);
+    public void playFireStorm(final Location location, final String id) {
+        this.locations.put(id, this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
+            final Location copy = location.add(.5, 2, .5);
+
+            final World world = copy.getWorld();
             
             @Override
             public void run() {
                 try {
-                    if (!noPlayers(l.clone(), range)) {
-                        l.getWorld().spawnParticle(Particle.LARGE_SMOKE, l, 15, 0.3f, 0, 0.3f, 0);
-                        l.getWorld().spawnParticle(Particle.FLAME, randomDrop(l.clone()), 0, 0, -0.2f, 0, 1);
-                        l.getWorld().spawnParticle(Particle.FLAME, randomDrop(l.clone()), 0, 0, -0.2f, 0, 1);
+                    if (!noPlayers(copy, range)) {
+                        world.spawnParticle(Particle.LARGE_SMOKE, copy, 15, 0.3f, 0, 0.3f, 0);
+                        world.spawnParticle(Particle.FLAME, randomDrop(copy), 0, 0, -0.2f, 0, 1);
+                        world.spawnParticle(Particle.FLAME, randomDrop(copy), 0, 0, -0.2f, 0, 1);
                     }
                 } catch (Exception e) {
-                    Bukkit.getServer().getScheduler().cancelTask(locations.get(id));
+                    plugin.getServer().getScheduler().cancelTask(locations.get(id));
+                    
                     e.printStackTrace();
                 }
             }
         }, 0, 2));
     }
     
-    public void playSnow(final Location location, String id) {
-        locations.put(id, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-            Location l = location.add(.5, 2, .5);
+    public void playSnow(final Location location, final String id) {
+        this.locations.put(id, this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
+            final Location copy = location.add(.5, 2, .5);
+            final World world = copy.getWorld();
             
             @Override
             public void run() {
-                if (noPlayers(l.clone(), range)) return;
-                l.getWorld().spawnParticle(Particle.FIREWORK, l, 1, .7f, .7f, .7f, 0);
+                if (noPlayers(copy, range)) return;
+
+                world.spawnParticle(Particle.FIREWORK, copy, 1, .7f, .7f, .7f, 0);
             }
         }, 0, 2));
     }
     
-    public void playSpew(final Location location, String id) {
-        locations.put(id, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-            Location l = location.add(.5, 1, .5);
+    public void playSpew(final Location location, final String id) {
+        this.locations.put(id, this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
+            final Location copy = location.add(.5, 1, .5);
+            final World world = copy.getWorld();
             
             @Override
             public void run() {
-                if (noPlayers(l.clone(), range)) return;
-                l.getWorld().spawnParticle(Particle.FIREWORK, l, 0, randomVector(), .1f, randomVector(), 1);
+                if (noPlayers(copy, range)) return;
+
+                world.spawnParticle(Particle.FIREWORK, copy, 0, randomVector(), .1f, randomVector(), 1);
             }
         }, 0, 2));
     }
     
-    public void playPotion(final Location location, String id) {
-        locations.put(id, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-            Location l = location.add(.5, .2, .5);
-            
+    public void playPotion(final Location location, final String id) {
+        this.locations.put(id, this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
+            final Location copy = location.add(.5, .2, .5);
+            final World world = copy.getWorld();
+
             @Override
             public void run() {
-                if (noPlayers(l.clone(), range)) return;
-                l.getWorld().spawnParticle(Particle.INSTANT_EFFECT, l, 6, .3f, 0, .3f, randomColor());
-                l.getWorld().spawnParticle(Particle.INSTANT_EFFECT, l, 6, .3f, 0, .3f, randomColor());
-                l.getWorld().spawnParticle(Particle.INSTANT_EFFECT, l, 6, .3f, 0, .3f, randomColor());
+                if (noPlayers(copy, range)) return;
+
+                world.spawnParticle(Particle.INSTANT_EFFECT, copy, 6, .3f, 0, .3f, randomColor());
+                world.spawnParticle(Particle.INSTANT_EFFECT, copy, 6, .3f, 0, .3f, randomColor());
+                world.spawnParticle(Particle.INSTANT_EFFECT, copy, 6, .3f, 0, .3f, randomColor());
             }
         }, 0, 2));
     }
     
-    public void playMusic(final Location location, String id) {
-        locations.put(id, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-            Location l = location.add(.5, .2, .5);
-            ArrayList<Location> locs = getCircle(l, 1, 16);
+    public void playMusic(final Location location, final String id) {
+        this.locations.put(id, this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
+            final Location copy = location.add(.5, .2, .5);
+            final World world = copy.getWorld();
+            final List<Location> locs = getCircle(copy, 1, 16);
+
             int time = 0;
             
             @Override
             public void run() {
-                if (noPlayers(l.clone(), range)) return;
+                if (noPlayers(copy, range)) return;
+
                 int i = time;
+
                 if (time == 15) {
-                    l.getWorld().spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, randomColor());
+                    world.spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, randomColor());
+                    
                     time = -1;
                 }
-                if (time == 14)
-                    l.getWorld().spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, randomColor());
-                if (time == 13)
-                    l.getWorld().spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, randomColor());
-                if (time == 12)
-                    l.getWorld().spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, randomColor());
-                if (time == 11)
-                    l.getWorld().spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, randomColor());
-                if (time == 10)
-                    l.getWorld().spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, randomColor());
-                if (time == 9)
-                    l.getWorld().spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, randomColor());
-                if (time == 8)
-                    l.getWorld().spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, randomColor());
-                if (time == 7)
-                    l.getWorld().spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, randomColor());
-                if (time == 6)
-                    l.getWorld().spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, randomColor());
-                if (time == 5)
-                    l.getWorld().spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, randomColor());
-                if (time == 4)
-                    l.getWorld().spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, randomColor());
-                if (time == 3)
-                    l.getWorld().spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, randomColor());
-                if (time == 2)
-                    l.getWorld().spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, randomColor());
-                if (time == 1)
-                    l.getWorld().spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, randomColor());
-                if (time == 0)
-                    l.getWorld().spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, randomColor());
+
+                if (time == 14) world.spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, randomColor());
+                if (time == 13) world.spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, randomColor());
+                if (time == 12) world.spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, randomColor());
+                if (time == 11) world.spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, randomColor());
+                if (time == 10) world.spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, randomColor());
+                if (time == 9) world.spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, randomColor());
+                if (time == 8) world.spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, randomColor());
+                if (time == 7) world.spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, randomColor());
+                if (time == 6) world.spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, randomColor());
+                if (time == 5) world.spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, randomColor());
+                if (time == 4) world.spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, randomColor());
+                if (time == 3) world.spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, randomColor());
+                if (time == 2) world.spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, randomColor());
+                if (time == 1) world.spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, randomColor());
+                if (time == 0) world.spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, randomColor());
+
                 time++;
             }
         }, 0, 2));
     }
     
-    public void playMagic(final Location location, String id) {
-        locations.put(id, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-            Location l = location.add(.5, .5, .5);
+    public void playMagic(final Location location, final String id) {
+        this.locations.put(id, this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
+            final Location copy = location.add(.5, .5, .5);
+            final World world = copy.getWorld();
             int time = 16;
             
             @Override
             public void run() {
-                if (noPlayers(l.clone(), range)) return;
-                if (time == 15) l.getWorld().spawnParticle(Particle.CRIT, l.clone().add(0, .8, 0), 5, 0, 0, 0, 0);
-                if (time == 0)
-                    l.getWorld().spawnParticle(Particle.CRIT, l.clone().add(0, .75, .43), 5, 0, 0, 0, 0);
-                if (time == 1)
-                    l.getWorld().spawnParticle(Particle.CRIT, l.clone().add(0, .65, .65), 5, 0, 0, 0, 0);
-                if (time == 2)
-                    l.getWorld().spawnParticle(Particle.CRIT, l.clone().add(0, .43, .75), 5, 0, 0, 0, 0);
-                if (time == 3) l.getWorld().spawnParticle(Particle.CRIT, l.clone().add(0, 0, .8), 5, 0, 0, 0, 0);
-                if (time == 4)
-                    l.getWorld().spawnParticle(Particle.CRIT, l.clone().add(0, -.43, .75), 5, 0, 0, 0, 0);
-                if (time == 5)
-                    l.getWorld().spawnParticle(Particle.CRIT, l.clone().add(0, -.65, .65), 5, 0, 0, 0, 0);
-                if (time == 86)
-                    l.getWorld().spawnParticle(Particle.CRIT, l.clone().add(0, -.75, .43), 5, 0, 0, 0, 0);
-                if (time == 7) l.getWorld().spawnParticle(Particle.CRIT, l.clone().add(0, -.8, 0), 5, 0, 0, 0, 0);
-                if (time == 8)
-                    l.getWorld().spawnParticle(Particle.CRIT, l.clone().add(0, -.75, -.43), 5, 0, 0, 0, 0);
-                if (time == 9)
-                    l.getWorld().spawnParticle(Particle.CRIT, l.clone().add(0, -.65, -.65), 5, 0, 0, 0, 0);
-                if (time == 10)
-                    l.getWorld().spawnParticle(Particle.CRIT, l.clone().add(0, -.43, -.75), 5, 0, 0, 0, 0);
-                if (time == 11)
-                    l.getWorld().spawnParticle(Particle.CRIT, l.clone().add(0, 0, -.8), 5, 0, 0, 0, 0);
-                if (time == 12)
-                    l.getWorld().spawnParticle(Particle.CRIT, l.clone().add(0, .43, -.75), 5, 0, 0, 0, 0);
-                if (time == 13)
-                    l.getWorld().spawnParticle(Particle.CRIT, l.clone().add(0, .65, -.65), 5, 0, 0, 0, 0);
-                if (time == 14)
-                    l.getWorld().spawnParticle(Particle.CRIT, l.clone().add(0, .75, -.43), 5, 0, 0, 0, 0);
+                if (noPlayers(copy, range)) return;
                 
-                if (time == 15) l.getWorld().spawnParticle(Particle.CRIT, l.clone().add(.8, 0, 0), 5, 0, 0, 0, 0);
-                if (time == 14)
-                    l.getWorld().spawnParticle(Particle.CRIT, l.clone().add(.75, 0, .43), 5, 0, 0, 0, 0);
-                if (time == 13)
-                    l.getWorld().spawnParticle(Particle.CRIT, l.clone().add(.65, 0, .65), 5, 0, 0, 0, 0);
-                if (time == 12)
-                    l.getWorld().spawnParticle(Particle.CRIT, l.clone().add(.43, 0, .75), 5, 0, 0, 0, 0);
-                if (time == 11) l.getWorld().spawnParticle(Particle.CRIT, l.clone().add(0, 0, .8), 5, 0, 0, 0, 0);
-                if (time == 10)
-                    l.getWorld().spawnParticle(Particle.CRIT, l.clone().add(-.43, 0, .75), 5, 0, 0, 0, 0);
-                if (time == 9)
-                    l.getWorld().spawnParticle(Particle.CRIT, l.clone().add(-.65, 0, .65), 5, 0, 0, 0, 0);
-                if (time == 8)
-                    l.getWorld().spawnParticle(Particle.CRIT, l.clone().add(-.75, 0, .43), 5, 0, 0, 0, 0);
-                if (time == 7) l.getWorld().spawnParticle(Particle.CRIT, l.clone().add(-.8, 0, 0), 5, 0, 0, 0, 0);
-                if (time == 6)
-                    l.getWorld().spawnParticle(Particle.CRIT, l.clone().add(-.75, 0, -.43), 5, 0, 0, 0, 0);
-                if (time == 5)
-                    l.getWorld().spawnParticle(Particle.CRIT, l.clone().add(-.65, 0, -.65), 5, 0, 0, 0, 0);
-                if (time == 4)
-                    l.getWorld().spawnParticle(Particle.CRIT, l.clone().add(-.43, 0, -.75), 5, 0, 0, 0, 0);
-                if (time == 3) l.getWorld().spawnParticle(Particle.CRIT, l.clone().add(0, 0, -.8), 5, 0, 0, 0, 0);
-                if (time == 2)
-                    l.getWorld().spawnParticle(Particle.CRIT, l.clone().add(.43, 0, -.75), 5, 0, 0, 0, 0);
-                if (time == 1)
-                    l.getWorld().spawnParticle(Particle.CRIT, l.clone().add(.65, 0, -.65), 5, 0, 0, 0, 0);
+                if (time == 15) world.spawnParticle(Particle.CRIT, copy.add(0, .8, 0), 5, 0, 0, 0, 0);
+                if (time == 0) world.spawnParticle(Particle.CRIT, copy.add(0, .75, .43), 5, 0, 0, 0, 0);
+                if (time == 1) world.spawnParticle(Particle.CRIT, copy.add(0, .65, .65), 5, 0, 0, 0, 0);
+                if (time == 2) world.spawnParticle(Particle.CRIT, copy.add(0, .43, .75), 5, 0, 0, 0, 0);
+                if (time == 3) world.spawnParticle(Particle.CRIT, copy.add(0, 0, .8), 5, 0, 0, 0, 0);
+                if (time == 4) world.spawnParticle(Particle.CRIT, copy.add(0, -.43, .75), 5, 0, 0, 0, 0);
+                if (time == 5) world.spawnParticle(Particle.CRIT, copy.add(0, -.65, .65), 5, 0, 0, 0, 0);
+                if (time == 86) world.spawnParticle(Particle.CRIT, copy.add(0, -.75, .43), 5, 0, 0, 0, 0);
+                if (time == 7) world.spawnParticle(Particle.CRIT, copy.add(0, -.8, 0), 5, 0, 0, 0, 0);
+                if (time == 8) world.spawnParticle(Particle.CRIT, copy.add(0, -.75, -.43), 5, 0, 0, 0, 0);
+                if (time == 9) world.spawnParticle(Particle.CRIT, copy.add(0, -.65, -.65), 5, 0, 0, 0, 0);
+                if (time == 10) world.spawnParticle(Particle.CRIT, copy.add(0, -.43, -.75), 5, 0, 0, 0, 0);
+                if (time == 11) world.spawnParticle(Particle.CRIT, copy.add(0, 0, -.8), 5, 0, 0, 0, 0);
+                if (time == 12) world.spawnParticle(Particle.CRIT, copy.add(0, .43, -.75), 5, 0, 0, 0, 0);
+                if (time == 13) world.spawnParticle(Particle.CRIT, copy.add(0, .65, -.65), 5, 0, 0, 0, 0);
+                if (time == 14) world.spawnParticle(Particle.CRIT, copy.add(0, .75, -.43), 5, 0, 0, 0, 0);
+                
+                if (time == 15) world.spawnParticle(Particle.CRIT, copy.add(.8, 0, 0), 5, 0, 0, 0, 0);
+                if (time == 14) world.spawnParticle(Particle.CRIT, copy.add(.75, 0, .43), 5, 0, 0, 0, 0);
+                if (time == 13) world.spawnParticle(Particle.CRIT, copy.add(.65, 0, .65), 5, 0, 0, 0, 0);
+                if (time == 12) world.spawnParticle(Particle.CRIT, copy.add(.43, 0, .75), 5, 0, 0, 0, 0);
+                if (time == 11) world.spawnParticle(Particle.CRIT, copy.add(0, 0, .8), 5, 0, 0, 0, 0);
+                if (time == 10) world.spawnParticle(Particle.CRIT, copy.add(-.43, 0, .75), 5, 0, 0, 0, 0);
+                if (time == 9) world.spawnParticle(Particle.CRIT, copy.add(-.65, 0, .65), 5, 0, 0, 0, 0);
+                if (time == 8) world.spawnParticle(Particle.CRIT, copy.add(-.75, 0, .43), 5, 0, 0, 0, 0);
+                if (time == 7) world.spawnParticle(Particle.CRIT, copy.add(-.8, 0, 0), 5, 0, 0, 0, 0);
+                if (time == 6) world.spawnParticle(Particle.CRIT, copy.add(-.75, 0, -.43), 5, 0, 0, 0, 0);
+                if (time == 5) world.spawnParticle(Particle.CRIT, copy.add(-.65, 0, -.65), 5, 0, 0, 0, 0);
+                if (time == 4) world.spawnParticle(Particle.CRIT, copy.add(-.43, 0, -.75), 5, 0, 0, 0, 0);
+                if (time == 3) world.spawnParticle(Particle.CRIT, copy.add(0, 0, -.8), 5, 0, 0, 0, 0);
+                if (time == 2) world.spawnParticle(Particle.CRIT, copy.add(.43, 0, -.75), 5, 0, 0, 0, 0);
+                if (time == 1) world.spawnParticle(Particle.CRIT, copy.add(.65, 0, -.65), 5, 0, 0, 0, 0);
+                
                 if (time == 0) {
-                    l.getWorld().spawnParticle(Particle.CRIT, l.clone().add(.75, 0, -.43), 5, 0, 0, 0, 0);
+                    world.spawnParticle(Particle.CRIT, copy.add(.75, 0, -.43), 5, 0, 0, 0, 0);
+                    
                     time = 16;
                 }
+                
                 time--;
             }
         }, 0, 2));
     }
     
-    public void playSnowStorm(final Location location, String id) {
-        locations.put(id, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-            Location l = location.add(.5, 2, .5);
+    public void playSnowStorm(final Location location, final String id) {
+        this.locations.put(id, this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
+            final Location copy = location.add(.5, 2, .5);
+            final World world = copy.getWorld();
             
             @Override
             public void run() {
-                if (noPlayers(l.clone(), range)) return;
-                l.getWorld().spawnParticle(Particle.CLOUD, l, 15, .3f, 0, .3f, 0);
-                l.getWorld().spawnParticle(Particle.FIREWORK, l, 2, .3f, 0, .3f, 0);
+                if (noPlayers(copy, range)) return;
+                
+                world.spawnParticle(Particle.CLOUD, copy, 15, .3f, 0, .3f, 0);
+                world.spawnParticle(Particle.FIREWORK, copy, 2, .3f, 0, .3f, 0);
             }
         }, 0, 2));
     }
     
-    public void playFireSpew(final Location location, String id) {
-        locations.put(id, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-            Location l = location.add(.5, 1, .5);
+    public void playFireSpew(final Location location, final String id) {
+        this.locations.put(id, this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
+            final Location copy = location.add(.5, 1, .5);
+            final World world = copy.getWorld();
             
             @Override
             public void run() {
-                if (noPlayers(l.clone(), range)) return;
-                l.getWorld().spawnParticle(Particle.FLAME, l, 0, randomVector(), .1f, randomVector(), 1.5f);
-                l.getWorld().spawnParticle(Particle.FLAME, l, 0, randomVector(), .1f, randomVector(), 1.5f);
-                l.getWorld().spawnParticle(Particle.FLAME, l, 0, randomVector(), .1f, randomVector(), 1.5f);
+                if (noPlayers(copy, range)) return;
+                
+                world.spawnParticle(Particle.FLAME, copy, 0, randomVector(), .1f, randomVector(), 1.5f);
+                world.spawnParticle(Particle.FLAME, copy, 0, randomVector(), .1f, randomVector(), 1.5f);
+                world.spawnParticle(Particle.FLAME, copy, 0, randomVector(), .1f, randomVector(), 1.5f);
             }
         }, 0, 2));
     }
     
-    public void playFootPrint(final Location location, String id) {
-        locations.put(id, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-            Location l = location.add(.5, .1, .5);
+    public void playFootPrint(final Location location, final String id) {
+        this.locations.put(id, this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
+            final Location copy = location.add(.5, .1, .5);
+            final World world = copy.getWorld();
             
             @Override
             public void run() {
-                if (noPlayers(l.clone(), range)) return;
-                l.getWorld().spawnParticle(Particle.EGG_CRACK, l, 3, 1, 0, 1, 0);
+                if (noPlayers(copy, range)) return;
+                
+                world.spawnParticle(Particle.EGG_CRACK, copy, 3, 1, 0, 1, 0);
             }
         }, 0, 20));
     }
     
-    public void playHappyVillager(final Location location, String id) {
-        locations.put(id, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-            Location l = location.add(.5, .1, .5);
+    public void playHappyVillager(final Location location, final String id) {
+        this.locations.put(id, this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
+            final Location copy = location.add(.5, .1, .5);
+            final World world = copy.getWorld();
             
             @Override
             public void run() {
-                if (noPlayers(l.clone(), range)) return;
-                location.getWorld().spawnParticle(Particle.HAPPY_VILLAGER, l, 10, .5f, .5f, .5f, 0);
+                if (noPlayers(copy, range)) return;
+                
+                world.spawnParticle(Particle.HAPPY_VILLAGER, copy, 10, .5f, .5f, .5f, 0);
             }
         }, 0, 5));
     }
     
-    public void playAngryVillager(final Location location, String id) {
-        locations.put(id, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-            Location l = location.add(.5, .1, .5);
+    public void playAngryVillager(final Location location, final String id) {
+        this.locations.put(id, this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
+            final Location copy = location.add(.5, .1, .5);
+            final World world = copy.getWorld();
             
             @Override
             public void run() {
-                if (noPlayers(l.clone(), range)) return;
-                l.getWorld().spawnParticle(Particle.ANGRY_VILLAGER, l, 5, .5f, .5f, .5f, 0);
+                if (noPlayers(copy, range)) return;
+                world.spawnParticle(Particle.ANGRY_VILLAGER, copy, 5, .5f, .5f, .5f, 0);
             }
         }, 0, 10));
     }
     
-    public void playMobSpawner(final Location location, String id) {
-        locations.put(id, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-            Location l = location.add(.5, .1, .5);
+    public void playMobSpawner(final Location location, final String id) {
+        this.locations.put(id, this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
+            final Location copy = location.add(.5, .1, .5);
+            final World world = copy.getWorld();
             
             @Override
             public void run() {
-                if (noPlayers(l.clone(), range)) return;
-                l.getWorld().spawnParticle(Particle.FLAME, l, 15, .5f, .5f, .5f, 0);
+                if (noPlayers(copy, range)) return;
+                world.spawnParticle(Particle.FLAME, copy, 15, .5f, .5f, .5f, 0);
             }
         }, 0, 8));
     }
     
-    public void startWater(final Location location, String id) {
-        locations.put(id, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-            Location l = location.add(.5, .8, .6);
+    public void startWater(final Location location, final String id) {
+        this.locations.put(id, this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
+            final Location copy = location.add(.5, .8, .6);
+            final World world = copy.getWorld();
             
             @Override
             public void run() {
-                if (noPlayers(l.clone(), range)) return;
-                location.getWorld().spawnParticle(Particle.FALLING_WATER, l.clone().add(0, .1, 0), 10, 0, 0, 0, 0);
-                location.getWorld().spawnParticle(Particle.FALLING_WATER, l.clone().add(0, .5, 0), 10, 0, 0, 0, 0);
-                location.getWorld().spawnParticle(Particle.FALLING_WATER, l.clone().add(.2, .3, .2), 10, 0, 0, 0, 0);
-                location.getWorld().spawnParticle(Particle.FALLING_WATER, l.clone().add(-.2, .3, .2), 10, 0, 0, 0, 0);
-                location.getWorld().spawnParticle(Particle.FALLING_WATER, l.clone().add(.2, .3, -.2), 10, 0, 0, 0, 0);
-                location.getWorld().spawnParticle(Particle.FALLING_WATER, l.clone().add(-.2, .3, -.2), 10, 0, 0, 0, 0);
+                if (noPlayers(copy, range)) return;
+
+                world.spawnParticle(Particle.FALLING_WATER, copy.add(0, .1, 0), 10, 0, 0, 0, 0);
+                world.spawnParticle(Particle.FALLING_WATER, copy.add(0, .5, 0), 10, 0, 0, 0, 0);
+                world.spawnParticle(Particle.FALLING_WATER, copy.add(.2, .3, .2), 10, 0, 0, 0, 0);
+                world.spawnParticle(Particle.FALLING_WATER, copy.add(-.2, .3, .2), 10, 0, 0, 0, 0);
+                world.spawnParticle(Particle.FALLING_WATER, copy.add(.2, .3, -.2), 10, 0, 0, 0, 0);
+                world.spawnParticle(Particle.FALLING_WATER, copy.add(-.2, .3, -.2), 10, 0, 0, 0, 0);
             }
         }, 0, 2));
     }
     
-    public void playEnderSignal(final Location location, String id) {
-        locations.put(id, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-            Location l = location.add(.5, 0, .5);
+    public void playEnderSignal(final Location location, final String id) {
+        this.locations.put(id, this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
+            final Location copy = location.add(.5, 0, .5);
+            final World world = copy.getWorld();
             
             @Override
             public void run() {
-                if (noPlayers(l.clone(), range)) return;
-                location.getWorld().playEffect(l, Effect.ENDER_SIGNAL, 1);
-                location.getWorld().playEffect(l, Effect.ENDER_SIGNAL, 1);
-                location.getWorld().playEffect(l, Effect.ENDER_SIGNAL, 1);
-                location.getWorld().playEffect(l, Effect.ENDER_SIGNAL, 1);
+                if (noPlayers(copy, range)) return;
+                
+                world.playEffect(copy, Effect.ENDER_SIGNAL, 1);
+                world.playEffect(copy, Effect.ENDER_SIGNAL, 1);
+                world.playEffect(copy, Effect.ENDER_SIGNAL, 1);
+                world.playEffect(copy, Effect.ENDER_SIGNAL, 1);
             }
         }, 0, 8));
     }
     
-    public void playRainbow(final Location location, String id) {
-        locations.put(id, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-            Location l = location.add(.5, .1, .5);
+    public void playRainbow(final Location location, final String id) {
+        ThreadLocalRandom random = ThreadLocalRandom.current();
+
+        this.locations.put(id, this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
+            final Location copy = location.add(.5, .1, .5);
+            final World world = copy.getWorld();
             
             @Override
             public void run() {
-                if (noPlayers(l.clone(), range)) return;
+                if (noPlayers(copy, range)) return;
+
                 int r = random.nextInt(255);
                 int g = random.nextInt(255);
                 int b = random.nextInt(255);
+
                 Particle.DustOptions dustOptions = new Particle.DustOptions(Color.fromRGB(r, g, b), 1);
-                l.getWorld().spawnParticle(Particle.DUST, l, 10, .5f, .5f, .5f, 1, dustOptions);
+                world.spawnParticle(Particle.DUST, copy, 10, .5f, .5f, .5f, 1, dustOptions);
             }
         }, 0, 5));
     }
     
-    public void playSnowBlast(final Location location, String id) {
-        locations.put(id, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-            Location l = location.add(.5, .5, .5);
+    public void playSnowBlast(final Location location, final String id) {
+        this.locations.put(id, this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
+            final Location copy = location.add(.5, .5, .5);
+            final World world = copy.getWorld();
             
             @Override
             public void run() {
-                if (noPlayers(l.clone(), range)) return;
-                l.getWorld().spawnParticle(Particle.SNOWFLAKE, l, 40, 0, 0, 0, .2f);
+                if (noPlayers(copy, range)) return;
+                world.spawnParticle(Particle.SNOWFLAKE, copy, 40, 0, 0, 0, .2f);
             }
         }, 0, 2));
     }
     
-    public void playHalo(final Location location, String id) {
-        locations.put(id, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-            Location l = location.add(.5, 1.3, .5);
+    public void playHalo(final Location location, final String id) {
+        this.locations.put(id, this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
+            final Location copy = location.add(.5, 1.3, .5);
+            final World world = copy.getWorld();
             
             @Override
             public void run() {
-                if (noPlayers(l.clone(), range)) return;
+                if (noPlayers(copy, range)) return;
                 try {
                     for (int i = 0; i < 3; i++) {
-                        l.getWorld().spawnParticle(Particle.DUST, l.clone().add(.5, 0, 0), 1, 0, 0, 0, 1, new Particle.DustOptions(Color.fromRGB(255, 255, 0), 1));
-                        l.getWorld().spawnParticle(Particle.DUST, l.clone().add(.45, 0, .13), 1, 0, 0, 0, 1, new Particle.DustOptions(Color.fromRGB(255, 255, 0), 1));
-                        l.getWorld().spawnParticle(Particle.DUST, l.clone().add(.35, 0, .35), 1, 0, 0, 0, 1, new Particle.DustOptions(Color.fromRGB(255, 255, 0), 1));
-                        l.getWorld().spawnParticle(Particle.DUST, l.clone().add(.13, 0, .45), 1, 0, 0, 0, 1, new Particle.DustOptions(Color.fromRGB(255, 255, 0), 1));
-                        l.getWorld().spawnParticle(Particle.DUST, l.clone().add(0, 0, .5), 1, 0, 0, 0, 1, new Particle.DustOptions(Color.fromRGB(255, 255, 0), 1));
-                        l.getWorld().spawnParticle(Particle.DUST, l.clone().add(-.13, 0, .45), 1, 0, 0, 0, 1, new Particle.DustOptions(Color.fromRGB(255, 255, 0), 1));
-                        l.getWorld().spawnParticle(Particle.DUST, l.clone().add(-.35, 0, .35), 1, 0, 0, 0, 1, new Particle.DustOptions(Color.fromRGB(255, 255, 0), 1));
-                        l.getWorld().spawnParticle(Particle.DUST, l.clone().add(-.45, 0, .13), 1, 0, 0, 0, 1, new Particle.DustOptions(Color.fromRGB(255, 255, 0), 1));
-                        l.getWorld().spawnParticle(Particle.DUST, l.clone().add(-.5, 0, 0), 1, 0, 0, 0, 1, new Particle.DustOptions(Color.fromRGB(255, 255, 0), 1));
-                        l.getWorld().spawnParticle(Particle.DUST, l.clone().add(-.45, 0, -.13), 1, 0, 0, 0, 1, new Particle.DustOptions(Color.fromRGB(255, 255, 0), 1));
-                        l.getWorld().spawnParticle(Particle.DUST, l.clone().add(-.35, 0, -.35), 1, 0, 0, 0, 1, new Particle.DustOptions(Color.fromRGB(255, 255, 0), 1));
-                        l.getWorld().spawnParticle(Particle.DUST, l.clone().add(-.13, 0, -.45), 1, 0, 0, 0, 1, new Particle.DustOptions(Color.fromRGB(255, 255, 0), 1));
-                        l.getWorld().spawnParticle(Particle.DUST, l.clone().add(0, 0, -.5), 1, 0, 0, 0, 1, new Particle.DustOptions(Color.fromRGB(255, 255, 0), 1));
-                        l.getWorld().spawnParticle(Particle.DUST, l.clone().add(.13, 0, -.45), 1, 0, 0, 0, 1, new Particle.DustOptions(Color.fromRGB(255, 255, 0), 1));
-                        l.getWorld().spawnParticle(Particle.DUST, l.clone().add(.35, 0, -.35), 1, 0, 0, 0, 1, new Particle.DustOptions(Color.fromRGB(255, 255, 0), 1));
-                        l.getWorld().spawnParticle(Particle.DUST, l.clone().add(.45, 0, -.13), 1, 0, 0, 0, 1, new Particle.DustOptions(Color.fromRGB(255, 255, 0), 1));
+                        world.spawnParticle(Particle.DUST, copy.add(.5, 0, 0), 1, 0, 0, 0, 1, new Particle.DustOptions(Color.fromRGB(255, 255, 0), 1));
+                        world.spawnParticle(Particle.DUST, copy.add(.45, 0, .13), 1, 0, 0, 0, 1, new Particle.DustOptions(Color.fromRGB(255, 255, 0), 1));
+                        world.spawnParticle(Particle.DUST, copy.add(.35, 0, .35), 1, 0, 0, 0, 1, new Particle.DustOptions(Color.fromRGB(255, 255, 0), 1));
+                        world.spawnParticle(Particle.DUST, copy.add(.13, 0, .45), 1, 0, 0, 0, 1, new Particle.DustOptions(Color.fromRGB(255, 255, 0), 1));
+                        world.spawnParticle(Particle.DUST, copy.add(0, 0, .5), 1, 0, 0, 0, 1, new Particle.DustOptions(Color.fromRGB(255, 255, 0), 1));
+                        world.spawnParticle(Particle.DUST, copy.add(-.13, 0, .45), 1, 0, 0, 0, 1, new Particle.DustOptions(Color.fromRGB(255, 255, 0), 1));
+                        world.spawnParticle(Particle.DUST, copy.add(-.35, 0, .35), 1, 0, 0, 0, 1, new Particle.DustOptions(Color.fromRGB(255, 255, 0), 1));
+                        world.spawnParticle(Particle.DUST, copy.add(-.45, 0, .13), 1, 0, 0, 0, 1, new Particle.DustOptions(Color.fromRGB(255, 255, 0), 1));
+                        world.spawnParticle(Particle.DUST, copy.add(-.5, 0, 0), 1, 0, 0, 0, 1, new Particle.DustOptions(Color.fromRGB(255, 255, 0), 1));
+                        world.spawnParticle(Particle.DUST, copy.add(-.45, 0, -.13), 1, 0, 0, 0, 1, new Particle.DustOptions(Color.fromRGB(255, 255, 0), 1));
+                        world.spawnParticle(Particle.DUST, copy.add(-.35, 0, -.35), 1, 0, 0, 0, 1, new Particle.DustOptions(Color.fromRGB(255, 255, 0), 1));
+                        world.spawnParticle(Particle.DUST, copy.add(-.13, 0, -.45), 1, 0, 0, 0, 1, new Particle.DustOptions(Color.fromRGB(255, 255, 0), 1));
+                        world.spawnParticle(Particle.DUST, copy.add(0, 0, -.5), 1, 0, 0, 0, 1, new Particle.DustOptions(Color.fromRGB(255, 255, 0), 1));
+                        world.spawnParticle(Particle.DUST, copy.add(.13, 0, -.45), 1, 0, 0, 0, 1, new Particle.DustOptions(Color.fromRGB(255, 255, 0), 1));
+                        world.spawnParticle(Particle.DUST, copy.add(.35, 0, -.35), 1, 0, 0, 0, 1, new Particle.DustOptions(Color.fromRGB(255, 255, 0), 1));
+                        world.spawnParticle(Particle.DUST, copy.add(.45, 0, -.13), 1, 0, 0, 0, 1, new Particle.DustOptions(Color.fromRGB(255, 255, 0), 1));
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -639,49 +668,42 @@ public class Particles implements ParticleControl {
         }, 0, 5));
     }
     
-    public void playSantaHat(final Location location, String id) {
-        locations.put(id, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-            Location l1 = location.clone().add(.5, 1, .5);
-            Location l2 = l1.clone().add(0, .05, 0);
-            Location l3 = l2.clone().add(0, .05, 0);
-            Location l4 = l3.clone().add(0, .05, 0);
-            Location l5 = l4.clone().add(0, .05, 0);
-            Location l6 = l5.clone().add(0, .05, 0);
-            Location l7 = l6.clone().add(0, .05, 0);
-            Location l8 = l7.clone().add(0, .05, 0);
-            Location l9 = l8.clone().add(0, .05, 0);
-            Location l10 = l9.clone().add(0, .1, 0);
-            Location l11 = l10.clone().add(0, .05, 0);
-            
+    public void playSantaHat(final Location location, final String id) {
+        this.locations.put(id, this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
+            final Location l1 = location.clone().add(.5, 1, .5);
+            final Location l2 = l1.clone().add(0, .05, 0);
+            final Location l3 = l2.clone().add(0, .05, 0);
+            final Location l4 = l3.clone().add(0, .05, 0);
+            final Location l5 = l4.clone().add(0, .05, 0);
+            final Location l6 = l5.clone().add(0, .05, 0);
+            final Location l7 = l6.clone().add(0, .05, 0);
+            final Location l8 = l7.clone().add(0, .05, 0);
+            final Location l9 = l8.clone().add(0, .05, 0);
+            final Location l10 = l9.clone().add(0, .1, 0);
+            final Location l11 = l10.clone().add(0, .05, 0);
+
+            final World world = l1.getWorld();
+
             @Override
             public void run() {
-                if (noPlayers(l1.clone(), 20)) return;
+                if (noPlayers(l1, 20)) return;
+
                 try {
                     for (int i = 0; i < 3; i++) {
                         Color red = Color.RED;
                         Color white = Color.fromRGB(255, 255, 255);
-                        for (Location location : getCircle(l1, .5, 20))
-                            location.getWorld().spawnParticle(Particle.DUST, location, 1, 0, 0, 0, 0, new Particle.DustOptions(white, 1));
-                        for (Location location : getCircle(l2, .4, 15))
-                            location.getWorld().spawnParticle(Particle.DUST, location, 1, 0, 0, 0, 0, new Particle.DustOptions(red, 1));
-                        for (Location location : getCircle(l3, .35, 15))
-                            location.getWorld().spawnParticle(Particle.DUST, location, 1, 0, 0, 0, 0, new Particle.DustOptions(red, 1));
-                        for (Location location : getCircle(l4, .3, 15))
-                            location.getWorld().spawnParticle(Particle.DUST, location, 1, 0, 0, 0, 0, new Particle.DustOptions(red, 1));
-                        for (Location location : getCircle(l5, .2, 15))
-                            location.getWorld().spawnParticle(Particle.DUST, location, 1, 0, 0, 0, 0, new Particle.DustOptions(red, 1));
-                        for (Location location : getCircle(l6, .15, 15))
-                            location.getWorld().spawnParticle(Particle.DUST, location, 1, 0, 0, 0, 0, new Particle.DustOptions(red, 1));
-                        for (Location location : getCircle(l7, .1, 15))
-                            location.getWorld().spawnParticle(Particle.DUST, location, 1, 0, 0, 0, 0, new Particle.DustOptions(red, 1));
-                        for (Location location : getCircle(l8, .05, 10))
-                            location.getWorld().spawnParticle(Particle.DUST, location, 1, 0, 0, 0, 0, new Particle.DustOptions(red, 1));
-                        for (Location location : getCircle(l9, .05, 10))
-                            location.getWorld().spawnParticle(Particle.DUST, location, 1, 0, 0, 0, 0, new Particle.DustOptions(red, 1));
-                        for (Location location : getCircle(l10, .05, 15))
-                            location.getWorld().spawnParticle(Particle.DUST, location, 1, 0, 0, 0, 0, new Particle.DustOptions(white, 1));
-                        for (Location location : getCircle(l11, .05, 15))
-                            location.getWorld().spawnParticle(Particle.DUST, location, 1, 0, 0, 0, 0, new Particle.DustOptions(white, 1));
+
+                        for (Location location : getCircle(l1, .5, 20)) world.spawnParticle(Particle.DUST, location, 1, 0, 0, 0, 0, new Particle.DustOptions(white, 1));
+                        for (Location location : getCircle(l2, .4, 15)) world.spawnParticle(Particle.DUST, location, 1, 0, 0, 0, 0, new Particle.DustOptions(red, 1));
+                        for (Location location : getCircle(l3, .35, 15)) world.spawnParticle(Particle.DUST, location, 1, 0, 0, 0, 0, new Particle.DustOptions(red, 1));
+                        for (Location location : getCircle(l4, .3, 15)) world.spawnParticle(Particle.DUST, location, 1, 0, 0, 0, 0, new Particle.DustOptions(red, 1));
+                        for (Location location : getCircle(l5, .2, 15)) world.spawnParticle(Particle.DUST, location, 1, 0, 0, 0, 0, new Particle.DustOptions(red, 1));
+                        for (Location location : getCircle(l6, .15, 15)) world.spawnParticle(Particle.DUST, location, 1, 0, 0, 0, 0, new Particle.DustOptions(red, 1));
+                        for (Location location : getCircle(l7, .1, 15)) world.spawnParticle(Particle.DUST, location, 1, 0, 0, 0, 0, new Particle.DustOptions(red, 1));
+                        for (Location location : getCircle(l8, .05, 10)) world.spawnParticle(Particle.DUST, location, 1, 0, 0, 0, 0, new Particle.DustOptions(red, 1));
+                        for (Location location : getCircle(l9, .05, 10)) world.spawnParticle(Particle.DUST, location, 1, 0, 0, 0, 0, new Particle.DustOptions(red, 1));
+                        for (Location location : getCircle(l10, .05, 15)) world.spawnParticle(Particle.DUST, location, 1, 0, 0, 0, 0, new Particle.DustOptions(white, 1));
+                        for (Location location : getCircle(l11, .05, 15)) world.spawnParticle(Particle.DUST, location, 1, 0, 0, 0, 0, new Particle.DustOptions(white, 1));
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -691,30 +713,38 @@ public class Particles implements ParticleControl {
     }
     
     public void playSoulWell(final Location location, final String id) {
-        final HashMap<Integer, Integer> S = new HashMap<>();
-        locations.put(id, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-            Location l = location.clone().add(.5, 0, .5);
+        final Map<Integer, Integer> keys = new HashMap<>();
+
+        this.locations.put(id, this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
+            final Location copy = location.clone().add(.5, 0, .5);
             
             void startSoulWell(final Location location, final String id) {
-                final int num = random.nextInt(Integer.MAX_VALUE);
-                S.put(num, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-                    Location height = location.clone();
+                final int num = ThreadLocalRandom.current().nextInt(Integer.MAX_VALUE);
+
+                keys.put(num, plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
+                    final Location height = location.clone();
+                    final World world = height.getWorld();
+
                     int loc = 0;
                     int lifeSpan = 0;
                     
                     @Override
                     public void run() {
-                        ArrayList<Location> locs = getCircle(height, 2, 50);
-                        ArrayList<Location> locs2 = getCircleReverse(height, 2, 50);
-                        height.getWorld().spawnParticle(Particle.WITCH, locs.get(loc), 1, 0, 0, 0, 0);
-                        height.getWorld().spawnParticle(Particle.WITCH, locs2.get(loc), 1, 0, 0, 0, 0);
+                        List<Location> locs = getCircle(height, 2, 50);
+                        List<Location> locs2 = getCircleReverse(height, 2, 50);
+
+                        world.spawnParticle(Particle.WITCH, locs.get(loc), 1, 0, 0, 0, 0);
+                        world.spawnParticle(Particle.WITCH, locs2.get(loc), 1, 0, 0, 0, 0);
+
                         loc++;
                         lifeSpan++;
+
                         height.add(0, .035, 0);
+
                         if (loc == 50) loc = 0;
                         if (lifeSpan == 75) {
-                            Bukkit.getScheduler().cancelTask(S.get(num));
-                            S.remove(num);
+                            plugin.getServer().getScheduler().cancelTask(keys.get(num));
+                            keys.remove(num);
                         }
                     }
                 }, 0, 1));
@@ -722,37 +752,44 @@ public class Particles implements ParticleControl {
             
             @Override
             public void run() {
-                if (noPlayers(l.clone(), range)) return;
-                startSoulWell(l, id);
+                if (noPlayers(copy, range)) return;
+
+                startSoulWell(copy, id);
             }
         }, 0, 16));
     }
     
     public void playBigSoulWell(final Location location, final String id) {
-        final HashMap<Integer, Integer> S = new HashMap<>();
-        locations.put(id, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-            Location l = location.clone().add(.5, 0, .5);
+        final Map<Integer, Integer> keys = new HashMap<>();
+
+        this.locations.put(id, plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
+            final Location copy = location.clone().add(.5, 0, .5);
             
             void startBigSoulWell(final Location location, final String id) {
-                final int num = random.nextInt(Integer.MAX_VALUE);
-                S.put(num, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-                    Location height = location.clone();
+                final int num = ThreadLocalRandom.current().nextInt(Integer.MAX_VALUE);
+                keys.put(num, plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
+                    final Location height = location.clone();
+                    final World world = height.getWorld();
                     int loc = 0;
                     int lifeSpan = 0;
                     
                     @Override
                     public void run() {
-                        ArrayList<Location> locs = getCircle(height, 3.5, 75);
-                        ArrayList<Location> locs2 = getCircleReverse(height, 3.5, 75);
-                        height.getWorld().spawnParticle(Particle.WITCH, locs.get(loc), 1, 0, 0, 0, 0);
-                        height.getWorld().spawnParticle(Particle.WITCH, locs2.get(loc), 1, 0, 0, 0, 0);
+                        List<Location> locs = getCircle(height, 3.5, 75);
+                        List<Location> locs2 = getCircleReverse(height, 3.5, 75);
+
+                        world.spawnParticle(Particle.WITCH, locs.get(loc), 1, 0, 0, 0, 0);
+                        world.spawnParticle(Particle.WITCH, locs2.get(loc), 1, 0, 0, 0, 0);
                         loc++;
                         lifeSpan++;
+
                         height.add(0, .04, 0);
+
                         if (loc == 75) loc = 0;
+
                         if (lifeSpan == 105) {
-                            Bukkit.getScheduler().cancelTask(S.get(num));
-                            S.remove(num);
+                            plugin.getServer().getScheduler().cancelTask(keys.get(num));
+                            keys.remove(num);
                         }
                     }
                 }, 0, 1));
@@ -760,21 +797,25 @@ public class Particles implements ParticleControl {
             
             @Override
             public void run() {
-                if (noPlayers(l.clone(), range)) return;
-                startBigSoulWell(l, id);
+                if (noPlayers(copy, range)) return;
+
+                startBigSoulWell(copy, id);
             }
         }, 0, 25));
     }
     
     public void playFlameWheel(final Location location, final String id) {
-        final HashMap<Integer, Integer> S = new HashMap<>();
-        locations.put(id, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-            Location l = location.clone().add(.5, .1, .5);
+        final HashMap<Integer, Integer> keys = new HashMap<>();
+
+        this.locations.put(id, this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
+            final Location copy = location.clone().add(.5, .1, .5);
             
             void startFlameWheel(final Location location, final String id) {
-                final int num = random.nextInt(Integer.MAX_VALUE);
-                S.put(num, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-                    Location l = location.clone();
+                final int num = ThreadLocalRandom.current().nextInt(Integer.MAX_VALUE);
+
+                keys.put(num, plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
+                    final Location copy = location.clone();
+                    final World world = copy.getWorld();
                     int i = 0;
                     int o = 74;
                     int f = 0;
@@ -782,38 +823,40 @@ public class Particles implements ParticleControl {
                     
                     @Override
                     public void run() {
-                        ArrayList<Location> locs = getCircle(l, 3.5, 75);
-                        ArrayList<Location> locs2 = getCircleReverse(l, 3.5, 75);
+                        List<Location> locs = getCircle(copy, 3.5, 75);
+                        List<Location> locs2 = getCircleReverse(copy, 3.5, 75);
                         float speed = (float) .15;
-                        Vector v = locs.get(i).toVector().subtract(l.toVector()).normalize();
-                        Vector v2 = locs2.get(i).toVector().subtract(l.toVector()).normalize();
-                        Vector v3 = locs.get(o).toVector().subtract(l.toVector()).normalize();
-                        Vector v4 = locs2.get(o).toVector().subtract(l.toVector()).normalize();
+
+                        Vector v = locs.get(i).toVector().subtract(copy.toVector()).normalize();
+                        Vector v2 = locs2.get(i).toVector().subtract(copy.toVector()).normalize();
+                        Vector v3 = locs.get(o).toVector().subtract(copy.toVector()).normalize();
+                        Vector v4 = locs2.get(o).toVector().subtract(copy.toVector()).normalize();
+
                         //Makes the ring around the edge
                         if (ringTimer == 10) {
                             for (Location i : locs) {
-                                l.getWorld().spawnParticle(Particle.FLAME, i, 0);
+                                world.spawnParticle(Particle.FLAME, i, 0);
                             }
                         }
-                        //Throws the fire inwords.
-                        l.getWorld().spawnParticle(Particle.FLAME, locs.get(i), 0, -v.getX(), 0, -v.getZ(), speed);
-                        l.getWorld().spawnParticle(Particle.FLAME, locs2.get(i), 0, -v2.getX(), 0, -v2.getZ(), speed);
-                        l.getWorld().spawnParticle(Particle.FLAME, locs.get(o), 0, -v3.getX(), 0, -v3.getZ(), speed);
-                        l.getWorld().spawnParticle(Particle.FLAME, locs2.get(o), 0, -v4.getX(), 0, -v4.getZ(), speed);
-                        /*ParticleEffect.FLAME.display(v.multiply(-2), speed, locs.get(i), 100);
-                        ParticleEffect.FLAME.display(v2.multiply(-2), speed, locs2.get(i), 100);
-                        ParticleEffect.FLAME.display(v3.multiply(-2), speed, locs.get(o), 100);
-                        ParticleEffect.FLAME.display(v4.multiply(-2), speed, locs2.get(o), 100);*/
+
+                        world.spawnParticle(Particle.FLAME, locs.get(i), 0, -v.getX(), 0, -v.getZ(), speed);
+                        world.spawnParticle(Particle.FLAME, locs2.get(i), 0, -v2.getX(), 0, -v2.getZ(), speed);
+                        world.spawnParticle(Particle.FLAME, locs.get(o), 0, -v3.getX(), 0, -v3.getZ(), speed);
+                        world.spawnParticle(Particle.FLAME, locs2.get(o), 0, -v4.getX(), 0, -v4.getZ(), speed);
+
                         i++;
                         f++;
                         o--;
+
                         ringTimer++;
+
                         if (ringTimer == 11) ringTimer = 0;
                         if (i == 75) i = 0;
                         if (o == 0) o = 74;
                         if (f == 105) {
-                            Bukkit.getScheduler().cancelTask(S.get(num));
-                            S.remove(num);
+                            plugin.getServer().getScheduler().cancelTask(keys.get(num));
+
+                            keys.remove(num);
                         }
                     }
                 }, 0, 1));
@@ -821,42 +864,50 @@ public class Particles implements ParticleControl {
             
             @Override
             public void run() {
-                if (noPlayers(l.clone(), range)) return;
-                startFlameWheel(l.clone(), id);
+                if (noPlayers(copy, range)) return;
+
+                startFlameWheel(copy, id);
             }
         }, 0, 25));
     }
     
     public void playWitchTornado(final Location location, final String id) {
-        final HashMap<Integer, Integer> S = new HashMap<>();
-        locations.put(id, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-            Location l = location.clone().add(.5, 0, .5);
+        final HashMap<Integer, Integer> keys = new HashMap<>();
+
+        this.locations.put(id, this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
+            final Location copy = location.clone().add(.5, 0, .5);
             
             void startWitchTornado(final Location location, final String id) {
-                final int num = random.nextInt(Integer.MAX_VALUE);
-                S.put(num, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-                    Location height = location.clone().add(0, 5, 0);
+                final int num = ThreadLocalRandom.current().nextInt(Integer.MAX_VALUE);
+                keys.put(num, plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
+                    final Location height = location.clone().add(0, 5, 0);
+                    final World world = height.getWorld();
+
                     int nextLocation = 0;
-                    int diamaterSwitch = 0;
+                    int diameterSwitch = 0;
                     double radius = 1.5;
                     int lifeSpan = 0;
                     
                     @Override
                     public void run() {
-                        ArrayList<Location> locs = getCircle(height, radius, 50);
-                        height.getWorld().spawnParticle(Particle.WITCH, locs.get(nextLocation), 0, 0, 0, 0, 1);
+                        List<Location> locs = getCircle(height, radius, 50);
+                        world.spawnParticle(Particle.WITCH, locs.get(nextLocation), 0, 0, 0, 0, 1);
+
                         nextLocation++;
-                        diamaterSwitch++;
+                        diameterSwitch++;
                         lifeSpan++;
+
                         if (nextLocation == 50) nextLocation = 0;
                         height.add(0, -.02, 0); //Controls how far each particle goes Down.
-                        if (diamaterSwitch == 7) { //Controls when diameter Changes.
-                            diamaterSwitch = 0;
+
+                        if (diameterSwitch == 7) { //Controls when diameter Changes.
+                            diameterSwitch = 0;
                             radius = radius - .05; //Controls how far it goes in.
                         }
+
                         if (lifeSpan == 207) { //Controls how far the particle effect go down.
-                            Bukkit.getScheduler().cancelTask(S.get(num));
-                            S.remove(num);
+                            plugin.getServer().getScheduler().cancelTask(keys.get(num));
+                            keys.remove(num);
                         }
                     }
                 }, 0, 1));
@@ -864,21 +915,25 @@ public class Particles implements ParticleControl {
             
             @Override
             public void run() {
-                if (noPlayers(l.clone(), range)) return;
-                startWitchTornado(l, id);
+                if (noPlayers(copy, range)) return;
+                
+                startWitchTornado(copy, id);
             }
         }, 0, 30));
     }
     
     public void playLoveTornado(final Location location, final String id) {
-        final HashMap<Integer, Integer> S = new HashMap<>();
-        locations.put(id, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-            Location l = location.clone().add(.5, 0, .5);
+        final Map<Integer, Integer> keys = new HashMap<>();
+        
+        this.locations.put(id, this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
+            final Location copy = location.clone().add(.5, 0, .5);
             
             void startLoveTornado(final Location location, final String id) {
-                final int num = random.nextInt(Integer.MAX_VALUE);
-                S.put(num, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-                    Location height = location.clone().add(0, 5, 0);
+                final int num = ThreadLocalRandom.current().nextInt(Integer.MAX_VALUE);
+                
+                keys.put(num, plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
+                    final Location height = location.clone().add(0, 5, 0);
+                    final World world = height.getWorld();
                     int diameterShrink = 0;
                     double radius = 1.5;
                     int lifeSpan = 0;
@@ -886,20 +941,25 @@ public class Particles implements ParticleControl {
                     
                     @Override
                     public void run() {
-                        ArrayList<Location> locs = getCircle(height, radius, 50);
-                        height.getWorld().spawnParticle(Particle.HEART, locs.get(nextLocation), 0, 0, 0, 0, 1);
+                        List<Location> locs = getCircle(height, radius, 50);
+                        world.spawnParticle(Particle.HEART, locs.get(nextLocation), 0, 0, 0, 0, 1);
+                        
                         diameterShrink++;
                         lifeSpan++;
                         nextLocation++;
+                        
                         if (nextLocation == 50) nextLocation = 0; //Controls the next x & z locations.
+                        
                         height.add(0, -.02, 0); //Controls how far each particle goes Down.
                         if (diameterShrink == 7) { //Controls when diameter Changes.
                             diameterShrink = 0;
                             radius = radius - .05; //Controls how far it goes in.
                         }
+                        
                         if (lifeSpan == 207) { //Controls how far the particle effect go down.
-                            Bukkit.getScheduler().cancelTask(S.get(num));
-                            S.remove(num);
+                            plugin.getServer().getScheduler().cancelTask(keys.get(num));
+
+                            keys.remove(num);
                         }
                     }
                 }, 0, 1));
@@ -907,37 +967,46 @@ public class Particles implements ParticleControl {
             
             @Override
             public void run() {
-                if (noPlayers(l.clone(), range)) return;
-                startLoveTornado(l, id);
+                if (noPlayers(copy, range)) return;
+
+                startLoveTornado(copy, id);
             }
         }, 0, 30));
     }
     
     public void playBigLoveWell(final Location location, final String id) {
-        final HashMap<Integer, Integer> S = new HashMap<>();
-        locations.put(id, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-            Location l = location.clone().add(.5, 0, .5);
+        final HashMap<Integer, Integer> keys = new HashMap<>();
+
+        this.locations.put(id, this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(this.plugin, new Runnable() {
+            final Location copy = location.clone().add(.5, 0, .5);
             
             void startBigLoveWell(final Location location, final String id) {
-                final int num = random.nextInt(Integer.MAX_VALUE);
-                S.put(num, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-                    Location height = location.clone();
+                final int num = ThreadLocalRandom.current().nextInt(Integer.MAX_VALUE);
+
+                keys.put(num, plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
+                    final Location height = location.clone();
+                    final World world = height.getWorld();
+
                     int loc = 0;
                     int lifeSpan = 0;
                     
                     @Override
                     public void run() {
-                        ArrayList<Location> locs = getCircle(height, 3.5, 75);
-                        ArrayList<Location> locs2 = getCircleReverse(height, 3.5, 75);
-                        height.getWorld().spawnParticle(Particle.HEART, locs.get(loc), 1, 0, 0, 0, 0);
-                        height.getWorld().spawnParticle(Particle.HEART, locs2.get(loc), 1, 0, 0, 0, 0);
+                        List<Location> locs = getCircle(height, 3.5, 75);
+                        List<Location> locs2 = getCircleReverse(height, 3.5, 75);
+
+                        world.spawnParticle(Particle.HEART, locs.get(loc), 1, 0, 0, 0, 0);
+                        world.spawnParticle(Particle.HEART, locs2.get(loc), 1, 0, 0, 0, 0);
                         loc++;
                         lifeSpan++;
+
                         height.add(0, .04, 0);
+
                         if (loc == 75) loc = 0;
+
                         if (lifeSpan == 105) {
-                            Bukkit.getScheduler().cancelTask(S.get(num));
-                            S.remove(num);
+                            plugin.getServer().getScheduler().cancelTask(keys.get(num));
+                            keys.remove(num);
                         }
                     }
                 }, 0, 1));
@@ -945,37 +1014,45 @@ public class Particles implements ParticleControl {
             
             @Override
             public void run() {
-                if (noPlayers(l.clone(), range)) return;
-                startBigLoveWell(l, id);
+                if (noPlayers(copy, range)) return;
+
+                startBigLoveWell(copy, id);
             }
         }, 0, 25));
     }
     
     public void playLoveWell(final Location location, final String id) {
-        final HashMap<Integer, Integer> S = new HashMap<>();
-        locations.put(id, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-            Location l = location.clone().add(.5, 0, .5);
+        final HashMap<Integer, Integer> keys = new HashMap<>();
+
+        this.locations.put(id, this.plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
+            final Location copy = location.clone().add(.5, 0, .5);
             
             void startLoveWell(final Location location, final String id) {
-                final int num = random.nextInt(Integer.MAX_VALUE);
-                S.put(num, Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-                    Location height = location.clone();
+                final int num = ThreadLocalRandom.current().nextInt(Integer.MAX_VALUE);
+
+                keys.put(num, plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
+                    final Location height = location.clone();
+                    final World world = height.getWorld();
                     int loc = 0;
                     int lifeSpan = 0;
                     
                     @Override
                     public void run() {
-                        ArrayList<Location> locs = getCircle(height, 2, 50);
-                        ArrayList<Location> locs2 = getCircleReverse(height, 2, 50);
-                        height.getWorld().spawnParticle(Particle.HEART, locs.get(loc), 1, 0, 0, 0, 0);
-                        height.getWorld().spawnParticle(Particle.HEART, locs2.get(loc), 1, 0, 0, 0, 0);
+                        List<Location> locs = getCircle(height, 2, 50);
+                        List<Location> locs2 = getCircleReverse(height, 2, 50);
+
+                        world.spawnParticle(Particle.HEART, locs.get(loc), 1, 0, 0, 0, 0);
+                        world.spawnParticle(Particle.HEART, locs2.get(loc), 1, 0, 0, 0, 0);
                         loc++;
                         lifeSpan++;
+
                         height.add(0, .035, 0);
+
                         if (loc == 50) loc = 0;
+
                         if (lifeSpan == 75) {
-                            Bukkit.getScheduler().cancelTask(S.get(num));
-                            S.remove(num);
+                            plugin.getServer().getScheduler().cancelTask(keys.get(num));
+                            keys.remove(num);
                         }
                     }
                 }, 0, 1));
@@ -983,66 +1060,74 @@ public class Particles implements ParticleControl {
             
             @Override
             public void run() {
-                if (noPlayers(l.clone(), range)) return;
-                startLoveWell(l, id);
+                if (noPlayers(copy, range)) return;
+
+                startLoveWell(copy, id);
             }
         }, 0, 16));
     }
     
-    private ArrayList<Location> getCircle(Location center, double radius, int amount) {
-        World world = center.getWorld();
-        double increment = (2 * Math.PI) / amount;
-        ArrayList<Location> locations = new ArrayList<>();
+    private List<Location> getCircle(final Location center, final double radius, final int amount) {
+        final World world = center.getWorld();
+        final double increment = (2 * Math.PI) / amount;
+
+        List<Location> locations = new ArrayList<>();
+
         for (int i = 0; i < amount; i++) {
-            double angle = i * increment;
-            double x = center.getX() + (radius * Math.cos(angle));
-            double z = center.getZ() + (radius * Math.sin(angle));
+            final double angle = i * increment;
+            final double x = center.getX() + (radius * Math.cos(angle));
+            final double z = center.getZ() + (radius * Math.sin(angle));
+
             locations.add(new Location(world, x, center.getY(), z));
         }
+
         return locations;
     }
     
-    private ArrayList<Location> getCircleReverse(Location center, double radius, int amount) {
-        World world = center.getWorld();
-        double increment = (2 * Math.PI) / amount;
-        ArrayList<Location> locations = new ArrayList<>();
+    private List<Location> getCircleReverse(final Location center, final double radius, final int amount) {
+        final World world = center.getWorld();
+
+        final double increment = (2 * Math.PI) / amount;
+        final List<Location> locations = new ArrayList<>();
+
         for (int i = 0; i < amount; i++) {
-            double angle = i * increment;
-            double x = center.getX() - (radius * Math.cos(angle));
-            double z = center.getZ() - (radius * Math.sin(angle));
+            final double angle = i * increment;
+            final double x = center.getX() - (radius * Math.cos(angle));
+            final double z = center.getZ() - (radius * Math.sin(angle));
+
             locations.add(new Location(world, x, center.getY(), z));
         }
+
         return locations;
     }
     
-    private Collection<Entity> getNearbyEntities(Location location, double x, double y, double z) {
+    private Collection<Entity> getNearbyEntities(final Location location, final double x, final double y, final double z) {
         try {
             return location.getWorld().getNearbyEntities(location, x, y, z);
-        } catch (Exception ignored) {
-        }
+        } catch (Exception ignored) {}
+
         return new ArrayList<>();
     }
     
-    private boolean noPlayers(Location location, int range) {
+    private boolean noPlayers(final Location location, final int range) {
         try {
             Collection<Entity> out = getNearbyEntities(location, range, range, range);
+
             if (!out.isEmpty()) {
                 for (Entity e : out) {
-                    if (e instanceof LivingEntity) {
-                        LivingEntity en = (LivingEntity) e;
+                    if (e instanceof LivingEntity en) {
                         if (en instanceof Player) {
                             return false;
                         }
                     }
                 }
             }
-        } catch (Exception ignored) {
-        }
+        } catch (Exception ignored) {}
+
         return true;
     }
     
     private int randomColor() {
-        return random.nextInt(255);
+        return ThreadLocalRandom.current().nextInt(255);
     }
-    
 }

@@ -1,7 +1,9 @@
-package com.badbones69.blockparticles.api.enums;
+package com.badbones69.blockparticles.api.enums.fountains;
 
+import com.badbones69.blockparticles.BlockParticles;
 import com.badbones69.blockparticles.api.objects.CustomFountain;
 import com.badbones69.blockparticles.api.ParticleManager;
+import org.bukkit.plugin.java.JavaPlugin;
 
 public enum BPFountains {
     
@@ -15,12 +17,12 @@ public enum BPFountains {
     PRESENTS(),
     CUSTOM();
     
-    private static ParticleManager bp = ParticleManager.getInstance();
+    private static final ParticleManager particleManager = JavaPlugin.getPlugin(BlockParticles.class).getParticleManager();
     
-    public static BPFountains getFromName(String name) {
-        for (BPFountains fountain : values()) {
+    public static BPFountains getFromName(final String name) {
+        for (final BPFountains fountain : values()) {
             if (fountain == CUSTOM) {
-                for (CustomFountain customFountain : bp.getCustomFountains()) {
+                for (final CustomFountain customFountain : particleManager.getCustomFountains()) {
                     if (customFountain.getName().equalsIgnoreCase(name.replace(" ", ""))) {
                         return CUSTOM;
                     }
@@ -29,7 +31,7 @@ public enum BPFountains {
                 return fountain;
             }
         }
+
         return null;
     }
-    
 }

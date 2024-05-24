@@ -1,12 +1,12 @@
-package com.badbones69.blockparticles.api.enums;
+package com.badbones69.blockparticles.api.enums.particles;
 
 public enum ParticleType {
     
     PARTICLE("Particle"), FOUNTAIN("Fountain");
     
-    private String name;
+    private final String name;
     
-    private ParticleType(String name) {
+    ParticleType(final String name) {
         this.name = name;
     }
     
@@ -14,8 +14,7 @@ public enum ParticleType {
         return ParticleType.values();
     }
     
-    public String getName() {
-        return name;
+    public final String getName() {
+        return this.name;
     }
-    
 }

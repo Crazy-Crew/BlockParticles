@@ -5,48 +5,47 @@ import org.bukkit.Location;
 
 public class Particle {
     
-    private String id;
-    private String world;
-    private int x, y, z;
-    private String particleTypeName;
-    private Location location;
+    private final String id;
+    private final String world;
+    private final int x, y, z;
+    private final String particleTypeName;
+    private final Location location;
     
-    public Particle(String id, String world, int x, int y, int z, String particleTypeName) {
+    public Particle(final String id, final String world, final int x, final int y, final int z, final String particleTypeName) {
         this.id = id;
         this.world = world;
         this.x = x;
         this.y = y;
         this.z = z;
         this.particleTypeName = particleTypeName;
-        location = new Location(Bukkit.getWorld(world), x, y, z);
+        this.location = new Location(Bukkit.getWorld(world), x, y, z);
     }
     
-    public String getID() {
-        return id;
+    public final String getID() {
+        return this.id;
     }
     
-    public String getWorld() {
-        return world;
+    public final String getWorld() {
+        return this.world;
     }
     
-    public int getX() {
-        return x;
+    public final int getX() {
+        return this.x;
     }
     
-    public int getY() {
-        return y;
+    public final int getY() {
+        return this.y;
     }
     
-    public int getZ() {
-        return z;
+    public final int getZ() {
+        return this.z;
     }
     
-    public String getParticleTypeName() {
-        return particleTypeName;
+    public final String getParticleTypeName() {
+        return this.particleTypeName;
     }
     
-    public Location getLocation() {
-        return location;
+    public final Location getLocation() {
+        return this.location;
     }
-    
 }

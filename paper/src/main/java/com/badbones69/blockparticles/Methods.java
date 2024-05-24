@@ -1,16 +1,20 @@
 package com.badbones69.blockparticles;
 
-import com.badbones69.blockparticles.api.enums.BPFountains;
-import com.badbones69.blockparticles.api.enums.BPParticles;
-import com.badbones69.blockparticles.api.enums.Particles;
-import com.badbones69.blockparticles.api.objects.ItemBuilder;
-import com.badbones69.blockparticles.controllers.Fountains;
-import com.badbones69.blockparticles.api.FileManager.Files;
 import com.badbones69.blockparticles.api.ParticleManager;
+import com.badbones69.blockparticles.api.enums.Messages;
+import com.badbones69.blockparticles.api.enums.fountains.BPFountains;
+import com.badbones69.blockparticles.api.enums.particles.BPParticles;
+import com.badbones69.blockparticles.api.enums.CustomFiles;
+import com.badbones69.blockparticles.api.enums.particles.Particles;
+import com.badbones69.blockparticles.config.ConfigManager;
+import com.badbones69.blockparticles.config.impl.ConfigKeys;
+import com.badbones69.blockparticles.controllers.Fountains;
+import com.badbones69.blockparticles.controllers.ParticleControl;
+import com.ryderbelserion.vital.core.config.YamlFile;
+import com.ryderbelserion.vital.paper.builders.items.ItemBuilder;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.LivingEntity;
@@ -18,23 +22,20 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Random;
 
 public class Methods implements Listener {
+
+    private static final BlockParticles plugin = JavaPlugin.getPlugin(BlockParticles.class);
+
+    private static final ParticleManager particleManager = plugin.getParticleManager();
     
-    public static HashMap<Location, Location> Locations = new HashMap<>();
-    private static ParticleManager bp = ParticleManager.getInstance();
-    
-    public static String color(String message) {
-        return ChatColor.translateAlternateColorCodes('&', message);
-    }
-    
-    public static String removeColor(String msg) {
-        return ChatColor.stripColor(msg);
-    }
+    private static final ParticleControl particleControl = plugin.getParticleControl();
     
     public static void reset() {
         kill();
@@ -44,8 +45,8 @@ public class Methods implements Listener {
     private static Collection<Entity> getNearbyEntities(Location loc, double x, double y, double z) {
         try {
             return loc.getWorld().getNearbyEntities(loc, x, y, z);
-        } catch (Exception ignored) {
-        }
+        } catch (Exception ignored) {}
+
         return new ArrayList<>();
     }
     
@@ -54,50 +55,53 @@ public class Methods implements Listener {
             Collection<Entity> out = getNearbyEntities(loc, range, range, range);
             if (!out.isEmpty()) {
                 for (Entity e : out) {
-                    if (e instanceof LivingEntity) {
-                        LivingEntity en = (LivingEntity) e;
+                    if (e instanceof LivingEntity en) {
                         if (en instanceof Player) {
                             return false;
                         }
                     }
                 }
             }
-        } catch (Exception ignored) {
-        }
+        } catch (Exception ignored) {}
+
         return true;
     }
     
     public static ArrayList<String> getLocations() {
-        if (Files.DATA.getFile().contains("locations")) {
-            return new ArrayList<>(Files.DATA.getFile().getConfigurationSection("locations").getKeys(false));
-        } else {
-            return new ArrayList<>();
-        }
+        CustomFiles file = CustomFiles.data;
+        YamlFile data = file.getYamlFile();
+        
+        return data.contains("locations") ? new ArrayList<>(data.getConfigurationSection("locations").getKeys(false)) : new ArrayList<>();
     }
     
     public static void kill() {
-        bp.getParticleControl().getLocations().clear();
-        for (World w : Bukkit.getServer().getWorlds()) {
+        particleControl.getLocations().clear();
+
+        for (World w : plugin.getServer().getWorlds()) {
             for (Entity e : w.getEntities()) {
-                if (e instanceof Item) {
-                    Item item = (Item) e;
-                    if (bp.getFountainItem().contains(item)) {
+                if (e instanceof Item item) {
+                    if (particleManager.getFountainItem().contains(item)) {
                         item.remove();
                     }
                 }
             }
         }
-        bp.getFountainItem().clear();
-        Bukkit.getScheduler().cancelTasks(ParticleManager.getInstance().getPlugin());
+
+        particleManager.getFountainItem().clear();
+        
+        plugin.getServer().getScheduler().cancelTasks(plugin);
     }
     
     public static void startParticles() {
-        FileConfiguration data = Files.DATA.getFile();
+        CustomFiles file = CustomFiles.data;
+        YamlFile data = file.getYamlFile();
+        
         if (data.contains("locations")) {
             for (final String id : data.getConfigurationSection("locations").getKeys(false)) {
-                World world = Bukkit.getServer().getWorld(data.getString("locations." + id + ".world"));
+                World world = plugin.getServer().getWorld(data.getString("locations." + id + ".world"));
                 String particle = data.getString("locations." + id + ".particle");
                 final Location loc = new Location(world, data.getInt("locations." + id + ".x"), data.getInt("locations." + id + ".y"), data.getInt("locations." + id + ".z"));
+                
                 if (BPFountains.getFromName(particle) != null) {
                     switch (BPFountains.getFromName(particle)) {
                         case MARIO:
@@ -129,121 +133,122 @@ public class Methods implements Listener {
                             break;
                     }
                 }
+                
                 if (BPParticles.getFromName(particle) != null) {
                     switch (BPParticles.getFromName(particle)) {
                         case LOVEWELL:
-                            bp.getParticleControl().playLoveWell(loc, id);
+                            particleControl.playLoveWell(loc, id);
                             break;
                         case BIGLOVEWELL:
-                            bp.getParticleControl().playBigLoveWell(loc, id);
+                            particleControl.playBigLoveWell(loc, id);
                             break;
                         case LOVETORNADO:
-                            bp.getParticleControl().playLoveTornado(loc, id);
+                            particleControl.playLoveTornado(loc, id);
                             break;
                         case WITCHTORNADO:
-                            bp.getParticleControl().playWitchTornado(loc, id);
+                            particleControl.playWitchTornado(loc, id);
                             break;
                         case FLAMEWHEEL:
-                            bp.getParticleControl().playFlameWheel(loc, id);
+                            particleControl.playFlameWheel(loc, id);
                             break;
                         case SOULWELL:
-                            bp.getParticleControl().playSoulWell(loc, id);
+                            particleControl.playSoulWell(loc, id);
                             break;
                         case BIGSOULWELL:
-                            bp.getParticleControl().playBigSoulWell(loc, id);
+                            particleControl.playBigSoulWell(loc, id);
                             break;
                         case SANTAHAT:
-                            bp.getParticleControl().playSantaHat(loc, id);
+                            particleControl.playSantaHat(loc, id);
                             break;
                         case SNOWBLAST:
-                            bp.getParticleControl().playSnowBlast(loc, id);
+                            particleControl.playSnowBlast(loc, id);
                             break;
                         case RAINBOW:
-                            bp.getParticleControl().playRainbow(loc, id);
+                            particleControl.playRainbow(loc, id);
                             break;
                         case ENDERSIGNAL:
-                            bp.getParticleControl().playEnderSignal(loc, id);
+                            particleControl.playEnderSignal(loc, id);
                             break;
                         case MOBSPAWNER:
-                            bp.getParticleControl().playMobSpawner(loc, id);
+                            particleControl.playMobSpawner(loc, id);
                             break;
                         case ANGRYVILLAGER:
-                            bp.getParticleControl().playAngryVillager(loc, id);
+                            particleControl.playAngryVillager(loc, id);
                             break;
                         case HAPPYVILLAGER:
-                            bp.getParticleControl().playHappyVillager(loc, id);
+                            particleControl.playHappyVillager(loc, id);
                             break;
                         case FOOTPRINT:
-                            bp.getParticleControl().playFootPrint(loc, id);
+                            particleControl.playFootPrint(loc, id);
                             break;
                         case FIRESPEW:
-                            bp.getParticleControl().playFireSpew(loc, id);
+                            particleControl.playFireSpew(loc, id);
                             break;
                         case SNOWSTORM:
-                            bp.getParticleControl().playSnowStorm(loc, id);
+                            particleControl.playSnowStorm(loc, id);
                             break;
                         case DOUBLEWITCH:
-                            bp.getParticleControl().playDoubleSpiral(loc, id, com.badbones69.blockparticles.api.enums.Particles.DOUBLEWITCH, 5);
+                            particleControl.playDoubleSpiral(loc, id, Particles.DOUBLEWITCH, 5);
                             break;
                         case WITCH:
-                            bp.getParticleControl().playSpiral(loc, id, com.badbones69.blockparticles.api.enums.Particles.WITCH, 5);
+                            particleControl.playSpiral(loc, id, Particles.WITCH, 5);
                             break;
                         case MAGIC:
-                            bp.getParticleControl().playMagic(loc, id);
+                            particleControl.playMagic(loc, id);
                             break;
                         case SPEW:
-                            bp.getParticleControl().playSpew(loc, id);
+                            particleControl.playSpew(loc, id);
                             break;
                         case HALO:
-                            bp.getParticleControl().playHalo(loc, id);
+                            particleControl.playHalo(loc, id);
                             break;
                         case MUSIC:
-                            bp.getParticleControl().playMusic(loc, id);
+                            particleControl.playMusic(loc, id);
                             break;
                         case POTION:
-                            bp.getParticleControl().playPotion(loc, id);
+                            particleControl.playPotion(loc, id);
                             break;
                         case SNOW:
-                            bp.getParticleControl().playSnow(loc, id);
+                            particleControl.playSnow(loc, id);
                             break;
                         case FIRESTORM:
-                            bp.getParticleControl().playFireStorm(loc, id);
+                            particleControl.playFireStorm(loc, id);
                             break;
                         case WATER:
-                            bp.getParticleControl().startWater(loc, id);
+                            particleControl.startWater(loc, id);
                             break;
                         case CHAINS:
-                            bp.getParticleControl().playChains(loc, id);
+                            particleControl.playChains(loc, id);
                             break;
                         case ENCHANT:
-                            bp.getParticleControl().playEnchant(loc, id);
+                            particleControl.playEnchant(loc, id);
                             break;
                         case FOG:
-                            bp.getParticleControl().playFog(loc, id);
+                            particleControl.playFog(loc, id);
                             break;
                         case STORM:
-                            bp.getParticleControl().playStorm(loc, id);
+                            particleControl.playStorm(loc, id);
                             break;
                         case BIGFLAME:
-                            bp.getParticleControl().playBigFlame(loc, id);
+                            particleControl.playBigFlame(loc, id);
                             break;
                         case FLAME:
-                            bp.getParticleControl().playFlame(loc, id);
+                            particleControl.playFlame(loc, id);
                             break;
                         case VOLCANO:
-                            bp.getParticleControl().playVolcano(loc, id);
+                            particleControl.playVolcano(loc, id);
                             break;
                         case SPIRAL:
-                            bp.getParticleControl().playSpiral(loc, id, com.badbones69.blockparticles.api.enums.Particles.SPIRAL, 1);
+                            particleControl.playSpiral(loc, id, Particles.SPIRAL, 1);
                             break;
                         case DOUBLESPIRAL:
-                            bp.getParticleControl().playDoubleSpiral(loc, id, Particles.DOUBLESPIRAL, 5);
+                            particleControl.playDoubleSpiral(loc, id, Particles.DOUBLESPIRAL, 5);
                             break;
                         case CRIT:
-                            bp.getParticleControl().playCrit(loc, id);
+                            particleControl.playCrit(loc, id);
                             break;
                         case BIGCRIT:
-                            bp.getParticleControl().playBigCrit(loc, id);
+                            particleControl.playBigCrit(loc, id);
                             break;
                     }
                 }
@@ -252,134 +257,162 @@ public class Methods implements Listener {
     }
     
     public static void addLoc(Player player, String name) {
-        String Prefix = Files.CONFIG.getFile().getString("settings.prefix");
-        if (Files.DATA.getFile().contains("locations")) {
-            for (String loc : Files.DATA.getFile().getConfigurationSection("locations").getKeys(false)) {
+        CustomFiles file = CustomFiles.data;
+        YamlFile data = file.getYamlFile();
+
+        if (data.contains("locations")) {
+            for (String loc : data.getConfigurationSection("locations").getKeys(false)) {
                 if (loc.equalsIgnoreCase(name)) {
-                    player.sendMessage(color(Prefix + "&3That location name is taken please remove it and replace it here."));
+                    Messages.location_already_taken.sendMessage(player);
+
                     return;
                 }
             }
         }
+        
         Block block = player.getTargetBlock(null, 5);
+        
         if (block.isEmpty()) {
-            player.sendMessage(Methods.color(Prefix + "&cYou are not looking at a block."));
+            Messages.not_looking_at_block.sendMessage(player);
+            
             return;
         }
+        
         Location l = block.getLocation();
         String w = l.getWorld().getName();
         int x = l.getBlockX();
         int y = l.getBlockY();
         int z = l.getBlockZ();
-        Files.DATA.getFile().set("locations." + name + ".world", w);
-        Files.DATA.getFile().set("locations." + name + ".x", x);
-        Files.DATA.getFile().set("locations." + name + ".y", y);
-        Files.DATA.getFile().set("locations." + name + ".z", z);
-        Files.DATA.getFile().set("locations." + name + ".particle", "Spiral");
-        Files.DATA.saveFile();
+
+        data.set("locations." + name + ".world", w);
+        data.set("locations." + name + ".x", x);
+        data.set("locations." + name + ".y", y);
+        data.set("locations." + name + ".z", z);
+        data.set("locations." + name + ".particle", "Spiral");
+        
+        file.save();
+        
         kill();
         startParticles();
-        player.sendMessage(color(Prefix + "&3You have added &6" + name + " &3to the block."));
+
+        Messages.location_added.sendMessage(player, new HashMap<>() {{
+            put("{name}", name);
+        }});
     }
     
     public static void delLoc(CommandSender player, String name) {
-        String Prefix = Files.CONFIG.getFile().getString("settings.prefix");
-        if (Files.DATA.getFile().contains("locations")) {
-            for (String loc : Files.DATA.getFile().getConfigurationSection("locations").getKeys(false)) {
+        CustomFiles file = CustomFiles.data;
+        YamlFile data = file.getYamlFile();
+
+        if (data.contains("locations")) {
+            for (String loc : data.getConfigurationSection("locations").getKeys(false)) {
                 if (loc.equalsIgnoreCase(name)) {
-                    Files.DATA.getFile().set("locations." + loc, null);
-                    Files.DATA.saveFile();
-                    Bukkit.getScheduler().cancelTask(bp.getParticleControl().getLocations().get(loc));
-                    player.sendMessage(color(Prefix + "&3You have just deleted &6" + name + "&3."));
+                    data.set("locations." + loc, null);
+                    file.save();
+                    
+                    plugin.getServer().getScheduler().cancelTask(particleControl.getLocations().get(loc));
+
+                    Messages.location_deleted.sendMessage(player, new HashMap<>() {{
+                        put("{name}", name);
+                    }});
+                    
                     return;
                 }
             }
         }
-        player.sendMessage(color(Prefix + "&3There are no locations called &6" + name + "&3."));
+
+        Messages.location_does_not_exist.sendMessage(player, new HashMap<>() {{
+            put("{name}", name);
+        }});
     }
     
     public static void listLoc(Player player) {
-        String Prefix = Methods.color(Files.CONFIG.getFile().getString("settings.prefix"));
-        if (!Files.DATA.getFile().contains("locations")) {
-            player.sendMessage(Prefix + Methods.color("&cThere are no locations set!"));
+        CustomFiles file = CustomFiles.data;
+        YamlFile data = file.getYamlFile();
+        
+        String prefix = ConfigManager.getConfig().getProperty(ConfigKeys.command_prefix);
+        
+        if (!data.contains("locations") || data.getConfigurationSection("locations").getKeys(false).isEmpty()) {
+            Messages.location_empty.sendMessage(player);
+            
             return;
         }
-        if (Files.DATA.getFile().getConfigurationSection("locations").getKeys(false).isEmpty()) {
-            player.sendMessage(Prefix + Methods.color("&cThere are no locations set!"));
-            return;
-        }
+        
         String msg;
         String part;
         StringBuilder l = new StringBuilder();
         int line = 1;
-        for (String L : Files.DATA.getFile().getConfigurationSection("locations").getKeys(false)) {
-            if (Files.DATA.getFile().getConfigurationSection("locations." + L).getKeys(false).isEmpty()) {
-                Files.DATA.getFile().set("locations." + L, null);
-                Files.DATA.saveFile();
+
+        //todo() re-do storage
+        for (String L : data.getConfigurationSection("locations").getKeys(false)) {
+            if (data.getConfigurationSection("locations." + L).getKeys(false).isEmpty()) {
+                data.set("locations." + L, null);
+
+                file.save();
+                
                 continue;
             }
-            String W = Files.DATA.getFile().getString("locations." + L + ".world");
-            String X = Files.DATA.getFile().getString("locations." + L + ".x");
-            String Y = Files.DATA.getFile().getString("locations." + L + ".y");
-            String Z = Files.DATA.getFile().getString("locations." + L + ".z");
-            
-            part = Methods.color("&8[&6" + line + "&8]: " + "&c" + L + "&8, &c" + W + "&8, &c" + X + "&8, &c" + Y + "&8, &c" + Z);
+
+            String W = data.getString("locations." + L + ".world");
+            String X = data.getString("locations." + L + ".x");
+            String Y = data.getString("locations." + L + ".y");
+            String Z = data.getString("locations." + L + ".z");
+
+            //todo() add format for this?
+            part = "&8[&6" + line + "&8]: " + "&c" + L + "&8, &c" + W + "&8, &c" + X + "&8, &c" + Y + "&8, &c" + Z;
             l.append(part);
             l.append("\n");
             line++;
             
         }
+
         msg = l.toString();
         line = line - 1;
-        player.sendMessage(Prefix + Methods.color("&6A list of all the locations."));
-        player.sendMessage(Methods.color("&c[Locations Name]&8, &c[World]&8, &c[X]&8, &c[Y]&8, &c[Z]"));
+
+        //todo() add list message
+        player.sendMessage(prefix + "&6A list of all the locations.");
+        player.sendMessage("&c[Locations Name]&8, &c[World]&8, &c[X]&8, &c[Y]&8, &c[Z]");
         player.sendMessage(msg);
-        player.sendMessage(Methods.color("&3Number of locations: &6" + line));
-    }
-    
-    public static int randomColor() {
-        Random r = new Random();
-        return r.nextInt(255);
-    }
-    
-    public static ItemStack makeItem(Material material, int amount, String name) {
-        ItemStack item = new ItemStack(material, amount);
-        ItemMeta m = item.getItemMeta();
-        m.setDisplayName(color(name));
-        item.setItemMeta(m);
-        return item;
+        player.sendMessage("&3Number of locations: &6" + line);
     }
     
     public static void setLoc(CommandSender player, String name, String particle) {
-        String prefix = Files.CONFIG.getFile().getString("settings.prefix");
-        if (BPFountains.getFromName(particle) == null && BPParticles.getFromName(particle) == null && bp.getCustomFountain(particle) == null) {
-            player.sendMessage(color(prefix + "&6" + particle + " &cis not a particle. Please do /bp help for more information."));
+        CustomFiles file = CustomFiles.data;
+        YamlFile data = file.getYamlFile();
+
+        if (BPFountains.getFromName(particle) == null && BPParticles.getFromName(particle) == null && particleManager.getCustomFountain(particle) == null) {
+            Messages.not_a_particle.sendMessage(player, new HashMap<>() {{
+                put("{particle}", particle);
+            }});
+            
             return;
         }
-        if (Files.DATA.getFile().contains("locations")) {
-            for (String loc : Files.DATA.getFile().getConfigurationSection("locations").getKeys(false)) {
+
+        if (data.contains("locations")) {
+            for (String loc : data.getConfigurationSection("locations").getKeys(false)) {
                 if (loc.equalsIgnoreCase(name)) {
-                    Files.DATA.getFile().set("locations." + loc + ".particle", particle);
-                    Files.DATA.saveFile();
+                    data.set("locations." + loc + ".particle", particle);
+                    file.save();
+                    
                     kill();
                     startParticles();
-                    player.sendMessage(color(prefix + "&3You have just set &6" + name + "'s &3particle to &6" + particle + "&3."));
+
+                    Messages.location_set.sendMessage(player, new HashMap<>() {{
+                        put("{name}", name);
+                        put("{particle}", particle);
+                    }});
+                    
                     return;
                 }
             }
         }
-        player.sendMessage(color(prefix + "&3There are no locations called &6" + name + "&3."));
+
+        Messages.location_does_not_exist.sendMessage(player, new HashMap<>() {{
+            put("{name}", name);
+        }});
     }
-    
-    public static ItemStack getPlayerHead(String name) {
-        return getPlayerHead(name, null);
-    }
-    
-    public static ItemStack getPlayerHead(String playerName, String displayName) {
-        return new ItemBuilder()
-        .setMaterial("PLAYER_HEAD", "SKULL_ITEM:3")
-        .setPlayer(playerName)
-        .setName(displayName != null ? color(displayName) : new Random().nextInt(Integer.MAX_VALUE) + "")
-        .build();
+
+    public static ItemStack getPlayerHead(final String playerName) {
+        return new ItemBuilder().withType(Material.PLAYER_HEAD).setPlayer(playerName).getStack();
     }
 }

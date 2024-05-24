@@ -9,34 +9,34 @@ import java.util.List;
 
 public class CustomFountain {
     
-    private String name;
-    private List<String> headNames;
-    private List<ItemStack> heads;
+    private final String name;
+    private final List<String> headNames;
+    private final List<ItemStack> heads;
     
-    public CustomFountain(String name, List<String> headNames) {
+    public CustomFountain(final String name, final List<String> headNames) {
         this.name = name;
         this.headNames = headNames;
         this.heads = new ArrayList<>();
+
         for (String headName : headNames) {
             ItemStack item = HeadDatabaseHook.getHead(headName);
             if (item == null) {
                 JavaPlugin.getPlugin(BlockParticles.class).getLogger().warning("Head item '" + name + "' for id " + headName + " is invalid!");
             } else {
-                heads.add(item);
+                this.heads.add(item);
             }
         }
     }
     
-    public String getName() {
-        return name;
+    public final String getName() {
+        return this.name;
     }
     
-    public List<String> getHeadNames() {
-        return headNames;
+    public final List<String> getHeadNames() {
+        return this.headNames;
     }
     
-    public List<ItemStack> getHeads() {
-        return heads;
+    public final List<ItemStack> getHeads() {
+        return this.heads;
     }
-    
 }

@@ -1,6 +1,7 @@
-package com.badbones69.blockparticles.api.enums;
+package com.badbones69.blockparticles.api.enums.particles;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public enum Particles {
     
@@ -51,24 +52,25 @@ public enum Particles {
     CRIT("Crit", ParticleType.PARTICLE),
     BIGCRIT("BigCrit", ParticleType.PARTICLE);
     
-    private String name;
-    private ParticleType type;
+    private final String name;
+    private final ParticleType type;
     
-    private Particles(String name, ParticleType type) {
+    Particles(final String name, final ParticleType type) {
         this.name = name;
         this.type = type;
     }
     
     /**
-     * @param name The Particle you wish to get.
-     * @return A Particle.
+     * @param name the Particle you wish to get.
+     * @return a Particle.
      */
-    public static Particles fromName(String name) {
-        for (Particles i : Particles.getParticles()) {
+    public static Particles fromName(final String name) {
+        for (final Particles i : getParticles()) {
             if (i.toString().equalsIgnoreCase(name)) {
                 return i;
             }
         }
+
         return null;
     }
     
@@ -81,28 +83,29 @@ public enum Particles {
     
     /**
      * @param type The ParticleType you want all the Particles From.
-     * @return Returns all the Particles in a ParticleType.
+     * @return returns all the particles in a ParticleType.
      */
-    public static ArrayList<Particles> getParticles(ParticleType type) {
-        ArrayList<Particles> i = new ArrayList<>();
-        for (Particles p : Particles.values()) {
+    public static List<Particles> getParticles(ParticleType type) {
+        List<Particles> i = new ArrayList<>();
+
+        for (final Particles p : getParticles()) {
             if (p.getType().equals(type)) i.add(p);
         }
+
         return i;
     }
     
     /**
      * Returns the Particle's name in a String.
      */
-    public String toString() {
-        return name;
+    public final String toString() {
+        return this.name;
     }
     
     /**
      * Returns the Particle's type (Particle/Fountain).
      */
-    public ParticleType getType() {
-        return type;
+    public final ParticleType getType() {
+        return this.type;
     }
-    
 }
