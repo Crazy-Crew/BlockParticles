@@ -28,13 +28,14 @@ public class BlockParticles extends JavaPlugin {
         fileManager.logInfo(true).setup(this);
         bp.load();
         PluginManager pm = Bukkit.getServer().getPluginManager();
-        pm.registerEvents(new GUI(), this);
+        server.apply();
         pm.registerEvents(new Methods(), this);
         pm.registerEvents(new Fountains(), this);
         getCommand("blockparticle").setExecutor(new BPCommands());
         getCommand("blockparticle").setTabCompleter(new BPTab());
         new HeadDatabaseHook();
         pm.registerEvents(new Events_v1_12_R1_Up(), this);
+        getServer().getPluginManager().registerEvents(new MainMenu(), this);
         // Load the commands.
         CommandManager.load();
 
