@@ -7,12 +7,11 @@ import com.badbones69.blockparticles.api.enums.fountains.BPFountains;
 import com.badbones69.blockparticles.api.enums.particles.BPParticles;
 import com.badbones69.blockparticles.commands.envoys.types.admin.CommandReload;
 import com.badbones69.blockparticles.commands.envoys.types.admin.CommandStats;
-import com.badbones69.blockparticles.commands.envoys.types.admin.CommandTypes;
+import com.badbones69.blockparticles.commands.envoys.types.player.CommandList;
 import com.badbones69.blockparticles.commands.envoys.types.admin.particle.CommandAdd;
 import com.badbones69.blockparticles.commands.envoys.types.admin.particle.CommandRemove;
 import com.badbones69.blockparticles.commands.envoys.types.admin.particle.CommandSet;
 import com.badbones69.blockparticles.commands.envoys.types.player.CommandHelp;
-import com.badbones69.blockparticles.commands.envoys.types.player.CommandList;
 import com.badbones69.blockparticles.commands.relations.ArgumentRelations;
 import com.ryderbelserion.vital.paper.builders.PlayerBuilder;
 import dev.triumphteam.cmd.bukkit.BukkitCommandManager;
@@ -76,7 +75,7 @@ public class CommandManager {
                 new CommandSet(),
                 new CommandReload(),
                 new CommandStats(),
-                new CommandTypes(),
+                new CommandList(),
                 new CommandHelp(),
                 new CommandList()
         ).forEach(commandManager::registerCommand);
