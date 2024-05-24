@@ -1,4 +1,4 @@
-package com.badbones69.blockparticles.util;
+package com.badbones69.blockparticles.utils;
 
 import org.bukkit.Location;
 import org.jetbrains.annotations.NotNull;

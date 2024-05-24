@@ -1,7 +1,7 @@
 package com.badbones69.blockparticles.api.objects.particles;
 
 import com.badbones69.blockparticles.BlockParticles;
-import com.badbones69.blockparticles.util.LocationUtil;
+import com.badbones69.blockparticles.utils.LocationUtil;
 import org.bukkit.Location;
 import org.bukkit.plugin.java.JavaPlugin;
 

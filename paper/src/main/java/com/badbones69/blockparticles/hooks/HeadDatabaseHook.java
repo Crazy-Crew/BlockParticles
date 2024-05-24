@@ -1,4 +1,4 @@
-package com.badbones69.blockparticles.hook;
+package com.badbones69.blockparticles.hooks;
 
 import com.badbones69.blockparticles.Methods;
 import com.ryderbelserion.vital.paper.enums.Support;
