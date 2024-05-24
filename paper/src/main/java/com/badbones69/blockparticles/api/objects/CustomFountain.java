@@ -1,42 +1,38 @@
 package com.badbones69.blockparticles.api.objects;
 
-import com.badbones69.blockparticles.BlockParticles;
-import com.badbones69.blockparticles.hook.HeadDatabaseHook;
+import com.ryderbelserion.vital.paper.builders.items.ItemBuilder;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class CustomFountain {
-    
-    private final String name;
-    private final List<String> headNames;
-    private final List<ItemStack> heads;
-    
-    public CustomFountain(final String name, final List<String> headNames) {
-        this.name = name;
-        this.headNames = headNames;
-        this.heads = new ArrayList<>();
 
-        for (String headName : headNames) {
-            ItemStack item = HeadDatabaseHook.getHead(headName);
-            if (item == null) {
-                JavaPlugin.getPlugin(BlockParticles.class).getLogger().warning("Head item '" + name + "' for id " + headName + " is invalid!");
-            } else {
-                this.heads.add(item);
-            }
+    private final List<ItemStack> builtHeads = new ArrayList<>();
+    private final List<String> fountainHeads;
+    private final String fountainName;
+
+    public CustomFountain(String fountainName, List<String> fountainHeads) {
+        this.fountainName = fountainName;
+        this.fountainHeads = fountainHeads;
+
+        for (String head : this.fountainHeads) {
+            ItemStack item = new ItemBuilder().setPlayer(head).getStack();
+
+            this.builtHeads.add(item);
         }
     }
-    
-    public final String getName() {
-        return this.name;
+
+    public @NotNull final List<ItemStack> getBuiltHeads() {
+        return Collections.unmodifiableList(this.builtHeads);
     }
-    
-    public final List<String> getHeadNames() {
-        return this.headNames;
+
+    public @NotNull final List<String> getFountainHeads() {
+        return Collections.unmodifiableList(this.fountainHeads);
     }
-    
-    public final List<ItemStack> getHeads() {
-        return this.heads;
+
+    public @NotNull final String getFountainName() {
+        return this.fountainName;
     }
 }

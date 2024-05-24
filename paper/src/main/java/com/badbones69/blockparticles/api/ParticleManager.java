@@ -91,7 +91,7 @@ public class ParticleManager {
     
     public final CustomFountain getCustomFountain(final String name) {
         for (final CustomFountain fountain : this.customFountains) {
-            if (fountain.getName().equalsIgnoreCase(name)) {
+            if (fountain.getFountainName().equalsIgnoreCase(name)) {
                 return fountain;
             }
         }

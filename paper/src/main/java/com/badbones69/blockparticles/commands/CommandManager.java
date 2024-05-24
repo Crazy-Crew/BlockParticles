@@ -49,7 +49,7 @@ public class CommandManager {
                 }
             }
 
-            particleManager.getCustomFountains().forEach(fountain -> completions.add(fountain.getName()));
+            particleManager.getCustomFountains().forEach(fountain -> completions.add(fountain.getFountainName()));
 
             return completions;
         });

@@ -185,7 +185,7 @@ public class Fountains implements Listener {
     
     public static void startCustomFountain(final Location loc, final String id, final CustomFountain fountain) {
         particleControl.addParticle(loc, id, "custom", plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
-            for (ItemStack head : getRandomCustomHead(fountain.getHeads())) {
+            for (ItemStack head : getRandomCustomHead(fountain.getBuiltHeads())) {
                 
                 final Item headItem = plugin.getServer().getWorld(loc.getWorld().getUID()).dropItem(loc.clone().add(.5, .8, .5), head);
                 

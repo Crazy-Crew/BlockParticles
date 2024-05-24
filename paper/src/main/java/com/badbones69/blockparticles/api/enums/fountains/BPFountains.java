@@ -23,7 +23,7 @@ public enum BPFountains {
         for (final BPFountains fountain : values()) {
             if (fountain == CUSTOM) {
                 for (final CustomFountain customFountain : particleManager.getCustomFountains()) {
-                    if (customFountain.getName().equalsIgnoreCase(name.replace(" ", ""))) {
+                    if (customFountain.getFountainName().equalsIgnoreCase(name.replace(" ", ""))) {
                         return CUSTOM;
                     }
                 }
