@@ -35,6 +35,9 @@ public class BlockParticles extends JavaPlugin {
         getCommand("blockparticle").setTabCompleter(new BPTab());
         new HeadDatabaseHook();
         pm.registerEvents(new Events_v1_12_R1_Up(), this);
+        // Load the commands.
+        CommandManager.load();
+
         new BukkitRunnable() {
             @Override
             public void run() {

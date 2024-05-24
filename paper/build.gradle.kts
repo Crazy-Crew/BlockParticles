@@ -11,6 +11,8 @@ dependencies {
         exclude("org.yaml")
     }
 
+    implementation(libs.triumph.cmds)
+
     compileOnly(libs.headdatabaseapi)
     api(projects.blockparticlesCore)
 }
@@ -40,7 +42,8 @@ tasks {
         archiveClassifier.set("")
 
         listOf(
-            "com.ryderbelserion.vital"
+            "com.ryderbelserion.vital",
+            "dev.triumphteam.cmds"
         ).forEach {
             relocate(it, "libs.$it")
         }
