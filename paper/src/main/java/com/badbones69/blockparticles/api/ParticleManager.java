@@ -6,7 +6,6 @@ import com.badbones69.blockparticles.api.objects.CustomFountain;
 import com.badbones69.blockparticles.api.objects.ParticleLocation;
 import com.badbones69.blockparticles.config.ConfigManager;
 import com.badbones69.blockparticles.config.impl.CategoryKeys;
-import com.badbones69.blockparticles.controllers.ParticleControl;
 import com.ryderbelserion.vital.core.config.YamlFile;
 import org.bukkit.Location;
 import org.bukkit.World;

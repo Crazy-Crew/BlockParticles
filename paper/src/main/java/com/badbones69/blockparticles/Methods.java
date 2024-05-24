@@ -243,13 +243,15 @@ public class Methods implements Listener {
         final int y = location.getBlockY();
         final int z = location.getBlockZ();
 
-        data.set("locations." + name + ".world", uuid);
+        data.set("locations." + name + ".uuid", uuid);
         data.set("locations." + name + ".x", x);
         data.set("locations." + name + ".y", y);
         data.set("locations." + name + ".z", z);
         data.set("locations." + name + ".particle", "Spiral");
         
         file.save();
+
+        particleManager.addLocation(name, "Spiral", location);
         
         kill();
         startParticles();
