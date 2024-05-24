@@ -38,7 +38,7 @@ public enum FileProperty {
 
         if (key == null) return false;
 
-        configuration.setValue(this.newString, replace(this.oldString.determineValue(reader).getValue()));
+        configuration.setValue(this.newString, this.oldString.determineValue(reader).getValue());
 
         return true;
     }
@@ -134,20 +134,7 @@ public enum FileProperty {
 
         if (key == null) return false;
 
-        List<String> list = new ArrayList<>();
-
-        if (this.oldList.getPath().equalsIgnoreCase("Settings.GUI-Customizer")) {
-            this.oldList.determineValue(reader).getValue().forEach(line -> list.add(line.replaceAll("Item:", "item:")
-                    .replaceAll("Slot:", "slot:")
-                    .replaceAll("Name:", "name:")
-                    .replaceAll("Lore:", "lore:")
-                    .replaceAll("Glowing:", "glowing:")
-                    .replaceAll("Player:", "player:")
-                    .replaceAll("Unbreakable-Item", "unbreakable_item:")
-                    .replaceAll("Hide-Item-Flags", "hide_item_flags:")));
-        } else {
-            this.oldList.determineValue(reader).getValue().forEach(line -> list.add(replace(line)));
-        }
+        List<String> list = new ArrayList<>(this.oldList.determineValue(reader).getValue());
 
         configuration.setValue(this.newList, list);
 
@@ -155,27 +142,52 @@ public enum FileProperty {
     }
 
     /**
-     * Replaces old placeholders in the option when migrating.
+     * Replaces old colors in the option when migrating.
      *
      * @param message the message to check
      * @return the finalized message to set
      */
     private String replace(String message) {
-        return message.replaceAll("%page%", "{page}")
-                .replaceAll("%prefix%", "{prefix}")
-                .replaceAll("%world%", "{world}")
-                .replaceAll("%crate%", "{crate}")
-                .replaceAll("%key%", "{key}")
-                .replaceAll("%keys%", "{keys}")
-                .replaceAll("%cratetype%", "{cratetype}")
-                .replaceAll("%player%", "{player}")
-                .replaceAll("%prize%", "{prize}")
-                .replaceAll("%number%", "{number}")
-                .replaceAll("%keytype%", "{keytype}")
-                .replaceAll("%usage%", "{usage}")
-                .replaceAll("%key-amount%", "{key_amount}")
-                .replaceAll("%amount%", "{amount}")
-                .replaceAll("%id%", "{id}")
-                .replaceAll("%crates_opened%", "{crates_opened}");
+        return message.replaceAll(
+                "&0", "<black>"
+        ).replaceAll(
+                "&9", "<dark_blue>"
+        ).replaceAll(
+                "&2", "<dark_green>"
+        ).replaceAll(
+                "&3", "<dark_aqua>"
+        ).replaceAll(
+                "&4", "<dark_red>"
+        ).replaceAll(
+                "&5", "<dark_purple>"
+        ).replaceAll(
+                "&6", "<gold>"
+        ).replaceAll(
+                "&7", "<gray>"
+        ).replaceAll(
+                "&8", "<dark_gray>"
+        ).replaceAll(
+                "&b", "<blue>"
+        ).replaceAll(
+                "&a", "<green>"
+        ).replaceAll(
+                "&c", "<red>"
+        ).replaceAll(
+                "&d", "<light_purple>"
+        ).replaceAll(
+                "&e", "<yellow>"
+        ).replaceAll(
+                "&f", "<white>"
+        ).replaceAll(
+                "&l", "<bold>"
+        ).replaceAll(
+                "&o", "<italic>"
+        ).replaceAll(
+                "&n", "<underlined>"
+        ).replaceAll(
+                "&m", "<strikethrough>"
+        ).replaceAll(
+                "&k", "<obfuscated>"
+        );
     }
 }
