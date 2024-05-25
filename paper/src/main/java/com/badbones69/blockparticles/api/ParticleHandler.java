@@ -136,6 +136,8 @@ public class ParticleHandler implements IParticleHandler {
      */
     @Override
     public void reload() {
+        saveParticleLocations();
+
         load();
     }
 
@@ -151,7 +153,9 @@ public class ParticleHandler implements IParticleHandler {
 
     @Override
     public void addParticleLocation(final IParticleBuilder builder) {
-        this.particles.put(builder.getId(), builder.execute());
+        String id = builder.getId();
+
+        this.particles.put(id, builder.execute());
     }
 
     /**
@@ -206,40 +210,41 @@ public class ParticleHandler implements IParticleHandler {
 
         // Loop through locations section.
         for (String id : section.getKeys(false)) {
+            final ConfigurationSection particle = section.getConfigurationSection(id);
+
             // Check if id exists in the file.
             if (hasParticleLocation(id, true)) {
                 IParticleBuilder type = this.particles.get(id);
 
                 // Updating the minecraft particle!
-                section.set(id + ".particle", type.getParticle());
+                particle.set("particle", type.getParticle());
 
                 // Updating the particle type!
-                section.set(id + ".type", type.getParticleKey().getParticleName().toLowerCase());
+                particle.set("type", type.getParticleKey().getParticleName().toLowerCase());
 
                 // "key" is the location data, We are simply updating the location!
-                section.set(id + ".key", type.asString());
-
-                // Save the file after each edit!
-                this.file.save();
-
-                // We return and continue the loop.
-                return;
-            }
-
-            // We only loop through this after the above check. This means the id does not exist, so we are adding it.
-            for (final IParticleBuilder type : this.particles.values()) {
-                // Updating the minecraft particle!
-                section.set(id + ".particle", type.getParticle());
-
-                // Updating the particle type!
-                section.set(id + ".type", type.getParticleKey().getParticleName().toLowerCase());
-
-                // "key" is the location data, We are simply updating the location!
-                section.set(id + ".key", type.asString());
+                particle.set("key", type.asString());
 
                 // Save the file after each edit!
                 this.file.save();
             }
+        }
+
+        // We only loop through this after the above check. This means the id does not exist, so we are adding it.
+        for (final IParticleBuilder type : this.particles.values()) {
+            String id = type.getId();
+
+            // Updating the minecraft particle!
+            section.set(id + ".particle", type.getParticle().getKey().getKey());
+
+            // Updating the particle type!
+            section.set(id + ".type", type.getParticleKey().getParticleName().toLowerCase());
+
+            // "key" is the location data, We are simply updating the location!
+            section.set(id + ".key", type.asString());
+
+            // Save the file after each edit!
+            this.file.save();
         }
     }
 
