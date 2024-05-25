@@ -14,6 +14,6 @@ public class ConfigMigration extends PlainMigrationService {
     }
 
     private boolean migrateLocale(@NotNull PropertyReader reader, @NotNull ConfigurationData configurationData) {
-        return FileProperty.command_prefix.moveBoolean(reader, configurationData);
+        return FileProperty.command_prefix.moveString(reader, configurationData);
     }
 }
