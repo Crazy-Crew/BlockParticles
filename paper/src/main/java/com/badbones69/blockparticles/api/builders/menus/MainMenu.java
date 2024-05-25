@@ -1,8 +1,6 @@
 package com.badbones69.blockparticles.api.builders.menus;
 
 import com.badbones69.blockparticles.BlockParticles;
-import com.badbones69.blockparticles.Methods;
-import com.badbones69.blockparticles.api.ParticleManager;
 import com.badbones69.blockparticles.api.builders.InventoryBuilder;
 import com.badbones69.blockparticles.api.enums.Messages;
 import com.badbones69.blockparticles.api.enums.PersistentKeys;
@@ -24,7 +22,7 @@ public class MainMenu extends InventoryBuilder {
 
     private final BlockParticles plugin = JavaPlugin.getPlugin(BlockParticles.class);
 
-    private final ParticleManager particleManager = this.plugin.getParticleManager();
+    //private final ParticleManager particleManager = this.plugin.getParticleManager();
 
     private static final Map<Integer, Map<ItemStack, Integer>> items = new HashMap<>() {{
         putIfAbsent(1, new HashMap<>() {{
@@ -130,7 +128,7 @@ public class MainMenu extends InventoryBuilder {
             return;
         }
 
-        if (!this.particleManager.containsPlayer(player)) return;
+        //if (!this.particleManager.containsPlayer(player)) return;
 
         final ItemStack item = event.getCurrentItem();
 
@@ -165,7 +163,7 @@ public class MainMenu extends InventoryBuilder {
         // This is all the other generic stuff.
         if (container.has(PersistentKeys.generic_icon.getNamespacedKey())) {
             String name = container.get(PersistentKeys.generic_icon.getNamespacedKey(), PersistentDataType.STRING);
-            Methods.setLoc(player, this.particleManager.getLocation(player), name);
+            //Methods.setLoc(player, this.particleManager.getLocation(player), name);
 
             player.closeInventory();
         }
