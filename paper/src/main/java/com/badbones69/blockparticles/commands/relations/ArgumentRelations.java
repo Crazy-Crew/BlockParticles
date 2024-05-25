@@ -15,8 +15,9 @@ public class ArgumentRelations extends MessageManager {
         String usage = "";
 
         switch (command) {
-            case "add" -> usage = order + " [page]";
-            case "set" -> usage = order + " [amount] [player]";
+            case "remove" -> usage = order + " [id]";
+            case "add" -> usage = order + " [id] [type] [particle] [count] <size>";
+            case "set" -> usage = order + " [id] [type]";
         }
 
         return usage;

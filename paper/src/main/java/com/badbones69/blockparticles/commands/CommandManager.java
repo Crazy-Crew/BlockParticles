@@ -1,10 +1,8 @@
 package com.badbones69.blockparticles.commands;
 
 import com.badbones69.blockparticles.BlockParticles;
-import com.badbones69.blockparticles.Methods;
-import com.badbones69.blockparticles.api.ParticleManager;
-import com.badbones69.blockparticles.api.enums.fountains.BPFountains;
-import com.badbones69.blockparticles.api.enums.particles.BPParticles;
+import com.badbones69.blockparticles.api.ParticleHandler;
+import com.badbones69.blockparticles.api.enums.particles.ParticleKey;
 import com.badbones69.blockparticles.commands.envoys.types.admin.CommandReload;
 import com.badbones69.blockparticles.commands.envoys.types.admin.CommandStats;
 import com.badbones69.blockparticles.commands.envoys.types.admin.particle.CommandAdd;
@@ -26,7 +24,7 @@ public class CommandManager {
 
     private final static @NotNull BlockParticles plugin = JavaPlugin.getPlugin(BlockParticles.class);
 
-    private final static @NotNull ParticleManager particleManager = plugin.getParticleManager();
+    private final static @NotNull ParticleHandler particleHandler = plugin.getParticleHandler();
 
     private final static @NotNull BukkitCommandManager<CommandSender> commandManager = BukkitCommandManager.create(plugin);
 
@@ -36,28 +34,20 @@ public class CommandManager {
     public static void load() {
         new ArgumentRelations().build();
 
-        commandManager.registerSuggestion(SuggestionKey.of("particles"), (sender, context) -> {
+        commandManager.registerSuggestion(SuggestionKey.of("types"), (sender, context) -> {
             List<String> completions = new ArrayList<>();
 
-            for (BPParticles particle : BPParticles.values()) {
-                completions.add(particle.name().toLowerCase());
+            for (ParticleKey particle : ParticleKey.values()) {
+                completions.add(particle.getParticleName());
             }
-
-            for (BPFountains fountain : BPFountains.values()) {
-                if (fountain != BPFountains.CUSTOM) {
-                    completions.add(fountain.name().toLowerCase());
-                }
-            }
-
-            particleManager.getCustomFountains().forEach(fountain -> completions.add(fountain.getFountainName()));
 
             return completions;
         });
 
-        commandManager.registerSuggestion(SuggestionKey.of("locations"), (sender, context) -> {
+        commandManager.registerSuggestion(SuggestionKey.of("ids"), (sender, context) -> {
             List<String> completions = new ArrayList<>();
 
-            Methods.getLocations().forEach(particleLocation -> completions.add(particleLocation.getID()));
+            particleHandler.getParticles().keySet().forEach(particle -> completions.add(particle.toLowerCase()));
 
             return completions;
         });
