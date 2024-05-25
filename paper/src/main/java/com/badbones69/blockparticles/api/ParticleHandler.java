@@ -4,6 +4,7 @@ import ch.jalu.configme.SettingsManager;
 import com.badbones69.blockparticles.BlockParticles;
 import com.badbones69.blockparticles.api.enums.CustomFiles;
 import com.badbones69.blockparticles.api.enums.particles.ParticleKey;
+import com.badbones69.blockparticles.api.enums.particles.ParticleType;
 import com.badbones69.blockparticles.api.interfaces.IParticleBuilder;
 import com.badbones69.blockparticles.api.interfaces.IParticleHandler;
 import com.badbones69.blockparticles.config.ConfigManager;
@@ -14,9 +15,13 @@ import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.World;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.Nullable;
 import org.simpleyaml.configuration.ConfigurationSection;
+
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ParticleHandler implements IParticleHandler {
@@ -43,10 +48,12 @@ public class ParticleHandler implements IParticleHandler {
                 for (final String id : section.getKeys(false)) {
                     boolean hasOldKey = section.contains(id + ".world");
 
+                    ConfigurationSection key = section.getConfigurationSection(id);
+
                     // If it has the world section.
                     if (hasOldKey) {
                         // Get the world name.
-                        String worldName = section.getString(id + ".world");
+                        String worldName = key.getString("world");
 
                         // Get the world object.
                         World world = this.plugin.getServer().getWorld(worldName);
@@ -54,7 +61,7 @@ public class ParticleHandler implements IParticleHandler {
                         if (world == null) {
                             if (this.config.getProperty(ConfigKeys.clean_data_file)) {
                                 // If the world is null, we remove the data.
-                                this.data.set("locations." + id, null);
+                                section.set(id, null);
 
                                 // Save to file immediately.
                                 this.file.save();
@@ -64,21 +71,45 @@ public class ParticleHandler implements IParticleHandler {
                         }
 
                         // Get the old values.
-                        int x = section.getInt(id + ".x");
-                        int y = section.getInt(id + ".y");
-                        int z = section.getInt(id + ".z");
+                        int x = key.getInt("x");
+                        int y = key.getInt("y");
+                        int z = key.getInt("z");
 
                         // Convert it to the string format.
                         String asString = world.getUID() + "," + x + "," + y + "," + z;
 
                         // Set the new value.
-                        section.set(id + ".key", asString);
+                        key.set("key", asString);
 
                         // Remove the old values.
-                        section.remove(id + ".world");
-                        section.remove(id + ".x");
-                        section.remove(id + ".y");
-                        section.remove(id + ".z");
+                        key.remove("world");
+                        key.remove("x");
+                        key.remove("y");
+                        key.remove("z");
+
+                        /*ParticleKey type = ParticleUtil.getParticleByName(section.getString("particle", ParticleKey.SPIRAL.getParticleName().toLowerCase()));
+
+                        if (type != null) {
+                            key.set("type", type.getParticleName().toLowerCase());
+
+                            // Update default particles
+                            switch (type) {
+                                case SPIRAL, DOUBLE_SPIRAL -> key.set("particle", Particle.WITCH.getKey().getKey());
+                                case FLAME, BIG_FLAME, FLAME_WHEEL -> key.set("particle", Particle.FLAME.getKey().getKey());
+                                case VOLCANO -> key.set("particle", Particle.LAVA.getKey().getKey());
+                                case CRITICAL, BIG_CRITICAL -> key.set("particle", Particle.CRIT.getKey().getKey());
+                                case STORM -> {
+                                    List<String> particles = new ArrayList<>();
+
+
+
+                                    key.set("particle", Particle.CLOUD.getKey().getKey());
+                                }
+                            }
+                        }*/
+
+                        // Save to file immediately.
+                        this.file.save();
                     }
                 }
             }
