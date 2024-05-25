@@ -1,6 +1,7 @@
 package com.badbones69.blockparticles;
 
 import com.badbones69.blockparticles.config.ConfigManager;
+import com.badbones69.blockparticles.config.impl.ConfigKeys;
 import com.ryderbelserion.vital.core.AbstractPlugin;
 import org.jetbrains.annotations.NotNull;
 import java.io.File;
@@ -10,6 +11,7 @@ public class Server extends AbstractPlugin {
 
     private final File directory;
     private final Logger logger;
+    private boolean isLogging;
 
     public Server(@NotNull final File directory, @NotNull final Logger logger) {
         this.directory = directory;
@@ -21,6 +23,8 @@ public class Server extends AbstractPlugin {
      */
     public void apply() {
         ConfigManager.load();
+
+        this.isLogging = ConfigManager.getConfig().getProperty(ConfigKeys.verbose_logging);
     }
 
     /**
@@ -44,5 +48,10 @@ public class Server extends AbstractPlugin {
     @Override
     public @NotNull final Logger getLogger() {
         return this.logger;
+    }
+
+    @Override
+    public boolean isLogging() {
+        return this.isLogging;
     }
 }
