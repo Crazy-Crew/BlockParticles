@@ -1,6 +1,6 @@
 package com.badbones69.blockparticles.api.interfaces;
 
-import com.badbones69.blockparticles.api.objects.particles.ParticleTypeLocation;
+import com.badbones69.blockparticles.api.enums.particles.ParticleKey;
 import org.bukkit.Location;
 import java.util.Map;
 
@@ -10,6 +10,11 @@ public interface IParticleHandler {
      * Loads all particles and migrates configurations
      */
     void load(boolean isServerStart);
+
+    /**
+     * Loads the particles
+     */
+    void load();
 
     /**
      * Only used in the /blockparticles reload command
@@ -23,7 +28,14 @@ public interface IParticleHandler {
      * @param particle the type of particle
      * @param location the {@link Location}
      */
-    void addParticleLocation(final String id, final String particle, final Location location, final int task);
+    void addParticleLocation(final String id, final ParticleKey particle, final Location location);
+
+    /**
+     * Adds a particle to the map.
+     *
+     * @param builder the particle builder
+     */
+    void addParticleLocation(IParticleBuilder builder);
 
     /**
      * Removes a particle from the map.
@@ -59,6 +71,6 @@ public interface IParticleHandler {
      *
      * @return a map of active particle locations
      */
-    Map<String, ParticleTypeLocation> getParticles();
+    Map<String, IParticleBuilder> getParticles();
 
 }
