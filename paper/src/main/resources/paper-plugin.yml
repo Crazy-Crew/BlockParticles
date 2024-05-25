@@ -6,7 +6,7 @@ api-version: '1.20'
 description: '${description}'
 website: '${website}'
 
-#folia-supported: true
+folia-supported: true
 
 dependencies:
   server:
