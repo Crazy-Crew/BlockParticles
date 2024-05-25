@@ -40,6 +40,9 @@ public class ConfigKeys implements SettingsHolder {
     @Comment("Whether you want BlockParticles to shut up or not, This option is ignored by errors.")
     public static final Property<Boolean> verbose_logging = PropertyInitializer.newProperty("root.verbose_logging", true);
 
+    @Comment("This will remove all old data that no longer have an existing world.")
+    public static final Property<Boolean> clean_data_file = PropertyInitializer.newProperty("root.clean_data_file", true);
+
     @Comment("The command prefix you want shown in front of commands!")
     public static final Property<String> command_prefix = PropertyInitializer.newProperty("root.command_prefix", "<dark_gray>[<dark_aqua>BlockParticles<dark_gray>]: ");
 }
