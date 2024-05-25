@@ -7,13 +7,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class CustomFountain {
+public class FountainType {
 
     private final List<ItemStack> builtHeads = new ArrayList<>();
     private final List<String> fountainHeads;
     private final String fountainName;
 
-    public CustomFountain(String fountainName, List<String> fountainHeads) {
+    public FountainType(String fountainName, List<String> fountainHeads) {
         this.fountainName = fountainName;
         this.fountainHeads = fountainHeads;
 
