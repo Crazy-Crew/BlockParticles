@@ -4,7 +4,6 @@ import ch.jalu.configme.SettingsManager;
 import com.badbones69.blockparticles.BlockParticles;
 import com.badbones69.blockparticles.api.enums.CustomFiles;
 import com.badbones69.blockparticles.api.enums.particles.ParticleKey;
-import com.badbones69.blockparticles.api.enums.particles.ParticleType;
 import com.badbones69.blockparticles.api.interfaces.IParticleBuilder;
 import com.badbones69.blockparticles.api.interfaces.IParticleHandler;
 import com.badbones69.blockparticles.config.ConfigManager;
@@ -15,13 +14,9 @@ import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.World;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.jetbrains.annotations.Nullable;
 import org.simpleyaml.configuration.ConfigurationSection;
-
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class ParticleHandler implements IParticleHandler {
