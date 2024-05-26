@@ -8,9 +8,19 @@ import org.bukkit.Particle;
 
 public class SpiralParticle extends IParticleBuilder {
 
-    public SpiralParticle(final String id, final int count, final int size, final ParticleKey particleKey, final Particle particle, final Location location) {
-        super(id, count, size, particleKey, particle, location);
+    private final double height_value;
+    private final int inner_radius;
+    private final int outer_radius;
+
+    public SpiralParticle(final String id, final int count, final int inner_radius, final int outer_radius, final double height_value, final ParticleKey particleKey, final Particle particle, final Location location) {
+        super(id, count, particleKey, particle, location);
+
+        this.inner_radius = inner_radius;
+        this.outer_radius = outer_radius;
+        this.height_value = height_value;
     }
+
+    private final Location location = getLocation().clone().add(0.5, 1.0, 0.5);
 
     @Override
     public IParticleBuilder execute() {
@@ -26,10 +36,6 @@ public class SpiralParticle extends IParticleBuilder {
             return;
         }
 
-        ParticleUtil.circle(this, getSize());
-
-        if (getParticleKey() == ParticleKey.DOUBLE_SPIRAL) {
-            ParticleUtil.circle(this, getSize());
-        }
+        ParticleUtil.circle(this, this.location, this.inner_radius, this.outer_radius, this.height_value);
     }
 }

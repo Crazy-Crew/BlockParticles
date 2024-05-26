@@ -11,6 +11,8 @@ public class GenericParticle extends IParticleBuilder {
         super(id, count, particleKey, particle, location);
     }
 
+    private final Location location = getLocation().clone().add(0.5, 1.0, 0.5);
+
     @Override
     public IParticleBuilder execute() {
         runAtFixedRate(this.plugin, 0, getParticleKey().getPeriod());
@@ -25,6 +27,6 @@ public class GenericParticle extends IParticleBuilder {
             return;
         }
 
-        spawnParticle();
+        spawnParticle(this.location);
     }
 }

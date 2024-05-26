@@ -9,7 +9,6 @@ import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.World;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.util.Vector;
 
 public abstract class IParticleBuilder extends FoliaRunnable {
 
@@ -21,8 +20,7 @@ public abstract class IParticleBuilder extends FoliaRunnable {
     private final World world;
     private final String id;
 
-    private int count;
-    private int size;
+    private final int count;
 
     public IParticleBuilder(final String id, final int count, final ParticleKey particleKey, final Particle particle, final Location location) {
         super(Bukkit.getServer().getRegionScheduler(), location);
@@ -32,18 +30,6 @@ public abstract class IParticleBuilder extends FoliaRunnable {
         this.particle = particle;
         this.world = location.getWorld();
         this.count = count;
-        this.id = id;
-    }
-
-    public IParticleBuilder(final String id, final int count, final int size, final ParticleKey particleKey, final Particle particle, final Location location) {
-        super(Bukkit.getServer().getRegionScheduler(), location);
-
-        this.particleKey = particleKey;
-        this.location = location;
-        this.particle = particle;
-        this.world = location.getWorld();
-        this.count = count;
-        this.size = size;
         this.id = id;
     }
 
@@ -116,29 +102,10 @@ public abstract class IParticleBuilder extends FoliaRunnable {
     }
 
     /**
-     * Sets the amount of particles to show.
-     *
-     * @param count the amount of particles to show
-     * @return the {@link IParticleBuilder}
-     */
-    public IParticleBuilder setCount(final int count) {
-        this.count = count;
-
-        return this;
-    }
-
-    /**
      * @return the amount of particles to show
      */
     public final int getCount() {
         return this.count;
-    }
-
-    /**
-     * @return the size of the spiral particles
-     */
-    public int getSize() {
-        return this.size;
     }
 
     /**

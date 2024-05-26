@@ -12,11 +12,6 @@ public interface IParticleHandler {
     void load(boolean isServerStart);
 
     /**
-     * Loads the particles
-     */
-    void load();
-
-    /**
      * Only used in the /blockparticles reload command
      */
     void reload();
@@ -28,7 +23,7 @@ public interface IParticleHandler {
      * @param particle the type of particle
      * @param location the {@link Location}
      */
-    void addParticleLocation(final String id, final ParticleKey particle, final Location location);
+    void addParticleLocation(final String id, final int count, final int size, final ParticleKey particleKey, final String particle, final Location location);
 
     /**
      * Adds a particle to the map.
