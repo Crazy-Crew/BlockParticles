@@ -10,15 +10,34 @@ import java.util.List;
 
 public class ParticleUtil {
 
-    public static void circle(final IParticleBuilder builder, final int size) {
+    public static void circle(final IParticleBuilder builder, Location location, final int inner, final int outer, final double height) {
+        boolean isDoubleSpiral = builder.getParticleKey() == ParticleKey.DOUBLE_SPIRAL;
+
         for (int key = 0; key <= 30; key += 1) {
-            final Location location = builder.getLocation().clone();
+            if (isDoubleSpiral && outer > 0) {
+                final Location loc = location.clone();
 
-            location.setX(location.x() + cos(key, size));
-            location.setZ(location.z() + sin(key, size));
+                loc.setX(loc.x() + cos(key, outer));
+                loc.setZ(loc.z() + sin(key, outer));
 
-            builder.spawnParticle(location);
+                if (height > 0.0) {
+                    location.setY(loc.y() + height);
+                }
+
+                builder.spawnParticle(loc);
+            }
+
+            final Location loc = location.clone();
+
+            loc.setX(loc.x() + cos(key, inner));
+            loc.setZ(loc.z() + sin(key, inner));
+
+            builder.spawnParticle(loc);
         }
+    }
+
+    public static void circle(final IParticleBuilder builder, final int inner) {
+        circle(builder, builder.getLocation(), inner, inner, 0.0);
     }
 
     public static double cos(final int number, final int size) {
