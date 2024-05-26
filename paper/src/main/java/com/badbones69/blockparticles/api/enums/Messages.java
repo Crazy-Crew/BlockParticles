@@ -23,6 +23,7 @@ public enum Messages {
 
 
     internal_error(ErrorKeys.internal_error),
+    generic_error(ErrorKeys.generic_error),
     not_a_particle(ErrorKeys.not_a_particle),
     not_looking_at_block(ErrorKeys.not_looking_at_block),
 
@@ -144,6 +145,12 @@ public enum Messages {
 
     public void sendMessage(Player player) {
         sendMessage(player, new HashMap<>());
+    }
+
+    public void sendMessage(Player player, String placeholder, String value) {
+        sendMessage(player, new HashMap<>() {{
+            put(placeholder, value);
+        }});
     }
 
     public void sendMessage(Player player, Map<String, String> placeholder) {
