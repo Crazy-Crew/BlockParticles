@@ -17,7 +17,7 @@ public class BlockParticles extends JavaPlugin {
         server.apply();
 
         this.particleHandler = new ParticleHandler();
-        this.particleHandler.load();
+        this.particleHandler.load(false);
 
         CommandManager.load();
     }

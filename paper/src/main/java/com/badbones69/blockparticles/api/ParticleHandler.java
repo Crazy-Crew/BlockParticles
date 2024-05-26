@@ -2,6 +2,8 @@ package com.badbones69.blockparticles.api;
 
 import ch.jalu.configme.SettingsManager;
 import com.badbones69.blockparticles.BlockParticles;
+import com.badbones69.blockparticles.api.builders.particles.types.GenericParticle;
+import com.badbones69.blockparticles.api.builders.particles.types.SpiralParticle;
 import com.badbones69.blockparticles.api.enums.CustomFiles;
 import com.badbones69.blockparticles.api.enums.particles.ParticleKey;
 import com.badbones69.blockparticles.api.interfaces.IParticleBuilder;
@@ -10,6 +12,7 @@ import com.badbones69.blockparticles.config.ConfigManager;
 import com.badbones69.blockparticles.config.impl.ConfigKeys;
 import com.badbones69.blockparticles.utils.ParticleUtil;
 import com.ryderbelserion.vital.core.config.YamlFile;
+import com.ryderbelserion.vital.paper.util.ItemUtil;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.World;
@@ -146,15 +149,16 @@ public class ParticleHandler implements IParticleHandler {
                 int y = Integer.parseInt(key[3]);
                 int z = Integer.parseInt(key[3]);
 
-                // Add the particle.
-                addParticleLocation(id, ParticleUtil.getParticleByName(section.getString(id + ".particle", ParticleKey.SPIRAL.getParticleName())), new Location(world, x, y, z));
+                int count = 1;
+                int size = 1;
+
+                ParticleKey particleKey = ParticleUtil.getParticleByName(section.getString(id + ".type", ParticleKey.SPIRAL.getParticleName()));
+
+                if (particleKey != null) {
+                    addParticleLocation(id, count, size, particleKey, section.getString(id + ".particle", Particle.NAUTILUS.getKey().getKey()), new Location(world, x, y, z));
+                }
             }
         }
-    }
-
-    @Override
-    public void load() {
-
     }
 
     /**
@@ -164,17 +168,28 @@ public class ParticleHandler implements IParticleHandler {
     public void reload() {
         saveParticleLocations();
 
-        load();
+        load(false);
     }
 
     /**
      {@inheritDoc}
      */
     @Override
-    public void addParticleLocation(final String id, final ParticleKey particle, final Location location) {
-        //final ParticleType type = new ParticleType(id, location);
+    public void addParticleLocation(final String id, final int count, final int size, final ParticleKey particleKey, final String particle, final Location location) {
+        IParticleBuilder builder = null;
 
-        //this.particles.put(id, type);
+        switch (particleKey) {
+            case GENERIC -> builder = new GenericParticle(id, count, particleKey, ItemUtil.getParticleType(particle), location.add(0.5, 1.0, 0.5));
+
+            case SPIRAL, DOUBLE_SPIRAL -> builder = new SpiralParticle(id, count, size, 0, 0.0, particleKey, ItemUtil.getParticleType(particle), location.add(0.5, 1.1, 0.5));
+        }
+
+        // Don't add the particle location twice!
+        if (hasParticleLocation(id)) {
+            return;
+        }
+
+        this.particles.put(id, builder);
     }
 
     @Override
@@ -299,7 +314,7 @@ public class ParticleHandler implements IParticleHandler {
     }
 
     public void playSpiral(final Location location, final String id, final Particle particle, final int amount) {
-        //final BukkitRunnable runnable = new SpiralParticle(id, amount,
+        //final BukkitRunnable runnable = new DoubleSpiral.yml(id, amount,
         // ParticleKey.SPIRAL, particle, location.add(.5, .7, .5));
         //final BukkitScheduler scheduler = this.plugin.getServer().getScheduler();
 
@@ -307,7 +322,7 @@ public class ParticleHandler implements IParticleHandler {
     }
 
     public void playDoubleSpiral(final Location location, final String id, final Particle particle, final int amount) {
-        //final BukkitRunnable runnable = new SpiralParticle(id, amount,
+        //final BukkitRunnable runnable = new DoubleSpiral.yml(id, amount,
         // ParticleKey.DOUBLE_SPIRAL, particle, location.add(.5, .7, .5));
         //final BukkitScheduler scheduler = this.plugin.getServer().getScheduler();
 
