@@ -4,21 +4,22 @@ import com.badbones69.blockparticles.BlockParticles;
 import com.badbones69.blockparticles.api.ParticleHandler;
 import com.badbones69.blockparticles.api.enums.particles.ParticleKey;
 import com.badbones69.blockparticles.commands.envoys.types.admin.CommandReload;
-import com.badbones69.blockparticles.commands.envoys.types.admin.CommandStats;
 import com.badbones69.blockparticles.commands.envoys.types.admin.particle.CommandAdd;
-import com.badbones69.blockparticles.commands.envoys.types.admin.particle.CommandRemove;
-import com.badbones69.blockparticles.commands.envoys.types.admin.particle.CommandSet;
 import com.badbones69.blockparticles.commands.envoys.types.player.CommandHelp;
 import com.badbones69.blockparticles.commands.relations.ArgumentRelations;
 import com.ryderbelserion.vital.paper.builders.PlayerBuilder;
 import dev.triumphteam.cmd.bukkit.BukkitCommandManager;
+import dev.triumphteam.cmd.core.argument.keyed.Argument;
+import dev.triumphteam.cmd.core.argument.keyed.ArgumentKey;
 import dev.triumphteam.cmd.core.suggestion.SuggestionKey;
+import org.bukkit.Particle;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class CommandManager {
 
@@ -54,23 +55,46 @@ public class CommandManager {
 
         commandManager.registerSuggestion(SuggestionKey.of("players"), (sender, context) -> plugin.getServer().getOnlinePlayers().stream().map(Player::getName).toList());
 
-        commandManager.registerSuggestion(SuggestionKey.of("numbers"), (sender, context) -> {
+        commandManager.registerSuggestion(SuggestionKey.of("integers"), (sender, context) -> {
             final List<String> numbers = new ArrayList<>();
 
-            for (int i = 1; i <= 64; i++) numbers.add(String.valueOf(i));
+            for (int i = 1; i <= 10; i++) numbers.add(String.valueOf(i));
 
             return numbers;
         });
 
+        commandManager.registerSuggestion(SuggestionKey.of("doubles"), (sender, context) -> {
+            final List<String> numbers = new ArrayList<>();
+
+            for (int i = 1; i <= 15; i++) {
+                numbers.add(String.valueOf(i / 10.0));
+            }
+
+            return numbers;
+        });
+
+        commandManager.registerSuggestion(SuggestionKey.of("uuids"), (sender, context) -> {
+            final List<String> uuids = new ArrayList<>();
+
+            for (int i = 1; i <= 5; i++) {
+                uuids.add(UUID.randomUUID().toString());
+            }
+
+            return uuids;
+        });
+
+        commandManager.registerNamedArguments(ArgumentKey.of("bp_add"),
+                Argument.forType(ParticleKey.class).name("key").build(),
+                Argument.forType(Particle.class).name("particle").build(),
+                Argument.forInt().name("amount").build()
+        );
+
         commandManager.registerArgument(PlayerBuilder.class, (sender, context) -> new PlayerBuilder(context));
 
         List.of(
-                new CommandRemove(),
                 new CommandReload(),
-                new CommandStats(),
                 new CommandHelp(),
-                new CommandAdd(),
-                new CommandSet()
+                new CommandAdd()
         ).forEach(commandManager::registerCommand);
     }
 
