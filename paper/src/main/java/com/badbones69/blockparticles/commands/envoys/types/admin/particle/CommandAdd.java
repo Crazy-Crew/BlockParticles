@@ -2,8 +2,8 @@ package com.badbones69.blockparticles.commands.envoys.types.admin.particle;
 
 import com.badbones69.blockparticles.api.enums.Messages;
 import com.badbones69.blockparticles.api.enums.particles.ParticleKey;
-import com.badbones69.blockparticles.api.enums.particles.types.GenericParticle;
-import com.badbones69.blockparticles.api.enums.particles.types.SpiralParticle;
+import com.badbones69.blockparticles.api.builders.particles.types.GenericParticle;
+import com.badbones69.blockparticles.api.builders.particles.types.SpiralParticle;
 import com.badbones69.blockparticles.api.interfaces.IParticleBuilder;
 import com.badbones69.blockparticles.commands.envoys.BaseCommand;
 import com.badbones69.blockparticles.utils.ParticleUtil;

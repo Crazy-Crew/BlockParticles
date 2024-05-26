@@ -1,4 +1,4 @@
-package com.badbones69.blockparticles.api.enums.particles.types;
+package com.badbones69.blockparticles.api.builders.particles.types;
 
 import com.badbones69.blockparticles.api.enums.particles.ParticleKey;
 import com.badbones69.blockparticles.api.interfaces.IParticleBuilder;
