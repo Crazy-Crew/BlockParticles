@@ -12,15 +12,18 @@ public class CommandCancel extends BaseCommand {
 
     @Command("cancel")
     @Permission(value = "blockparticles.cancel", def = PermissionDefault.OP)
-    public void remove(Player player, @Suggestion("names") String id) {
+    public void remove(Player player, @Suggestion("ids") String id) {
+        // Get active particle!
         AbstractParticle task = this.particleLoader.getActiveParticle(id).getParticle();
 
+        // Check if null!
         if (task != null) {
-            player.sendRichMessage("<red>Task: " + task.getTaskId() + "</red>");
-
+            // Cancel task!
             task.cancel();
 
-            player.sendRichMessage("<red>Task Active: " + task.isCancelled());
+            // Remove from the hashset!
+            this.particleLoader.removeActiveParticle(id);
+
         }
     }
 }
