@@ -24,6 +24,7 @@ public class CommandCancel extends BaseCommand {
             // Remove from the hashset!
             this.particleLoader.removeActiveParticle(id);
 
+            //todo() if in locations.yml, also remove it!
         }
     }
 }
