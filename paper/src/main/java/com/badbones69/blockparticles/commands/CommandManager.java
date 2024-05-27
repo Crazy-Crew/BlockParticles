@@ -48,6 +48,8 @@ public class CommandManager {
 
         commandManager.registerSuggestion(SuggestionKey.of("names"), (sender, context) -> new ArrayList<>(particleLoader.getParticles().keySet()));
 
+        commandManager.registerSuggestion(SuggestionKey.of("ids"), (sender, context) -> new ArrayList<>(particleLoader.getActiveParticles().keySet()));
+
         commandManager.registerSuggestion(SuggestionKey.of("players"), (sender, context) -> plugin.getServer().getOnlinePlayers().stream().map(Player::getName).toList());
 
         commandManager.registerSuggestion(SuggestionKey.of("integers"), (sender, context) -> {
