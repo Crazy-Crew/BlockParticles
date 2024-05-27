@@ -139,6 +139,7 @@ public class ParticleLoader implements IParticleHandler {
     /**
      {@inheritDoc}
      */
+    //todo() check if the world the particle is in is null, if so add option to prune old locations.
     @Override
     public void saveParticleLocations() {
         // Get the configuration section.
