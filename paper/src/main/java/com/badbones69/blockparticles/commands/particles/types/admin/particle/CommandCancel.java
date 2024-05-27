@@ -5,7 +5,6 @@ import com.badbones69.blockparticles.tasks.particles.AbstractParticle;
 import dev.triumphteam.cmd.bukkit.annotation.Permission;
 import dev.triumphteam.cmd.core.annotations.Command;
 import dev.triumphteam.cmd.core.annotations.Suggestion;
-import io.papermc.paper.threadedregions.scheduler.ScheduledTask;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.PermissionDefault;
 
@@ -14,12 +13,14 @@ public class CommandCancel extends BaseCommand {
     @Command("cancel")
     @Permission(value = "blockparticles.cancel", def = PermissionDefault.OP)
     public void remove(Player player, @Suggestion("names") String id) {
-        AbstractParticle task = this.particleLoader.getBlockParticle(id).getParticle();
+        AbstractParticle task = this.particleLoader.getActiveParticle(id).getParticle();
 
         if (task != null) {
-            this.plugin.getLogger().warning("Task: " + task.getTaskId());
+            player.sendRichMessage("<red>Task: " + task.getTaskId() + "</red>");
 
             task.cancel();
+
+            player.sendRichMessage("<red>Task Active: " + task.isCancelled());
         }
     }
 }
