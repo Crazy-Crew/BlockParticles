@@ -24,7 +24,7 @@ public class CommandCreate extends BaseCommand {
             return;
         }
 
-        boolean isAdded = this.particleLoader.addBlockParticleLocation(name, block.getLocation());
+        boolean isAdded = this.particleLoader.addActiveParticle(id, name, block.getLocation());
 
         if (isAdded) {
             Messages.location_added.sendMessage(player, new HashMap<>() {{

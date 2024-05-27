@@ -34,7 +34,7 @@ public abstract class AbstractParticle extends FoliaRunnable {
         this.config = particle.getConfig();
         this.section = this.config.getSettings();
 
-        this.particleKey = ParticleUtil.getParticleByName(this.config.getParticleType());
+        this.particleKey = ParticleUtil.getParticleByName(this.config.getType());
 
         this.particle = ItemUtil.getParticleType(this.config.getParticleType());
     }

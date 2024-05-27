@@ -6,7 +6,6 @@ import com.badbones69.blockparticles.tasks.particles.ParticleConfig;
 import com.badbones69.blockparticles.tasks.particles.types.spiral.DoubleSpiralParticle;
 import com.badbones69.blockparticles.tasks.particles.types.spiral.SpiralParticle;
 import com.badbones69.blockparticles.utils.ParticleUtil;
-import org.jetbrains.annotations.Nullable;
 
 public class BlockParticle {
 
@@ -17,10 +16,10 @@ public class BlockParticle {
     public BlockParticle(ParticleConfig config) {
         this.config = config;
 
-        @Nullable ParticleKey type = ParticleUtil.getParticleByName(this.config.getType());
+        ParticleKey particleKey = ParticleUtil.getParticleByName(this.config.getType());
 
-        if (type != null) {
-            switch (type) {
+        if (particleKey != null) {
+            switch (particleKey) {
                 case DOUBLE_SPIRAL -> this.particle = new DoubleSpiralParticle(this);
                 case SPIRAL -> this.particle = new SpiralParticle(this);
             }

@@ -16,9 +16,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 import java.util.logging.Level;
 
 public class ParticleLoader implements IParticleHandler {
@@ -31,7 +29,7 @@ public class ParticleLoader implements IParticleHandler {
 
     private final Map<String, BlockParticle> particles = new HashMap<>();
 
-    private final Set<BlockParticle> activeParticles = new HashSet<>();
+    private final Map<String, BlockParticle> activeParticles = new HashMap<>();
 
     /**
      {@inheritDoc}
@@ -73,7 +71,39 @@ public class ParticleLoader implements IParticleHandler {
      {@inheritDoc}
      */
     @Override
-    public final boolean addBlockParticleLocation(String particleName, Location location) {
+    public final boolean removeActiveParticle(final String particleName) {
+        return this.activeParticles.remove(particleName) != null;
+    }
+
+    /**
+     {@inheritDoc}
+     */
+    @Override
+    public final BlockParticle getActiveParticle(final String particleName) {
+        return this.activeParticles.getOrDefault(particleName, null);
+    }
+
+    /**
+     {@inheritDoc}
+     */
+    @Override
+    public final boolean hasActiveParticle(final String particleName) {
+        return this.activeParticles.containsKey(particleName);
+    }
+
+    /**
+     {@inheritDoc}
+     */
+    @Override
+    public final Map<String, BlockParticle> getActiveParticles() {
+        return Collections.unmodifiableMap(this.activeParticles);
+    }
+
+    /**
+     {@inheritDoc}
+     */
+    @Override
+    public final boolean addActiveParticle(final String id, final String particleName, final Location location) {
         final BlockParticle blockParticle = getBlockParticle(particleName);
 
         final AbstractParticle abstractParticle = getBlockParticle(particleName).getParticle();
@@ -81,7 +111,7 @@ public class ParticleLoader implements IParticleHandler {
         abstractParticle.setLocation(location);
         abstractParticle.execute();
 
-        this.activeParticles.add(blockParticle);
+        this.activeParticles.put(id, blockParticle);
 
         return false;
     }
@@ -117,37 +147,48 @@ public class ParticleLoader implements IParticleHandler {
         for (String id : section.getKeys(false)) {
             final ConfigurationSection particle = section.getConfigurationSection(id);
 
+            // Check if the file has an active particle.
             if (hasBlockParticle(id, true)) {
-                final BlockParticle type = this.particles.get(id);
+                final BlockParticle type = this.activeParticles.get(id);
 
                 final AbstractParticle key = type.getParticle();
 
-                // Update the particle name from `particles` directory!
-                particle.set("particle-type", id);
+                final String locationKey = particle.getString("key");
 
-                // "key" is the location data, We are simply updating the location!
-                particle.set("key", key.asString());
+                // Only update the location if they are different.
+                if (locationKey != null && !locationKey.equals(key.asString())) {
+                    // "key" is the location data, We are simply updating the location!
+                    particle.set("key", key.asString());
+                }
+
+                final String particleType = particle.getString("type");
+
+                // Only update the particle name if it is different.
+                if (particleType != null && !particleType.equals(key.getParticleKey().getParticleName())) {
+                    // Update the particle type as the file name might not always be the same!
+                    particle.set("type", key.getParticleKey().getParticleName());
+                }
 
                 // Save the file after each edit!
                 this.file.save();
             }
         }
 
-        this.plugin.getLogger().warning("Size: " + this.particles.size());
-
         // We only loop through this after the above check. This means the id does not exist, so we are adding it.
-        for (final BlockParticle particle : this.particles.values()) {
-            final String fileName = particle.getConfig().getFileName();
+        for (final String id : this.activeParticles.keySet()) {
+            final BlockParticle particle = this.activeParticles.get(id);
 
-            this.plugin.getLogger().warning("File: " + fileName);
-
+            // Get the abstract particle.
             final AbstractParticle key = particle.getParticle();
 
-            // Set the particle name from `particles` directory!
-            section.set(fileName + ".particle-type", fileName);
+            // Set the particle type as the file name might not always be the same!
+            section.set(id + ".type", key.getParticleKey().getParticleName());
 
-            // "key" is the location data, We are simply updating the location!
-            section.set(fileName + ".key", key.asString());
+            // Set the particle name from the `particles` directory!
+            section.set(id + ".file", particle.getConfig().getFileName());
+
+            // "key" is the location data, We are simply setting the location!
+            section.set(id + ".key", key.asString());
 
             // Save the file after each edit!
             this.file.save();

@@ -19,12 +19,43 @@ public interface IParticleHandler {
     void reload();
 
     /**
-     * Adds a {@link BlockParticle} to the map.
+     * Adds an active {@link BlockParticle} to the map.
      *
+     * @param id the id to write to the locations.yml
      * @param particleName the name of the {@link BlockParticle}
      * @param location the {@link Location}
      */
-    boolean addBlockParticleLocation(final String particleName, final Location location);
+    boolean addActiveParticle(final String id, final String particleName, final Location location);
+
+    /**
+     * Removes an active {@link BlockParticle} to the map.
+     *
+     * @param particleName the name of the {@link BlockParticle}
+     */
+    boolean removeActiveParticle(final String particleName);
+
+    /**
+     * Gets an active {@link BlockParticle} from the {@link HashMap}.
+     *
+     * @param particleName the name of the {@link BlockParticle}
+     * @return the {@link BlockParticle}
+     */
+    BlockParticle getActiveParticle(final String particleName);
+
+    /**
+     * Checks if an active {@link BlockParticle} {@link Location} already exists.
+     *
+     * @param particleName the name of the {@link BlockParticle}
+     * @return true or false
+     */
+    boolean hasActiveParticle(final String particleName);
+
+    /**
+     * Gets a map of active {@link BlockParticle}
+     *
+     * @return the map of {@link BlockParticle}
+     */
+    Map<String, BlockParticle> getActiveParticles();
 
     /**
      * Adds a {@link BlockParticle} to the {@link HashMap}.
