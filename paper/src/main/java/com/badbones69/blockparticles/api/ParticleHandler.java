@@ -2,39 +2,39 @@ package com.badbones69.blockparticles.api;
 
 import ch.jalu.configme.SettingsManager;
 import com.badbones69.blockparticles.BlockParticles;
-import com.badbones69.blockparticles.api.builders.particles.types.GenericParticle;
-import com.badbones69.blockparticles.api.builders.particles.types.SpiralParticle;
+import com.badbones69.blockparticles.Server;
 import com.badbones69.blockparticles.api.enums.CustomFiles;
 import com.badbones69.blockparticles.api.enums.particles.ParticleKey;
 import com.badbones69.blockparticles.api.interfaces.IParticleBuilder;
-import com.badbones69.blockparticles.api.interfaces.IParticleHandler;
 import com.badbones69.blockparticles.config.ConfigManager;
 import com.badbones69.blockparticles.config.impl.ConfigKeys;
-import com.badbones69.blockparticles.utils.ParticleUtil;
 import com.ryderbelserion.vital.core.config.YamlFile;
-import com.ryderbelserion.vital.paper.util.ItemUtil;
+import com.ryderbelserion.vital.core.config.YamlManager;
+import com.ryderbelserion.vital.core.config.objects.CustomFile;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.World;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.Nullable;
 import org.simpleyaml.configuration.ConfigurationSection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-public class ParticleHandler implements IParticleHandler {
+public class ParticleHandler {
 
     private final BlockParticles plugin = JavaPlugin.getPlugin(BlockParticles.class);
+    private final Server server = this.plugin.getPaperServer();
 
-    private final Map<String, IParticleBuilder> particles = new HashMap<>();
-
+    private final YamlManager yamlManager = ConfigManager.getYamlManager();
     private final SettingsManager config = ConfigManager.getConfig();
 
     private final CustomFiles file = CustomFiles.data;
-
     private final YamlFile data = this.file.getYamlFile();
 
-    @Override
+    private final Map<String, IParticleBuilder> particles = new HashMap<>();
+
     public void load(boolean isServerStart) {
         // Get the configuration section.
         final ConfigurationSection section = this.data.getConfigurationSection("locations");
@@ -116,8 +116,20 @@ public class ParticleHandler implements IParticleHandler {
         // Clear old particles.
         this.particles.clear();
 
+        for (final String particleName : List.of("beans", "x2")) {
+            try {
+                final @Nullable CustomFile customFile = this.yamlManager.getCustomFile(particleName);
+
+                if (customFile == null) return;
+
+
+            } catch (Exception exception) {
+                this.plugin.getLogger().warning("There was an error while loading " + particleName + ".yml");
+            }
+        }
+
         // Check if section is null.
-        if (section != null) {
+        /*if (section != null) {
             // Loop through section.
             for (final String id : section.getKeys(false)) {
                 // Get the location key.
@@ -158,30 +170,23 @@ public class ParticleHandler implements IParticleHandler {
                     addParticleLocation(id, count, size, particleKey, section.getString(id + ".particle", Particle.NAUTILUS.getKey().getKey()), new Location(world, x, y, z));
                 }
             }
-        }
+        }*/
     }
 
-    /**
-     {@inheritDoc}
-     */
-    @Override
     public void reload() {
         saveParticleLocations();
 
         load(false);
     }
 
-    /**
-     {@inheritDoc}
-     */
-    @Override
+
     public void addParticleLocation(final String id, final int count, final int size, final ParticleKey particleKey, final String particle, final Location location) {
         IParticleBuilder builder = null;
 
         switch (particleKey) {
-            case GENERIC -> builder = new GenericParticle(id, count, particleKey, ItemUtil.getParticleType(particle), location.add(0.5, 1.0, 0.5));
+            //case GENERIC -> builder = new GenericParticle(id, count, particleKey, ItemUtil.getParticleType(particle), location.add(0.5, 1.0, 0.5));
 
-            case SPIRAL, DOUBLE_SPIRAL -> builder = new SpiralParticle(id, count, size, 0, 0.0, particleKey, ItemUtil.getParticleType(particle), location.add(0.5, 1.1, 0.5));
+            //case SPIRAL, DOUBLE_SPIRAL -> builder = new SpiralParticle(id, count, size, 0, 0.0, particleKey, ItemUtil.getParticleType(particle), location.add(0.5, 1.1, 0.5));
         }
 
         // Don't add the particle location twice!
@@ -192,17 +197,13 @@ public class ParticleHandler implements IParticleHandler {
         this.particles.put(id, builder);
     }
 
-    @Override
     public void addParticleLocation(final IParticleBuilder builder) {
         String id = builder.getId();
 
         this.particles.put(id, builder.execute());
     }
 
-    /**
-     {@inheritDoc}
-     */
-    @Override
+
     public void removeParticleLocation(final String id) {
         final IParticleBuilder type = this.particles.remove(id);
 
@@ -221,10 +222,6 @@ public class ParticleHandler implements IParticleHandler {
         }
     }
 
-    /**
-     {@inheritDoc}
-     */
-    @Override
     public boolean hasParticleLocation(final String id, final boolean readFile) {
         if (readFile) {
             return this.data.contains("locations." + id);
@@ -233,18 +230,10 @@ public class ParticleHandler implements IParticleHandler {
         return this.particles.containsKey(id);
     }
 
-    /**
-     {@inheritDoc}
-     */
-    @Override
     public boolean hasParticleLocation(final String id) {
         return hasParticleLocation(id, false);
     }
 
-    /**
-     {@inheritDoc}
-     */
-    @Override
     public void saveParticleLocations() {
         // Get the configuration section.
         final ConfigurationSection section = this.data.getConfigurationSection("locations");
@@ -289,10 +278,6 @@ public class ParticleHandler implements IParticleHandler {
         }
     }
 
-    /**
-     {@inheritDoc}
-     */
-    @Override
     public final Map<String, IParticleBuilder> getParticles() {
         return Collections.unmodifiableMap(this.particles);
     }

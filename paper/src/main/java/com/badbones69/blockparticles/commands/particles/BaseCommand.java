@@ -1,7 +1,7 @@
-package com.badbones69.blockparticles.commands.envoys;
+package com.badbones69.blockparticles.commands.particles;
 
 import com.badbones69.blockparticles.BlockParticles;
-import com.badbones69.blockparticles.api.ParticleHandler;
+import com.badbones69.blockparticles.tasks.ParticleLoader;
 import dev.triumphteam.cmd.core.annotations.Command;
 import dev.triumphteam.cmd.core.annotations.Description;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -13,6 +13,6 @@ public abstract class BaseCommand {
 
     protected @NotNull final BlockParticles plugin = JavaPlugin.getPlugin(BlockParticles.class);
 
-    protected @NotNull final ParticleHandler particleHandler = this.plugin.getParticleHandler();
+    protected @NotNull final ParticleLoader particleLoader = this.plugin.getParticleLoader();
 
 }

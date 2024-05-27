@@ -1,14 +1,14 @@
-particle:
+settings:
   # The shape it will take i.e. Spiral or DoubleSpiral
   type: 'DoubleSpiral'
   # The settings related to the Minecraft particle.
   particle:
     # The type of particle to show.
-    type: 'Flame'
+    type: 'flame'
     # The amount of particles to show.
     amount: 5
   # Only works with Spiral/DoubleSpiral
-  inner-spiral:
+  inner-radius:
     # How large should the first layer be?
     radius: 3
     # The height separation for the first layer of the DoubleSpiral.
@@ -16,6 +16,6 @@ particle:
   # Only works with DoubleSpiral
   outer-radius:
     # How large should the second layer be?
-    radius: 3
+    radius: 5
     # The height separation for the second layer of the DoubleSpiral.
-    y-level: 0.5
+    y-level: 0.8

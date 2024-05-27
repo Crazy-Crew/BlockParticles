@@ -50,7 +50,7 @@ public class ConfigManager {
         locale(config.getProperty(ConfigKeys.locale_file) + ".yml");
 
         // Add files
-        yamlManager.addFile("config.yml").addFile("data.yml").init();
+        yamlManager.addFolder("particles").addFile("config.yml").addFile("data.yml").init();
     }
 
     /**

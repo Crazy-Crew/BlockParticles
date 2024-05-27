@@ -1,12 +1,13 @@
 package com.badbones69.blockparticles.commands;
 
 import com.badbones69.blockparticles.BlockParticles;
-import com.badbones69.blockparticles.api.ParticleHandler;
 import com.badbones69.blockparticles.api.enums.particles.ParticleKey;
-import com.badbones69.blockparticles.commands.envoys.types.admin.CommandReload;
-import com.badbones69.blockparticles.commands.envoys.types.admin.particle.CommandAdd;
-import com.badbones69.blockparticles.commands.envoys.types.player.CommandHelp;
+import com.badbones69.blockparticles.commands.particles.types.admin.CommandReload;
+import com.badbones69.blockparticles.commands.particles.types.admin.particle.CommandCancel;
+import com.badbones69.blockparticles.commands.particles.types.admin.particle.CommandCreate;
+import com.badbones69.blockparticles.commands.particles.types.player.CommandHelp;
 import com.badbones69.blockparticles.commands.relations.ArgumentRelations;
+import com.badbones69.blockparticles.tasks.ParticleLoader;
 import com.ryderbelserion.vital.paper.builders.PlayerBuilder;
 import dev.triumphteam.cmd.bukkit.BukkitCommandManager;
 import dev.triumphteam.cmd.core.argument.keyed.Argument;
@@ -25,7 +26,7 @@ public class CommandManager {
 
     private final static @NotNull BlockParticles plugin = JavaPlugin.getPlugin(BlockParticles.class);
 
-    private final static @NotNull ParticleHandler particleHandler = plugin.getParticleHandler();
+    private final static @NotNull ParticleLoader particleLoader = plugin.getParticleLoader();
 
     private final static @NotNull BukkitCommandManager<CommandSender> commandManager = BukkitCommandManager.create(plugin);
 
@@ -45,13 +46,7 @@ public class CommandManager {
             return completions;
         });
 
-        commandManager.registerSuggestion(SuggestionKey.of("ids"), (sender, context) -> {
-            List<String> completions = new ArrayList<>();
-
-            particleHandler.getParticles().keySet().forEach(particle -> completions.add(particle.toLowerCase()));
-
-            return completions;
-        });
+        commandManager.registerSuggestion(SuggestionKey.of("names"), (sender, context) -> new ArrayList<>(particleLoader.getParticles().keySet()));
 
         commandManager.registerSuggestion(SuggestionKey.of("players"), (sender, context) -> plugin.getServer().getOnlinePlayers().stream().map(Player::getName).toList());
 
@@ -92,9 +87,11 @@ public class CommandManager {
         commandManager.registerArgument(PlayerBuilder.class, (sender, context) -> new PlayerBuilder(context));
 
         List.of(
+                new CommandCreate(),
+                new CommandCancel(),
                 new CommandReload(),
-                new CommandHelp(),
-                new CommandAdd()
+                new CommandHelp()
+                //new CommandAdd()
         ).forEach(commandManager::registerCommand);
     }
 

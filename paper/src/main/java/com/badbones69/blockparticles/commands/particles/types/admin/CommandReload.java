@@ -1,7 +1,7 @@
-package com.badbones69.blockparticles.commands.envoys.types.admin;
+package com.badbones69.blockparticles.commands.particles.types.admin;
 
 import com.badbones69.blockparticles.api.enums.Messages;
-import com.badbones69.blockparticles.commands.envoys.BaseCommand;
+import com.badbones69.blockparticles.commands.particles.BaseCommand;
 import com.badbones69.blockparticles.config.ConfigManager;
 import dev.triumphteam.cmd.bukkit.annotation.Permission;
 import dev.triumphteam.cmd.core.annotations.Command;
@@ -16,8 +16,7 @@ public class CommandReload extends BaseCommand {
         // Refresh the config files.
         ConfigManager.refresh();
 
-        // Reload the particles.
-        this.particleHandler.reload();
+        this.particleLoader.load(false);
 
         // Send the message.
         Messages.reloaded.sendMessage(sender);

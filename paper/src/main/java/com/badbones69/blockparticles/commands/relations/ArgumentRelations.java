@@ -16,7 +16,7 @@ public class ArgumentRelations extends MessageManager {
 
         switch (command) {
             case "remove" -> usage = order + " [id]";
-            case "add" -> usage = order + " [id] [type] [particle] [count] <size>";
+            case "create" -> usage = order + " [id] [particle]";
             case "set" -> usage = order + " [id] [type]";
         }
 

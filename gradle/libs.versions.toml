@@ -13,7 +13,7 @@ oraxen = "1.171.0"
 # Core
 annotations = "24.1.0"
 gson = "2.10.1"
-vital = "1.4"
+vital = "1.5"
 
 decentholograms = "2.8.8"
 fancyholograms = "2.0.6"

@@ -1,6 +1,6 @@
-package com.badbones69.blockparticles.commands.envoys.types.admin.particle;
+package com.badbones69.blockparticles.commands.particles.types.admin.particle;
 
-import com.badbones69.blockparticles.commands.envoys.BaseCommand;
+import com.badbones69.blockparticles.commands.particles.BaseCommand;
 import dev.triumphteam.cmd.bukkit.annotation.Permission;
 import dev.triumphteam.cmd.core.annotations.Command;
 import dev.triumphteam.cmd.core.annotations.Suggestion;

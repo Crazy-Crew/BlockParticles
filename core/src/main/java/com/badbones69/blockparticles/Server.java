@@ -3,18 +3,22 @@ package com.badbones69.blockparticles;
 import com.badbones69.blockparticles.config.ConfigManager;
 import com.badbones69.blockparticles.config.impl.ConfigKeys;
 import com.ryderbelserion.vital.core.AbstractPlugin;
+import com.ryderbelserion.vital.core.util.FileUtil;
 import org.jetbrains.annotations.NotNull;
 import java.io.File;
+import java.util.List;
 import java.util.logging.Logger;
 
 public class Server extends AbstractPlugin {
 
     private final File directory;
+    private final File particles;
     private final Logger logger;
     private boolean isLogging;
 
     public Server(@NotNull final File directory, @NotNull final Logger logger) {
         this.directory = directory;
+        this.particles = new File(this.directory, "particles");
         this.logger = logger;
     }
 
@@ -43,6 +47,20 @@ public class Server extends AbstractPlugin {
     }
 
     /**
+     * @return the particles directory
+     */
+    public @NotNull final File getParticleFolder() {
+        return this.particles;
+    }
+
+    /**
+     * @return a list of particle files
+     */
+    public final List<File> getParticleFiles() {
+        return FileUtil.getFileObjects(getDirectory().toPath(), "particles", ".yml");
+    }
+
+    /**
      * @return the plugin logger
      */
     @Override
@@ -51,7 +69,7 @@ public class Server extends AbstractPlugin {
     }
 
     @Override
-    public boolean isLogging() {
+    public final boolean isLogging() {
         return this.isLogging;
     }
 }

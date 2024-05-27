@@ -1,7 +1,9 @@
 package com.badbones69.blockparticles.api.interfaces;
 
 import com.badbones69.blockparticles.api.enums.particles.ParticleKey;
+import com.badbones69.blockparticles.tasks.api.objects.BlockParticle;
 import org.bukkit.Location;
+import java.util.HashMap;
 import java.util.Map;
 
 public interface IParticleHandler {
@@ -17,55 +19,63 @@ public interface IParticleHandler {
     void reload();
 
     /**
-     * Adds a particle to the map.
+     * Adds a {@link BlockParticle} to the map.
      *
-     * @param id the id to identify the particle
-     * @param particle the type of particle
+     * @param particleName the name of the {@link BlockParticle}
      * @param location the {@link Location}
      */
-    void addParticleLocation(final String id, final int count, final int size, final ParticleKey particleKey, final String particle, final Location location);
+    boolean addBlockParticleLocation(final String particleName, final Location location);
 
     /**
-     * Adds a particle to the map.
+     * Adds a {@link BlockParticle} to the {@link HashMap}.
      *
-     * @param builder the particle builder
+     * @param particleName the name of the {@link BlockParticle}
+     * @param particle the {@link BlockParticle}
      */
-    void addParticleLocation(IParticleBuilder builder);
+    boolean addBlockParticle(final String particleName, final BlockParticle particle);
 
     /**
-     * Removes a particle from the map.
+     * Gets a {@link BlockParticle} from the {@link HashMap}.
      *
-     * @param id the id of the particle
+     * @param particleName the name of the {@link BlockParticle}
+     * @return the {@link BlockParticle}
      */
-    void removeParticleLocation(final String id);
+    BlockParticle getBlockParticle(final String particleName);
 
     /**
-     * Checks if a particle location already exists.
+     * Removes a {@link BlockParticle} from the {@link HashMap}
      *
-     * @param id the id of the particle
+     * @param particleName the name of the {@link BlockParticle}
+     */
+    void removeBlockParticle(final String particleName);
+
+    /**
+     * Checks if a {@link BlockParticle} {@link Location} already exists.
+     *
+     * @param particleName the name of the {@link BlockParticle}
      * @param readFile true or false
      * @return true or false
      */
-    boolean hasParticleLocation(final String id, boolean readFile);
+    boolean hasBlockParticle(final String particleName, boolean readFile);
 
     /**
-     * Checks if a particle location already exists.
+     * Checks if a {@link BlockParticle} {@link Location} already exists.
      *
-     * @param id the id of the particle
+     * @param particleName the name of the {@link BlockParticle}
      * @return true or false
      */
-    boolean hasParticleLocation(final String id);
+    boolean hasBlockParticle(final String particleName);
 
     /**
-     * Saves particle locations to file
+     * Saves {@link BlockParticle} locations to file
      */
     void saveParticleLocations();
 
     /**
-     * A map of currently active particle locations.
+     * Gets a map of {@link BlockParticle}
      *
-     * @return a map of active particle locations
+     * @return the map of {@link BlockParticle}
      */
-    Map<String, IParticleBuilder> getParticles();
+    Map<String, BlockParticle> getParticles();
 
 }
