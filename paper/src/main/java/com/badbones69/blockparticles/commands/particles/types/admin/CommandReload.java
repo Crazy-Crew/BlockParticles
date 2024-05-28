@@ -16,7 +16,8 @@ public class CommandReload extends BaseCommand {
         // Refresh the config files.
         ConfigManager.refresh();
 
-        this.particleLoader.reload();
+        // Reloads the particles.
+        this.manager.reload();
 
         // Send the message.
         Messages.reloaded.sendMessage(sender);

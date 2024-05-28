@@ -3,8 +3,9 @@ package com.badbones69.blockparticles.utils;
 import com.badbones69.blockparticles.api.enums.particles.ParticleKey;
 import com.badbones69.blockparticles.api.enums.particles.ParticleType;
 import com.badbones69.blockparticles.tasks.particles.AbstractParticle;
-import com.badbones69.blockparticles.tasks.particles.types.spiral.DoubleSpiralParticle;
-import com.badbones69.blockparticles.tasks.particles.types.spiral.SpiralParticle;
+import com.badbones69.blockparticles.api.objects.BlockParticle;
+import com.badbones69.blockparticles.api.types.spiral.DoubleSpiral;
+import com.badbones69.blockparticles.api.types.spiral.Spiral;
 import org.bukkit.Location;
 import org.jetbrains.annotations.Nullable;
 import java.util.Arrays;
@@ -17,13 +18,15 @@ public class ParticleUtil {
      *
      * @param particle the {@link AbstractParticle}
      * @param location the {@link Location} of the {@link org.bukkit.Particle}
-     * @param inner the size of the {@link SpiralParticle}
-     * @param innerHeight the height of the {@link SpiralParticle}
-     * @param outer the size of the {@link DoubleSpiralParticle}
-     * @param outerHeight the height of the {@link DoubleSpiralParticle}
+     * @param inner the size of the {@link Spiral}
+     * @param innerHeight the height of the {@link Spiral}
+     * @param outer the size of the {@link DoubleSpiral}
+     * @param outerHeight the height of the {@link DoubleSpiral}
      */
-    public static void circle(final AbstractParticle particle, final Location location, final int inner, final double innerHeight, final int outer, final double outerHeight) {
-        boolean isDoubleSpiral = particle.getParticleKey() == ParticleKey.DOUBLE_SPIRAL;
+    public static void circle(final BlockParticle particle, final Location location, final int inner, final double innerHeight, final int outer, final double outerHeight) {
+        final boolean isDoubleSpiral = particle.getConfig().getParticleKey() == ParticleKey.DOUBLE_SPIRAL;
+
+        final AbstractParticle abstractParticle = particle.getParticle();
 
         // Check if it's double spiral
         if (isDoubleSpiral && outer > 0) {
@@ -37,7 +40,7 @@ public class ParticleUtil {
                     location.setY(loc.y() + outerHeight);
                 }
 
-                particle.spawnParticle(loc);
+                abstractParticle.spawnParticle(loc);
             }
         }
 
@@ -51,7 +54,7 @@ public class ParticleUtil {
                 location.setY(loc.y() + innerHeight);
             }
 
-            particle.spawnParticle(loc);
+            abstractParticle.spawnParticle(loc);
         }
     }
 
@@ -61,8 +64,8 @@ public class ParticleUtil {
      * @param particle the {@link AbstractParticle}
      * @param inner the size of the inner spiral
      */
-    public static void circle(final AbstractParticle particle, final int inner, final int innerHeight) {
-        circle(particle, particle.getLocation(), inner, innerHeight, inner, 0.0);
+    public static void circle(final BlockParticle particle, final int inner, final int innerHeight) {
+        circle(particle, particle.getParticle().getLocation().clone(), inner, innerHeight, inner, 0.0);
     }
 
     /**

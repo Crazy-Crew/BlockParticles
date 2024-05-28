@@ -1,15 +1,15 @@
 package com.badbones69.blockparticles;
 
 import com.badbones69.blockparticles.commands.CommandManager;
-import com.badbones69.blockparticles.tasks.ParticleLoader;
+import com.badbones69.blockparticles.tasks.particles.ParticleManager;
 import com.ryderbelserion.vital.paper.VitalPaper;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class BlockParticles extends JavaPlugin {
 
+    private ParticleManager particleManager;
     private Server paperServer;
-    private ParticleLoader particleLoader;
-    
+
     @Override
     public void onEnable() {
         new VitalPaper(this);
@@ -17,8 +17,8 @@ public class BlockParticles extends JavaPlugin {
         this.paperServer = new Server(getDataFolder(), getLogger());
         this.paperServer.apply();
 
-        this.particleLoader = new ParticleLoader();
-        this.particleLoader.load(false);
+        this.particleManager = new ParticleManager();
+        this.particleManager.load(true);
 
         CommandManager.load();
     }
@@ -28,8 +28,8 @@ public class BlockParticles extends JavaPlugin {
         super.onDisable();
     }
 
-    public final ParticleLoader getParticleLoader() {
-        return this.particleLoader;
+    public final ParticleManager getParticleManager() {
+        return this.particleManager;
     }
 
     public final Server getPaperServer() {

@@ -1,6 +1,6 @@
 package com.badbones69.blockparticles.hooks;
 
-import com.badbones69.blockparticles.Methods;
+import com.badbones69.blockparticles.utils.MiscUtil;
 import com.ryderbelserion.vital.paper.enums.Support;
 import me.arcaniax.hdb.api.HeadDatabaseAPI;
 import org.bukkit.inventory.ItemStack;
@@ -18,6 +18,6 @@ public class HeadDatabaseHook {
             return headDatabaseAPI.getItemHead(head);
         }
         
-        return Methods.getPlayerHead(head);
+        return MiscUtil.getPlayerHead(head);
     }
 }

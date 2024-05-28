@@ -1,12 +1,9 @@
 package com.badbones69.blockparticles.tasks.particles;
 
-
 import com.badbones69.blockparticles.BlockParticles;
-import com.badbones69.blockparticles.api.enums.particles.ParticleKey;
-import com.badbones69.blockparticles.tasks.api.objects.BlockParticle;
+import com.badbones69.blockparticles.api.objects.BlockParticle;
 import com.badbones69.blockparticles.utils.LocationUtil;
-import com.badbones69.blockparticles.utils.ParticleUtil;
-import com.ryderbelserion.vital.paper.util.ItemUtil;
+import com.badbones69.blockparticles.api.config.ParticleConfig;
 import com.ryderbelserion.vital.paper.util.scheduler.FoliaRunnable;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -20,67 +17,49 @@ public abstract class AbstractParticle extends FoliaRunnable {
 
     protected final BlockParticles plugin = JavaPlugin.getPlugin(BlockParticles.class);
 
-    protected final ParticleConfig config;
-
     protected final ConfigurationSection section;
 
-    protected final ParticleKey particleKey;
-
-    protected final Particle particle;
+    protected final ParticleConfig config;
 
     public AbstractParticle(final BlockParticle particle) {
         super(Bukkit.getServer().getGlobalRegionScheduler());
 
         this.config = particle.getConfig();
         this.section = this.config.getSettings();
-
-        this.particleKey = ParticleUtil.getParticleByName(this.config.getType());
-
-        this.particle = ItemUtil.getParticleType(this.config.getParticleType());
     }
-
-    protected boolean isCancelled = false;
-    protected Location location;
-    protected World world;
 
     public abstract void execute();
 
-    /**
-     * This will cancel the task!
-     */
-    @Override
-    public void cancel() {
-        super.cancel();
-
-        this.isCancelled = true;
-    }
+    private Location location;
+    private World world;
 
     /**
-     * Checks if players are near a {@link BlockParticle} with a specific range.
-     *
-     * @param range the range around a {@link Location}
-     * @return true or false
-     */
-    protected final boolean isPlayerPresent(final int range) {
-        return this.location.getNearbyPlayers(range, range, range).isEmpty();
-    }
-
-    /**
-     * Spawns a {@link Particle} at a specific location with a vector.
+     * Spawns a {@link Particle} at a specific {@link Location}!
      *
      * @param location the {@link Location} to spawn the particle
      */
     public void spawnParticle(Location location) {
-        this.world.spawnParticle(this.particle, location, this.config.getParticleAmount(), 0, 0, 0, 0);
+        Particle particle = this.config.getParticleType();
+
+        if (particle != null) {
+            int amount = this.config.getParticleAmount();
+
+            this.world.spawnParticle(particle, location, amount, 0, 0, 0, 0);
+        }
     }
 
     /**
-     * Spawns a {@link Particle} at a specific location with a vector.
+     * Spawns a {@link Particle} at a specific the {@link Location}!
      */
     public void spawnParticle() {
         spawnParticle(this.location);
     }
 
+    /**
+     * Sets the {@link Location} for the particle!
+     *
+     * @param location the {@link Location}
+     */
     public void setLocation(@NotNull final Location location) {
         this.location = location;
 
@@ -94,11 +73,17 @@ public abstract class AbstractParticle extends FoliaRunnable {
         return LocationUtil.location(this.location);
     }
 
+    /**
+     * @return the {@link Location}
+     */
     public final Location getLocation() {
         return this.location;
     }
 
-    public final ParticleKey getParticleKey() {
-        return this.particleKey;
+    /**
+     * @return the {@link World}
+     */
+    public final World getWorld() {
+        return this.world;
     }
 }

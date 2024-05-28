@@ -12,15 +12,16 @@ public class ArgumentRelations extends MessageManager {
     private String getContext(String command, String order) {
         if (command.isEmpty() || order.isEmpty()) return "";
 
-        String usage = "";
+        //String usage = "";
 
-        switch (command) {
-            case "remove" -> usage = order + " [id]";
-            case "create" -> usage = order + " [id] [particle]";
-            case "set" -> usage = order + " [id] [type]";
-        }
+        //switch (command) {
+        //    case "remove" -> usage = order + " [id]";
+        //    case "create" -> usage = order + " [id] [particle]";
+        //    case "set" -> usage = order + " [id] [type]";
+        //}
 
-        return usage;
+        //return usage;
+        return "";
     }
 
     @Override

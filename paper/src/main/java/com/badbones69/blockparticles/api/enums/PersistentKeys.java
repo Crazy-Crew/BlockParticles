@@ -6,7 +6,6 @@ import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
-@SuppressWarnings("rawtypes")
 public enum PersistentKeys {
 
     no_firework_damage("firework", PersistentDataType.BOOLEAN),

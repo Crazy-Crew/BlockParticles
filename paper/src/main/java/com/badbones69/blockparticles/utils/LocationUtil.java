@@ -1,5 +1,6 @@
 package com.badbones69.blockparticles.utils;
 
+import com.badbones69.blockparticles.api.objects.BlockParticle;
 import org.bukkit.Location;
 import org.jetbrains.annotations.NotNull;
 
@@ -26,5 +27,15 @@ public class LocationUtil {
      */
     public static @NotNull String location(@NotNull final Location location) {
         return location(location, false);
+    }
+
+    /**
+     * Checks if players are near a {@link BlockParticle} with a specific range.
+     *
+     * @param range the range around a {@link Location}
+     * @return true or false
+     */
+    public static boolean isPlayerPresent(final Location location, final int range) {
+        return location.getNearbyPlayers(range, range, range).isEmpty();
     }
 }

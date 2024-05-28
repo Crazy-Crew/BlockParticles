@@ -1,4 +1,4 @@
-package com.badbones69.blockparticles.commands.particles.types.admin.particle;
+package com.badbones69.blockparticles.commands.particles.types.admin;
 
 import com.badbones69.blockparticles.api.enums.Messages;
 import com.badbones69.blockparticles.commands.particles.BaseCommand;
@@ -11,11 +11,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.permissions.PermissionDefault;
 import java.util.HashMap;
 
-public class CommandCreate extends BaseCommand {
+public class CommandSet extends BaseCommand {
 
-    @Command("create")
-    @Permission(value = "blockparticles.create", def = PermissionDefault.OP)
-    public void add(Player player, @Suggestion("uuids") String id, @Suggestion("names") String name) {
+    @Command("set")
+    @Permission(value = "blockparticles.set", def = PermissionDefault.OP)
+    public void set(Player player, @Suggestion("ids") String id, @Suggestion("files") String file) {
         final Block block = player.getTargetBlockExact(player.getViewDistance());
 
         if (block == null || block.getType() == Material.AIR) {
@@ -24,7 +24,7 @@ public class CommandCreate extends BaseCommand {
             return;
         }
 
-        boolean isAdded = this.particleLoader.addActiveParticle(id, name, block.getLocation());
+        boolean isAdded = this.manager.addActiveParticle(id, file, block.getLocation());
 
         if (isAdded) {
             Messages.location_added.sendMessage(player, new HashMap<>() {{

@@ -1,10 +1,14 @@
-package com.badbones69.blockparticles.tasks.particles;
+package com.badbones69.blockparticles.api.config;
 
-import com.badbones69.blockparticles.BlockParticles;
+import com.badbones69.blockparticles.utils.ParticleUtil;
 import com.badbones69.blockparticles.api.enums.particles.ParticleKey;
+import com.badbones69.blockparticles.BlockParticles;
 import com.ryderbelserion.vital.core.config.YamlFile;
+import com.ryderbelserion.vital.paper.util.ItemUtil;
+import org.bukkit.Particle;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.simpleyaml.configuration.ConfigurationSection;
 import java.io.File;
 
@@ -39,8 +43,8 @@ public class ParticleConfig extends YamlFile {
      *
      * @return the {@link org.bukkit.Particle}
      */
-    public final String getParticleType() {
-        return getSettings().getString("particle.type", "Flame");
+    public final @Nullable Particle getParticleType() {
+        return ItemUtil.getParticleType(getSettings().getString("particle.type", "flame"));
     }
 
     /**
@@ -57,8 +61,8 @@ public class ParticleConfig extends YamlFile {
      *
      * @return the shape the {@link ParticleKey} will take
      */
-    public final String getType() {
-        return getSettings().getString("type", "Generic");
+    public final ParticleKey getParticleKey() {
+        return ParticleUtil.getParticleByName(getSettings().getString("type", "Generic"));
     }
 
     /**
