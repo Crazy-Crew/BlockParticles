@@ -30,28 +30,28 @@ public class ParticleUtil {
 
         // Check if it's double spiral
         if (isDoubleSpiral && outer > 0) {
-            for (int key = 0; key <= 30; key += 1) {
-                final Location loc = location.clone();
-
-                loc.setX(loc.x() + cos(key, outer));
-                loc.setZ(loc.z() + sin(key, outer));
-
-                if (outerHeight > 0.0) {
-                    location.setY(loc.y() + outerHeight);
-                }
-
-                abstractParticle.spawnParticle(loc);
-            }
+            modify(location, outer, outerHeight, abstractParticle);
         }
 
+        modify(location, inner, innerHeight, abstractParticle);
+    }
+
+    /**
+     * Spawns the particle!
+     *
+     * @param location the {@link Location} of the {@link org.bukkit.Particle}
+     * @param outer the size of the {@link DoubleSpiral}
+     * @param outerHeight the height of the {@link DoubleSpiral}
+     */
+    private static void modify(Location location, int outer, double outerHeight, AbstractParticle abstractParticle) {
         for (int key = 0; key <= 30; key += 1) {
             final Location loc = location.clone();
 
-            loc.setX(loc.x() + cos(key, inner));
-            loc.setZ(loc.z() + sin(key, inner));
+            loc.setX(loc.x() + cos(key, outer));
+            loc.setZ(loc.z() + sin(key, outer));
 
-            if (innerHeight > 0.0) {
-                location.setY(loc.y() + innerHeight);
+            if (outerHeight > 0.0) {
+                location.setY(loc.y() + outerHeight);
             }
 
             abstractParticle.spawnParticle(loc);
