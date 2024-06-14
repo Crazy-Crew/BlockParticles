@@ -9,11 +9,11 @@ plugins {
     `java-plugin`
 }
 
-val buildNumber: String = System.getenv("NEXT_BUILD_NUMBER") ?: "SNAPSHOT"
+val buildNumber: String = System.getenv("BUILD_NUMBER") ?: "SNAPSHOT"
+
+rootProject.version = "1.3-$buildNumber"
 
 val isSnapshot = false
-
-rootProject.version = if (isSnapshot) "1.0-$buildNumber" else "1.2"
 
 val content: String = if (isSnapshot) {
     formatLog(latestCommitHash(), latestCommitMessage(), rootProject.name, "Crazy-Crew")
