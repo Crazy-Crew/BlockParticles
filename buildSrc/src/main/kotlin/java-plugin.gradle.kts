@@ -19,6 +19,8 @@ repositories {
 
 dependencies {
     compileOnlyApi(libs.annotations)
+
+    compileOnly(libs.bundles.adventure)
 }
 
 feather {

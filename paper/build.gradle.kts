@@ -11,7 +11,13 @@ dependencies {
         exclude("org.yaml")
     }
 
+    implementation(libs.triumph.cmds)
+
     compileOnly(libs.headdatabaseapi)
+
+    compileOnly(libs.placeholderapi)
+
+    api(projects.blockparticlesCore)
 }
 
 tasks {
@@ -39,7 +45,8 @@ tasks {
         archiveClassifier.set("")
 
         listOf(
-            "com.ryderbelserion.vital"
+            "com.ryderbelserion.vital",
+            "dev.triumphteam.cmds"
         ).forEach {
             relocate(it, "libs.$it")
         }
@@ -53,7 +60,7 @@ tasks {
         inputs.properties("description" to project.properties["description"])
         inputs.properties("website" to project.properties["website"])
 
-        filesMatching("plugin.yml") {
+        filesMatching("paper-plugin.yml") {
             expand(inputs.properties)
         }
     }
