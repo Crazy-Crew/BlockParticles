@@ -1,20 +1,53 @@
 plugins {
+    alias(libs.plugins.paperweight)
     alias(libs.plugins.shadowJar)
     alias(libs.plugins.runPaper)
 
     `paper-plugin`
 }
 
+base {
+    archivesName.set(rootProject.name)
+}
+
 dependencies {
-    // org.yaml is already bundled with Paper
-    implementation(libs.vital.paper) {
-        exclude("org.yaml")
-    }
+    paperweight.paperDevBundle(libs.versions.paper)
+
+    implementation(libs.vital.paper)
 
     compileOnly(libs.headdatabaseapi)
 }
 
+val component: SoftwareComponent = components["java"]
+
+paperweight {
+    reobfArtifactConfiguration = io.papermc.paperweight.userdev.ReobfArtifactConfiguration.REOBF_PRODUCTION
+}
+
 tasks {
+    publishing {
+        repositories {
+            maven {
+                url = uri("https://repo.crazycrew.us/releases")
+
+                credentials {
+                    this.username = System.getenv("gradle_username")
+                    this.password = System.getenv("gradle_password")
+                }
+            }
+        }
+
+        publications {
+            create<MavenPublication>("maven") {
+                groupId = rootProject.group.toString()
+                artifactId = "${rootProject.name.lowercase()}-paper-api"
+                version = rootProject.version.toString()
+
+                from(component)
+            }
+        }
+    }
+
     runServer {
         jvmArgs("-Dnet.kyori.ansi.colorLevel=truecolor")
 
@@ -24,11 +57,11 @@ tasks {
     }
 
     assemble {
-        dependsOn(shadowJar)
+        dependsOn(reobfJar)
 
         doLast {
             copy {
-                from(shadowJar.get())
+                from(reobfJar.get())
                 into(rootProject.projectDir.resolve("jars"))
             }
         }
@@ -39,7 +72,7 @@ tasks {
         archiveClassifier.set("")
 
         listOf(
-            "com.ryderbelserion.vital"
+            "com.ryderbelserion"
         ).forEach {
             relocate(it, "libs.$it")
         }
