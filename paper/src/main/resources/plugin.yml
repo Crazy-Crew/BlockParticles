@@ -5,7 +5,7 @@ authors: ${authors}
 
 version: '${version}'
 description: '${description}'
-api-version: '1.20'
+api-version: '${apiVersion}'
 website: '${website}'
 
 softdepend: [HeadDatabase]
