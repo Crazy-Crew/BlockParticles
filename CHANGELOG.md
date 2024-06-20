@@ -1,5 +1,5 @@
 ## Changes:
-* Updated to 1.20.6 paper
+* Updated to 1.21 paper
 
 ## Other:
 * [Feature Requests](https://github.com/Crazy-Crew/BlockParticles/discussions/categories/features)

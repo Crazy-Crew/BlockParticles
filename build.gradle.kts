@@ -9,11 +9,11 @@ plugins {
     `java-plugin`
 }
 
-val buildNumber: String = System.getenv("NEXT_BUILD_NUMBER") ?: "SNAPSHOT"
+val buildNumber: String? = System.getenv("BUILD_NUMBER")
+
+rootProject.version = if (buildNumber != null) "${libs.versions.minecraft.get()}-$buildNumber" else "2.0"
 
 val isSnapshot = false
-
-rootProject.version = if (isSnapshot) "1.0-$buildNumber" else "1.2"
 
 val content: String = if (isSnapshot) {
     formatLog(latestCommitHash(), latestCommitMessage(), rootProject.name, "Crazy-Crew")
@@ -39,13 +39,9 @@ modrinth {
 
     uploadFile.set(rootProject.projectDir.resolve("jars/${rootProject.name}-${rootProject.version}.jar"))
 
-    gameVersions.set(listOf(
-        "1.20.6"
-    ))
+    gameVersions.add(libs.versions.minecraft.get())
 
-    loaders.add("paper")
-    loaders.add("purpur")
-    loaders.add("folia")
+    loaders.addAll(listOf("purpur", "paper", "folia"))
 
     autoAddDependsOn.set(false)
     detectLoaders.set(false)
@@ -71,9 +67,7 @@ hangarPublish {
             paper {
                 jar.set(rootProject.projectDir.resolve("jars/${rootProject.name}-${rootProject.version}.jar"))
 
-                platformVersions.set(listOf(
-                    "1.20.6"
-                ))
+                platformVersions.set(listOf(libs.versions.minecraft.get()))
 
                 dependencies {
                     hangar("PlaceholderAPI") {
