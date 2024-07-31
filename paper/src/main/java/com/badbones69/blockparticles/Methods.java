@@ -251,12 +251,12 @@ public class Methods implements Listener {
         }
     }
     
-    public static void addLoc(Player player, String name) {
+    public static void addLoc(Player player, String name, String particle) {
         String Prefix = Files.CONFIG.getFile().getString("settings.prefix");
         if (Files.DATA.getFile().contains("locations")) {
             for (String loc : Files.DATA.getFile().getConfigurationSection("locations").getKeys(false)) {
                 if (loc.equalsIgnoreCase(name)) {
-                    player.sendMessage(color(Prefix + "&3That location name is taken please remove it and replace it here."));
+                    player.sendMessage(color(Prefix + "&3That location name is taken, please remove it and replace it here."));
                     return;
                 }
             }
@@ -275,7 +275,7 @@ public class Methods implements Listener {
         Files.DATA.getFile().set("locations." + name + ".x", x);
         Files.DATA.getFile().set("locations." + name + ".y", y);
         Files.DATA.getFile().set("locations." + name + ".z", z);
-        Files.DATA.getFile().set("locations." + name + ".particle", "Spiral");
+        Files.DATA.getFile().set("locations." + name + ".particle", particle);
         Files.DATA.saveFile();
         kill();
         startParticles();
@@ -350,7 +350,7 @@ public class Methods implements Listener {
         return item;
     }
     
-    public static void setLoc(CommandSender player, String name, String particle) {
+    public static void setLoc(Player player, String name, String particle) {
         String prefix = Files.CONFIG.getFile().getString("settings.prefix");
         if (BPFountains.getFromName(particle) == null && BPParticles.getFromName(particle) == null && bp.getCustomFountain(particle) == null) {
             player.sendMessage(color(prefix + "&6" + particle + " &cis not a particle. Please do /bp help for more information."));
@@ -368,6 +368,7 @@ public class Methods implements Listener {
                 }
             }
         }
+
         player.sendMessage(color(prefix + "&3There are no locations called &6" + name + "&3."));
     }
     

@@ -109,7 +109,7 @@ public class GUI implements Listener {
                                     openGUIPage2((Player) e.getWhoClicked());
                                     return;
                                 }
-                                Methods.setLoc(e.getWhoClicked(), loc, name);
+                                Methods.setLoc((Player) e.getWhoClicked(), loc, name);
                                 e.getWhoClicked().closeInventory();
                             }
                         }

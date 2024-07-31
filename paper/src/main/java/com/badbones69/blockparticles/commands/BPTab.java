@@ -42,7 +42,7 @@ public class BPTab implements TabCompleter {
             }
             return StringUtil.copyPartialMatches(args[1], completions, new ArrayList<>());
         } else {// /bp arg1 arg2
-            if (args[0].equalsIgnoreCase("set")) {
+            if (args[0].equalsIgnoreCase("set") || args[0].equalsIgnoreCase("add")) {
                 for (BPParticles particle : BPParticles.values()) {
                     completions.add(particle.name().toLowerCase());
                 }

@@ -62,28 +62,42 @@ public class BPCommands implements CommandExecutor {
                         return true;
                     case "set":
                     case "s":
-                        if (args.length == 2) {
-                            for (String location : Methods.getLocations()) {
-                                if (location.equalsIgnoreCase(args[1])) {
-                                    bp.addSetCommandPlayer((Player) sender, location);
-                                    GUI.openGUIPage1((Player) sender);
-                                    return true;
+                        if (sender instanceof Player player) {
+                            if (args.length == 2) {
+                                for (String location : Methods.getLocations()) {
+                                    if (location.equalsIgnoreCase(args[1])) {
+                                        bp.addSetCommandPlayer((Player) sender, location);
+                                        GUI.openGUIPage1((Player) sender);
+                                        return true;
+                                    }
                                 }
+                                player.sendMessage(Methods.color(prefix + "&3There are no locations called &6" + args[1] + "&3."));
+                            } else if (args.length >= 3) {
+                                Methods.setLoc(player, args[1], args[2]);
+                            } else {
+                                player.sendMessage(Methods.color(prefix + "&c/bp set <id> [type]"));
                             }
-                            sender.sendMessage(Methods.color(prefix + "&3There are no locations called &6" + args[1] + "&3."));
-                        } else if (args.length >= 3) {
-                            Methods.setLoc(sender, args[1], args[2]);
-                        } else {
-                            sender.sendMessage(Methods.color(prefix + "&c/bp set <id> [type]"));
+
+                            return true;
                         }
+
+                        sender.sendMessage(Methods.color(prefix + "This command is player only."));
+
                         return true;
                     case "add":
                     case "a":
-                        if (args.length >= 2) {
-                            Methods.addLoc((Player) sender, args[1]);
-                        } else {
-                            sender.sendMessage(Methods.color(prefix + "&c/bp add <id>"));
+                        if (sender instanceof Player player) {
+                            if (args.length >= 3) {
+                                Methods.addLoc(player, args[1], args[2]);
+                            } else {
+                                player.sendMessage(Methods.color(prefix + "&c/bp add <id> [type]"));
+                            }
+
+                            return true;
                         }
+
+                        sender.sendMessage(Methods.color(prefix + "This command is player only."));
+
                         return true;
                     case "delete":
                     case "del":
