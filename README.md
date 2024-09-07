@@ -31,7 +31,7 @@ BlockParticles as first install will come with config.yml which you can edit to 
 
 ![Support Banner](https://raw.githubusercontent.com/Crazy-Crew/Branding/main/blockparticles/banner/webp/support.webp)<br>
 Are you confused about something? Hop by the Discord and you might just get an answer!<br>
-Please head to [crazy-crates](https://discord.com/channels/182615261403283459/1143069389181157386) with your question and do not cross post.<br>
+Please head to [block-particles](https://discord.com/channels/182615261403283459/1143069389181157386) with your question and do not cross post.<br>
 <details>
 <summary>Support Checklist</summary>
 
