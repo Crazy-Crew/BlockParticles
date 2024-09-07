@@ -23,9 +23,7 @@
 [![purpur software](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/compact-minimal/supported/purpur_vector.svg)](https://purpurmc.org/)
 
 <big>**Initial Plugin Setup**</big><br>
-BlockParticles as first install will come with a set of default files in the `crates` folder which are to help you figure out how to use the plugin.
-You can simply create more crates by copying the files or creating new ones than doing `/blockparticles reload`<br>
-Testing your crates is even easier, if you simply want to test prizes. We have a command for that called `/blockparticles debug <crate>`
+BlockParticles as first install will come with config.yml which you can edit to your hearts content. Type /blockparticles help for a list of commands!
 
 ![Features Banner](https://raw.githubusercontent.com/Crazy-Crew/Branding/main/blockparticles/banner/webp/features.webp)<br>
 **Add fancy particles to your blocks!**<br>
