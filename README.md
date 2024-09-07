@@ -25,6 +25,8 @@
 <big>**Initial Plugin Setup**</big><br>
 BlockParticles as first install will come with config.yml which you can edit to your hearts content. Type /blockparticles help for a list of commands!
 
+[![Partnered with ApexHosting](https://raw.githubusercontent.com/Crazy-Crew/Branding/main/apex-banner-transparent.webp)](https://billing.apexminecrafthosting.com/aff.php?aff=5511)
+
 ![Features Banner](https://raw.githubusercontent.com/Crazy-Crew/Branding/main/blockparticles/banner/webp/features.webp)<br>
 **Add fancy particles to your blocks!**<br>
 **Ability to use custom heads from HeadDatabase for particles!**<br>
