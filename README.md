@@ -9,7 +9,7 @@
 [![MIT License][license-shield]][license-url]
 [![CodeFactor](https://www.codefactor.io/repository/github/crazy-crew/blockparticles/badge)](https://www.codefactor.io/repository/github/crazy-crew/blockparticles)
 
-<big>**Sick of boring blocks? Today's the day that changes, Add customParticles to your blocks now!**</big>
+<big>**Sick of boring blocks? Today's the day that changes, Add fancy particles to your blocks now!**</big>
 
 <big>**Quick Links**</big><br>
 [Request Features](https://github.com/Crazy-Crew/BlockParticles/issues)<br>
@@ -29,11 +29,11 @@ BlockParticles as first install will come with config.yml which you can edit to 
 
 ![Features Banner](https://raw.githubusercontent.com/Crazy-Crew/Branding/main/blockparticles/banner/webp/features.webp)<br>
 **Add fancy customParticles to your blocks!**<br>
-**Ability to use custom heads from HeadDatabase for customParticles!**<br>
+**Ability to use custom heads from HeadDatabase for particles!**<br>
 
 ![Support Banner](https://raw.githubusercontent.com/Crazy-Crew/Branding/main/blockparticles/banner/webp/support.webp)<br>
 Are you confused about something? Hop by the Discord and you might just get an answer!<br>
-Please head to [block-customParticles](https://discord.com/channels/182615261403283459/1143069389181157386) with your question and do not cross post.<br>
+Please head to [block-particles](https://discord.com/channels/182615261403283459/1143069389181157386) with your question and do not cross post.<br>
 <details>
 <summary>Support Checklist</summary>
 
