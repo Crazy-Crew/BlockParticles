@@ -1,15 +1,17 @@
 package com.badbones69.blockparticles.api.objects;
 
-import org.bukkit.Bukkit;
+import com.badbones69.blockparticles.BlockParticles;
 import org.bukkit.Location;
 
 public class CustomParticle {
+
+    private final BlockParticles plugin = BlockParticles.getPlugin();
     
-    private String id;
-    private String world;
-    private int x, y, z;
-    private String particleTypeName;
-    private Location location;
+    private final String id;
+    private final String world;
+    private final int x, y, z;
+    private final String particleTypeName;
+    private final Location location;
     
     public CustomParticle(String id, String world, int x, int y, int z, String particleTypeName) {
         this.id = id;
@@ -18,7 +20,7 @@ public class CustomParticle {
         this.y = y;
         this.z = z;
         this.particleTypeName = particleTypeName;
-        location = new Location(Bukkit.getWorld(world), x, y, z);
+        this.location = new Location(this.plugin.getServer().getWorld(world), x, y, z);
     }
     
     public String getID() {
@@ -48,5 +50,4 @@ public class CustomParticle {
     public Location getLocation() {
         return location;
     }
-    
 }
