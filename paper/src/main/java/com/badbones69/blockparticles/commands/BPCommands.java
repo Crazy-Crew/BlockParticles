@@ -1,30 +1,36 @@
 package com.badbones69.blockparticles.commands;
 
-import com.badbones69.blockparticles.api.enums.ParticleType;
-import com.badbones69.blockparticles.api.enums.Particles;
+import com.badbones69.blockparticles.BlockParticles;
+import com.badbones69.blockparticles.api.enums.Files;
+import com.badbones69.blockparticles.api.enums.particles.ParticleType;
+import com.badbones69.blockparticles.api.enums.particles.CustomParticles;
 import com.badbones69.blockparticles.Methods;
-import com.badbones69.blockparticles.api.FileManager;
-import com.badbones69.blockparticles.api.FileManager.Files;
 import com.badbones69.blockparticles.api.ParticleManager;
-import com.badbones69.blockparticles.controllers.GUI;
+import com.badbones69.blockparticles.listeners.MenuListener;
+import com.ryderbelserion.vital.paper.api.files.FileManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 public class BPCommands implements CommandExecutor {
-    
-    private FileManager fileManager = FileManager.getInstance();
-    private ParticleManager bp = ParticleManager.getInstance();
+
+    private final BlockParticles plugin = BlockParticles.getPlugin();
+
+    private final FileManager fileManager = this.plugin.getFileManager();
+
+    private final ParticleManager particleManager = this.plugin.getParticleManager();
     
     @Override
-    public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-        if (hasPermission(sender, "admin")) {
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String commandLabel, String[] args) {
+        if (hasPermission(sender)) {
             if (args.length == 0) {// /bp
                 sender.sendMessage(Methods.color("&cPlease do /blockparticle help for more information."));
                 return true;
             } else {
-                String prefix = Files.CONFIG.getFile().getString("settings.prefix");
+                String prefix = Files.config.getConfiguration().getString("settings.prefix");
+
                 switch (args[0].toLowerCase()) {
                     case "help":
                         sender.sendMessage(Methods.color(prefix + "&6List of all Block Particle Commands."));
@@ -40,12 +46,14 @@ public class BPCommands implements CommandExecutor {
                     case "r":
                         Methods.kill();
                         Methods.startParticles();
-                        fileManager.setup(bp.getPlugin());
+
+                        this.fileManager.reloadFiles();
+
                         sender.sendMessage(Methods.color(prefix + "&3You have just reloaded the config.yml and block particles."));
                         return true;
                     case "show":
-                        int items = bp.getFountainItem().size();
-                        int blocks = bp.getParticleControl().getLocations().size();
+                        int items = this.particleManager.getFountainItem().size();
+                        int blocks = this.particleManager.getParticleControl().getLocations().size();
                         sender.sendMessage(Methods.color(prefix + "&3There are &6" + items + " &3items in the List."));
                         sender.sendMessage(Methods.color(prefix + "&3There are &6" + blocks + " &3particles/fountains running."));
                         return true;
@@ -55,9 +63,9 @@ public class BPCommands implements CommandExecutor {
                         return true;
                     case "types":
                         sender.sendMessage(Methods.color(prefix + "&3List of all particle types."));
-                        sender.sendMessage(Methods.color("&6&lParticles&8: &3Total " + Particles.getParticles(ParticleType.PARTICLE).size() + "."));
+                        sender.sendMessage(Methods.color("&6&lParticles&8: &3Total " + CustomParticles.getParticles(ParticleType.PARTICLE).size() + "."));
                         sender.sendMessage(Methods.color("&aSpiral&8, &aDoubleSpiral&8, &aCrit&8, &aBigCrit&8, &aFlame&8, &aBigFlame&8, &aVolcano" + "&8, &aFog&8, &aEnchant&8, &aStorm&8, &aChains&8, &aFireStorm&8, &aSnow&8, &aPotion&8, &aMusic&8, &aSpew&8," + "&aMagic&8, &aWitch&8, &aDoubleWitch&8, &aSnowStorm&8, &aFireSpew&8, &aFootPrint&8, &aWater&8, &aHappyVillager" + "&8, &aAngryVillager&8, &aMobSpawner&8, &aEnderSignal&8, &aRainbow&8," + "&aSnowBlast&8, &aHalo&8, &aSoulWell&8, &aBigSoulWell&8, &aLoveWell&8, &aBigLoveWell&8," + "&aFlameWheel&8, &aWitchTornado&8, &aLoveTornado"));
-                        sender.sendMessage(Methods.color("&6&lFountains&8: &3Total " + Particles.getParticles(ParticleType.FOUNTAIN).size() + "."));
+                        sender.sendMessage(Methods.color("&6&lFountains&8: &3Total " + CustomParticles.getParticles(ParticleType.FOUNTAIN).size() + "."));
                         sender.sendMessage(Methods.color("&aGems&8, &aHalloween&8, &aHeads&8, &aPresents&8, &aMobs&8, &aFood&8, &aPokemon&8, &aMario"));
                         return true;
                     case "set":
@@ -66,8 +74,8 @@ public class BPCommands implements CommandExecutor {
                             if (args.length == 2) {
                                 for (String location : Methods.getLocations()) {
                                     if (location.equalsIgnoreCase(args[1])) {
-                                        bp.addSetCommandPlayer((Player) sender, location);
-                                        GUI.openGUIPage1((Player) sender);
+                                        this.particleManager.addSetCommandPlayer((Player) sender, location);
+                                        MenuListener.openGUIPage1((Player) sender);
                                         return true;
                                     }
                                 }
@@ -115,15 +123,15 @@ public class BPCommands implements CommandExecutor {
                 }
             }
         }
+
         return false;
     }
     
-    private boolean hasPermission(CommandSender sender, String node) {
+    private boolean hasPermission(CommandSender sender) {
         if (sender instanceof Player) {
-            return sender.hasPermission("bparticles." + node);
+            return sender.hasPermission("bparticles." + "admin");
         } else {
             return true;
         }
     }
-    
 }

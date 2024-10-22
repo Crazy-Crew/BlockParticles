@@ -1,4 +1,4 @@
-package com.badbones69.blockparticles.api.enums;
+package com.badbones69.blockparticles.api.enums.fountains;
 
 public enum BPParticles {
     
@@ -47,7 +47,7 @@ public enum BPParticles {
                 return fountain;
             }
         }
-        return null;
+
+        return BPParticles.FLAME;
     }
-    
 }

@@ -1,6 +1,6 @@
-package com.badbones69.blockparticles.controllers;
+package com.badbones69.blockparticles.api;
 
-import com.badbones69.blockparticles.api.enums.Particles;
+import com.badbones69.blockparticles.api.enums.particles.CustomParticles;
 import org.bukkit.Location;
 
 import java.util.HashMap;
@@ -15,9 +15,9 @@ public interface ParticleControl {
     
     void playFlame(Location location, String id);
     
-    void playDoubleSpiral(Location location, String id, Particles particle, int amount);
+    void playDoubleSpiral(Location location, String id, CustomParticles particle, int amount);
     
-    void playSpiral(Location location, String id, Particles particle, int amount);
+    void playSpiral(Location location, String id, CustomParticles particle, int amount);
     
     void playCrit(Location location, String id);
     

@@ -1,46 +1,37 @@
 plugins {
-    alias(libs.plugins.paperweight)
     alias(libs.plugins.runPaper)
     alias(libs.plugins.shadow)
-
-    `paper-plugin`
 }
 
-base {
-    archivesName.set(rootProject.name)
+repositories {
+    maven("https://repo.papermc.io/repository/maven-public")
+
+    maven("https://repo.extendedclip.com/content/repositories/placeholderapi")
+
+    maven("https://repo.fancyplugins.de/releases")
+
+    maven("https://repo.oraxen.com/releases")
 }
 
 dependencies {
-    paperweight.paperDevBundle(libs.versions.paper)
+    implementation(libs.vital.paper) {
+        exclude("org.yaml")
+    }
 
-    implementation(libs.vital.paper)
+    compileOnly(libs.bundles.dependencies)
+    compileOnly(libs.bundles.shared)
 
-    compileOnly(libs.headdatabaseapi)
+    compileOnly(libs.paper)
 }
 
 val component: SoftwareComponent = components["java"]
 
-paperweight {
-    reobfArtifactConfiguration = io.papermc.paperweight.userdev.ReobfArtifactConfiguration.REOBF_PRODUCTION
-}
-
 tasks {
     publishing {
-        repositories {
-            maven {
-                url = uri("https://repo.crazycrew.us/releases")
-
-                credentials {
-                    this.username = System.getenv("gradle_username")
-                    this.password = System.getenv("gradle_password")
-                }
-            }
-        }
-
         publications {
             create<MavenPublication>("maven") {
                 groupId = rootProject.group.toString()
-                artifactId = "${rootProject.name.lowercase()}-paper-api"
+                artifactId = "${rootProject.name.lowercase()}-api"
                 version = rootProject.version.toString()
 
                 from(component)
@@ -57,11 +48,11 @@ tasks {
     }
 
     assemble {
-        dependsOn(reobfJar)
+        dependsOn(shadowJar)
 
         doLast {
             copy {
-                from(reobfJar.get())
+                from(shadowJar.get())
                 into(rootProject.projectDir.resolve("jars"))
             }
         }
@@ -72,7 +63,7 @@ tasks {
         archiveClassifier.set("")
 
         listOf(
-            "com.ryderbelserion"
+            "com.ryderbelserion.vital"
         ).forEach {
             relocate(it, "libs.$it")
         }

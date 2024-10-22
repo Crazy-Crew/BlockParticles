@@ -1,24 +1,27 @@
 package com.badbones69.blockparticles.commands;
 
-import com.badbones69.blockparticles.api.enums.BPParticles;
+import com.badbones69.blockparticles.BlockParticles;
+import com.badbones69.blockparticles.api.enums.fountains.BPParticles;
 import com.badbones69.blockparticles.Methods;
 import com.badbones69.blockparticles.api.ParticleManager;
-import com.badbones69.blockparticles.api.enums.BPFountains;
+import com.badbones69.blockparticles.api.enums.fountains.BPFountains;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.util.StringUtil;
-
+import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class BPTab implements TabCompleter {
-    
-    private ParticleManager bp = ParticleManager.getInstance();
+
+    private final BlockParticles plugin = BlockParticles.getPlugin();
+
+    private final ParticleManager particleManager = this.plugin.getParticleManager();
     
     @Override
-    public List<String> onTabComplete(CommandSender sender, Command command, String commandLable, String[] args) {
+    public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String commandLabel, String[] args) {
         List<String> completions = new ArrayList<>();
         if (args.length == 1) {// /bp
             if (sender.hasPermission("bparticles.admin")) {
@@ -51,10 +54,9 @@ public class BPTab implements TabCompleter {
                         completions.add(fountain.name().toLowerCase());
                     }
                 }
-                bp.getCustomFountains().forEach(fountain -> completions.add(fountain.getName()));
+                this.particleManager.getCustomFountains().forEach(fountain -> completions.add(fountain.getName()));
             }
             return StringUtil.copyPartialMatches(args[2], completions, new ArrayList<>());
         }
     }
-    
 }

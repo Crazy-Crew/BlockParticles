@@ -1,29 +1,34 @@
 package com.badbones69.blockparticles.api.objects;
 
 import com.badbones69.blockparticles.BlockParticles;
-import com.badbones69.blockparticles.hook.HeadDatabaseHook;
+import com.ryderbelserion.vital.paper.api.builders.items.ItemBuilder;
+import me.arcaniax.hdb.api.HeadDatabaseAPI;
+import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.java.JavaPlugin;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CustomFountain {
-    
-    private String name;
-    private List<String> headNames;
-    private List<ItemStack> heads;
+
+    private final BlockParticles plugin = BlockParticles.getPlugin();
+
+    private final HeadDatabaseAPI api = this.plugin.getApi();
+
+    private final String name;
+    private final List<String> headNames;
+    private final List<ItemStack> heads;
     
     public CustomFountain(String name, List<String> headNames) {
         this.name = name;
         this.headNames = headNames;
         this.heads = new ArrayList<>();
-        for (String headName : headNames) {
-            ItemStack item = HeadDatabaseHook.getHead(headName);
-            if (item == null) {
-                JavaPlugin.getPlugin(BlockParticles.class).getLogger().warning("Head item '" + name + "' for id " + headName + " is invalid!");
-            } else {
-                heads.add(item);
-            }
+
+        for (final String headName : headNames) {
+            final ItemBuilder itemBuilder = new ItemBuilder().withType(Material.PLAYER_HEAD);
+
+            itemBuilder.setSkull(headName, this.api);
+
+            this.heads.add(itemBuilder.asItemStack());
         }
     }
     

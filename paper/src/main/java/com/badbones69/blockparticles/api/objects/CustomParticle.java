@@ -3,7 +3,7 @@ package com.badbones69.blockparticles.api.objects;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 
-public class Particle {
+public class CustomParticle {
     
     private String id;
     private String world;
@@ -11,7 +11,7 @@ public class Particle {
     private String particleTypeName;
     private Location location;
     
-    public Particle(String id, String world, int x, int y, int z, String particleTypeName) {
+    public CustomParticle(String id, String world, int x, int y, int z, String particleTypeName) {
         this.id = id;
         this.world = world;
         this.x = x;

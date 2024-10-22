@@ -1,8 +1,8 @@
-package com.badbones69.blockparticles.api.enums;
+package com.badbones69.blockparticles.api.enums.particles;
 
 import java.util.ArrayList;
 
-public enum Particles {
+public enum CustomParticles {
     
     BIGLOVEWELL("BigLoveWell", ParticleType.PARTICLE),
     LOVEWELL("LoveWell", ParticleType.PARTICLE),
@@ -51,43 +51,24 @@ public enum Particles {
     CRIT("Crit", ParticleType.PARTICLE),
     BIGCRIT("BigCrit", ParticleType.PARTICLE);
     
-    private String name;
-    private ParticleType type;
+    private final String name;
+    private final ParticleType type;
     
-    private Particles(String name, ParticleType type) {
+    CustomParticles(String name, ParticleType type) {
         this.name = name;
         this.type = type;
-    }
-    
-    /**
-     * @param name The Particle you wish to get.
-     * @return A Particle.
-     */
-    public static Particles fromName(String name) {
-        for (Particles i : Particles.getParticles()) {
-            if (i.toString().equalsIgnoreCase(name)) {
-                return i;
-            }
-        }
-        return null;
-    }
-    
-    /**
-     * Returns all the Particle.
-     */
-    public static Particles[] getParticles() {
-        return Particles.values();
     }
     
     /**
      * @param type The ParticleType you want all the Particles From.
      * @return Returns all the Particles in a ParticleType.
      */
-    public static ArrayList<Particles> getParticles(ParticleType type) {
-        ArrayList<Particles> i = new ArrayList<>();
-        for (Particles p : Particles.values()) {
+    public static ArrayList<CustomParticles> getParticles(ParticleType type) {
+        ArrayList<CustomParticles> i = new ArrayList<>();
+        for (CustomParticles p : CustomParticles.values()) {
             if (p.getType().equals(type)) i.add(p);
         }
+
         return i;
     }
     
@@ -104,5 +85,4 @@ public enum Particles {
     public ParticleType getType() {
         return type;
     }
-    
 }
