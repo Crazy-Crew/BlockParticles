@@ -9,6 +9,7 @@ import io.papermc.paper.persistence.PersistentDataContainerView;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
 
@@ -120,22 +121,30 @@ public class MainMenu extends StaticInventoryBuilder {
 
             if (type == null) return;
 
+            final Inventory inventory = this.gui.getInventory();
+
             switch (type) {
                 case "fountains" -> {
-                    this.items.get(1).keySet().forEach(this.gui::removeItem);
+                    this.items.get(1).keySet().forEach(slot -> {
+                        this.gui.removeItem(slot);
+
+                        inventory.setItem(slot, null);
+                    });
 
                     this.items.get(2).forEach((slot, item) -> this.gui.setItem(slot, new GuiItem(item)));
                 }
 
                 case "particles" -> {
-                    this.items.get(2).keySet().forEach(this.gui::removeItem);
+                    this.items.get(2).keySet().forEach(slot -> {
+                        this.gui.removeItem(slot);
+
+                        inventory.setItem(slot, null);
+                    });
 
                     this.items.get(1).forEach((slot, item) -> this.gui.setItem(slot, new GuiItem(item)));
                 }
 
-                default -> {
-                    Methods.setLoc(this.player, this.location, type);
-                }
+                default -> Methods.setLoc(this.player, this.location, type);
             }
         });
 
