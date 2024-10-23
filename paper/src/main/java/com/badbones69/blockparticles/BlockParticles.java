@@ -15,11 +15,19 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Locale;
+
 public class BlockParticles extends JavaPlugin {
 
     @ApiStatus.Internal
     public static BlockParticles getPlugin() {
         return JavaPlugin.getPlugin(BlockParticles.class);
+    }
+
+    private final long startTime;
+
+    public BlockParticles() {
+        this.startTime = System.nanoTime();
     }
 
     private VitalPaper instance;
@@ -56,6 +64,8 @@ public class BlockParticles extends JavaPlugin {
         }
 
         Methods.startParticles();
+
+        getComponentLogger().info("Done ({})!", String.format(Locale.ROOT, "%.3fs", (double) (System.nanoTime() - this.startTime) / 1.0E9D));
     }
 
     @Override
