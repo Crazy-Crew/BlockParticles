@@ -15,13 +15,11 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class Methods implements Listener {
+public class Methods {
 
     private static final BlockParticles plugin = BlockParticles.getPlugin();
 
@@ -31,10 +29,6 @@ public class Methods implements Listener {
     
     public static String color(String message) {
         return ChatColor.translateAlternateColorCodes('&', message);
-    }
-    
-    public static String removeColor(String msg) {
-        return ChatColor.stripColor(msg);
     }
     
     public static ArrayList<String> getLocations() {
@@ -352,14 +346,6 @@ public class Methods implements Listener {
         player.sendMessage(Methods.color("&c[Locations Name]&8, &c[World]&8, &c[X]&8, &c[Y]&8, &c[Z]"));
         player.sendMessage(msg);
         player.sendMessage(Methods.color("&3Number of locations: &6" + line));
-    }
-    
-    public static ItemStack makeItem(Material material, int amount, String name) {
-        ItemStack item = new ItemStack(material, amount);
-        ItemMeta m = item.getItemMeta();
-        m.setDisplayName(color(name));
-        item.setItemMeta(m);
-        return item;
     }
     
     public static void setLoc(Player player, String name, String particle) {

@@ -4,7 +4,6 @@ import com.badbones69.blockparticles.api.ParticleManager;
 import com.badbones69.blockparticles.commands.BPCommands;
 import com.badbones69.blockparticles.commands.BPTab;
 import com.badbones69.blockparticles.listeners.FountainListener;
-import com.badbones69.blockparticles.listeners.MenuListener;
 import com.badbones69.blockparticles.listeners.ParticleListener;
 import com.ryderbelserion.vital.paper.VitalPaper;
 import com.ryderbelserion.vital.paper.api.enums.Support;
@@ -42,11 +41,10 @@ public class BlockParticles extends JavaPlugin {
         }
 
         this.particleManager = new ParticleManager();
+        this.particleManager.load();
 
         final PluginManager pluginManager = getServer().getPluginManager();
 
-        pluginManager.registerEvents(new MenuListener(), this);
-        pluginManager.registerEvents(new Methods(), this);
         pluginManager.registerEvents(new FountainListener(), this);
         pluginManager.registerEvents(new ParticleListener(), this);
 

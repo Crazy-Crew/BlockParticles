@@ -1,12 +1,12 @@
 package com.badbones69.blockparticles.commands;
 
 import com.badbones69.blockparticles.BlockParticles;
+import com.badbones69.blockparticles.api.builders.types.MainMenu;
 import com.badbones69.blockparticles.api.enums.Files;
 import com.badbones69.blockparticles.api.enums.particles.ParticleType;
 import com.badbones69.blockparticles.api.enums.particles.CustomParticles;
 import com.badbones69.blockparticles.Methods;
 import com.badbones69.blockparticles.api.ParticleManager;
-import com.badbones69.blockparticles.listeners.MenuListener;
 import com.ryderbelserion.vital.paper.api.files.FileManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -74,8 +74,8 @@ public class BPCommands implements CommandExecutor {
                             if (args.length == 2) {
                                 for (String location : Methods.getLocations()) {
                                     if (location.equalsIgnoreCase(args[1])) {
-                                        this.particleManager.addSetCommandPlayer((Player) sender, location);
-                                        MenuListener.openGUIPage1((Player) sender);
+                                        new MainMenu(player, "<dark_gray>Block <blue>Particles", 6).open();
+
                                         return true;
                                     }
                                 }

@@ -4,7 +4,6 @@ import com.badbones69.blockparticles.BlockParticles;
 import com.badbones69.blockparticles.Particles;
 import com.badbones69.blockparticles.api.enums.Files;
 import com.badbones69.blockparticles.api.enums.particles.CustomParticles;
-import com.badbones69.blockparticles.api.enums.particles.ParticleType;
 import com.badbones69.blockparticles.api.objects.CustomFountain;
 import com.badbones69.blockparticles.listeners.FountainListener;
 import org.bukkit.Location;
@@ -13,11 +12,8 @@ import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.Player;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
 
 public class ParticleManager {
 
@@ -25,13 +21,12 @@ public class ParticleManager {
 
     private final List<Entity> fountainItems = new ArrayList<>();
     private final List<CustomFountain> customFountains = new ArrayList<>();
-    private final HashMap<UUID, String> setCommandPlayers = new HashMap<>();
     private ParticleControl particleControl;
 
     
     public void load() {
-        particleControl = new Particles();
-        customFountains.clear();
+        this.particleControl = new Particles();
+        this.customFountains.clear();
 
         FileConfiguration config = Files.config.getConfiguration();
 
@@ -40,7 +35,7 @@ public class ParticleManager {
         if (section == null) return;
 
         for (String customFountain : section.getKeys(false)) {
-            customFountains.add(new CustomFountain(customFountain, config.getStringList("settings.heads." + customFountain)));
+            this.customFountains.add(new CustomFountain(customFountain, config.getStringList("settings.heads." + customFountain)));
         }
     }
     
@@ -267,21 +262,9 @@ public class ParticleManager {
      * @param name The Location Name.
      */
     public void removeParticle(String name) {
-        if (particleControl.getLocations().containsKey(name)) {
-            this.plugin.getServer().getScheduler().cancelTask(particleControl.getLocations().get(name));
-            particleControl.getLocations().remove(name);
+        if (this.particleControl.getLocations().containsKey(name)) {
+            this.plugin.getServer().getScheduler().cancelTask(this.particleControl.getLocations().get(name));
+            this.particleControl.getLocations().remove(name);
         }
-    }
-
-    public ParticleType getType(CustomParticles particle) {
-        return particle.getType();
-    }
-    
-    public void addSetCommandPlayer(Player player, String type) {
-        setCommandPlayers.put(player.getUniqueId(), type);
-    }
-    
-    public HashMap<UUID, String> getSetCommandPlayers() {
-        return setCommandPlayers;
     }
 }
