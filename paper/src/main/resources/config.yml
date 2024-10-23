@@ -3,16 +3,16 @@ settings:
   heads:
     plants:
       #Tomato
-      - '54482'
+      - '1130'
       #Mango
-      - '46777'
+      - '32596'
       #Cherry
-      - '67559'
+      - '31879'
       #Melon
-      - '104643'
+      - '20577'
       #Mushroom
-      - '105269'
+      - '21906'
       #Orange
-      - '71401'
+      - '59223'
       #Golden Apple
-      - '3333'
+      - '79863'
