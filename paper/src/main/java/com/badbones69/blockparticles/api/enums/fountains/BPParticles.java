@@ -48,6 +48,6 @@ public enum BPParticles {
             }
         }
 
-        return BPParticles.FLAME;
+        return null;
     }
 }

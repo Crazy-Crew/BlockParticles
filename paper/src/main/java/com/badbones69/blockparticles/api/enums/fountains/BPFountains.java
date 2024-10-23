@@ -28,6 +28,6 @@ public enum BPFountains {
             }
         }
 
-        return BPFountains.FOOD;
+        return null;
     }
 }

@@ -75,8 +75,10 @@ public class Methods {
 
             final Location loc = new Location(world, data.getInt("locations." + id + ".x"), data.getInt("locations." + id + ".y"), data.getInt("locations." + id + ".z"));
 
-            if (BPFountains.getFromName(particle) != null) {
-                switch (BPFountains.getFromName(particle)) {
+            final BPFountains fountain = BPFountains.getFromName(particle);
+
+            if (fountain != null) {
+                switch (fountain) {
                     case MARIO:
                         FountainListener.startMario(loc, id);
                         break;
@@ -107,8 +109,10 @@ public class Methods {
                 }
             }
 
-            if (BPParticles.getFromName(particle) != null) {
-                switch (BPParticles.getFromName(particle)) {
+            final BPParticles particles = BPParticles.getFromName(particle);
+
+            if (particles != null) {
+                switch (particles) {
                     case LOVEWELL:
                         particleManager.getParticleControl().playLoveWell(loc, id);
                         break;
