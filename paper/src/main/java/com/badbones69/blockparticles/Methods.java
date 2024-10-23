@@ -303,6 +303,8 @@ public class Methods {
             return;
         }
 
+        boolean hasLocation = false;
+
         for (String loc : section.getKeys(false)) {
             if (loc.equalsIgnoreCase(name)) {
                 data.set("locations." + loc, null);
@@ -313,8 +315,14 @@ public class Methods {
 
                 player.sendMessage(color(prefix + "&3You have deleted &6" + name + "&3."));
 
+                hasLocation = true;
+
                 break;
             }
+        }
+
+        if (!hasLocation) {
+            player.sendMessage(color(prefix + "&3There are no locations called &6" + name + "&3."));
         }
     }
     
