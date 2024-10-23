@@ -5,10 +5,10 @@ import com.badbones69.blockparticles.commands.BPCommands;
 import com.badbones69.blockparticles.commands.BPTab;
 import com.badbones69.blockparticles.listeners.FountainListener;
 import com.badbones69.blockparticles.listeners.ParticleListener;
+import com.badbones69.blockparticles.listeners.WorldLoadListener;
 import com.ryderbelserion.vital.paper.VitalPaper;
 import com.ryderbelserion.vital.paper.api.enums.Support;
 import com.ryderbelserion.vital.paper.api.files.FileManager;
-import com.ryderbelserion.vital.paper.util.scheduler.FoliaRunnable;
 import me.arcaniax.hdb.api.HeadDatabaseAPI;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.PluginManager;
@@ -47,6 +47,7 @@ public class BlockParticles extends JavaPlugin {
 
         pluginManager.registerEvents(new FountainListener(), this);
         pluginManager.registerEvents(new ParticleListener(), this);
+        pluginManager.registerEvents(new WorldLoadListener(), this);
 
         final PluginCommand command = getCommand("blockparticle");
 
@@ -55,13 +56,6 @@ public class BlockParticles extends JavaPlugin {
 
             command.setTabCompleter(new BPTab());
         }
-
-        new FoliaRunnable(getServer().getGlobalRegionScheduler()){
-            @Override
-            public void run() {
-                Methods.startParticles();
-            }
-        }.runDelayed(this, 200);
     }
 
     @Override
