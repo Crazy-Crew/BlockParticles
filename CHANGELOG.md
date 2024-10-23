@@ -1,5 +1,7 @@
 ### Additions:
 - Added folia support (untested).
+- Added `bparticles.admin` to the plugin.yml
+  - This will fix a few niche issues, it's mainly for tab completion!
 
 ### Changes:
 - Improved readability and slight performance increase by using single variables for commonly called methods.
