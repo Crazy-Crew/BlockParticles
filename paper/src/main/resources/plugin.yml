@@ -1,7 +1,11 @@
 name: '${name}'
 main: '${group}.${name}'
 
-authors: ${authors}
+authors:
+  - ryderbelserion
+  - BadBones69
+  - Felux
+  - TDL
 
 version: '${version}'
 description: '${description}'
