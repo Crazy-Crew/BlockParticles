@@ -15,6 +15,8 @@
 - Updated the itembuilder.
   - With updating the ItemBuilder, and Vital API. You can expect more configuration to how the plugin works.
 - Cleaned up unused methods.
+- Send a message if the location you are trying to delete does not exist.
+- End all for loops early, if we find what we need and utilize booleans to send messages depending on the outcome (true/false).
 
 ### Future Changes:
 A current list of things I thought of that need to be done. If you have any suggestions, hop over to our issues tab!
