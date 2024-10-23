@@ -296,7 +296,7 @@ public class Methods {
                 data.set("locations." + loc, null);
                 Files.data.save();
 
-                Bukkit.getScheduler().cancelTask(particleManager.getParticleControl().getLocations().get(loc));
+                particleManager.getParticleControl().getLocations().get(loc).cancel();
 
                 player.sendMessage(color(prefix + "&3You have deleted &6" + name + "&3."));
 

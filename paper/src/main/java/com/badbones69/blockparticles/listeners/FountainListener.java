@@ -1,9 +1,11 @@
 package com.badbones69.blockparticles.listeners;
 
 import com.badbones69.blockparticles.BlockParticles;
+import com.badbones69.blockparticles.api.ParticleControl;
 import com.badbones69.blockparticles.api.objects.CustomFountain;
 import com.badbones69.blockparticles.Methods;
 import com.badbones69.blockparticles.api.ParticleManager;
+import com.ryderbelserion.vital.paper.util.scheduler.FoliaRunnable;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -30,6 +32,8 @@ public class FountainListener implements Listener {
     private static final Server server = plugin.getServer();
 
     private static final ParticleManager particleManager = plugin.getParticleManager();
+
+    private static final ParticleControl particleControl = particleManager.getParticleControl();
     
     private static final Random random = new Random();
 
@@ -182,173 +186,235 @@ public class FountainListener implements Listener {
     }
     
     public static void startCustomFountain(Location loc, String id, CustomFountain fountain) {
-        particleManager.getParticleControl().getLocations().put(id, server.getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
-            for (ItemStack head : getRandomCustomHead(fountain.getHeads())) {
-                final Item headItem = Bukkit.getWorld(loc.getWorld().getName()).dropItem(loc.clone().add(.5, .8, .5), head);
-                headItem.setVelocity(new Vector(randomVector(), .01, randomVector()));
-                particleManager.addFountainItem(headItem);
-                server.getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                    particleManager.removeFountainItem(headItem);
-                    headItem.remove();
-                }, 2 * 20);
+        particleManager.getParticleControl().getLocations().put(id, new FoliaRunnable(server.getRegionScheduler(), loc) {
+            @Override
+            public void run() {
+                for (ItemStack head : getRandomCustomHead(fountain.getHeads())) {
+                    final Item headItem = Bukkit.getWorld(loc.getWorld().getName()).dropItem(loc.clone().add(.5, .8, .5), head);
+                    headItem.setVelocity(new Vector(randomVector(), .01, randomVector()));
+                    particleManager.addFountainItem(headItem);
+
+                    new FoliaRunnable(server.getRegionScheduler(), loc) {
+                        @Override
+                        public void run() {
+                            particleManager.removeFountainItem(headItem);
+                            headItem.remove();
+                        }
+                    }.runDelayed(plugin, 2 * 20);
+                }
             }
-        }, 0, 3));
+        }.runAtFixedRate(plugin, 0, 3));
     }
     
     public static void startHalloween(final Location loc, String id) {
-        particleManager.getParticleControl().getLocations().put(id, server.getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
-            ItemStack flesh = new ItemStack(Material.ROTTEN_FLESH);
-            ItemMeta m = flesh.getItemMeta();
-            m.setDisplayName(new Random().nextInt(Integer.MAX_VALUE) + "");
-            flesh.setItemMeta(m);
-            ItemStack redstone = new ItemStack(Material.REDSTONE);
-            redstone.setItemMeta(m);
-            ItemStack bone = new ItemStack(Material.BONE);
-            bone.setItemMeta(m);
-            ItemStack pumpkin = new ItemStack(Material.JACK_O_LANTERN);
-            pumpkin.setItemMeta(m);
-            final Item fleshItem = Bukkit.getWorld(loc.getWorld().getName()).dropItem(loc.clone().add(.5, 1, .5), flesh);
-            final Item redstoneItem = Bukkit.getWorld(loc.getWorld().getName()).dropItem(loc.clone().add(.5, 1, .5), redstone);
-            final Item boneItem = Bukkit.getWorld(loc.getWorld().getName()).dropItem(loc.clone().add(.5, 1, .5), bone);
-            final Item pumpkinItem = Bukkit.getWorld(loc.getWorld().getName()).dropItem(loc.clone().add(.5, 1, .5), pumpkin);
-            fleshItem.setVelocity(new Vector(randomVector(), .3, randomVector()));
-            particleManager.addFountainItem(fleshItem);
-            redstoneItem.setVelocity(new Vector(randomVector(), .3, randomVector()));
-            particleManager.addFountainItem(redstoneItem);
-            boneItem.setVelocity(new Vector(randomVector(), .3, randomVector()));
-            particleManager.addFountainItem(boneItem);
-            pumpkinItem.setVelocity(new Vector(randomVector(), .3, randomVector()));
-            particleManager.addFountainItem(pumpkinItem);
-            server.getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                particleManager.removeFountainItem(fleshItem);
-                fleshItem.remove();
-                particleManager.removeFountainItem(redstoneItem);
-                redstoneItem.remove();
-                particleManager.removeFountainItem(boneItem);
-                boneItem.remove();
-                particleManager.removeFountainItem(pumpkinItem);
-                pumpkinItem.remove();
-            }, 2 * 20);
-        }, 0, 2));
+        particleManager.getParticleControl().getLocations().put(id, new FoliaRunnable(server.getRegionScheduler(), loc) {
+            @Override
+            public void run() {
+                ItemStack flesh = new ItemStack(Material.ROTTEN_FLESH);
+                ItemMeta m = flesh.getItemMeta();
+                m.setDisplayName(new Random().nextInt(Integer.MAX_VALUE) + "");
+                flesh.setItemMeta(m);
+                ItemStack redstone = new ItemStack(Material.REDSTONE);
+                redstone.setItemMeta(m);
+                ItemStack bone = new ItemStack(Material.BONE);
+                bone.setItemMeta(m);
+                ItemStack pumpkin = new ItemStack(Material.JACK_O_LANTERN);
+                pumpkin.setItemMeta(m);
+                final Item fleshItem = Bukkit.getWorld(loc.getWorld().getName()).dropItem(loc.clone().add(.5, 1, .5), flesh);
+                final Item redstoneItem = Bukkit.getWorld(loc.getWorld().getName()).dropItem(loc.clone().add(.5, 1, .5), redstone);
+                final Item boneItem = Bukkit.getWorld(loc.getWorld().getName()).dropItem(loc.clone().add(.5, 1, .5), bone);
+                final Item pumpkinItem = Bukkit.getWorld(loc.getWorld().getName()).dropItem(loc.clone().add(.5, 1, .5), pumpkin);
+                fleshItem.setVelocity(new Vector(randomVector(), .3, randomVector()));
+                particleManager.addFountainItem(fleshItem);
+                redstoneItem.setVelocity(new Vector(randomVector(), .3, randomVector()));
+                particleManager.addFountainItem(redstoneItem);
+                boneItem.setVelocity(new Vector(randomVector(), .3, randomVector()));
+                particleManager.addFountainItem(boneItem);
+                pumpkinItem.setVelocity(new Vector(randomVector(), .3, randomVector()));
+                particleManager.addFountainItem(pumpkinItem);
+
+                new FoliaRunnable(server.getRegionScheduler(), loc) {
+                    @Override
+                    public void run() {
+                        particleManager.removeFountainItem(fleshItem);
+                        fleshItem.remove();
+                        particleManager.removeFountainItem(redstoneItem);
+                        redstoneItem.remove();
+                        particleManager.removeFountainItem(boneItem);
+                        boneItem.remove();
+                        particleManager.removeFountainItem(pumpkinItem);
+                        pumpkinItem.remove();
+                    }
+                }.runDelayed(plugin, 2 * 20);
+            }
+        }.runAtFixedRate(plugin, 0, 2));
     }
     
     public static void startGems(final Location loc, String id) {
-        particleManager.getParticleControl().getLocations().put(id, server.getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
-            ItemStack emerald = new ItemStack(Material.EMERALD);
-            ItemMeta m = emerald.getItemMeta();
-            m.setDisplayName(new Random().nextInt(Integer.MAX_VALUE) + "");
-            emerald.setItemMeta(m);
-            ItemStack diamond = new ItemStack(Material.DIAMOND);
-            diamond.setItemMeta(m);
-            ItemStack gold = new ItemStack(Material.GOLD_INGOT);
-            gold.setItemMeta(m);
-            final Item emeraldItem = Bukkit.getWorld(loc.getWorld().getName()).dropItem(loc.clone().add(.5, 1, .5), emerald);
-            final Item diamondItem = Bukkit.getWorld(loc.getWorld().getName()).dropItem(loc.clone().add(.5, 1, .5), diamond);
-            final Item goldItem = Bukkit.getWorld(loc.getWorld().getName()).dropItem(loc.clone().add(.5, 1, .5), gold);
-            emeraldItem.setVelocity(new Vector(randomVector(), .3, randomVector()));
-            particleManager.addFountainItem(emeraldItem);
-            diamondItem.setVelocity(new Vector(randomVector(), .3, randomVector()));
-            particleManager.addFountainItem(diamondItem);
-            goldItem.setVelocity(new Vector(randomVector(), .3, randomVector()));
-            particleManager.addFountainItem(goldItem);
-            server.getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                particleManager.removeFountainItem(emeraldItem);
-                emeraldItem.remove();
-                particleManager.removeFountainItem(diamondItem);
-                diamondItem.remove();
-                particleManager.removeFountainItem(goldItem);
-                goldItem.remove();
-            }, 2 * 20);
-        }, 0, 2));
+        particleManager.getParticleControl().getLocations().put(id, new FoliaRunnable(server.getRegionScheduler(), loc) {
+            @Override
+            public void run() {
+                ItemStack emerald = new ItemStack(Material.EMERALD);
+                ItemMeta m = emerald.getItemMeta();
+                m.setDisplayName(new Random().nextInt(Integer.MAX_VALUE) + "");
+                emerald.setItemMeta(m);
+                ItemStack diamond = new ItemStack(Material.DIAMOND);
+                diamond.setItemMeta(m);
+                ItemStack gold = new ItemStack(Material.GOLD_INGOT);
+                gold.setItemMeta(m);
+                final Item emeraldItem = Bukkit.getWorld(loc.getWorld().getName()).dropItem(loc.clone().add(.5, 1, .5), emerald);
+                final Item diamondItem = Bukkit.getWorld(loc.getWorld().getName()).dropItem(loc.clone().add(.5, 1, .5), diamond);
+                final Item goldItem = Bukkit.getWorld(loc.getWorld().getName()).dropItem(loc.clone().add(.5, 1, .5), gold);
+                emeraldItem.setVelocity(new Vector(randomVector(), .3, randomVector()));
+                particleManager.addFountainItem(emeraldItem);
+                diamondItem.setVelocity(new Vector(randomVector(), .3, randomVector()));
+                particleManager.addFountainItem(diamondItem);
+                goldItem.setVelocity(new Vector(randomVector(), .3, randomVector()));
+                particleManager.addFountainItem(goldItem);
+
+                new FoliaRunnable(server.getRegionScheduler(), loc) {
+                    @Override
+                    public void run() {
+                        particleManager.removeFountainItem(emeraldItem);
+                        emeraldItem.remove();
+                        particleManager.removeFountainItem(diamondItem);
+                        diamondItem.remove();
+                        particleManager.removeFountainItem(goldItem);
+                        goldItem.remove();
+                    }
+                }.runDelayed(plugin, 2 * 20);
+            }
+        }.runAtFixedRate(plugin, 0, 2));
     }
     
     public static void startHeads(final Location loc, String id) {
-        particleManager.getParticleControl().getLocations().put(id, server.getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
-            String name;
-            int radius = 10;
-            for (Entity entity : getNearbyEntities(loc.clone(), radius, radius, radius)) {
-                if (entity instanceof Player) {
-                    name = entity.getName();
-                    final Item head = Bukkit.getWorld(loc.getWorld().getName()).dropItem(loc.clone().add(.5, .8, .5), Methods.getPlayerHead(name));
-                    head.setVelocity(new Vector(randomVector(), .01, randomVector()));
-                    particleManager.addFountainItem(head);
-                    server.getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                        particleManager.removeFountainItem(head);
-                        head.remove();
-                    }, 2 * 20);
+        particleManager.getParticleControl().getLocations().put(id, new FoliaRunnable(server.getRegionScheduler(), loc) {
+            @Override
+            public void run() {
+                String name;
+                int radius = 10;
+                for (Entity entity : getNearbyEntities(loc.clone(), radius, radius, radius)) {
+                    if (entity instanceof Player) {
+                        name = entity.getName();
+                        final Item head = Bukkit.getWorld(loc.getWorld().getName()).dropItem(loc.clone().add(.5, .8, .5), Methods.getPlayerHead(name));
+                        head.setVelocity(new Vector(randomVector(), .01, randomVector()));
+                        particleManager.addFountainItem(head);
+
+                        new FoliaRunnable(server.getRegionScheduler(), loc) {
+                            @Override
+                            public void run() {
+                                particleManager.removeFountainItem(head);
+                                head.remove();
+                            }
+                        }.runDelayed(plugin, 2 * 20);
+                    }
                 }
             }
-        }, 0, 3));
+        }.runAtFixedRate(plugin, 0, 3));
     }
     
     public static void startPresents(final Location loc, String id) {
-        particleManager.getParticleControl().getLocations().put(id, server.getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
-            for (String head : getRandomHeads(presentHeads)) {
-                final Item headItem = Bukkit.getWorld(loc.getWorld().getName()).dropItem(loc.clone().add(.5, .8, .5), Methods.getPlayerHead("https://textures.minecraft.net/texture/" + head));
-                headItem.setVelocity(new Vector(randomVector(), .01, randomVector()));
-                particleManager.addFountainItem(headItem);
-                server.getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                    particleManager.removeFountainItem(headItem);
-                    headItem.remove();
-                }, 2 * 20);
+        particleManager.getParticleControl().getLocations().put(id, new FoliaRunnable(server.getRegionScheduler(), loc) {
+            @Override
+            public void run() {
+                for (String head : getRandomHeads(presentHeads)) {
+                    final Item headItem = Bukkit.getWorld(loc.getWorld().getName()).dropItem(loc.clone().add(.5, .8, .5), Methods.getPlayerHead("https://textures.minecraft.net/texture/" + head));
+                    headItem.setVelocity(new Vector(randomVector(), .01, randomVector()));
+                    particleManager.addFountainItem(headItem);
+
+                    new FoliaRunnable(server.getRegionScheduler(), loc) {
+                        @Override
+                        public void run() {
+                            particleManager.removeFountainItem(headItem);
+                            headItem.remove();
+                        }
+                    }.runDelayed(plugin, 2 * 20);
+                }
             }
-        }, 0, 3));
+        }.runAtFixedRate(plugin, 0, 3));
     }
     
     public static void startMobs(final Location loc, String id) {
-        particleManager.getParticleControl().getLocations().put(id, server.getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
-            for (String head : getRandomHeads(mobHeads)) {
-                final Item headItem = Bukkit.getWorld(loc.getWorld().getName()).dropItem(loc.clone().add(.5, .8, .5), Methods.getPlayerHead("https://textures.minecraft.net/texture/" + head));
-                headItem.setVelocity(new Vector(randomVector(), .01, randomVector()));
-                particleManager.addFountainItem(headItem);
-                server.getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                    particleManager.removeFountainItem(headItem);
-                    headItem.remove();
-                }, 2 * 20);
+        particleManager.getParticleControl().getLocations().put(id, new FoliaRunnable(server.getRegionScheduler(), loc) {
+            @Override
+            public void run() {
+                for (String head : getRandomHeads(mobHeads)) {
+                    final Item headItem = Bukkit.getWorld(loc.getWorld().getName()).dropItem(loc.clone().add(.5, .8, .5), Methods.getPlayerHead("https://textures.minecraft.net/texture/" + head));
+                    headItem.setVelocity(new Vector(randomVector(), .01, randomVector()));
+                    particleManager.addFountainItem(headItem);
+
+                    new FoliaRunnable(server.getRegionScheduler(), loc) {
+                        @Override
+                        public void run() {
+                            particleManager.removeFountainItem(headItem);
+                            headItem.remove();
+                        }
+                    }.runDelayed(plugin, 2 * 20);
+                }
             }
-        }, 0, 3));
+        }.runAtFixedRate(plugin, 0, 3));
     }
     
     public static void startFood(final Location loc, String id) {
-        particleManager.getParticleControl().getLocations().put(id, server.getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
-            for (String head : getRandomHeads(foodHeads)) {
-                final Item headItem = Bukkit.getWorld(loc.getWorld().getName()).dropItem(loc.clone().add(.5, .8, .5), Methods.getPlayerHead("https://textures.minecraft.net/texture/" + head));
-                headItem.setVelocity(new Vector(randomVector(), .01, randomVector()));
-                particleManager.addFountainItem(headItem);
-                server.getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                    particleManager.removeFountainItem(headItem);
-                    headItem.remove();
-                }, 2 * 20);
+        particleManager.getParticleControl().getLocations().put(id, new FoliaRunnable(server.getRegionScheduler(), loc) {
+            @Override
+            public void run() {
+                for (String head : getRandomHeads(foodHeads)) {
+                    final Item headItem = Bukkit.getWorld(loc.getWorld().getName()).dropItem(loc.clone().add(.5, .8, .5), Methods.getPlayerHead("https://textures.minecraft.net/texture/" + head));
+                    headItem.setVelocity(new Vector(randomVector(), .01, randomVector()));
+                    particleManager.addFountainItem(headItem);
+
+                    new FoliaRunnable(server.getRegionScheduler(), loc) {
+                        @Override
+                        public void run() {
+                            particleManager.removeFountainItem(headItem);
+                            headItem.remove();
+                        }
+                    }.runDelayed(plugin, 2 * 20);
+                }
             }
-        }, 0, 3));
+        }.runAtFixedRate(plugin, 0, 3));
     }
     
     public static void startPokemon(final Location loc, String id) {
-        particleManager.getParticleControl().getLocations().put(id, server.getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
-            for (String head : getRandomHeads(pokemonHeads)) {
-                final Item headItem = Bukkit.getWorld(loc.getWorld().getName()).dropItem(loc.clone().add(.5, .8, .5), Methods.getPlayerHead("https://textures.minecraft.net/texture/" + head));
-                headItem.setVelocity(new Vector(randomVector(), .01, randomVector()));
-                particleManager.addFountainItem(headItem);
-                server.getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                    particleManager.removeFountainItem(headItem);
-                    headItem.remove();
-                }, 2 * 20);
+        particleManager.getParticleControl().getLocations().put(id, new FoliaRunnable(server.getRegionScheduler(), loc) {
+            @Override
+            public void run() {
+                for (String head : getRandomHeads(pokemonHeads)) {
+                    final Item headItem = Bukkit.getWorld(loc.getWorld().getName()).dropItem(loc.clone().add(.5, .8, .5), Methods.getPlayerHead("https://textures.minecraft.net/texture/" + head));
+                    headItem.setVelocity(new Vector(randomVector(), .01, randomVector()));
+                    particleManager.addFountainItem(headItem);
+
+                    new FoliaRunnable(server.getRegionScheduler(), loc) {
+                        @Override
+                        public void run() {
+                            particleManager.removeFountainItem(headItem);
+                            headItem.remove();
+                        }
+                    }.runDelayed(plugin, 2 * 20);
+                }
             }
-        }, 0, 3));
+        }.runAtFixedRate(plugin, 0, 3));
     }
     
     public static void startMario(final Location loc, String id) {
-        particleManager.getParticleControl().getLocations().put(id, server.getScheduler().scheduleSyncRepeatingTask(plugin, () -> {
-            for (String head : getRandomHeads(marioHeads)) {
-                final Item headItem = Bukkit.getWorld(loc.getWorld().getName()).dropItem(loc.clone().add(.5, .8, .5), Methods.getPlayerHead("https://textures.minecraft.net/texture/" + head));
-                headItem.setVelocity(new Vector(randomVector(), .01, randomVector()));
-                particleManager.addFountainItem(headItem);
-                server.getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                    particleManager.removeFountainItem(headItem);
-                    headItem.remove();
-                }, 2 * 20);
+        particleManager.getParticleControl().getLocations().put(id, new FoliaRunnable(server.getRegionScheduler(), loc) {
+            @Override
+            public void run() {
+                for (String head : getRandomHeads(marioHeads)) {
+                    final Item headItem = Bukkit.getWorld(loc.getWorld().getName()).dropItem(loc.clone().add(.5, .8, .5), Methods.getPlayerHead("https://textures.minecraft.net/texture/" + head));
+                    headItem.setVelocity(new Vector(randomVector(), .01, randomVector()));
+
+                    new FoliaRunnable(server.getRegionScheduler(), loc) {
+                        @Override
+                        public void run() {
+                            particleManager.removeFountainItem(headItem);
+                            headItem.remove();
+                        }
+                    }.runDelayed(plugin, 2 * 20);
+                }
             }
-        }, 0, 3));
+        }.runAtFixedRate(plugin, 0, 3));
     }
     
     private static List<String> getRandomHeads(List<String> headList) {

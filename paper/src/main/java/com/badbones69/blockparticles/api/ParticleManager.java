@@ -111,7 +111,7 @@ public class ParticleManager {
      */
     public void setParticle(CustomParticles type, Location loc, String name) {
         if (particleControl.getLocations().containsKey(name)) {
-            this.plugin.getServer().getScheduler().cancelTask(particleControl.getLocations().get(name));
+            particleControl.getLocations().get(name).cancel();
         }
 
         switch (type) {
@@ -263,7 +263,7 @@ public class ParticleManager {
      */
     public void removeParticle(String name) {
         if (this.particleControl.getLocations().containsKey(name)) {
-            this.plugin.getServer().getScheduler().cancelTask(this.particleControl.getLocations().get(name));
+            this.particleControl.getLocations().get(name).cancel();
             this.particleControl.getLocations().remove(name);
         }
     }

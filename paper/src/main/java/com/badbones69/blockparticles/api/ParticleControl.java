@@ -1,13 +1,15 @@
 package com.badbones69.blockparticles.api;
 
 import com.badbones69.blockparticles.api.enums.particles.CustomParticles;
+import io.papermc.paper.threadedregions.scheduler.ScheduledTask;
 import org.bukkit.Location;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public interface ParticleControl {
     
-    HashMap<String, Integer> getLocations();
+    Map<String, ScheduledTask> getLocations();
     
     void playVolcano(Location location, String id);
     
