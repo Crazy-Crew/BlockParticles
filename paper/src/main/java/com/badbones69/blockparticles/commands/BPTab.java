@@ -24,7 +24,7 @@ public class BPTab implements TabCompleter {
     public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String commandLabel, String[] args) {
         List<String> completions = new ArrayList<>();
 
-        if (sender.hasPermission("bparticles.admin")) {
+        if (!sender.hasPermission("bparticles.admin")) {
             return new ArrayList<>();
         }
 
