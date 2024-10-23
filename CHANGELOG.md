@@ -9,6 +9,7 @@
 - Updated how the inventory that displays particles or fountain types is handled.
   - No longer check the inventory title to see if it's our inventory.
   - No longer check display name on items to find out which set of items to show a player.
+  - This effectively keeps the menu secure from unwanted eyeballs.
 - Updated to 1.21.1.
 - Updated vital api.
 - Updated the itembuilder.
