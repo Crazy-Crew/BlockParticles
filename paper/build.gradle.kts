@@ -24,17 +24,28 @@ dependencies {
     compileOnly(libs.paper)
 }
 
-val component: SoftwareComponent = components["java"]
+val javaComponent: SoftwareComponent = components["java"]
 
 tasks {
     publishing {
+        repositories {
+            maven {
+                url = uri("https://repo.crazycrew.us/releases")
+
+                credentials {
+                    this.username = System.getenv("gradle_username")
+                    this.password = System.getenv("gradle_password")
+                }
+            }
+        }
+
         publications {
             create<MavenPublication>("maven") {
-                groupId = rootProject.group.toString()
-                artifactId = "${rootProject.name.lowercase()}-api"
-                version = rootProject.version.toString()
+                groupId = project.group.toString()
+                artifactId = "${rootProject.name.lowercase()}-paper-api"
+                version = project.version.toString()
 
-                from(component)
+                artifact(shadowJar.get())
             }
         }
     }
