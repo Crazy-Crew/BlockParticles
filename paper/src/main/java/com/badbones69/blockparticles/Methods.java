@@ -241,14 +241,22 @@ public class Methods {
 
         final ConfigurationSection section = data.getConfigurationSection("locations");
 
+        boolean alreadyExists = false;
+
         if (section != null) {
             for (final String loc : section.getKeys(false)) {
                 if (loc.equalsIgnoreCase(name)) {
-                    player.sendMessage(color(prefix + "&3That location name is taken, please remove it and replace it here."));
+                    alreadyExists = true;
 
                     break;
                 }
             }
+        }
+
+        if (alreadyExists) {
+            player.sendMessage(color(prefix + "&3That location name is taken, please remove it and replace it here."));
+
+            return;
         }
 
         final Block block = player.getTargetBlock(null, 5);
@@ -298,13 +306,14 @@ public class Methods {
         for (String loc : section.getKeys(false)) {
             if (loc.equalsIgnoreCase(name)) {
                 data.set("locations." + loc, null);
+                
                 Files.data.save();
 
                 particleManager.getParticleControl().getLocations().get(loc).cancel();
 
                 player.sendMessage(color(prefix + "&3You have deleted &6" + name + "&3."));
 
-                return;
+                break;
             }
         }
     }
@@ -367,6 +376,8 @@ public class Methods {
 
         final ConfigurationSection section = data.getConfigurationSection("locations");
 
+        boolean hasLocation = false;
+
         if (section != null) {
             for (String loc : section.getKeys(false)) {
                 if (loc.equalsIgnoreCase(name)) {
@@ -380,12 +391,14 @@ public class Methods {
 
                     player.sendMessage(color(prefix + "&3You have just set &6" + name + "'s &3particle to &6" + particle + "&3."));
 
-                    return;
+                    hasLocation = true;
+
+                    break;
                 }
             }
         }
 
-        player.sendMessage(color(prefix + "&3There are no locations called &6" + name + "&3."));
+        if (!hasLocation) player.sendMessage(color(prefix + "&3There are no locations called &6" + name + "&3."));
     }
     
     public static ItemStack getPlayerHead(String name) {
