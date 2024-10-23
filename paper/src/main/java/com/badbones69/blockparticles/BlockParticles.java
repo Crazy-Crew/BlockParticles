@@ -5,7 +5,6 @@ import com.badbones69.blockparticles.commands.BPCommands;
 import com.badbones69.blockparticles.commands.BPTab;
 import com.badbones69.blockparticles.listeners.FountainListener;
 import com.badbones69.blockparticles.listeners.ParticleListener;
-import com.badbones69.blockparticles.listeners.WorldLoadListener;
 import com.ryderbelserion.vital.paper.VitalPaper;
 import com.ryderbelserion.vital.paper.api.enums.Support;
 import com.ryderbelserion.vital.paper.api.files.FileManager;
@@ -47,7 +46,6 @@ public class BlockParticles extends JavaPlugin {
 
         pluginManager.registerEvents(new FountainListener(), this);
         pluginManager.registerEvents(new ParticleListener(), this);
-        pluginManager.registerEvents(new WorldLoadListener(), this);
 
         final PluginCommand command = getCommand("blockparticle");
 
@@ -56,6 +54,8 @@ public class BlockParticles extends JavaPlugin {
 
             command.setTabCompleter(new BPTab());
         }
+
+        Methods.startParticles();
     }
 
     @Override
