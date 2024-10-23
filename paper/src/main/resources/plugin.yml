@@ -14,3 +14,8 @@ commands:
   blockparticle:
     description: Adds particles to blocks!
     aliases: [blockparticles, bp, bparticle, bparticles]
+
+permissions:
+  bparticles.admin:
+    default: op
+    description: Allows access to /blockparticles

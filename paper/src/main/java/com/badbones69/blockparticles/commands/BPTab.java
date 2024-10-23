@@ -23,17 +23,21 @@ public class BPTab implements TabCompleter {
     @Override
     public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String commandLabel, String[] args) {
         List<String> completions = new ArrayList<>();
+
+        if (sender.hasPermission("bparticles.admin")) {
+            return new ArrayList<>();
+        }
+
         if (args.length == 1) {// /bp
-            if (sender.hasPermission("bparticles.admin")) {
-                completions.addAll(Arrays.asList(
-                "help",
-                "reload",
-                "list",
-                "types",
-                "set",
-                "add",
-                "delete"));
-            }
+            completions.addAll(Arrays.asList(
+                    "help",
+                    "reload",
+                    "list",
+                    "types",
+                    "set",
+                    "add",
+                    "delete"));
+            
             return StringUtil.copyPartialMatches(args[0], completions, new ArrayList<>());
         } else if (args.length == 2) {// /bp arg1
             switch (args[0].toLowerCase()) {
