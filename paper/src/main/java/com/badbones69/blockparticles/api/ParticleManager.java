@@ -25,7 +25,17 @@ public class ParticleManager {
 
     
     public void load() {
+        if (this.particleControl != null) {
+            // cancel all tasks
+            this.particleControl.getLocations().forEach((name, location) -> location.cancel());
+
+            // clear locations
+            this.particleControl.getLocations().clear();
+        }
+
+        // create new instance
         this.particleControl = new Particles();
+
         this.customFountains.clear();
 
         FileConfiguration config = Files.config.getConfiguration();
