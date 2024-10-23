@@ -44,10 +44,12 @@ public class BPCommands implements CommandExecutor {
                         return true;
                     case "reload":
                     case "r":
+                        this.fileManager.reloadFiles();
+
+                        this.plugin.getParticleManager().load();
+
                         Methods.kill();
                         Methods.startParticles();
-
-                        this.fileManager.reloadFiles();
 
                         sender.sendMessage(Methods.color(prefix + "&3You have just reloaded the config.yml and block particles."));
                         return true;
