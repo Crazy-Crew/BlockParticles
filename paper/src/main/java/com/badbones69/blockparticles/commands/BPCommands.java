@@ -74,7 +74,7 @@ public class BPCommands implements CommandExecutor {
                             if (args.length == 2) {
                                 for (String location : Methods.getLocations()) {
                                     if (location.equalsIgnoreCase(args[1])) {
-                                        new MainMenu(player, "<dark_gray>Block <blue>Particles", 6).open();
+                                        new MainMenu(player, "<dark_gray>Block <blue>Particles", 6, location).open();
 
                                         return true;
                                     }

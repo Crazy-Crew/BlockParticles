@@ -1,5 +1,6 @@
 package com.badbones69.blockparticles.api.builders.types;
 
+import com.badbones69.blockparticles.Methods;
 import com.badbones69.blockparticles.api.builders.gui.StaticInventoryBuilder;
 import com.ryderbelserion.vital.paper.api.builders.gui.interfaces.Gui;
 import com.ryderbelserion.vital.paper.api.builders.gui.interfaces.GuiItem;
@@ -20,7 +21,9 @@ public class MainMenu extends StaticInventoryBuilder {
     
     private final Map<Integer, Map<Integer, ItemStack>> items;
 
-    public MainMenu(final Player player, final String title, final int rows) {
+    private final String location;
+
+    public MainMenu(final Player player, final String title, final int rows, String location) {
         super(player, title, rows);
         
         this.items = new HashMap<>();
@@ -128,6 +131,10 @@ public class MainMenu extends StaticInventoryBuilder {
                     this.items.get(2).keySet().forEach(this.gui::removeItem);
 
                     this.items.get(1).forEach((slot, item) -> this.gui.setItem(slot, new GuiItem(item)));
+                }
+
+                default -> {
+                    Methods.setLoc(this.player, this.location, type);
                 }
             }
         });
