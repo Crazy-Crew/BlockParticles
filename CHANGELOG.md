@@ -25,3 +25,5 @@
 - Not getting tab completion with the permission `bparticles.admin`, because the check for the permission was if you had the permission.
 - Fixed an issue with custom heads from HeadDatabaseAPI.
   - We load everything after the HeadDatabaseAPI's database loads if the plugin is enabled.
+- Fixed the menu that pops up when you do /bp set <name>
+  - It was not updating items properly when you hit Fountains to view fountain types etc.
