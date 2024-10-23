@@ -408,12 +408,4 @@ public class Methods {
 
         if (!hasLocation) player.sendMessage(color(prefix + "&3There are no locations called &6" + name + "&3."));
     }
-    
-    public static ItemStack getPlayerHead(String name) {
-        return getPlayerHead(name, null);
-    }
-    
-    public static ItemStack getPlayerHead(String playerName, String displayName) {
-        return new ItemBuilder().withType(Material.PLAYER_HEAD).setPlayer(playerName).setDisplayName(displayName != null ? displayName : ThreadLocalRandom.current().nextInt(Integer.MAX_VALUE) + "").asItemStack();
-    }
 }

@@ -99,71 +99,90 @@ public class Particles implements ParticleControl {
             @Override
             public void run() {
                 if (noPlayers(l.clone(), range)) return;
-                if (time == 15) {
-                    world.spawnParticle(particle, l.clone().add(.8, 0, 0), amount, 0, 0, 0, 0);
-                    world.spawnParticle(particle, l.clone().add(-.8, 0, 0), amount, 0, 0, 0, 0);
+
+                switch (time) {
+                    case 15 -> {
+                        world.spawnParticle(particle, l.clone().add(.8, 0, 0), amount, 0, 0, 0, 0);
+                        world.spawnParticle(particle, l.clone().add(-.8, 0, 0), amount, 0, 0, 0, 0);
+                    }
+
+                    case 14 -> {
+                        world.spawnParticle(particle, l.clone().add(.75, 0, .43), amount, 0, 0, 0, 0);
+                        world.spawnParticle(particle, l.clone().add(-.75, 0, -.43), amount, 0, 0, 0, 0);
+                    }
+
+                    case 13 -> {
+                        world.spawnParticle(particle, l.clone().add(.65, 0, .65), amount, 0, 0, 0, 0);
+                        world.spawnParticle(particle, l.clone().add(-.65, 0, -.65), amount, 0, 0, 0, 0);
+                    }
+
+                    case 12 -> {
+                        world.spawnParticle(particle, l.clone().add(.43, 0, .75), amount, 0, 0, 0, 0);
+                        world.spawnParticle(particle, l.clone().add(-.43, 0, -.75), amount, 0, 0, 0, 0);
+                    }
+
+                    case 11 -> {
+                        world.spawnParticle(particle, l.clone().add(0, 0, .8), amount, 0, 0, 0, 0);
+                        world.spawnParticle(particle, l.clone().add(0, 0, -.8), amount, 0, 0, 0, 0);
+                    }
+
+                    case 10 -> {
+                        world.spawnParticle(particle, l.clone().add(-.43, 0, .75), amount, 0, 0, 0, 0);
+                        world.spawnParticle(particle, l.clone().add(.43, 0, -.75), amount, 0, 0, 0, 0);
+                    }
+
+                    case 9 -> {
+                        world.spawnParticle(particle, l.clone().add(-.65, 0, .65), amount, 0, 0, 0, 0);
+                        world.spawnParticle(particle, l.clone().add(.65, 0, -.65), amount, 0, 0, 0, 0);
+                    }
+
+                    case 8 -> {
+                        world.spawnParticle(particle, l.clone().add(-.75, 0, .43), amount, 0, 0, 0, 0);
+                        world.spawnParticle(particle, l.clone().add(.75, 0, -.43), amount, 0, 0, 0, 0);
+                    }
+
+                    case 7 -> {
+                        world.spawnParticle(particle, l.clone().add(-.8, 0, 0), amount, 0, 0, 0, 0);
+                        world.spawnParticle(particle, l.clone().add(.8, 0, 0), amount, 0, 0, 0, 0);
+                    }
+
+                    case 6 -> {
+                        world.spawnParticle(particle, l.clone().add(-.75, 0, -.43), amount, 0, 0, 0, 0);
+                        world.spawnParticle(particle, l.clone().add(.75, 0, .43), amount, 0, 0, 0, 0);
+                    }
+
+                    case 5 -> {
+                        world.spawnParticle(particle, l.clone().add(-.65, 0, -.65), amount, 0, 0, 0, 0);
+                        world.spawnParticle(particle, l.clone().add(.65, 0, .65), amount, 0, 0, 0, 0);
+                    }
+
+                    case 4 -> {
+                        world.spawnParticle(particle, l.clone().add(-.43, 0, -.75), amount, 0, 0, 0, 0);
+                        world.spawnParticle(particle, l.clone().add(.43, 0, .75), amount, 0, 0, 0, 0);
+                    }
+
+                    case 3 -> {
+                        world.spawnParticle(particle, l.clone().add(0, 0, -.8), amount, 0, 0, 0, 0);
+                        world.spawnParticle(particle, l.clone().add(0, 0, .8), amount, 0, 0, 0, 0);
+                    }
+
+                    case 2 -> {
+                        world.spawnParticle(particle, l.clone().add(.43, 0, -.75), amount, 0, 0, 0, 0);
+                        world.spawnParticle(particle, l.clone().add(-.43, 0, .75), amount, 0, 0, 0, 0);
+                    }
+
+                    case 1 -> {
+                        world.spawnParticle(particle, l.clone().add(.65, 0, -.65), amount, 0, 0, 0, 0);
+                        world.spawnParticle(particle, l.clone().add(-.65, 0, .65), amount, 0, 0, 0, 0);
+                    }
+
+                    case 0 -> {
+                        world.spawnParticle(particle, l.clone().add(.75, 0, -.43), amount, 0, 0, 0, 0);
+                        world.spawnParticle(particle, l.clone().add(-.75, 0, .43), amount, 0, 0, 0, 0);
+                        time = 16;
+                    }
                 }
-                if (time == 14) {
-                    world.spawnParticle(particle, l.clone().add(.75, 0, .43), amount, 0, 0, 0, 0);
-                    world.spawnParticle(particle, l.clone().add(-.75, 0, -.43), amount, 0, 0, 0, 0);
-                }
-                if (time == 13) {
-                    world.spawnParticle(particle, l.clone().add(.65, 0, .65), amount, 0, 0, 0, 0);
-                    world.spawnParticle(particle, l.clone().add(-.65, 0, -.65), amount, 0, 0, 0, 0);
-                }
-                if (time == 12) {
-                    world.spawnParticle(particle, l.clone().add(.43, 0, .75), amount, 0, 0, 0, 0);
-                    world.spawnParticle(particle, l.clone().add(-.43, 0, -.75), amount, 0, 0, 0, 0);
-                }
-                if (time == 11) {
-                    world.spawnParticle(particle, l.clone().add(0, 0, .8), amount, 0, 0, 0, 0);
-                    world.spawnParticle(particle, l.clone().add(0, 0, -.8), amount, 0, 0, 0, 0);
-                }
-                if (time == 10) {
-                    world.spawnParticle(particle, l.clone().add(-.43, 0, .75), amount, 0, 0, 0, 0);
-                    world.spawnParticle(particle, l.clone().add(.43, 0, -.75), amount, 0, 0, 0, 0);
-                }
-                if (time == 9) {
-                    world.spawnParticle(particle, l.clone().add(-.65, 0, .65), amount, 0, 0, 0, 0);
-                    world.spawnParticle(particle, l.clone().add(.65, 0, -.65), amount, 0, 0, 0, 0);
-                }
-                if (time == 8) {
-                    world.spawnParticle(particle, l.clone().add(-.75, 0, .43), amount, 0, 0, 0, 0);
-                    world.spawnParticle(particle, l.clone().add(.75, 0, -.43), amount, 0, 0, 0, 0);
-                }
-                if (time == 7) {
-                    world.spawnParticle(particle, l.clone().add(-.8, 0, 0), amount, 0, 0, 0, 0);
-                    world.spawnParticle(particle, l.clone().add(.8, 0, 0), amount, 0, 0, 0, 0);
-                }
-                if (time == 6) {
-                    world.spawnParticle(particle, l.clone().add(-.75, 0, -.43), amount, 0, 0, 0, 0);
-                    world.spawnParticle(particle, l.clone().add(.75, 0, .43), amount, 0, 0, 0, 0);
-                }
-                if (time == 5) {
-                    world.spawnParticle(particle, l.clone().add(-.65, 0, -.65), amount, 0, 0, 0, 0);
-                    world.spawnParticle(particle, l.clone().add(.65, 0, .65), amount, 0, 0, 0, 0);
-                }
-                if (time == 4) {
-                    world.spawnParticle(particle, l.clone().add(-.43, 0, -.75), amount, 0, 0, 0, 0);
-                    world.spawnParticle(particle, l.clone().add(.43, 0, .75), amount, 0, 0, 0, 0);
-                }
-                if (time == 3) {
-                    world.spawnParticle(particle, l.clone().add(0, 0, -.8), amount, 0, 0, 0, 0);
-                    world.spawnParticle(particle, l.clone().add(0, 0, .8), amount, 0, 0, 0, 0);
-                }
-                if (time == 2) {
-                    world.spawnParticle(particle, l.clone().add(.43, 0, -.75), amount, 0, 0, 0, 0);
-                    world.spawnParticle(particle, l.clone().add(-.43, 0, .75), amount, 0, 0, 0, 0);
-                }
-                if (time == 1) {
-                    world.spawnParticle(particle, l.clone().add(.65, 0, -.65), amount, 0, 0, 0, 0);
-                    world.spawnParticle(particle, l.clone().add(-.65, 0, .65), amount, 0, 0, 0, 0);
-                }
-                if (time == 0) {
-                    world.spawnParticle(particle, l.clone().add(.75, 0, -.43), amount, 0, 0, 0, 0);
-                    world.spawnParticle(particle, l.clone().add(-.75, 0, .43), amount, 0, 0, 0, 0);
-                    time = 16;
-                }
+
                 time--;
             }
         }.runAtFixedRate(plugin, 0, 2));
@@ -180,25 +199,29 @@ public class Particles implements ParticleControl {
             @Override
             public void run() {
                 if (noPlayers(l.clone(), range)) return;
-                if (time == 15) world.spawnParticle(particle, l.clone().add(.8, 0, 0), amount, 0, 0, 0, 0);
-                if (time == 14) world.spawnParticle(particle, l.clone().add(.75, 0, .43), amount, 0, 0, 0, 0);
-                if (time == 13) world.spawnParticle(particle, l.clone().add(.65, 0, .65), amount, 0, 0, 0, 0);
-                if (time == 12) world.spawnParticle(particle, l.clone().add(.43, 0, .75), amount, 0, 0, 0, 0);
-                if (time == 11) world.spawnParticle(particle, l.clone().add(0, 0, .8), amount, 0, 0, 0, 0);
-                if (time == 10) world.spawnParticle(particle, l.clone().add(-.43, 0, .75), amount, 0, 0, 0, 0);
-                if (time == 9) world.spawnParticle(particle, l.clone().add(-.65, 0, .65), amount, 0, 0, 0, 0);
-                if (time == 8) world.spawnParticle(particle, l.clone().add(-.75, 0, .43), amount, 0, 0, 0, 0);
-                if (time == 7) world.spawnParticle(particle, l.clone().add(-.8, 0, 0), amount, 0, 0, 0, 0);
-                if (time == 6) world.spawnParticle(particle, l.clone().add(-.75, 0, -.43), amount, 0, 0, 0, 0);
-                if (time == 5) world.spawnParticle(particle, l.clone().add(-.65, 0, -.65), amount, 0, 0, 0, 0);
-                if (time == 4) world.spawnParticle(particle, l.clone().add(-.43, 0, -.75), amount, 0, 0, 0, 0);
-                if (time == 3) world.spawnParticle(particle, l.clone().add(0, 0, -.8), amount, 0, 0, 0, 0);
-                if (time == 2) world.spawnParticle(particle, l.clone().add(.43, 0, -.75), amount, 0, 0, 0, 0);
-                if (time == 1) world.spawnParticle(particle, l.clone().add(.65, 0, -.65), amount, 0, 0, 0, 0);
-                if (time == 0) {
-                    world.spawnParticle(particle, l.clone().add(.75, 0, -.43), amount, 0, 0, 0, 0);
-                    time = 16;
+
+                switch (time) {
+                    case 15 -> world.spawnParticle(particle, l.clone().add(.8, 0, 0), amount, 0, 0, 0, 0);
+                    case 14 -> world.spawnParticle(particle, l.clone().add(.75, 0, .43), amount, 0, 0, 0, 0);
+                    case 13 -> world.spawnParticle(particle, l.clone().add(.65, 0, .65), amount, 0, 0, 0, 0);
+                    case 12 -> world.spawnParticle(particle, l.clone().add(.43, 0, .75), amount, 0, 0, 0, 0);
+                    case 11 -> world.spawnParticle(particle, l.clone().add(0, 0, .8), amount, 0, 0, 0, 0);
+                    case 10 -> world.spawnParticle(particle, l.clone().add(-.43, 0, .75), amount, 0, 0, 0, 0);
+                    case 9 -> world.spawnParticle(particle, l.clone().add(-.65, 0, .65), amount, 0, 0, 0, 0);
+                    case 8 -> world.spawnParticle(particle, l.clone().add(-.75, 0, .43), amount, 0, 0, 0, 0);
+                    case 7 -> world.spawnParticle(particle, l.clone().add(-.8, 0, 0), amount, 0, 0, 0, 0);
+                    case 6 -> world.spawnParticle(particle, l.clone().add(-.75, 0, -.43), amount, 0, 0, 0, 0);
+                    case 5 -> world.spawnParticle(particle, l.clone().add(-.65, 0, -.65), amount, 0, 0, 0, 0);
+                    case 4 -> world.spawnParticle(particle, l.clone().add(-.43, 0, -.75), amount, 0, 0, 0, 0);
+                    case 3 -> world.spawnParticle(particle, l.clone().add(0, 0, -.8), amount, 0, 0, 0, 0);
+                    case 2 -> world.spawnParticle(particle, l.clone().add(.43, 0, -.75), amount, 0, 0, 0, 0);
+                    case 1 -> world.spawnParticle(particle, l.clone().add(.65, 0, -.65), amount, 0, 0, 0, 0);
+                    case 0 -> {
+                        world.spawnParticle(particle, l.clone().add(.75, 0, -.43), amount, 0, 0, 0, 0);
+                        time = 16;
+                    }
                 }
+
                 time--;
             }
         }.runAtFixedRate(plugin, 0, 2));
@@ -399,40 +422,16 @@ public class Particles implements ParticleControl {
             public void run() {
                 if (noPlayers(l.clone(), range)) return;
                 int i = time;
-                if (time == 15) {
-                    world.spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, randomColor());
-                    time = -1;
+
+                switch (time) {
+                    case 15 -> {
+                        world.spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, randomColor());
+                        time = -1;
+                    }
+
+                    case 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 -> world.spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, randomColor());
                 }
-                if (time == 14)
-                    world.spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, randomColor());
-                if (time == 13)
-                    world.spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, randomColor());
-                if (time == 12)
-                    world.spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, randomColor());
-                if (time == 11)
-                    world.spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, randomColor());
-                if (time == 10)
-                    world.spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, randomColor());
-                if (time == 9)
-                    world.spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, randomColor());
-                if (time == 8)
-                    world.spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, randomColor());
-                if (time == 7)
-                    world.spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, randomColor());
-                if (time == 6)
-                    world.spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, randomColor());
-                if (time == 5)
-                    world.spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, randomColor());
-                if (time == 4)
-                    world.spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, randomColor());
-                if (time == 3)
-                    world.spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, randomColor());
-                if (time == 2)
-                    world.spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, randomColor());
-                if (time == 1)
-                    world.spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, randomColor());
-                if (time == 0)
-                    world.spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, randomColor());
+
                 time++;
             }
         }.runAtFixedRate(plugin, 0, 2));
@@ -448,66 +447,89 @@ public class Particles implements ParticleControl {
             @Override
             public void run() {
                 if (noPlayers(l.clone(), range)) return;
-                if (time == 15) world.spawnParticle(Particle.CRIT, l.clone().add(0, .8, 0), 5, 0, 0, 0, 0);
-                if (time == 0)
-                    world.spawnParticle(Particle.CRIT, l.clone().add(0, .75, .43), 5, 0, 0, 0, 0);
-                if (time == 1)
-                    world.spawnParticle(Particle.CRIT, l.clone().add(0, .65, .65), 5, 0, 0, 0, 0);
-                if (time == 2)
-                    world.spawnParticle(Particle.CRIT, l.clone().add(0, .43, .75), 5, 0, 0, 0, 0);
-                if (time == 3) world.spawnParticle(Particle.CRIT, l.clone().add(0, 0, .8), 5, 0, 0, 0, 0);
-                if (time == 4)
-                    world.spawnParticle(Particle.CRIT, l.clone().add(0, -.43, .75), 5, 0, 0, 0, 0);
-                if (time == 5)
-                    world.spawnParticle(Particle.CRIT, l.clone().add(0, -.65, .65), 5, 0, 0, 0, 0);
-                if (time == 86)
-                    world.spawnParticle(Particle.CRIT, l.clone().add(0, -.75, .43), 5, 0, 0, 0, 0);
-                if (time == 7) world.spawnParticle(Particle.CRIT, l.clone().add(0, -.8, 0), 5, 0, 0, 0, 0);
-                if (time == 8)
-                    world.spawnParticle(Particle.CRIT, l.clone().add(0, -.75, -.43), 5, 0, 0, 0, 0);
-                if (time == 9)
-                    world.spawnParticle(Particle.CRIT, l.clone().add(0, -.65, -.65), 5, 0, 0, 0, 0);
-                if (time == 10)
-                    world.spawnParticle(Particle.CRIT, l.clone().add(0, -.43, -.75), 5, 0, 0, 0, 0);
-                if (time == 11)
-                    world.spawnParticle(Particle.CRIT, l.clone().add(0, 0, -.8), 5, 0, 0, 0, 0);
-                if (time == 12)
-                    world.spawnParticle(Particle.CRIT, l.clone().add(0, .43, -.75), 5, 0, 0, 0, 0);
-                if (time == 13)
-                    world.spawnParticle(Particle.CRIT, l.clone().add(0, .65, -.65), 5, 0, 0, 0, 0);
-                if (time == 14)
-                    world.spawnParticle(Particle.CRIT, l.clone().add(0, .75, -.43), 5, 0, 0, 0, 0);
 
-                if (time == 15) world.spawnParticle(Particle.CRIT, l.clone().add(.8, 0, 0), 5, 0, 0, 0, 0);
-                if (time == 14)
-                    world.spawnParticle(Particle.CRIT, l.clone().add(.75, 0, .43), 5, 0, 0, 0, 0);
-                if (time == 13)
-                    world.spawnParticle(Particle.CRIT, l.clone().add(.65, 0, .65), 5, 0, 0, 0, 0);
-                if (time == 12)
-                    world.spawnParticle(Particle.CRIT, l.clone().add(.43, 0, .75), 5, 0, 0, 0, 0);
-                if (time == 11) world.spawnParticle(Particle.CRIT, l.clone().add(0, 0, .8), 5, 0, 0, 0, 0);
-                if (time == 10)
-                    world.spawnParticle(Particle.CRIT, l.clone().add(-.43, 0, .75), 5, 0, 0, 0, 0);
-                if (time == 9)
-                    world.spawnParticle(Particle.CRIT, l.clone().add(-.65, 0, .65), 5, 0, 0, 0, 0);
-                if (time == 8)
-                    world.spawnParticle(Particle.CRIT, l.clone().add(-.75, 0, .43), 5, 0, 0, 0, 0);
-                if (time == 7) world.spawnParticle(Particle.CRIT, l.clone().add(-.8, 0, 0), 5, 0, 0, 0, 0);
-                if (time == 6)
-                    world.spawnParticle(Particle.CRIT, l.clone().add(-.75, 0, -.43), 5, 0, 0, 0, 0);
-                if (time == 5)
-                    world.spawnParticle(Particle.CRIT, l.clone().add(-.65, 0, -.65), 5, 0, 0, 0, 0);
-                if (time == 4)
-                    world.spawnParticle(Particle.CRIT, l.clone().add(-.43, 0, -.75), 5, 0, 0, 0, 0);
-                if (time == 3) world.spawnParticle(Particle.CRIT, l.clone().add(0, 0, -.8), 5, 0, 0, 0, 0);
-                if (time == 2)
-                    world.spawnParticle(Particle.CRIT, l.clone().add(.43, 0, -.75), 5, 0, 0, 0, 0);
-                if (time == 1)
-                    world.spawnParticle(Particle.CRIT, l.clone().add(.65, 0, -.65), 5, 0, 0, 0, 0);
-                if (time == 0) {
-                    world.spawnParticle(Particle.CRIT, l.clone().add(.75, 0, -.43), 5, 0, 0, 0, 0);
-                    time = 16;
+                switch (time) {
+                    case 0 -> {
+                        world.spawnParticle(Particle.CRIT, l.clone().add(0, .75, .43), 5, 0, 0, 0, 0);
+                        world.spawnParticle(Particle.CRIT, l.clone().add(.75, 0, -.43), 5, 0, 0, 0, 0);
+                        time = 16;
+                    }
+
+                    case 1 -> {
+                        world.spawnParticle(Particle.CRIT, l.clone().add(0, .65, .65), 5, 0, 0, 0, 0);
+                        world.spawnParticle(Particle.CRIT, l.clone().add(.65, 0, -.65), 5, 0, 0, 0, 0);
+                    }
+
+                    case 2 -> {
+                        world.spawnParticle(Particle.CRIT, l.clone().add(0, .43, .75), 5, 0, 0, 0, 0);
+                        world.spawnParticle(Particle.CRIT, l.clone().add(.43, 0, -.75), 5, 0, 0, 0, 0);
+                    }
+
+                    case 3 -> {
+                        world.spawnParticle(Particle.CRIT, l.clone().add(0, 0, .8), 5, 0, 0, 0, 0);
+                        world.spawnParticle(Particle.CRIT, l.clone().add(0, 0, -.8), 5, 0, 0, 0, 0);
+                    }
+
+                    case 4 -> {
+                        world.spawnParticle(Particle.CRIT, l.clone().add(0, -.43, .75), 5, 0, 0, 0, 0);
+                        world.spawnParticle(Particle.CRIT, l.clone().add(-.43, 0, -.75), 5, 0, 0, 0, 0);
+                    }
+
+                    case 5 -> {
+                        world.spawnParticle(Particle.CRIT, l.clone().add(0, -.65, .65), 5, 0, 0, 0, 0);
+                        world.spawnParticle(Particle.CRIT, l.clone().add(-.65, 0, -.65), 5, 0, 0, 0, 0);
+                    }
+
+                    case 6 -> world.spawnParticle(Particle.CRIT, l.clone().add(-.75, 0, -.43), 5, 0, 0, 0, 0);
+
+                    case 7 -> {
+                        world.spawnParticle(Particle.CRIT, l.clone().add(0, -.8, 0), 5, 0, 0, 0, 0);
+                        world.spawnParticle(Particle.CRIT, l.clone().add(-.8, 0, 0), 5, 0, 0, 0, 0);
+                    }
+
+                    case 8 -> {
+                        world.spawnParticle(Particle.CRIT, l.clone().add(0, -.75, -.43), 5, 0, 0, 0, 0);
+                        world.spawnParticle(Particle.CRIT, l.clone().add(-.75, 0, .43), 5, 0, 0, 0, 0);
+                    }
+
+                    case 9 -> {
+                        world.spawnParticle(Particle.CRIT, l.clone().add(0, -.65, -.65), 5, 0, 0, 0, 0);
+                        world.spawnParticle(Particle.CRIT, l.clone().add(-.65, 0, .65), 5, 0, 0, 0, 0);
+                    }
+
+                    case 10 -> {
+                        world.spawnParticle(Particle.CRIT, l.clone().add(0, -.43, -.75), 5, 0, 0, 0, 0);
+                        world.spawnParticle(Particle.CRIT, l.clone().add(-.43, 0, .75), 5, 0, 0, 0, 0);
+                    }
+
+                    case 11 -> {
+                        world.spawnParticle(Particle.CRIT, l.clone().add(0, 0, -.8), 5, 0, 0, 0, 0);
+                        world.spawnParticle(Particle.CRIT, l.clone().add(0, 0, .8), 5, 0, 0, 0, 0);
+                    }
+
+                    case 12 -> {
+                        world.spawnParticle(Particle.CRIT, l.clone().add(0, .43, -.75), 5, 0, 0, 0, 0);
+                        world.spawnParticle(Particle.CRIT, l.clone().add(.43, 0, .75), 5, 0, 0, 0, 0);
+                    }
+
+                    case 13 -> {
+                        world.spawnParticle(Particle.CRIT, l.clone().add(0, .65, -.65), 5, 0, 0, 0, 0);
+                        world.spawnParticle(Particle.CRIT, l.clone().add(.65, 0, .65), 5, 0, 0, 0, 0);
+                    }
+
+                    case 14 -> {
+                        world.spawnParticle(Particle.CRIT, l.clone().add(0, .75, -.43), 5, 0, 0, 0, 0);
+                        world.spawnParticle(Particle.CRIT, l.clone().add(.75, 0, .43), 5, 0, 0, 0, 0);
+                    }
+
+                    case 15 -> {
+                        world.spawnParticle(Particle.CRIT, l.clone().add(0, .8, 0), 5, 0, 0, 0, 0);
+                        world.spawnParticle(Particle.CRIT, l.clone().add(.8, 0, 0), 5, 0, 0, 0, 0);
+                    }
+
+                    case 86 -> world.spawnParticle(Particle.CRIT, l.clone().add(0, -.75, .43), 5, 0, 0, 0, 0);
                 }
+
                 time--;
             }
         }.runAtFixedRate(plugin, 0, 2));
@@ -841,7 +863,7 @@ public class Particles implements ParticleControl {
         locations.put(id, new FoliaRunnable(this.server.getRegionScheduler(), location) {
             final Location l = location.clone().add(.5, .1, .5);
 
-            void startFlameWheel(final Location location, final String id) {
+            void startFlameWheel(final Location location) {
                 final int num = random.nextInt(Integer.MAX_VALUE);
                 S.put(num, new FoliaRunnable(server.getRegionScheduler(), location) {
                     final Location l = location.clone();
@@ -891,7 +913,7 @@ public class Particles implements ParticleControl {
             @Override
             public void run() {
                 if (noPlayers(l.clone(), range)) return;
-                startFlameWheel(l.clone(), id);
+                startFlameWheel(l.clone());
             }
         }.runAtFixedRate(plugin, 0, 25));
     }
@@ -902,7 +924,7 @@ public class Particles implements ParticleControl {
         locations.put(id, new FoliaRunnable(this.server.getRegionScheduler(), location) {
             final Location l = location.clone().add(.5, .1, .5);
 
-            void startWitchTornado(final Location location, final String id) {
+            void startWitchTornado(final Location location) {
                 final int num = random.nextInt(Integer.MAX_VALUE);
                 S.put(num, new FoliaRunnable(server.getRegionScheduler(), location) {
                     final Location height = location.clone().add(0, 5, 0);
@@ -935,7 +957,7 @@ public class Particles implements ParticleControl {
             @Override
             public void run() {
                 if (noPlayers(l.clone(), range)) return;
-                startWitchTornado(l, id);
+                startWitchTornado(l);
             }
         }.runAtFixedRate(plugin, 0, 30));
     }
@@ -946,7 +968,7 @@ public class Particles implements ParticleControl {
         locations.put(id, new FoliaRunnable(this.server.getRegionScheduler(), location) {
             final Location l = location.clone().add(.5, 0, .5);
 
-            void startLoveTornado(final Location location, final String id) {
+            void startLoveTornado(final Location location) {
                 final int num = random.nextInt(Integer.MAX_VALUE);
                 S.put(num, new FoliaRunnable(server.getRegionScheduler(), location) {
 
@@ -980,7 +1002,7 @@ public class Particles implements ParticleControl {
             @Override
             public void run() {
                 if (noPlayers(l.clone(), range)) return;
-                startLoveTornado(l, id);
+                startLoveTornado(l);
             }
         }.runAtFixedRate(plugin, 0, 30));
     }
@@ -991,7 +1013,7 @@ public class Particles implements ParticleControl {
         locations.put(id, new FoliaRunnable(this.server.getRegionScheduler(), location) {
             final Location l = location.clone().add(.5, 0, .5);
 
-            void startBigLoveWell(final Location location, final String id) {
+            void startBigLoveWell(final Location location) {
                 final int num = random.nextInt(Integer.MAX_VALUE);
                 S.put(num, new FoliaRunnable(server.getRegionScheduler(), location) {
                     final Location height = location.clone();
@@ -1019,7 +1041,7 @@ public class Particles implements ParticleControl {
             @Override
             public void run() {
                 if (noPlayers(l.clone(), range)) return;
-                startBigLoveWell(l, id);
+                startBigLoveWell(l);
             }
         }.runAtFixedRate(plugin, 0, 25));
     }
@@ -1030,7 +1052,7 @@ public class Particles implements ParticleControl {
         locations.put(id, new FoliaRunnable(this.server.getRegionScheduler(), location) {
             Location l = location.clone().add(.5, 0, .5);
 
-            void startLoveWell(final Location location, final String id) {
+            void startLoveWell(final Location location) {
                 final int num = random.nextInt(Integer.MAX_VALUE);
                 S.put(num, new FoliaRunnable(server.getRegionScheduler(), location) {
                     final Location height = location.clone();
@@ -1058,7 +1080,7 @@ public class Particles implements ParticleControl {
             @Override
             public void run() {
                 if (noPlayers(l.clone(), range)) return;
-                startLoveWell(l, id);
+                startLoveWell(l);
             }
         }.runAtFixedRate(plugin, 0, 16));
     }

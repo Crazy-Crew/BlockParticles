@@ -1,18 +1,11 @@
 package com.badbones69.blockparticles.api.objects;
 
-import com.badbones69.blockparticles.BlockParticles;
-import com.ryderbelserion.vital.paper.api.builders.items.ItemBuilder;
-import me.arcaniax.hdb.api.HeadDatabaseAPI;
-import org.bukkit.Material;
+import com.badbones69.blockparticles.hooks.HeadDatabaseHook;
 import org.bukkit.inventory.ItemStack;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CustomFountain {
-
-    private final BlockParticles plugin = BlockParticles.getPlugin();
-
-    private final HeadDatabaseAPI api = this.plugin.getApi();
 
     private final String name;
     private final List<String> headNames;
@@ -24,11 +17,7 @@ public class CustomFountain {
         this.heads = new ArrayList<>();
 
         for (final String headName : headNames) {
-            final ItemBuilder itemBuilder = new ItemBuilder().withType(Material.PLAYER_HEAD);
-
-            itemBuilder.setSkull(headName, this.api);
-
-            this.heads.add(itemBuilder.asItemStack());
+            this.heads.add(HeadDatabaseHook.getHead(headName));
         }
     }
     
@@ -43,5 +32,4 @@ public class CustomFountain {
     public List<ItemStack> getHeads() {
         return heads;
     }
-    
 }

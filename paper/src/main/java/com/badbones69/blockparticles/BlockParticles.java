@@ -3,7 +3,9 @@ package com.badbones69.blockparticles;
 import com.badbones69.blockparticles.api.ParticleManager;
 import com.badbones69.blockparticles.commands.BPCommands;
 import com.badbones69.blockparticles.commands.BPTab;
+import com.badbones69.blockparticles.hooks.HeadDatabaseHook;
 import com.badbones69.blockparticles.listeners.FountainListener;
+import com.badbones69.blockparticles.listeners.HeadDatabaseListener;
 import com.badbones69.blockparticles.listeners.ParticleListener;
 import com.ryderbelserion.vital.paper.VitalPaper;
 import com.ryderbelserion.vital.paper.api.enums.Support;
@@ -13,8 +15,6 @@ import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.ApiStatus;
-import org.jetbrains.annotations.Nullable;
-
 import java.util.Locale;
 
 public class BlockParticles extends JavaPlugin {
@@ -34,8 +34,6 @@ public class BlockParticles extends JavaPlugin {
     private FileManager fileManager;
     private ParticleManager particleManager;
 
-    private HeadDatabaseAPI api;
-
     @Override
     public void onEnable() {
         this.instance = new VitalPaper(this);
@@ -43,17 +41,20 @@ public class BlockParticles extends JavaPlugin {
         this.fileManager = this.instance.getFileManager();
         this.fileManager.addFile("config.yml").addFile("data.yml");
 
-        if (Support.head_database.isEnabled()) {
-            this.api = new HeadDatabaseAPI();
-        }
-
         this.particleManager = new ParticleManager();
-        this.particleManager.load();
 
         final PluginManager pluginManager = getServer().getPluginManager();
 
-        pluginManager.registerEvents(new FountainListener(), this);
-        pluginManager.registerEvents(new ParticleListener(), this);
+        if (Support.head_database.isEnabled()) {
+            pluginManager.registerEvents(new HeadDatabaseListener(), this);
+        } else {
+            pluginManager.registerEvents(new FountainListener(), this);
+            pluginManager.registerEvents(new ParticleListener(), this);
+
+            this.particleManager.load();
+
+            Methods.startParticles();
+        }
 
         final PluginCommand command = getCommand("blockparticle");
 
@@ -62,8 +63,6 @@ public class BlockParticles extends JavaPlugin {
 
             command.setTabCompleter(new BPTab());
         }
-
-        Methods.startParticles();
 
         getComponentLogger().info("Done ({})!", String.format(Locale.ROOT, "%.3fs", (double) (System.nanoTime() - this.startTime) / 1.0E9D));
     }
@@ -77,20 +76,11 @@ public class BlockParticles extends JavaPlugin {
         return this.fileManager;
     }
 
-    public final VitalPaper getVital() {
-        return this.instance;
-    }
-
     public ParticleManager getParticleManager() {
         return this.particleManager;
     }
 
-    @ApiStatus.Internal
-    public @Nullable final HeadDatabaseAPI getApi() {
-        if (this.api == null) {
-            return null;
-        }
-
-        return this.api;
+    public final VitalPaper getVital() {
+        return this.instance;
     }
 }
