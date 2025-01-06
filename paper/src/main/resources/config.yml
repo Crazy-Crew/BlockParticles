@@ -1,0 +1,18 @@
+settings:
+  prefix: '&8[&aBP&8]: '
+  heads:
+    plants:
+      #Tomato
+      - '1130'
+      #Mango
+      - '32596'
+      #Cherry
+      - '31879'
+      #Melon
+      - '20577'
+      #Mushroom
+      - '21906'
+      #Orange
+      - '59223'
+      #Golden Apple
+      - '79863'

@@ -1,0 +1,25 @@
+name: '${name}'
+main: '${group}.${name}'
+
+authors:
+  - ryderbelserion
+  - BadBones69
+  - Felux
+  - TDL
+
+version: '${version}'
+description: '${description}'
+api-version: '${apiVersion}'
+website: '${website}'
+
+softdepend: [HeadDatabase]
+
+commands:
+  blockparticle:
+    description: Adds particles to blocks!
+    aliases: [blockparticles, bp, bparticle, bparticles]
+
+permissions:
+  bparticles.admin:
+    default: op
+    description: Allows access to /blockparticles
