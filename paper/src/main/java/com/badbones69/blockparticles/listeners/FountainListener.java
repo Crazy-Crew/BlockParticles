@@ -6,6 +6,7 @@ import com.badbones69.blockparticles.Methods;
 import com.badbones69.blockparticles.api.ParticleManager;
 import com.badbones69.blockparticles.hooks.HeadDatabaseHook;
 import com.ryderbelserion.vital.paper.util.scheduler.FoliaRunnable;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Server;
@@ -208,19 +209,38 @@ public class FountainListener implements Listener {
             @Override
             public void run() {
                 ItemStack flesh = new ItemStack(Material.ROTTEN_FLESH);
-                ItemMeta m = flesh.getItemMeta();
-                m.setDisplayName(new Random().nextInt(Integer.MAX_VALUE) + "");
-                flesh.setItemMeta(m);
                 ItemStack redstone = new ItemStack(Material.REDSTONE);
-                redstone.setItemMeta(m);
                 ItemStack bone = new ItemStack(Material.BONE);
-                bone.setItemMeta(m);
                 ItemStack pumpkin = new ItemStack(Material.JACK_O_LANTERN);
-                pumpkin.setItemMeta(m);
+
                 final Item fleshItem = loc.getWorld().dropItem(loc.clone().add(.5, 1, .5), flesh);
+
+                fleshItem.customName(Component.text(new Random().nextInt(Integer.MAX_VALUE)));
+                fleshItem.setCustomNameVisible(false);
+                fleshItem.setCanMobPickup(false);
+                fleshItem.setCanPlayerPickup(false);
+
                 final Item redstoneItem = loc.getWorld().dropItem(loc.clone().add(.5, 1, .5), redstone);
+
+                redstoneItem.customName(Component.text(new Random().nextInt(Integer.MAX_VALUE)));
+                redstoneItem.setCustomNameVisible(false);
+                redstoneItem.setCanMobPickup(false);
+                redstoneItem.setCanPlayerPickup(false);
+
                 final Item boneItem = loc.getWorld().dropItem(loc.clone().add(.5, 1, .5), bone);
+
+                boneItem.customName(Component.text(new Random().nextInt(Integer.MAX_VALUE)));
+                boneItem.setCustomNameVisible(false);
+                boneItem.setCanMobPickup(false);
+                boneItem.setCanPlayerPickup(false);
+
                 final Item pumpkinItem = loc.getWorld().dropItem(loc.clone().add(.5, 1, .5), pumpkin);
+
+                pumpkinItem.customName(Component.text(new Random().nextInt(Integer.MAX_VALUE)));
+                pumpkinItem.setCustomNameVisible(false);
+                pumpkinItem.setCanMobPickup(false);
+                pumpkinItem.setCanPlayerPickup(false);
+
                 fleshItem.setVelocity(new Vector(randomVector(), .3, randomVector()));
                 particleManager.addFountainItem(fleshItem);
                 redstoneItem.setVelocity(new Vector(randomVector(), .3, randomVector()));
@@ -252,16 +272,30 @@ public class FountainListener implements Listener {
             @Override
             public void run() {
                 ItemStack emerald = new ItemStack(Material.EMERALD);
-                ItemMeta m = emerald.getItemMeta();
-                m.setDisplayName(new Random().nextInt(Integer.MAX_VALUE) + "");
-                emerald.setItemMeta(m);
                 ItemStack diamond = new ItemStack(Material.DIAMOND);
-                diamond.setItemMeta(m);
                 ItemStack gold = new ItemStack(Material.GOLD_INGOT);
-                gold.setItemMeta(m);
+
                 final Item emeraldItem = loc.getWorld().dropItem(loc.clone().add(.5, 1, .5), emerald);
+
+                emeraldItem.customName(Component.text(new Random().nextInt(Integer.MAX_VALUE)));
+                emeraldItem.setCustomNameVisible(false);
+                emeraldItem.setCanMobPickup(false);
+                emeraldItem.setCanPlayerPickup(false);
+
                 final Item diamondItem = loc.getWorld().dropItem(loc.clone().add(.5, 1, .5), diamond);
+
+                diamondItem.customName(Component.text(new Random().nextInt(Integer.MAX_VALUE)));
+                diamondItem.setCustomNameVisible(false);
+                diamondItem.setCanMobPickup(false);
+                diamondItem.setCanPlayerPickup(false);
+
                 final Item goldItem = loc.getWorld().dropItem(loc.clone().add(.5, 1, .5), gold);
+
+                goldItem.customName(Component.text(new Random().nextInt(Integer.MAX_VALUE)));
+                goldItem.setCustomNameVisible(false);
+                goldItem.setCanMobPickup(false);
+                goldItem.setCanPlayerPickup(false);
+
                 emeraldItem.setVelocity(new Vector(randomVector(), .3, randomVector()));
                 particleManager.addFountainItem(emeraldItem);
                 diamondItem.setVelocity(new Vector(randomVector(), .3, randomVector()));
