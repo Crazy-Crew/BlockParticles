@@ -1,0 +1,8 @@
+name: Debug
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    uses: Crazy-Crew/.github/.github/workflows/debug.yml@main
