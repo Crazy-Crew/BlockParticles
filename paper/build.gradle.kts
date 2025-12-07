@@ -85,7 +85,7 @@ tasks {
         inputs.properties("version" to project.version)
         inputs.properties("group" to project.group)
         inputs.properties("apiVersion" to libs.versions.minecraft.get())
-        inputs.properties("description" to project.description)
+        inputs.properties("description" to project.description.toString())
         inputs.properties("website" to "https://modrinth.com/plugin/blockparticles")
 
         filesMatching("plugin.yml") {
