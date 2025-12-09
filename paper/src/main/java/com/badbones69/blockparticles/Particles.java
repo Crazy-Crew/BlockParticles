@@ -8,6 +8,7 @@ import org.bukkit.*;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.util.NumberConversions;
 import org.bukkit.util.Vector;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -1114,35 +1115,25 @@ public class Particles implements ParticleControl {
 
         return locations;
     }
-    
-    private Collection<Entity> getNearbyEntities(Location location, double x, double y, double z) {
-        final World world = location.getWorld();
-        
-        try {
-            return world.getNearbyEntities(location, x, y, z);
-        } catch (Exception ignored) {}
 
-        return new ArrayList<>();
-    }
-    
-    private boolean noPlayers(Location location, int range) {
-        try {
-            Collection<Entity> out = getNearbyEntities(location, range, range, range);
+    private boolean noPlayers(Location location, double range) {
+        double rangeSquared = range * range;
+        World world = location.getWorld();
 
-            if (!out.isEmpty()) {
-                for (Entity e : out) {
-                    if (e instanceof LivingEntity en) {
-                        if (en instanceof Player) {
-                            return false;
-                        }
-                    }
-                }
+        for (Player player : world.getPlayers()) {
+            if (distanceSquared(player.getX(), player.getY(), player.getZ(), location) <= rangeSquared) {
+                return false;
             }
-        } catch (Exception ignored) {}
-
+        }
         return true;
     }
-    
+
+    private static double distanceSquared(double x, double y, double z, Location location) {
+        return NumberConversions.square(x - location.getX())
+                + NumberConversions.square(y - location.getY())
+                + NumberConversions.square(z - location.getZ());
+    }
+
     private int randomColor() {
         return random.nextInt(255);
     }
