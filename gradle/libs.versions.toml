@@ -15,7 +15,7 @@ brigadier = "1.3.10"
 runPaper = "2.3.0"
 minotaur = "2.8.7"
 hangar = "0.1.2"
-shadow = "8.3.0"
+shadow = "9.3.0"
 
 # Plugins
 decentholograms = "2.8.8"
@@ -52,8 +52,8 @@ headdatabaseapi = { module = "com.arcaniax:HeadDatabase-API", version.ref = "hea
 fancy-holograms = { module = "de.oliver:FancyHolograms", version.ref = "fancyholograms" }
 placeholderapi = { module = "me.clip:placeholderapi", version.ref = "placeholderapi" }
 oraxen = { module = "io.th0rgal:oraxen", version.ref = "oraxen" }
-cmi-api = { module = "CMI-API:CMI-API", version = "9.7.4.1" }
-cmi-lib = { module = "CMILib:CMILib", version = "1.5.1.4" }
+cmi-api = { module = "com.github.Zrips:CMI-API", version = "9.7.14.3" }
+cmi-lib = { module = "com.github.Zrips:CMILib", version = "1.5.7.4" }
 
 # Vital API
 vital-common = { module = "com.ryderbelserion.vital:common", version.ref = "vital-common" }
