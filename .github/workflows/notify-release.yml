@@ -1,4 +1,4 @@
-name: Release Build
+name: Notify Release
 
 on:
   workflow_dispatch:
@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    uses: Crazy-Crew/.github/.github/workflows/build.yml@main
+    uses: Crazy-Crew/.github/.github/workflows/notify.yml@main
 
     secrets:
       webhook: ${{ secrets.BUILD_WEBHOOK }}
