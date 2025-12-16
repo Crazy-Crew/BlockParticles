@@ -2,11 +2,7 @@ plugins {
     `paper-plugin`
 }
 
-project.group = "${rootProject.group}.paper"
-
 repositories {
-    maven("https://repo.extendedclip.com/content/repositories/placeholderapi/")
-
     maven("https://repo.fancyinnovations.com/releases/")
 
     maven("https://repo.nexomc.com/releases/")
