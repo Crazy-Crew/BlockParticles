@@ -2,10 +2,9 @@ package com.badbones69.blockparticles.listeners;
 
 import com.badbones69.blockparticles.BlockParticles;
 import com.badbones69.blockparticles.api.objects.CustomFountain;
-import com.badbones69.blockparticles.Methods;
 import com.badbones69.blockparticles.api.ParticleManager;
 import com.badbones69.blockparticles.hooks.HeadDatabaseHook;
-import com.ryderbelserion.vital.paper.util.scheduler.FoliaRunnable;
+import com.ryderbelserion.fusion.paper.scheduler.FoliaScheduler;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -18,12 +17,12 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.util.Vector;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class FountainListener implements Listener {
 
@@ -33,7 +32,7 @@ public class FountainListener implements Listener {
 
     private static final ParticleManager particleManager = plugin.getParticleManager();
     
-    private static final Random random = new Random();
+    private static final Random random = ThreadLocalRandom.current();
 
     private static final List<String> pokemonHeads = Arrays.asList(
             "4a786e4e35b59d91eb6454ef26b7b0683761d6b11f1d63c7740af17aa3f",
@@ -184,7 +183,7 @@ public class FountainListener implements Listener {
     }
     
     public static void startCustomFountain(Location loc, String id, CustomFountain fountain) {
-        particleManager.getParticleControl().getLocations().put(id, new FoliaRunnable(server.getRegionScheduler(), loc) {
+        particleManager.getParticleControl().getLocations().put(id, new FoliaScheduler(plugin, loc) {
             @Override
             public void run() {
                 for (ItemStack head : getRandomCustomHead(fountain.getHeads())) {
@@ -192,20 +191,20 @@ public class FountainListener implements Listener {
                     headItem.setVelocity(new Vector(randomVector(), .01, randomVector()));
                     particleManager.addFountainItem(headItem);
 
-                    new FoliaRunnable(server.getRegionScheduler(), loc) {
+                    new FoliaScheduler(plugin, loc) {
                         @Override
                         public void run() {
                             particleManager.removeFountainItem(headItem);
                             headItem.remove();
                         }
-                    }.runDelayed(plugin, 2 * 20);
+                    }.runDelayed(2 * 20);
                 }
             }
-        }.runAtFixedRate(plugin, 0, 3));
+        }.runAtFixedRate(0, 3));
     }
     
     public static void startHalloween(final Location loc, String id) {
-        particleManager.getParticleControl().getLocations().put(id, new FoliaRunnable(server.getRegionScheduler(), loc) {
+        particleManager.getParticleControl().getLocations().put(id, new FoliaScheduler(plugin, loc) {
             @Override
             public void run() {
                 ItemStack flesh = new ItemStack(Material.ROTTEN_FLESH);
@@ -250,7 +249,7 @@ public class FountainListener implements Listener {
                 pumpkinItem.setVelocity(new Vector(randomVector(), .3, randomVector()));
                 particleManager.addFountainItem(pumpkinItem);
 
-                new FoliaRunnable(server.getRegionScheduler(), loc) {
+                new FoliaScheduler(plugin, loc) {
                     @Override
                     public void run() {
                         particleManager.removeFountainItem(fleshItem);
@@ -262,13 +261,13 @@ public class FountainListener implements Listener {
                         particleManager.removeFountainItem(pumpkinItem);
                         pumpkinItem.remove();
                     }
-                }.runDelayed(plugin, 2 * 20);
+                }.runDelayed(2 * 20);
             }
-        }.runAtFixedRate(plugin, 0, 2));
+        }.runAtFixedRate(0, 2));
     }
     
     public static void startGems(final Location loc, String id) {
-        particleManager.getParticleControl().getLocations().put(id, new FoliaRunnable(server.getRegionScheduler(), loc) {
+        particleManager.getParticleControl().getLocations().put(id, new FoliaScheduler(plugin, loc) {
             @Override
             public void run() {
                 ItemStack emerald = new ItemStack(Material.EMERALD);
@@ -303,7 +302,7 @@ public class FountainListener implements Listener {
                 goldItem.setVelocity(new Vector(randomVector(), .3, randomVector()));
                 particleManager.addFountainItem(goldItem);
 
-                new FoliaRunnable(server.getRegionScheduler(), loc) {
+                new FoliaScheduler(plugin, loc) {
                     @Override
                     public void run() {
                         particleManager.removeFountainItem(emeraldItem);
@@ -313,13 +312,13 @@ public class FountainListener implements Listener {
                         particleManager.removeFountainItem(goldItem);
                         goldItem.remove();
                     }
-                }.runDelayed(plugin, 2 * 20);
+                }.runDelayed(2 * 20);
             }
-        }.runAtFixedRate(plugin, 0, 2));
+        }.runAtFixedRate(0, 2));
     }
     
     public static void startHeads(final Location loc, String id) {
-        particleManager.getParticleControl().getLocations().put(id, new FoliaRunnable(server.getRegionScheduler(), loc) {
+        particleManager.getParticleControl().getLocations().put(id, new FoliaScheduler(plugin, loc) {
             @Override
             public void run() {
                 int radius = 10;
@@ -329,21 +328,21 @@ public class FountainListener implements Listener {
                         head.setVelocity(new Vector(randomVector(), .01, randomVector()));
                         particleManager.addFountainItem(head);
 
-                        new FoliaRunnable(server.getRegionScheduler(), loc) {
+                        new FoliaScheduler(plugin, loc) {
                             @Override
                             public void run() {
                                 particleManager.removeFountainItem(head);
                                 head.remove();
                             }
-                        }.runDelayed(plugin, 2 * 20);
+                        }.runDelayed(2 * 20);
                     }
                 }
             }
-        }.runAtFixedRate(plugin, 0, 3));
+        }.runAtFixedRate(0, 3));
     }
     
     public static void startPresents(final Location loc, String id) {
-        particleManager.getParticleControl().getLocations().put(id, new FoliaRunnable(server.getRegionScheduler(), loc) {
+        particleManager.getParticleControl().getLocations().put(id, new FoliaScheduler(plugin, loc) {
             @Override
             public void run() {
                 for (String head : getRandomHeads(presentHeads)) {
@@ -351,20 +350,20 @@ public class FountainListener implements Listener {
                     headItem.setVelocity(new Vector(randomVector(), .01, randomVector()));
                     particleManager.addFountainItem(headItem);
 
-                    new FoliaRunnable(server.getRegionScheduler(), loc) {
+                    new FoliaScheduler(plugin, loc) {
                         @Override
                         public void run() {
                             particleManager.removeFountainItem(headItem);
                             headItem.remove();
                         }
-                    }.runDelayed(plugin, 2 * 20);
+                    }.runDelayed(2 * 20);
                 }
             }
-        }.runAtFixedRate(plugin, 0, 3));
+        }.runAtFixedRate(0, 3));
     }
     
     public static void startMobs(final Location loc, String id) {
-        particleManager.getParticleControl().getLocations().put(id, new FoliaRunnable(server.getRegionScheduler(), loc) {
+        particleManager.getParticleControl().getLocations().put(id, new FoliaScheduler(plugin, loc) {
             @Override
             public void run() {
                 for (String head : getRandomHeads(mobHeads)) {
@@ -372,20 +371,20 @@ public class FountainListener implements Listener {
                     headItem.setVelocity(new Vector(randomVector(), .01, randomVector()));
                     particleManager.addFountainItem(headItem);
 
-                    new FoliaRunnable(server.getRegionScheduler(), loc) {
+                    new FoliaScheduler(plugin, loc) {
                         @Override
                         public void run() {
                             particleManager.removeFountainItem(headItem);
                             headItem.remove();
                         }
-                    }.runDelayed(plugin, 2 * 20);
+                    }.runDelayed(2 * 20);
                 }
             }
-        }.runAtFixedRate(plugin, 0, 3));
+        }.runAtFixedRate(0, 3));
     }
     
     public static void startFood(final Location loc, String id) {
-        particleManager.getParticleControl().getLocations().put(id, new FoliaRunnable(server.getRegionScheduler(), loc) {
+        particleManager.getParticleControl().getLocations().put(id, new FoliaScheduler(plugin, loc) {
             @Override
             public void run() {
                 for (String head : getRandomHeads(foodHeads)) {
@@ -393,20 +392,20 @@ public class FountainListener implements Listener {
                     headItem.setVelocity(new Vector(randomVector(), .01, randomVector()));
                     particleManager.addFountainItem(headItem);
 
-                    new FoliaRunnable(server.getRegionScheduler(), loc) {
+                    new FoliaScheduler(plugin, loc) {
                         @Override
                         public void run() {
                             particleManager.removeFountainItem(headItem);
                             headItem.remove();
                         }
-                    }.runDelayed(plugin, 2 * 20);
+                    }.runDelayed(2 * 20);
                 }
             }
-        }.runAtFixedRate(plugin, 0, 3));
+        }.runAtFixedRate(0, 3));
     }
     
     public static void startPokemon(final Location loc, String id) {
-        particleManager.getParticleControl().getLocations().put(id, new FoliaRunnable(server.getRegionScheduler(), loc) {
+        particleManager.getParticleControl().getLocations().put(id, new FoliaScheduler(plugin, loc) {
             @Override
             public void run() {
                 for (String head : getRandomHeads(pokemonHeads)) {
@@ -414,36 +413,36 @@ public class FountainListener implements Listener {
                     headItem.setVelocity(new Vector(randomVector(), .01, randomVector()));
                     particleManager.addFountainItem(headItem);
 
-                    new FoliaRunnable(server.getRegionScheduler(), loc) {
+                    new FoliaScheduler(plugin, loc) {
                         @Override
                         public void run() {
                             particleManager.removeFountainItem(headItem);
                             headItem.remove();
                         }
-                    }.runDelayed(plugin, 2 * 20);
+                    }.runDelayed(2 * 20);
                 }
             }
-        }.runAtFixedRate(plugin, 0, 3));
+        }.runAtFixedRate(0, 3));
     }
     
     public static void startMario(final Location loc, String id) {
-        particleManager.getParticleControl().getLocations().put(id, new FoliaRunnable(server.getRegionScheduler(), loc) {
+        particleManager.getParticleControl().getLocations().put(id, new FoliaScheduler(plugin, loc) {
             @Override
             public void run() {
                 for (String head : getRandomHeads(marioHeads)) {
                     final Item headItem = loc.getWorld().dropItem(loc.clone().add(.5, .8, .5), HeadDatabaseHook.getPlayerHead(head));
                     headItem.setVelocity(new Vector(randomVector(), .01, randomVector()));
 
-                    new FoliaRunnable(server.getRegionScheduler(), loc) {
+                    new FoliaScheduler(plugin, loc) {
                         @Override
                         public void run() {
                             particleManager.removeFountainItem(headItem);
                             headItem.remove();
                         }
-                    }.runDelayed(plugin, 2 * 20);
+                    }.runDelayed(2 * 20);
                 }
             }
-        }.runAtFixedRate(plugin, 0, 3));
+        }.runAtFixedRate(0, 3));
     }
     
     private static List<String> getRandomHeads(List<String> headList) {

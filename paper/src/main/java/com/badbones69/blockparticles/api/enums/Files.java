@@ -1,32 +1,26 @@
 package com.badbones69.blockparticles.api.enums;
 
 import com.badbones69.blockparticles.BlockParticles;
-import com.ryderbelserion.vital.paper.api.files.FileManager;
+import com.ryderbelserion.fusion.core.api.exceptions.FusionException;
+import com.ryderbelserion.fusion.paper.files.PaperFileManager;
+import com.ryderbelserion.fusion.paper.files.types.PaperCustomFile;
 import org.bukkit.configuration.file.YamlConfiguration;
-import java.io.File;
+import org.jetbrains.annotations.NotNull;
+import java.nio.file.Path;
+import java.util.Optional;
 
 public enum Files {
 
     config("config.yml"),
     data("data.yml");
 
-
-    private final String fileName;
-    private final String folder;
-
     private final BlockParticles plugin = BlockParticles.getPlugin();
 
-    private final FileManager fileManager = this.plugin.getFileManager();
+    private final Path dataPath = this.plugin.getDataPath();
 
-    /**
-     * A constructor to build a file
-     *
-     * @param fileName the name of the file
-     */
-    Files(final String fileName, final String folder) {
-        this.fileName = fileName;
-        this.folder = folder;
-    }
+    private final PaperFileManager fileManager = this.plugin.getFileManager();
+
+    private final Path path;
 
     /**
      * A constructor to build a file
@@ -34,23 +28,20 @@ public enum Files {
      * @param fileName the name of the file
      */
     Files(final String fileName) {
-        this.fileName = fileName;
-        this.folder = "";
+        this.path = this.dataPath.resolve(fileName);
     }
 
     public final YamlConfiguration getConfiguration() {
-        return this.fileManager.getFile(this.fileName).getConfiguration();
-    }
+        @NotNull final Optional<PaperCustomFile> customFile = this.fileManager.getPaperFile(this.path);
 
-    public void reload() {
-        this.fileManager.addFile(new File(this.plugin.getDataFolder(), this.fileName));
+        if (customFile.isEmpty()) {
+            throw new FusionException("Could not find custom file for " + this.path);
+        }
+
+        return customFile.get().getConfiguration();
     }
 
     public void save() {
-        this.fileManager.saveFile(this.fileName);
-    }
-
-    public final File getFile() {
-        return new File(this.folder.isEmpty() ? this.plugin.getDataFolder() : new File(this.plugin.getDataFolder(), this.folder), this.fileName);
+        this.fileManager.saveFile(this.path);
     }
 }

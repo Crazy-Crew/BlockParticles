@@ -7,7 +7,7 @@ import com.badbones69.blockparticles.api.enums.particles.ParticleType;
 import com.badbones69.blockparticles.api.enums.particles.CustomParticles;
 import com.badbones69.blockparticles.Methods;
 import com.badbones69.blockparticles.api.ParticleManager;
-import com.ryderbelserion.vital.paper.api.files.FileManager;
+import com.ryderbelserion.fusion.paper.files.PaperFileManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -18,7 +18,7 @@ public class BPCommands implements CommandExecutor {
 
     private final BlockParticles plugin = BlockParticles.getPlugin();
 
-    private final FileManager fileManager = this.plugin.getFileManager();
+    private final PaperFileManager fileManager = this.plugin.getFileManager();
 
     private final ParticleManager particleManager = this.plugin.getParticleManager();
     
@@ -44,7 +44,7 @@ public class BPCommands implements CommandExecutor {
                         return true;
                     case "reload":
                     case "r":
-                        this.fileManager.reloadFiles();
+                        this.fileManager.refresh(false);
 
                         this.plugin.getParticleManager().load();
 

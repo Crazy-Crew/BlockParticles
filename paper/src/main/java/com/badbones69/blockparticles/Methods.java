@@ -6,7 +6,6 @@ import com.badbones69.blockparticles.api.enums.Files;
 import com.badbones69.blockparticles.api.enums.particles.CustomParticles;
 import com.badbones69.blockparticles.listeners.FountainListener;
 import com.badbones69.blockparticles.api.ParticleManager;
-import com.ryderbelserion.vital.paper.api.builders.items.ItemBuilder;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.command.CommandSender;
@@ -15,9 +14,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 import java.util.ArrayList;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class Methods {
 

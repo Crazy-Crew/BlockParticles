@@ -1,21 +1,29 @@
 package com.badbones69.blockparticles.hooks;
 
-import com.ryderbelserion.vital.paper.api.builders.items.ItemBuilder;
-import com.ryderbelserion.vital.paper.api.enums.Support;
+import com.badbones69.blockparticles.BlockParticles;
+import com.ryderbelserion.fusion.core.api.support.ModSupport;
+import com.ryderbelserion.fusion.paper.FusionPaper;
+import com.ryderbelserion.fusion.paper.builders.ItemBuilder;
 import me.arcaniax.hdb.api.HeadDatabaseAPI;
-import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.ItemType;
 
 public class HeadDatabaseHook {
+
+    private static final BlockParticles plugin = BlockParticles.getPlugin();
+
+    private static FusionPaper fusion = plugin.getFusion();
     
     private static HeadDatabaseAPI headDatabaseAPI;
     
     public HeadDatabaseHook() {
-        if (Support.head_database.isEnabled()) headDatabaseAPI = new HeadDatabaseAPI();
+        if (fusion.isModReady(ModSupport.head_database)) {
+            headDatabaseAPI = new HeadDatabaseAPI();
+        }
     }
     
     public static ItemStack getHead(String head) {
-        if (Support.head_database.isEnabled()) {
+        if (fusion.isModReady(ModSupport.head_database)) {
             return headDatabaseAPI.getItemHead(head);
         }
         
@@ -23,6 +31,6 @@ public class HeadDatabaseHook {
     }
 
     public static ItemStack getPlayerHead(final String playerName) {
-        return new ItemBuilder().withType(Material.PLAYER_HEAD).setPlayer(playerName).asItemStack();
+        return new ItemBuilder(ItemType.PLAYER_HEAD).asSkullBuilder().withName(playerName).asItemStack();
     }
 }

@@ -2,7 +2,7 @@ package com.badbones69.blockparticles;
 
 import com.badbones69.blockparticles.api.ParticleControl;
 import com.badbones69.blockparticles.api.enums.particles.CustomParticles;
-import com.ryderbelserion.vital.paper.util.scheduler.FoliaRunnable;
+import com.ryderbelserion.fusion.paper.scheduler.FoliaScheduler;
 import io.papermc.paper.threadedregions.scheduler.ScheduledTask;
 import org.bukkit.*;
 import org.bukkit.entity.Entity;
@@ -40,7 +40,7 @@ public class Particles implements ParticleControl {
     }
 
     public void playVolcano(final Location location, String id) {
-        locations.put(id, new FoliaRunnable(this.server.getRegionScheduler(), location) {
+        locations.put(id, new FoliaScheduler(this.plugin, location) {
             final Location clonedLocation = location.clone().add(.5, .8, .5);
 
             final World world = location.getWorld();
@@ -51,11 +51,11 @@ public class Particles implements ParticleControl {
 
                 world.spawnParticle(Particle.LAVA, clonedLocation, 10, 0, 0, 0, 0);
             }
-        }.runAtFixedRate(plugin, 0, 4));
+        }.runAtFixedRate(0, 4));
     }
     
     public void playBigFlame(final Location location, String id) {
-        locations.put(id, new FoliaRunnable(this.server.getRegionScheduler(), location) {
+        locations.put(id, new FoliaScheduler(this.plugin, location) {
             final Location l = location.clone().add(.5, .1, .5);
 
             final World world = location.getWorld();
@@ -68,11 +68,11 @@ public class Particles implements ParticleControl {
                 for (Location location : getCircle(l, 2, 25))
                     world.spawnParticle(Particle.FLAME, location, 1, 0, 0, 0, 0);
             }
-        }.runAtFixedRate(plugin, 0, 5));
+        }.runAtFixedRate(0, 5));
     }
     
     public void playFlame(final Location location, String id) {
-        locations.put(id, new FoliaRunnable(this.server.getRegionScheduler(), location) {
+        locations.put(id, new FoliaScheduler(this.plugin, location) {
             final Location l = location.add(.5, .1, .5);
 
             final World world = location.getWorld();
@@ -85,11 +85,11 @@ public class Particles implements ParticleControl {
                 for (Location location : getCircle(l, 1, 20))
                     world.spawnParticle(Particle.FLAME, location, 1, 0, 0, 0, 0);
             }
-        }.runAtFixedRate(plugin, 0, 5));
+        }.runAtFixedRate(0, 5));
     }
     
     public void playDoubleSpiral(final Location location, String id, CustomParticles customParticles, int amount) {
-        locations.put(id, new FoliaRunnable(this.server.getRegionScheduler(), location) {
+        locations.put(id, new FoliaScheduler(this.plugin, location) {
             final Location l = location.add(.5, .7, .5);
             int time = 16;
             final Particle particle = customParticles == CustomParticles.DOUBLEWITCH ? Particle.WITCH : Particle.FIREWORK;
@@ -185,11 +185,11 @@ public class Particles implements ParticleControl {
 
                 time--;
             }
-        }.runAtFixedRate(plugin, 0, 2));
+        }.runAtFixedRate(0, 2));
     }
     
     public void playSpiral(final Location location, String id, CustomParticles customParticles, int amount) {
-        locations.put(id, new FoliaRunnable(this.server.getRegionScheduler(), location) {
+        locations.put(id, new FoliaScheduler(this.plugin, location) {
             final Location l = location.add(.5, .7, .5);
             int time = 16;
             final Particle particle = customParticles == CustomParticles.WITCH ? Particle.WITCH : Particle.FIREWORK;
@@ -224,11 +224,11 @@ public class Particles implements ParticleControl {
 
                 time--;
             }
-        }.runAtFixedRate(plugin, 0, 2));
+        }.runAtFixedRate(0, 2));
     }
     
     public void playCrit(final Location location, String id) {
-        locations.put(id, new FoliaRunnable(this.server.getRegionScheduler(), location) {
+        locations.put(id, new FoliaScheduler(this.plugin, location) {
             final Location l = location.add(.5, 1.1, .5);
 
             final World world = location.getWorld();
@@ -238,11 +238,11 @@ public class Particles implements ParticleControl {
                 if (noPlayers(l.clone(), range)) return;
                 world.spawnParticle(Particle.CRIT, l.clone(), 1, 0, 0, 0, 0);
             }
-        }.runAtFixedRate(plugin, 0, 2));
+        }.runAtFixedRate(0, 2));
     }
     
     public void playBigCrit(final Location location, String id) {
-        locations.put(id, new FoliaRunnable(this.server.getRegionScheduler(), location) {
+        locations.put(id, new FoliaScheduler(this.plugin, location) {
             final Location l = location.add(.5, .5, .5);
 
             final World world = location.getWorld();
@@ -253,11 +253,11 @@ public class Particles implements ParticleControl {
                 for (Location location : getCircle(l, 2, 20))
                     world.spawnParticle(Particle.CRIT, location, 1, 0, 0, 0, 0);
             }
-        }.runAtFixedRate(plugin, 0, 2));
+        }.runAtFixedRate(0, 2));
     }
     
     public void playStorm(final Location location, String id) {
-        locations.put(id, new FoliaRunnable(this.server.getRegionScheduler(), location) {
+        locations.put(id, new FoliaScheduler(this.plugin, location) {
             final Location l = location.add(.5, 2, .5);
 
             final World world = location.getWorld();
@@ -268,11 +268,11 @@ public class Particles implements ParticleControl {
                 world.spawnParticle(Particle.CLOUD, l.clone(), 15, .3f, 0, 0.3f, 0);
                 world.spawnParticle(Particle.FALLING_WATER, l.clone().add(0, 0, .1), 10, 0.2f, 0, 0.2f, 0);
             }
-        }.runAtFixedRate(plugin, 0, 2));
+        }.runAtFixedRate(0, 2));
     }
     
     public void playFog(final Location location, String id) {
-        locations.put(id, new FoliaRunnable(this.server.getRegionScheduler(), location) {
+        locations.put(id, new FoliaScheduler(this.plugin, location) {
             final Location l = location.add(.5, .5, .5);
 
             final World world = location.getWorld();
@@ -282,11 +282,11 @@ public class Particles implements ParticleControl {
                 if (noPlayers(l.clone(), range)) return;
                 world.spawnParticle(Particle.CLOUD, l, 20, .3f, 0, .3f, 0.05f);
             }
-        }.runAtFixedRate(plugin, 0, 2));
+        }.runAtFixedRate(0, 2));
     }
     
     public void playEnchant(final Location location, String id) {
-        locations.put(id, new FoliaRunnable(this.server.getRegionScheduler(), location) {
+        locations.put(id, new FoliaScheduler(this.plugin, location) {
             final Location l = location.add(.5, 1.5, .5);
 
             final World world = location.getWorld();
@@ -296,11 +296,11 @@ public class Particles implements ParticleControl {
                 if (noPlayers(l.clone(), range)) return;
                 world.spawnParticle(Particle.ENCHANT, l, 20, 0, 0, 0, 2);
             }
-        }.runAtFixedRate(plugin, 0, 2));
+        }.runAtFixedRate(0, 2));
     }
     
     public void playChains(final Location location, String id) {
-        locations.put(id, new FoliaRunnable(this.server.getRegionScheduler(), location) {
+        locations.put(id, new FoliaScheduler(this.plugin, location) {
             final Location l = location.add(.5, .1, .5);
 
             final World world = location.getWorld();
@@ -340,11 +340,11 @@ public class Particles implements ParticleControl {
                 world.spawnParticle(Particle.FLAME, l.clone().add(.5, .6, -.5), 1, 0, 0, 0, 0);
                 world.spawnParticle(Particle.FLAME, l.clone().add(.4, .8, -.4), 1, 0, 0, 0, 0);
             }
-        }.runAtFixedRate(plugin, 0, 5));
+        }.runAtFixedRate(0, 5));
     }
     
     public void playFireStorm(final Location location, String id) {
-        locations.put(id, new FoliaRunnable(this.server.getRegionScheduler(), location) {
+        locations.put(id, new FoliaScheduler(this.plugin, location) {
             final Location l = location.add(.5, 2, .5);
 
             final World world = location.getWorld();
@@ -363,11 +363,11 @@ public class Particles implements ParticleControl {
                     e.printStackTrace();
                 }
             }
-        }.runAtFixedRate(plugin, 0, 2));
+        }.runAtFixedRate(0, 2));
     }
     
     public void playSnow(final Location location, String id) {
-        locations.put(id, new FoliaRunnable(this.server.getRegionScheduler(), location) {
+        locations.put(id, new FoliaScheduler(this.plugin, location) {
             final Location l = location.add(.5, 2, .5);
 
             final World world = location.getWorld();
@@ -377,11 +377,11 @@ public class Particles implements ParticleControl {
                 if (noPlayers(l.clone(), range)) return;
                 world.spawnParticle(Particle.FIREWORK, l, 1, .7f, .7f, .7f, 0);
             }
-        }.runAtFixedRate(plugin, 0, 2));
+        }.runAtFixedRate(0, 2));
     }
     
     public void playSpew(final Location location, String id) {
-        locations.put(id, new FoliaRunnable(this.server.getRegionScheduler(), location) {
+        locations.put(id, new FoliaScheduler(this.plugin, location) {
             final Location l = location.add(.5, 1, .5);
 
             final World world = location.getWorld();
@@ -391,11 +391,11 @@ public class Particles implements ParticleControl {
                 if (noPlayers(l.clone(), range)) return;
                 world.spawnParticle(Particle.FIREWORK, l, 0, randomVector(), .1f, randomVector(), 1);
             }
-        }.runAtFixedRate(plugin, 0, 2));
+        }.runAtFixedRate(0, 2));
     }
     
     public void playPotion(final Location location, String id) {
-        locations.put(id, new FoliaRunnable(this.server.getRegionScheduler(), location) {
+        locations.put(id, new FoliaScheduler(this.plugin, location) {
             final Location l = location.add(.5, .2, .5);
 
             final World world = location.getWorld();
@@ -407,11 +407,11 @@ public class Particles implements ParticleControl {
                 world.spawnParticle(Particle.INSTANT_EFFECT, l, 6, .3f, 0, .3f, randomColor());
                 world.spawnParticle(Particle.INSTANT_EFFECT, l, 6, .3f, 0, .3f, randomColor());
             }
-        }.runAtFixedRate(plugin, 0, 2));
+        }.runAtFixedRate(0, 2));
     }
     
     public void playMusic(final Location location, String id) {
-        locations.put(id, new FoliaRunnable(this.server.getRegionScheduler(), location) {
+        locations.put(id, new FoliaScheduler(this.plugin, location) {
             final Location l = location.add(.5, .2, .5);
             final ArrayList<Location> locs = getCircle(l, 1, 16);
             int time = 0;
@@ -434,11 +434,11 @@ public class Particles implements ParticleControl {
 
                 time++;
             }
-        }.runAtFixedRate(plugin, 0, 2));
+        }.runAtFixedRate(0, 2));
     }
     
     public void playMagic(final Location location, String id) {
-        locations.put(id, new FoliaRunnable(this.server.getRegionScheduler(), location) {
+        locations.put(id, new FoliaScheduler(this.plugin, location) {
             final Location l = location.add(.5, .5, .5);
 
             final World world = location.getWorld();
@@ -532,11 +532,11 @@ public class Particles implements ParticleControl {
 
                 time--;
             }
-        }.runAtFixedRate(plugin, 0, 2));
+        }.runAtFixedRate(0, 2));
     }
     
     public void playSnowStorm(final Location location, String id) {
-        locations.put(id, new FoliaRunnable(this.server.getRegionScheduler(), location) {
+        locations.put(id, new FoliaScheduler(this.plugin, location) {
             final Location l = location.add(.5, 2, .5);
 
             final World world = location.getWorld();
@@ -547,11 +547,11 @@ public class Particles implements ParticleControl {
                 world.spawnParticle(Particle.CLOUD, l, 15, .3f, 0, .3f, 0);
                 world.spawnParticle(Particle.FIREWORK, l, 2, .3f, 0, .3f, 0);
             }
-        }.runAtFixedRate(plugin, 0, 2));
+        }.runAtFixedRate(0, 2));
     }
     
     public void playFireSpew(final Location location, String id) {
-        locations.put(id, new FoliaRunnable(this.server.getRegionScheduler(), location) {
+        locations.put(id, new FoliaScheduler(this.plugin, location) {
             final Location l = location.add(.5, 1, .5);
 
             final World world = location.getWorld();
@@ -563,11 +563,11 @@ public class Particles implements ParticleControl {
                 world.spawnParticle(Particle.FLAME, l, 0, randomVector(), .1f, randomVector(), 1.5f);
                 world.spawnParticle(Particle.FLAME, l, 0, randomVector(), .1f, randomVector(), 1.5f);
             }
-        }.runAtFixedRate(plugin, 0, 2));
+        }.runAtFixedRate(0, 2));
     }
     
     public void playFootPrint(final Location location, String id) {
-        locations.put(id, new FoliaRunnable(this.server.getRegionScheduler(), location) {
+        locations.put(id, new FoliaScheduler(this.plugin, location) {
             final Location l = location.add(.5, .1, .5);
 
             final World world = location.getWorld();
@@ -577,11 +577,11 @@ public class Particles implements ParticleControl {
                 if (noPlayers(l.clone(), range)) return;
                 world.spawnParticle(Particle.EGG_CRACK, l, 3, 1, 0, 1, 0);
             }
-        }.runAtFixedRate(plugin, 0, 20));
+        }.runAtFixedRate(0, 20));
     }
     
     public void playHappyVillager(final Location location, String id) {
-        locations.put(id, new FoliaRunnable(this.server.getRegionScheduler(), location) {
+        locations.put(id, new FoliaScheduler(this.plugin, location) {
             final Location l = location.add(.5, .1, .5);
 
             final World world = location.getWorld();
@@ -591,11 +591,11 @@ public class Particles implements ParticleControl {
                 if (noPlayers(l.clone(), range)) return;
                 world.spawnParticle(Particle.HAPPY_VILLAGER, l, 10, .5f, .5f, .5f, 0);
             }
-        }.runAtFixedRate(plugin, 0, 5));
+        }.runAtFixedRate(0, 5));
     }
     
     public void playAngryVillager(final Location location, String id) {
-        locations.put(id, new FoliaRunnable(this.server.getRegionScheduler(), location) {
+        locations.put(id, new FoliaScheduler(this.plugin, location) {
             final Location l = location.add(.5, .1, .5);
 
             final World world = location.getWorld();
@@ -605,11 +605,11 @@ public class Particles implements ParticleControl {
                 if (noPlayers(l.clone(), range)) return;
                 world.spawnParticle(Particle.ANGRY_VILLAGER, l, 5, .5f, .5f, .5f, 0);
             }
-        }.runAtFixedRate(plugin, 0, 10));
+        }.runAtFixedRate(0, 10));
     }
     
     public void playMobSpawner(final Location location, String id) {
-        locations.put(id, new FoliaRunnable(this.server.getRegionScheduler(), location) {
+        locations.put(id, new FoliaScheduler(this.plugin, location) {
             final Location l = location.add(.5, .1, .5);
 
             final World world = location.getWorld();
@@ -619,11 +619,11 @@ public class Particles implements ParticleControl {
                 if (noPlayers(l.clone(), range)) return;
                 world.spawnParticle(Particle.FLAME, l, 15, .5f, .5f, .5f, 0);
             }
-        }.runAtFixedRate(plugin, 0, 8));
+        }.runAtFixedRate(0, 8));
     }
     
     public void startWater(final Location location, String id) {
-        locations.put(id, new FoliaRunnable(this.server.getRegionScheduler(), location) {
+        locations.put(id, new FoliaScheduler(this.plugin, location) {
             final Location l = location.add(.5, .8, .6);
 
             final World world = location.getWorld();
@@ -638,11 +638,11 @@ public class Particles implements ParticleControl {
                 world.spawnParticle(Particle.FALLING_WATER, l.clone().add(.2, .3, -.2), 10, 0, 0, 0, 0);
                 world.spawnParticle(Particle.FALLING_WATER, l.clone().add(-.2, .3, -.2), 10, 0, 0, 0, 0);
             }
-        }.runAtFixedRate(plugin, 0, 2));
+        }.runAtFixedRate(0, 2));
     }
     
     public void playEnderSignal(final Location location, String id) {
-        locations.put(id, new FoliaRunnable(this.server.getRegionScheduler(), location) {
+        locations.put(id, new FoliaScheduler(this.plugin, location) {
             final Location l = location.add(.5, 0, .5);
 
             final World world = location.getWorld();
@@ -655,11 +655,11 @@ public class Particles implements ParticleControl {
                 world.playEffect(l, Effect.ENDER_SIGNAL, 1);
                 world.playEffect(l, Effect.ENDER_SIGNAL, 1);
             }
-        }.runAtFixedRate(plugin, 0, 8));
+        }.runAtFixedRate(0, 8));
     }
     
     public void playRainbow(final Location location, String id) {
-        locations.put(id, new FoliaRunnable(this.server.getRegionScheduler(), location) {
+        locations.put(id, new FoliaScheduler(this.plugin, location) {
             final Location l = location.add(.5, .1, .5);
 
             final World world = location.getWorld();
@@ -673,11 +673,11 @@ public class Particles implements ParticleControl {
                 Particle.DustOptions dustOptions = new Particle.DustOptions(Color.fromRGB(r, g, b), 1);
                 world.spawnParticle(Particle.DUST, l, 10, .5f, .5f, .5f, 1, dustOptions);
             }
-        }.runAtFixedRate(plugin, 0, 5));
+        }.runAtFixedRate(0, 5));
     }
     
     public void playSnowBlast(final Location location, String id) {
-        locations.put(id, new FoliaRunnable(this.server.getRegionScheduler(), location) {
+        locations.put(id, new FoliaScheduler(this.plugin, location) {
             final Location l = location.add(.5, .5, .5);
 
             final World world = location.getWorld();
@@ -687,11 +687,11 @@ public class Particles implements ParticleControl {
                 if (noPlayers(l.clone(), range)) return;
                 world.spawnParticle(Particle.SNOWFLAKE, l, 40, 0, 0, 0, .2f);
             }
-        }.runAtFixedRate(plugin, 0, 2));
+        }.runAtFixedRate(0, 2));
     }
     
     public void playHalo(final Location location, String id) {
-        locations.put(id, new FoliaRunnable(this.server.getRegionScheduler(), location) {
+        locations.put(id, new FoliaScheduler(this.plugin, location) {
             final Location l = location.add(.5, 1.3, .5);
 
             final World world = location.getWorld();
@@ -722,11 +722,11 @@ public class Particles implements ParticleControl {
                     e.printStackTrace();
                 }
             }
-        }.runAtFixedRate(plugin, 0, 5));
+        }.runAtFixedRate(0, 5));
     }
     
     public void playSantaHat(final Location location, String id) {
-        locations.put(id, new FoliaRunnable(this.server.getRegionScheduler(), location) {
+        locations.put(id, new FoliaScheduler(this.plugin, location) {
             final Location l1 = location.clone().add(.5, 1, .5);
             final Location l2 = l1.clone().add(0, .05, 0);
             final Location l3 = l2.clone().add(0, .05, 0);
@@ -775,19 +775,19 @@ public class Particles implements ParticleControl {
                     e.printStackTrace();
                 }
             }
-        }.runAtFixedRate(plugin, 0, 5));
+        }.runAtFixedRate(0, 5));
     }
     
     public void playSoulWell(final Location location, final String id) {
         final HashMap<Integer, ScheduledTask> S = new HashMap<>();
 
-        locations.put(id, new FoliaRunnable(this.server.getRegionScheduler(), location) {
+        locations.put(id, new FoliaScheduler(this.plugin, location) {
             final Location l = location.clone().add(.5, 0, .5);
 
             void startSoulWell(final Location location, final String id) {
                 final int num = random.nextInt(Integer.MAX_VALUE);
 
-                S.put(num, new FoliaRunnable(server.getRegionScheduler(), location) {
+                S.put(num, new FoliaScheduler(plugin, location) {
                     final Location height = location.clone();
                     int loc = 0;
                     int lifeSpan = 0;
@@ -807,7 +807,7 @@ public class Particles implements ParticleControl {
                             S.remove(num);
                         }
                     }
-                }.runAtFixedRate(plugin, 0, 1));
+                }.runAtFixedRate(0, 1));
             }
 
             @Override
@@ -815,18 +815,18 @@ public class Particles implements ParticleControl {
                 if (noPlayers(l.clone(), range)) return;
                 startSoulWell(l, id);
             }
-        }.runAtFixedRate(plugin, 0, 16));
+        }.runAtFixedRate(0, 16));
     }
     
     public void playBigSoulWell(final Location location, final String id) {
         final HashMap<Integer, ScheduledTask> S = new HashMap<>();
 
-        locations.put(id, new FoliaRunnable(this.server.getRegionScheduler(), location) {
+        locations.put(id, new FoliaScheduler(this.plugin, location) {
             final Location l = location.clone().add(.5, 0, .5);
 
             void startBigSoulWell(final Location location, final String id) {
                 final int num = random.nextInt(Integer.MAX_VALUE);
-                S.put(num, new FoliaRunnable(server.getRegionScheduler(), location) {
+                S.put(num, new FoliaScheduler(plugin, location) {
                     final Location height = location.clone();
                     int loc = 0;
                     int lifeSpan = 0;
@@ -846,7 +846,7 @@ public class Particles implements ParticleControl {
                             S.remove(num);
                         }
                     }
-                }.runAtFixedRate(plugin, 0, 1));
+                }.runAtFixedRate(0, 1));
             }
 
             @Override
@@ -854,18 +854,18 @@ public class Particles implements ParticleControl {
                 if (noPlayers(l.clone(), range)) return;
                 startBigSoulWell(l, id);
             }
-        }.runAtFixedRate(plugin, 0, 25));
+        }.runAtFixedRate(0, 25));
     }
     
     public void playFlameWheel(final Location location, final String id) {
         final HashMap<Integer, ScheduledTask> S = new HashMap<>();
 
-        locations.put(id, new FoliaRunnable(this.server.getRegionScheduler(), location) {
+        locations.put(id, new FoliaScheduler(this.plugin, location) {
             final Location l = location.clone().add(.5, .1, .5);
 
             void startFlameWheel(final Location location) {
                 final int num = random.nextInt(Integer.MAX_VALUE);
-                S.put(num, new FoliaRunnable(server.getRegionScheduler(), location) {
+                S.put(num, new FoliaScheduler(plugin, location) {
                     final Location l = location.clone();
                     int i = 0;
                     int o = 74;
@@ -907,7 +907,7 @@ public class Particles implements ParticleControl {
                             S.remove(num);
                         }
                     }
-                }.runAtFixedRate(plugin, 0, 1));
+                }.runAtFixedRate(0, 1));
             }
 
             @Override
@@ -915,18 +915,18 @@ public class Particles implements ParticleControl {
                 if (noPlayers(l.clone(), range)) return;
                 startFlameWheel(l.clone());
             }
-        }.runAtFixedRate(plugin, 0, 25));
+        }.runAtFixedRate(0, 25));
     }
     
     public void playWitchTornado(final Location location, final String id) {
         final HashMap<Integer, ScheduledTask> S = new HashMap<>();
 
-        locations.put(id, new FoliaRunnable(this.server.getRegionScheduler(), location) {
+        locations.put(id, new FoliaScheduler(this.plugin, location) {
             final Location l = location.clone().add(.5, .1, .5);
 
             void startWitchTornado(final Location location) {
                 final int num = random.nextInt(Integer.MAX_VALUE);
-                S.put(num, new FoliaRunnable(server.getRegionScheduler(), location) {
+                S.put(num, new FoliaScheduler(plugin, location) {
                     final Location height = location.clone().add(0, 5, 0);
                     int nextLocation = 0;
                     int diameterSwitch = 0;
@@ -951,7 +951,7 @@ public class Particles implements ParticleControl {
                             S.remove(num);
                         }
                     }
-                }.runAtFixedRate(plugin, 0, 1));
+                }.runAtFixedRate(0, 1));
             }
 
             @Override
@@ -959,18 +959,18 @@ public class Particles implements ParticleControl {
                 if (noPlayers(l.clone(), range)) return;
                 startWitchTornado(l);
             }
-        }.runAtFixedRate(plugin, 0, 30));
+        }.runAtFixedRate(0, 30));
     }
     
     public void playLoveTornado(final Location location, final String id) {
         final HashMap<Integer, ScheduledTask> S = new HashMap<>();
 
-        locations.put(id, new FoliaRunnable(this.server.getRegionScheduler(), location) {
+        locations.put(id, new FoliaScheduler(this.plugin, location) {
             final Location l = location.clone().add(.5, 0, .5);
 
             void startLoveTornado(final Location location) {
                 final int num = random.nextInt(Integer.MAX_VALUE);
-                S.put(num, new FoliaRunnable(server.getRegionScheduler(), location) {
+                S.put(num, new FoliaScheduler(plugin, location) {
 
                     final Location height = location.clone().add(0, 5, 0);
                     int diameterShrink = 0;
@@ -996,7 +996,7 @@ public class Particles implements ParticleControl {
                             S.remove(num);
                         }
                     }
-                }.runAtFixedRate(plugin, 0, 1));
+                }.runAtFixedRate(0, 1));
             }
 
             @Override
@@ -1004,18 +1004,18 @@ public class Particles implements ParticleControl {
                 if (noPlayers(l.clone(), range)) return;
                 startLoveTornado(l);
             }
-        }.runAtFixedRate(plugin, 0, 30));
+        }.runAtFixedRate(0, 30));
     }
     
     public void playBigLoveWell(final Location location, final String id) {
         final HashMap<Integer, ScheduledTask> S = new HashMap<>();
 
-        locations.put(id, new FoliaRunnable(this.server.getRegionScheduler(), location) {
+        locations.put(id, new FoliaScheduler(this.plugin, location) {
             final Location l = location.clone().add(.5, 0, .5);
 
             void startBigLoveWell(final Location location) {
                 final int num = random.nextInt(Integer.MAX_VALUE);
-                S.put(num, new FoliaRunnable(server.getRegionScheduler(), location) {
+                S.put(num, new FoliaScheduler(plugin, location) {
                     final Location height = location.clone();
                     int loc = 0;
                     int lifeSpan = 0;
@@ -1035,7 +1035,7 @@ public class Particles implements ParticleControl {
                             S.remove(num);
                         }
                     }
-                }.runAtFixedRate(plugin, 0, 1));
+                }.runAtFixedRate(0, 1));
             }
 
             @Override
@@ -1043,18 +1043,18 @@ public class Particles implements ParticleControl {
                 if (noPlayers(l.clone(), range)) return;
                 startBigLoveWell(l);
             }
-        }.runAtFixedRate(plugin, 0, 25));
+        }.runAtFixedRate(0, 25));
     }
     
     public void playLoveWell(final Location location, final String id) {
         final HashMap<Integer, ScheduledTask> S = new HashMap<>();
 
-        locations.put(id, new FoliaRunnable(this.server.getRegionScheduler(), location) {
+        locations.put(id, new FoliaScheduler(this.plugin, location) {
             Location l = location.clone().add(.5, 0, .5);
 
             void startLoveWell(final Location location) {
                 final int num = random.nextInt(Integer.MAX_VALUE);
-                S.put(num, new FoliaRunnable(server.getRegionScheduler(), location) {
+                S.put(num, new FoliaScheduler(plugin, location) {
                     final Location height = location.clone();
                     int loc = 0;
                     int lifeSpan = 0;
@@ -1074,7 +1074,7 @@ public class Particles implements ParticleControl {
                             S.remove(num);
                         }
                     }
-                }.runAtFixedRate(plugin, 0, 1));
+                }.runAtFixedRate(0, 1));
             }
 
             @Override
@@ -1082,7 +1082,7 @@ public class Particles implements ParticleControl {
                 if (noPlayers(l.clone(), range)) return;
                 startLoveWell(l);
             }
-        }.runAtFixedRate(plugin, 0, 16));
+        }.runAtFixedRate(0, 16));
     }
     
     private ArrayList<Location> getCircle(Location center, double radius, int amount) {

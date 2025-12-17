@@ -1,6 +1,6 @@
 package com.badbones69.blockparticles.api.builders.gui;
 
-import com.ryderbelserion.vital.paper.api.builders.gui.interfaces.Gui;
+import com.ryderbelserion.fusion.paper.builders.gui.interfaces.Gui;
 import org.bukkit.entity.Player;
 
 public abstract class StaticInventoryBuilder extends InventoryBuilder {
@@ -19,7 +19,7 @@ public abstract class StaticInventoryBuilder extends InventoryBuilder {
     public StaticInventoryBuilder(final Player player, final String title, final int rows) {
         super(player);
 
-        this.gui = Gui.gui().setTitle(parse(player, title)).setRows(rows).disableInteractions().create();
+        this.gui = Gui.gui(this.plugin).setTitle(parse(player, title)).setRows(rows).disableInteractions().create();
 
         this.player = player;
     }

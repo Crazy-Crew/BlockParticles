@@ -1,8 +1,7 @@
 package com.badbones69.blockparticles.api.builders.gui;
 
 import com.badbones69.blockparticles.BlockParticles;
-import com.ryderbelserion.vital.paper.api.enums.Support;
-import me.clip.placeholderapi.PlaceholderAPI;
+import com.ryderbelserion.fusion.paper.FusionPaper;
 import org.bukkit.entity.Player;
 
 public abstract class InventoryBuilder {
@@ -15,7 +14,9 @@ public abstract class InventoryBuilder {
 
     protected final BlockParticles plugin = BlockParticles.getPlugin();
 
+    protected final FusionPaper fusion = this.plugin.getFusion();
+
     public final String parse(final Player player, final String title) {
-        return Support.placeholder_api.isEnabled() ? PlaceholderAPI.setPlaceholders(player, title) : title;
+        return this.fusion.papi(player, title);
     }
 }

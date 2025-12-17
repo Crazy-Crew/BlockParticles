@@ -9,7 +9,7 @@ authors:
 
 version: '${version}'
 description: '${description}'
-api-version: '${apiVersion}'
+api-version: '${minecraft}'
 website: '${website}'
 
 softdepend: [HeadDatabase]
