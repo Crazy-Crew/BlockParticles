@@ -41,7 +41,7 @@ tasks {
             "description" to rootProject.description.toString(),
             "minecraft" to libs.findVersion("minecraft").get(),
             "website" to "https://github.com/${rootProject.property("repository_owner")}/${rootProject.name}",
-            "group" to rootProject.group
+            "group" to project.group
         )
 
         with(copySpec {
