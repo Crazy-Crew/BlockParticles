@@ -3,18 +3,17 @@ package com.badbones69.blockparticles;
 import com.badbones69.blockparticles.api.ParticleManager;
 import com.badbones69.blockparticles.commands.BPCommands;
 import com.badbones69.blockparticles.commands.BPTab;
-import com.badbones69.blockparticles.hooks.HeadDatabaseHook;
 import com.badbones69.blockparticles.listeners.FountainListener;
 import com.badbones69.blockparticles.listeners.HeadDatabaseListener;
 import com.badbones69.blockparticles.listeners.ParticleListener;
-import com.ryderbelserion.vital.paper.VitalPaper;
-import com.ryderbelserion.vital.paper.api.enums.Support;
-import com.ryderbelserion.vital.paper.api.files.FileManager;
-import me.arcaniax.hdb.api.HeadDatabaseAPI;
+import com.ryderbelserion.fusion.core.api.support.ModSupport;
+import com.ryderbelserion.fusion.paper.FusionPaper;
+import com.ryderbelserion.fusion.paper.files.PaperFileManager;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.ApiStatus;
+import java.nio.file.Path;
 import java.util.Locale;
 
 public class BlockParticles extends JavaPlugin {
@@ -30,31 +29,35 @@ public class BlockParticles extends JavaPlugin {
         this.startTime = System.nanoTime();
     }
 
-    private VitalPaper instance;
-    private FileManager fileManager;
     private ParticleManager particleManager;
+    private PaperFileManager fileManager;
+    private FusionPaper fusion;
 
     @Override
     public void onEnable() {
-        this.instance = new VitalPaper(this);
+        this.fusion = new FusionPaper(this);
+        this.fusion.init();
 
-        this.fileManager = this.instance.getFileManager();
-        this.fileManager.addFile("config.yml").addFile("data.yml");
+        this.fileManager = this.fusion.getFileManager();
+
+        final Path path = getDataPath();
+
+        this.fileManager.addPaperFile(path.resolve("config.yml")).addPaperFile(path.resolve("data.yml"));
 
         this.particleManager = new ParticleManager();
 
         final PluginManager pluginManager = getServer().getPluginManager();
 
-        if (Support.head_database.isEnabled()) {
+        if (this.fusion.isModReady(ModSupport.head_database)) {
             pluginManager.registerEvents(new HeadDatabaseListener(), this);
-        } else {
-            pluginManager.registerEvents(new FountainListener(), this);
-            pluginManager.registerEvents(new ParticleListener(), this);
-
-            this.particleManager.load();
-
-            Methods.startParticles();
         }
+
+        pluginManager.registerEvents(new FountainListener(), this);
+        pluginManager.registerEvents(new ParticleListener(), this);
+
+        this.particleManager.load();
+
+        Methods.startParticles();
 
         final PluginCommand command = getCommand("blockparticle");
 
@@ -72,15 +75,15 @@ public class BlockParticles extends JavaPlugin {
         Methods.kill();
     }
 
-    public final FileManager getFileManager() {
+    public final PaperFileManager getFileManager() {
         return this.fileManager;
     }
 
-    public ParticleManager getParticleManager() {
+    public final ParticleManager getParticleManager() {
         return this.particleManager;
     }
 
-    public final VitalPaper getVital() {
-        return this.instance;
+    public final FusionPaper getFusion() {
+        return this.fusion;
     }
 }

@@ -1,3 +1,3 @@
 rootProject.name = "BlockParticles"
 
-include("publish", "paper")
+include("paper")
