@@ -7,7 +7,6 @@
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
 [![MIT License][license-shield]][license-url]
-[![CodeFactor](https://www.codefactor.io/repository/github/crazy-crew/blockparticles/badge)](https://www.codefactor.io/repository/github/crazy-crew/blockparticles)
 
 <big>**Sick of boring blocks? Today's the day that changes, Add fancy particles to your blocks now!**</big>
 
