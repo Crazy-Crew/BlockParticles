@@ -719,12 +719,15 @@ public class Particles implements ParticleControl {
     }
     
     public void playSantaHat(final Location location, String id) {
+        final Location baseLocation = location.clone().add(.5, 1, .5);
         locations.put(id, new FoliaScheduler(this.plugin, location) {
-            final List<Location> locationList = new ArrayList<>(); {
-                final Location baseLocation = location.clone().add(.5, 1, .5);
-                final double[] offsets = {0, .05, .10, .15, .20, .25, .30, .35, .40, .50, .55};
-                for (double offset : offsets) {
-                    locationList.add(baseLocation.clone().add(0, offset, 0));
+            final List<List<Location>> rings = new ArrayList<>(); {
+                final double[] offsetLocation = {0, .05, .10, .15, .20, .25, .30, .35, .40, .50, .55};// The height of the row
+                final double[] offsetParticleRadius = {.5, .4, .35, .3, .2, .15, .1, .05, .05, .05, .05};// How much the row shrinks
+                final int[] offsetParticleAmount = {20, 15, 15, 15, 15, 15, 15, 10, 10, 15, 15};// The amount of particles that spawn
+                for (int i = 0; i < offsetLocation.length; i++) {
+                    final Location center = baseLocation.clone().add(0, offsetLocation[i], 0);
+                    rings.add(getCircle(center, offsetParticleRadius[i], offsetParticleAmount[i]));
                 }
             }
 
@@ -732,31 +735,15 @@ public class Particles implements ParticleControl {
 
             @Override
             public void run() {
-                if (noPlayers(locationList.get(0).clone(), 20)) return;
+                if (noPlayers(baseLocation.clone(), 20)) return;
                 try {
-                    for (int i = 0; i < 3; i++) {
-                        for (Location location : getCircle(locationList.get(0), .5, 20))
-                            world.spawnParticle(Particle.DUST, location, 1, 0, 0, 0, 0, WHITE);
-                        for (Location location : getCircle(locationList.get(1), .4, 15))
-                            world.spawnParticle(Particle.DUST, location, 1, 0, 0, 0, 0, RED);
-                        for (Location location : getCircle(locationList.get(2), .35, 15))
-                            world.spawnParticle(Particle.DUST, location, 1, 0, 0, 0, 0, RED);
-                        for (Location location : getCircle(locationList.get(3), .3, 15))
-                            world.spawnParticle(Particle.DUST, location, 1, 0, 0, 0, 0, RED);
-                        for (Location location : getCircle(locationList.get(4), .2, 15))
-                            world.spawnParticle(Particle.DUST, location, 1, 0, 0, 0, 0, RED);
-                        for (Location location : getCircle(locationList.get(5), .15, 15))
-                            world.spawnParticle(Particle.DUST, location, 1, 0, 0, 0, 0, RED);
-                        for (Location location : getCircle(locationList.get(6), .1, 15))
-                            world.spawnParticle(Particle.DUST, location, 1, 0, 0, 0, 0, RED);
-                        for (Location location : getCircle(locationList.get(7), .05, 10))
-                            world.spawnParticle(Particle.DUST, location, 1, 0, 0, 0, 0, RED);
-                        for (Location location : getCircle(locationList.get(8), .05, 10))
-                            world.spawnParticle(Particle.DUST, location, 1, 0, 0, 0, 0, RED);
-                        for (Location location : getCircle(locationList.get(9), .05, 15))
-                            world.spawnParticle(Particle.DUST, location, 1, 0, 0, 0, 0, WHITE);
-                        for (Location location : getCircle(locationList.get(10), .05, 15))
-                            world.spawnParticle(Particle.DUST, location, 1, 0, 0, 0, 0, WHITE);
+                    for (int pass = 0; pass < 3; pass++) {// Spawns them 3 times so the hat looks full, otherwise its thin and lacking
+                        for (int row = 0; row < rings.size(); row++) {
+                            final Particle.DustOptions dust = (row == 0 || row == 9 || row == 10) ? WHITE : RED;
+                            for (Location point : rings.get(row)) {
+                                world.spawnParticle(Particle.DUST, point, 1, 0, 0, 0, 0, dust);
+                            }
+                        }
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
