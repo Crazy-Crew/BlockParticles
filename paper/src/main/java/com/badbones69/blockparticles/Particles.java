@@ -883,7 +883,7 @@ public class Particles implements ParticleControl {
                             }
                         }
 
-                        //Throws the fire inwords.
+                        //Throws the fire inwards.
                         world.spawnParticle(Particle.FLAME, locs.get(i), 0, -v.getX(), 0, -v.getZ(), speed);
                         world.spawnParticle(Particle.FLAME, locs2.get(i), 0, -v2.getX(), 0, -v2.getZ(), speed);
                         world.spawnParticle(Particle.FLAME, locs.get(o), 0, -v3.getX(), 0, -v3.getZ(), speed);
@@ -1084,31 +1084,31 @@ public class Particles implements ParticleControl {
     private ArrayList<Location> getCircle(Location center, double radius, int amount) {
         World world = center.getWorld();
         double increment = (2 * Math.PI) / amount;
-        ArrayList<Location> locations = new ArrayList<>();
+        ArrayList<Location> locationArrayList = new ArrayList<>();
 
         for (int i = 0; i < amount; i++) {
             double angle = i * increment;
             double x = center.getX() + (radius * Math.cos(angle));
             double z = center.getZ() + (radius * Math.sin(angle));
-            locations.add(new Location(world, x, center.getY(), z));
+            locationArrayList.add(new Location(world, x, center.getY(), z));
         }
 
-        return locations;
+        return locationArrayList;
     }
     
     private ArrayList<Location> getCircleReverse(Location center, double radius, int amount) {
         World world = center.getWorld();
         double increment = (2 * Math.PI) / amount;
-        ArrayList<Location> locations = new ArrayList<>();
+        ArrayList<Location> locationArrayList = new ArrayList<>();
 
         for (int i = 0; i < amount; i++) {
             double angle = i * increment;
             double x = center.getX() - (radius * Math.cos(angle));
             double z = center.getZ() - (radius * Math.sin(angle));
-            locations.add(new Location(world, x, center.getY(), z));
+            locationArrayList.add(new Location(world, x, center.getY(), z));
         }
 
-        return locations;
+        return locationArrayList;
     }
 
     private boolean noPlayers(Location location, int range) {
