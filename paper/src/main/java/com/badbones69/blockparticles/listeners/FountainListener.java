@@ -320,20 +320,18 @@ public class FountainListener implements Listener {
         particleManager.getParticleControl().getLocations().put(id, new FoliaScheduler(plugin, loc) {
             @Override
             public void run() {
-                for (Entity entity : loc.getNearbyPlayers(10)) {
-                    if (entity instanceof Player player) {
-                        final Item head = loc.getWorld().dropItem(loc.clone().add(.5, .8, .5), HeadDatabaseHook.getPlayerHead(player.getName()));
-                        head.setVelocity(new Vector(randomVector(), .01, randomVector()));
-                        particleManager.addFountainItem(head);
+                for (Player player : loc.getNearbyPlayers(10)) {
+                    final Item head = loc.getWorld().dropItem(loc.clone().add(.5, .8, .5), HeadDatabaseHook.getPlayerHead(player.getName()));
+                    head.setVelocity(new Vector(randomVector(), .01, randomVector()));
+                    particleManager.addFountainItem(head);
 
-                        new FoliaScheduler(plugin, loc) {
-                            @Override
-                            public void run() {
-                                particleManager.removeFountainItem(head);
-                                head.remove();
-                            }
-                        }.runDelayed(40);
-                    }
+                    new FoliaScheduler(plugin, loc) {
+                        @Override
+                        public void run() {
+                            particleManager.removeFountainItem(head);
+                            head.remove();
+                        }
+                    }.runDelayed(40);
                 }
             }
         }.runAtFixedRate(0, 3));

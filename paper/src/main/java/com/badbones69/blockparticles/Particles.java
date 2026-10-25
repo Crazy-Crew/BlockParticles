@@ -842,23 +842,24 @@ public class Particles implements ParticleControl {
             void startFlameWheel(final Location location) {
                 final int num = random.nextInt(Integer.MAX_VALUE);
                 scheduledTaskHashMap.put(num, new FoliaScheduler(plugin, location) {
-                    final Location l = location.clone();
-                    int i = 0;
-                    int o = 74;
+                    final Location center = location.clone();
+                    int clockWise = 0;
+                    int counterClockWise = 74;
                     int f = 0;
                     int ringTimer = 0;
 
                     final World world = location.getWorld();
 
+                    final ArrayList<Location> locs = getCircle(center, 3.5, 75);
+                    final ArrayList<Location> locs2 = getCircleReverse(center, 3.5, 75);
+
                     @Override
                     public void run() {
-                        ArrayList<Location> locs = getCircle(l, 3.5, 75);
-                        ArrayList<Location> locs2 = getCircleReverse(l, 3.5, 75);
                         float speed = .15f;
-                        Vector v = locs.get(i).toVector().subtract(l.toVector()).normalize();
-                        Vector v2 = locs2.get(i).toVector().subtract(l.toVector()).normalize();
-                        Vector v3 = locs.get(o).toVector().subtract(l.toVector()).normalize();
-                        Vector v4 = locs2.get(o).toVector().subtract(l.toVector()).normalize();
+                        Vector v = locs.get(clockWise).toVector().subtract(center.toVector()).normalize();
+                        Vector v2 = locs2.get(clockWise).toVector().subtract(center.toVector()).normalize();
+                        Vector v3 = locs.get(counterClockWise).toVector().subtract(center.toVector()).normalize();
+                        Vector v4 = locs2.get(counterClockWise).toVector().subtract(center.toVector()).normalize();
                         //Makes the ring around the edge
                         if (ringTimer == 10) {
                             for (Location i : locs) {
@@ -867,17 +868,17 @@ public class Particles implements ParticleControl {
                         }
 
                         //Throws the fire inwards.
-                        world.spawnParticle(Particle.FLAME, locs.get(i), 0, -v.getX(), 0, -v.getZ(), speed);
-                        world.spawnParticle(Particle.FLAME, locs2.get(i), 0, -v2.getX(), 0, -v2.getZ(), speed);
-                        world.spawnParticle(Particle.FLAME, locs.get(o), 0, -v3.getX(), 0, -v3.getZ(), speed);
-                        world.spawnParticle(Particle.FLAME, locs2.get(o), 0, -v4.getX(), 0, -v4.getZ(), speed);
-                        i++;
+                        world.spawnParticle(Particle.FLAME, locs.get(clockWise), 0, -v.getX(), 0, -v.getZ(), speed);
+                        world.spawnParticle(Particle.FLAME, locs2.get(clockWise), 0, -v2.getX(), 0, -v2.getZ(), speed);
+                        world.spawnParticle(Particle.FLAME, locs.get(counterClockWise), 0, -v3.getX(), 0, -v3.getZ(), speed);
+                        world.spawnParticle(Particle.FLAME, locs2.get(counterClockWise), 0, -v4.getX(), 0, -v4.getZ(), speed);
+                        clockWise++;
                         f++;
-                        o--;
+                        counterClockWise--;
                         ringTimer++;
                         if (ringTimer == 11) ringTimer = 0;
-                        if (i == 75) i = 0;
-                        if (o == 0) o = 74;
+                        if (clockWise == 75) clockWise = 0;
+                        if (counterClockWise == 0) counterClockWise = 74;
                         if (f == 105) {
                             scheduledTaskHashMap.get(num).cancel();
                             scheduledTaskHashMap.remove(num);
