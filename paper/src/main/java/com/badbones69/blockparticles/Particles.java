@@ -720,46 +720,42 @@ public class Particles implements ParticleControl {
     
     public void playSantaHat(final Location location, String id) {
         locations.put(id, new FoliaScheduler(this.plugin, location) {
-            final Location l1 = location.clone().add(.5, 1, .5);
-            final Location l2 = l1.clone().add(0, .05, 0);
-            final Location l3 = l2.clone().add(0, .05, 0);
-            final Location l4 = l3.clone().add(0, .05, 0);
-            final Location l5 = l4.clone().add(0, .05, 0);
-            final Location l6 = l5.clone().add(0, .05, 0);
-            final Location l7 = l6.clone().add(0, .05, 0);
-            final Location l8 = l7.clone().add(0, .05, 0);
-            final Location l9 = l8.clone().add(0, .05, 0);
-            final Location l10 = l9.clone().add(0, .1, 0);
-            final Location l11 = l10.clone().add(0, .05, 0);
+            final List<Location> locationList = new ArrayList<>(); {
+                final Location baseLocation = location.clone().add(.5, 1, .5);
+                final double[] offsets = {0, .05, .10, .15, .20, .25, .30, .35, .40, .50, .55};
+                for (double offset : offsets) {
+                    locationList.add(baseLocation.clone().add(0, offset, 0));
+                }
+            }
 
             final World world = location.getWorld();
 
             @Override
             public void run() {
-                if (noPlayers(l1.clone(), 20)) return;
+                if (noPlayers(locationList.get(0).clone(), 20)) return;
                 try {
                     for (int i = 0; i < 3; i++) {
-                        for (Location location : getCircle(l1, .5, 20))
+                        for (Location location : getCircle(locationList.get(0), .5, 20))
                             world.spawnParticle(Particle.DUST, location, 1, 0, 0, 0, 0, WHITE);
-                        for (Location location : getCircle(l2, .4, 15))
+                        for (Location location : getCircle(locationList.get(1), .4, 15))
                             world.spawnParticle(Particle.DUST, location, 1, 0, 0, 0, 0, RED);
-                        for (Location location : getCircle(l3, .35, 15))
+                        for (Location location : getCircle(locationList.get(2), .35, 15))
                             world.spawnParticle(Particle.DUST, location, 1, 0, 0, 0, 0, RED);
-                        for (Location location : getCircle(l4, .3, 15))
+                        for (Location location : getCircle(locationList.get(3), .3, 15))
                             world.spawnParticle(Particle.DUST, location, 1, 0, 0, 0, 0, RED);
-                        for (Location location : getCircle(l5, .2, 15))
+                        for (Location location : getCircle(locationList.get(4), .2, 15))
                             world.spawnParticle(Particle.DUST, location, 1, 0, 0, 0, 0, RED);
-                        for (Location location : getCircle(l6, .15, 15))
+                        for (Location location : getCircle(locationList.get(5), .15, 15))
                             world.spawnParticle(Particle.DUST, location, 1, 0, 0, 0, 0, RED);
-                        for (Location location : getCircle(l7, .1, 15))
+                        for (Location location : getCircle(locationList.get(6), .1, 15))
                             world.spawnParticle(Particle.DUST, location, 1, 0, 0, 0, 0, RED);
-                        for (Location location : getCircle(l8, .05, 10))
+                        for (Location location : getCircle(locationList.get(7), .05, 10))
                             world.spawnParticle(Particle.DUST, location, 1, 0, 0, 0, 0, RED);
-                        for (Location location : getCircle(l9, .05, 10))
+                        for (Location location : getCircle(locationList.get(8), .05, 10))
                             world.spawnParticle(Particle.DUST, location, 1, 0, 0, 0, 0, RED);
-                        for (Location location : getCircle(l10, .05, 15))
+                        for (Location location : getCircle(locationList.get(9), .05, 15))
                             world.spawnParticle(Particle.DUST, location, 1, 0, 0, 0, 0, WHITE);
-                        for (Location location : getCircle(l11, .05, 15))
+                        for (Location location : getCircle(locationList.get(10), .05, 15))
                             world.spawnParticle(Particle.DUST, location, 1, 0, 0, 0, 0, WHITE);
                     }
                 } catch (Exception e) {
