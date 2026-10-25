@@ -770,8 +770,8 @@ public class Particles implements ParticleControl {
 
         locations.put(id, new FoliaScheduler(this.plugin, location) {
             final Location l = location.clone().add(.5, 0, .5);
-            final List<Location> ring = getCircle(location, 2, 50);
-            final List<Location> ringReverse = getCircleReverse(location, 2, 50);
+            final List<Location> ring = getCircle(l, 2, 50);
+            final List<Location> ringReverse = getCircleReverse(l, 2, 50);
 
             void startSoulWell(final Location location, final String id) {
                 final int num = random.nextInt(Integer.MAX_VALUE);
@@ -811,8 +811,8 @@ public class Particles implements ParticleControl {
 
         locations.put(id, new FoliaScheduler(this.plugin, location) {
             final Location l = location.clone().add(.5, 0, .5);
-            final List<Location> ring = getCircle(location, 2, 50);
-            final List<Location> ringReverse = getCircleReverse(location, 2, 50);
+            final List<Location> ring = getCircle(l, 2, 75);
+            final List<Location> ringReverse = getCircleReverse(l, 2, 75);
 
             void startBigSoulWell(final Location location, final String id) {
                 final int num = random.nextInt(Integer.MAX_VALUE);
@@ -823,7 +823,7 @@ public class Particles implements ParticleControl {
 
                     @Override
                     public void run() {
-                        final double rise = lifeSpan * .035;
+                        final double rise = lifeSpan * .04;
                         height.getWorld().spawnParticle(Particle.WITCH, ring.get(loc).clone().add(0, rise, 0), 1, 0, 0, 0, 0);
                         height.getWorld().spawnParticle(Particle.WITCH, ringReverse.get(loc).clone().add(0, rise, 0), 1, 0, 0, 0, 0);
                         loc++;
@@ -1001,8 +1001,8 @@ public class Particles implements ParticleControl {
 
         locations.put(id, new FoliaScheduler(this.plugin, location) {
             final Location l = location.clone().add(.5, 0, .5);
-            final List<Location> ring = getCircle(location, 2, 50);
-            final List<Location> ringReverse = getCircleReverse(location, 2, 50);
+            final List<Location> ring = getCircle(l, 2, 75);
+            final List<Location> ringReverse = getCircleReverse(l, 2, 75);
 
             void startBigLoveWell(final Location location) {
                 final int num = random.nextInt(Integer.MAX_VALUE);
@@ -1011,12 +1011,11 @@ public class Particles implements ParticleControl {
                     int loc = 0;
                     int lifeSpan = 0;
 
-
                     @Override
                     public void run() {
-                        final double rise = lifeSpan * .035;
-                        height.getWorld().spawnParticle(Particle.WITCH, ring.get(loc).clone().add(0, rise, 0), 1, 0, 0, 0, 0);
-                        height.getWorld().spawnParticle(Particle.WITCH, ringReverse.get(loc).clone().add(0, rise, 0), 1, 0, 0, 0, 0);
+                        final double rise = lifeSpan * .04;
+                        height.getWorld().spawnParticle(Particle.HEART, ring.get(loc).clone().add(0, rise, 0), 1, 0, 0, 0, 0);
+                        height.getWorld().spawnParticle(Particle.HEART, ringReverse.get(loc).clone().add(0, rise, 0), 1, 0, 0, 0, 0);
                         loc++;
                         lifeSpan++;
                         height.add(0, .04, 0);
@@ -1042,8 +1041,8 @@ public class Particles implements ParticleControl {
 
         locations.put(id, new FoliaScheduler(this.plugin, location) {
             Location l = location.clone().add(.5, 0, .5);
-            final List<Location> ring = getCircle(location, 2, 50);
-            final List<Location> ringReverse = getCircleReverse(location, 2, 50);
+            final List<Location> ring = getCircle(l, 2, 50);
+            final List<Location> ringReverse = getCircleReverse(l, 2, 50);
 
             void startLoveWell(final Location location) {
                 final int num = random.nextInt(Integer.MAX_VALUE);
