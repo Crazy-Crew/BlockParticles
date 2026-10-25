@@ -18,10 +18,9 @@ import java.util.Random;
 public class Particles implements ParticleControl {
 
     private final BlockParticles plugin = BlockParticles.getPlugin();
-    private final Server server = plugin.getServer();
-    
+
     private final Map<String, ScheduledTask> locations = new HashMap<>();
-    private final int range = 25;
+    private static final int range = 25;
     private final Random random = new Random();
     
     private Location randomDrop(Location location) {
@@ -31,7 +30,7 @@ public class Particles implements ParticleControl {
     }
     
     private float randomVector() {
-        return (float) -.05 + (float) (Math.random() * ((.05 - -.05)));
+        return -.05f + (float) (Math.random() * ((.05 - -.05)));
     }
 
     @Override
@@ -176,7 +175,7 @@ public class Particles implements ParticleControl {
                         world.spawnParticle(particle, l.clone().add(-.65, 0, .65), amount, 0, 0, 0, 0);
                     }
 
-                    case 0 -> {
+                    default -> {
                         world.spawnParticle(particle, l.clone().add(.75, 0, -.43), amount, 0, 0, 0, 0);
                         world.spawnParticle(particle, l.clone().add(-.75, 0, .43), amount, 0, 0, 0, 0);
                         time = 16;
@@ -216,7 +215,7 @@ public class Particles implements ParticleControl {
                     case 3 -> world.spawnParticle(particle, l.clone().add(0, 0, -.8), amount, 0, 0, 0, 0);
                     case 2 -> world.spawnParticle(particle, l.clone().add(.43, 0, -.75), amount, 0, 0, 0, 0);
                     case 1 -> world.spawnParticle(particle, l.clone().add(.65, 0, -.65), amount, 0, 0, 0, 0);
-                    case 0 -> {
+                    default -> {
                         world.spawnParticle(particle, l.clone().add(.75, 0, -.43), amount, 0, 0, 0, 0);
                         time = 16;
                     }
@@ -423,13 +422,11 @@ public class Particles implements ParticleControl {
                 if (noPlayers(l.clone(), range)) return;
                 int i = time;
 
-                switch (time) {
-                    case 15 -> {
-                        world.spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, randomColor());
-                        time = -1;
-                    }
-
-                    case 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 -> world.spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, randomColor());
+                if (time == 15) {
+                    world.spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, randomColor());
+                    time = -1;
+                } else {
+                    world.spawnParticle(Particle.NOTE, locs.get(i), 1, 0, 0, 0, randomColor());
                 }
 
                 time++;
@@ -779,7 +776,7 @@ public class Particles implements ParticleControl {
     }
     
     public void playSoulWell(final Location location, final String id) {
-        final HashMap<Integer, ScheduledTask> S = new HashMap<>();
+        final HashMap<Integer, ScheduledTask> scheduledTaskHashMap = new HashMap<>();
 
         locations.put(id, new FoliaScheduler(this.plugin, location) {
             final Location l = location.clone().add(.5, 0, .5);
@@ -787,7 +784,7 @@ public class Particles implements ParticleControl {
             void startSoulWell(final Location location, final String id) {
                 final int num = random.nextInt(Integer.MAX_VALUE);
 
-                S.put(num, new FoliaScheduler(plugin, location) {
+                scheduledTaskHashMap.put(num, new FoliaScheduler(plugin, location) {
                     final Location height = location.clone();
                     int loc = 0;
                     int lifeSpan = 0;
@@ -803,8 +800,8 @@ public class Particles implements ParticleControl {
                         height.add(0, .035, 0);
                         if (loc == 50) loc = 0;
                         if (lifeSpan == 75) {
-                            S.get(num).cancel();
-                            S.remove(num);
+                            scheduledTaskHashMap.get(num).cancel();
+                            scheduledTaskHashMap.remove(num);
                         }
                     }
                 }.runAtFixedRate(0, 1));
@@ -819,14 +816,14 @@ public class Particles implements ParticleControl {
     }
     
     public void playBigSoulWell(final Location location, final String id) {
-        final HashMap<Integer, ScheduledTask> S = new HashMap<>();
+        final HashMap<Integer, ScheduledTask> scheduledTaskHashMap = new HashMap<>();
 
         locations.put(id, new FoliaScheduler(this.plugin, location) {
             final Location l = location.clone().add(.5, 0, .5);
 
             void startBigSoulWell(final Location location, final String id) {
                 final int num = random.nextInt(Integer.MAX_VALUE);
-                S.put(num, new FoliaScheduler(plugin, location) {
+                scheduledTaskHashMap.put(num, new FoliaScheduler(plugin, location) {
                     final Location height = location.clone();
                     int loc = 0;
                     int lifeSpan = 0;
@@ -842,8 +839,8 @@ public class Particles implements ParticleControl {
                         height.add(0, .04, 0);
                         if (loc == 75) loc = 0;
                         if (lifeSpan == 105) {
-                            S.get(num).cancel();
-                            S.remove(num);
+                            scheduledTaskHashMap.get(num).cancel();
+                            scheduledTaskHashMap.remove(num);
                         }
                     }
                 }.runAtFixedRate(0, 1));
@@ -858,14 +855,14 @@ public class Particles implements ParticleControl {
     }
     
     public void playFlameWheel(final Location location, final String id) {
-        final HashMap<Integer, ScheduledTask> S = new HashMap<>();
+        final HashMap<Integer, ScheduledTask> scheduledTaskHashMap = new HashMap<>();
 
         locations.put(id, new FoliaScheduler(this.plugin, location) {
             final Location l = location.clone().add(.5, .1, .5);
 
             void startFlameWheel(final Location location) {
                 final int num = random.nextInt(Integer.MAX_VALUE);
-                S.put(num, new FoliaScheduler(plugin, location) {
+                scheduledTaskHashMap.put(num, new FoliaScheduler(plugin, location) {
                     final Location l = location.clone();
                     int i = 0;
                     int o = 74;
@@ -878,7 +875,7 @@ public class Particles implements ParticleControl {
                     public void run() {
                         ArrayList<Location> locs = getCircle(l, 3.5, 75);
                         ArrayList<Location> locs2 = getCircleReverse(l, 3.5, 75);
-                        float speed = (float) .15;
+                        float speed = .15f;
                         Vector v = locs.get(i).toVector().subtract(l.toVector()).normalize();
                         Vector v2 = locs2.get(i).toVector().subtract(l.toVector()).normalize();
                         Vector v3 = locs.get(o).toVector().subtract(l.toVector()).normalize();
@@ -903,8 +900,8 @@ public class Particles implements ParticleControl {
                         if (i == 75) i = 0;
                         if (o == 0) o = 74;
                         if (f == 105) {
-                            S.get(num).cancel();
-                            S.remove(num);
+                            scheduledTaskHashMap.get(num).cancel();
+                            scheduledTaskHashMap.remove(num);
                         }
                     }
                 }.runAtFixedRate(0, 1));
@@ -919,14 +916,14 @@ public class Particles implements ParticleControl {
     }
     
     public void playWitchTornado(final Location location, final String id) {
-        final HashMap<Integer, ScheduledTask> S = new HashMap<>();
+        final HashMap<Integer, ScheduledTask> scheduledTaskHashMap = new HashMap<>();
 
         locations.put(id, new FoliaScheduler(this.plugin, location) {
             final Location l = location.clone().add(.5, .1, .5);
 
             void startWitchTornado(final Location location) {
                 final int num = random.nextInt(Integer.MAX_VALUE);
-                S.put(num, new FoliaScheduler(plugin, location) {
+                scheduledTaskHashMap.put(num, new FoliaScheduler(plugin, location) {
                     final Location height = location.clone().add(0, 5, 0);
                     int nextLocation = 0;
                     int diameterSwitch = 0;
@@ -947,8 +944,8 @@ public class Particles implements ParticleControl {
                             radius = radius - .05; //Controls how far it goes in.
                         }
                         if (lifeSpan == 207) { //Controls how far the particle effect go down.
-                            S.get(num).cancel();
-                            S.remove(num);
+                            scheduledTaskHashMap.get(num).cancel();
+                            scheduledTaskHashMap.remove(num);
                         }
                     }
                 }.runAtFixedRate(0, 1));
@@ -963,14 +960,14 @@ public class Particles implements ParticleControl {
     }
     
     public void playLoveTornado(final Location location, final String id) {
-        final HashMap<Integer, ScheduledTask> S = new HashMap<>();
+        final HashMap<Integer, ScheduledTask> scheduledTaskHashMap = new HashMap<>();
 
         locations.put(id, new FoliaScheduler(this.plugin, location) {
             final Location l = location.clone().add(.5, 0, .5);
 
             void startLoveTornado(final Location location) {
                 final int num = random.nextInt(Integer.MAX_VALUE);
-                S.put(num, new FoliaScheduler(plugin, location) {
+                scheduledTaskHashMap.put(num, new FoliaScheduler(plugin, location) {
 
                     final Location height = location.clone().add(0, 5, 0);
                     int diameterShrink = 0;
@@ -992,8 +989,8 @@ public class Particles implements ParticleControl {
                             radius = radius - .05; //Controls how far it goes in.
                         }
                         if (lifeSpan == 207) { //Controls how far the particle effect go down.
-                            S.get(num).cancel();
-                            S.remove(num);
+                            scheduledTaskHashMap.get(num).cancel();
+                            scheduledTaskHashMap.remove(num);
                         }
                     }
                 }.runAtFixedRate(0, 1));
@@ -1008,14 +1005,14 @@ public class Particles implements ParticleControl {
     }
     
     public void playBigLoveWell(final Location location, final String id) {
-        final HashMap<Integer, ScheduledTask> S = new HashMap<>();
+        final HashMap<Integer, ScheduledTask> scheduledTaskHashMap = new HashMap<>();
 
         locations.put(id, new FoliaScheduler(this.plugin, location) {
             final Location l = location.clone().add(.5, 0, .5);
 
             void startBigLoveWell(final Location location) {
                 final int num = random.nextInt(Integer.MAX_VALUE);
-                S.put(num, new FoliaScheduler(plugin, location) {
+                scheduledTaskHashMap.put(num, new FoliaScheduler(plugin, location) {
                     final Location height = location.clone();
                     int loc = 0;
                     int lifeSpan = 0;
@@ -1031,8 +1028,8 @@ public class Particles implements ParticleControl {
                         height.add(0, .04, 0);
                         if (loc == 75) loc = 0;
                         if (lifeSpan == 105) {
-                            S.get(num).cancel();
-                            S.remove(num);
+                            scheduledTaskHashMap.get(num).cancel();
+                            scheduledTaskHashMap.remove(num);
                         }
                     }
                 }.runAtFixedRate(0, 1));
@@ -1047,14 +1044,14 @@ public class Particles implements ParticleControl {
     }
     
     public void playLoveWell(final Location location, final String id) {
-        final HashMap<Integer, ScheduledTask> S = new HashMap<>();
+        final HashMap<Integer, ScheduledTask> scheduledTaskHashMap = new HashMap<>();
 
         locations.put(id, new FoliaScheduler(this.plugin, location) {
             Location l = location.clone().add(.5, 0, .5);
 
             void startLoveWell(final Location location) {
                 final int num = random.nextInt(Integer.MAX_VALUE);
-                S.put(num, new FoliaScheduler(plugin, location) {
+                scheduledTaskHashMap.put(num, new FoliaScheduler(plugin, location) {
                     final Location height = location.clone();
                     int loc = 0;
                     int lifeSpan = 0;
@@ -1070,8 +1067,8 @@ public class Particles implements ParticleControl {
                         height.add(0, .035, 0);
                         if (loc == 50) loc = 0;
                         if (lifeSpan == 75) {
-                            S.get(num).cancel();
-                            S.remove(num);
+                            scheduledTaskHashMap.get(num).cancel();
+                            scheduledTaskHashMap.remove(num);
                         }
                     }
                 }.runAtFixedRate(0, 1));

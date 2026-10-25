@@ -8,9 +8,7 @@ import com.ryderbelserion.fusion.paper.scheduler.FoliaScheduler;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.Server;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -27,8 +25,6 @@ import java.util.concurrent.ThreadLocalRandom;
 public class FountainListener implements Listener {
 
     private static final BlockParticles plugin = BlockParticles.getPlugin();
-
-    private static final Server server = plugin.getServer();
 
     private static final ParticleManager particleManager = plugin.getParticleManager();
     
@@ -175,7 +171,7 @@ public class FountainListener implements Listener {
             "f5612dc7b86d71afc1197301c15fd979e9f39e7b1f41d8f1ebdf8115576e2e");
     
     private static float randomVector() {
-        return (float) -.1 + (float) (Math.random() * ((.1 - -.1)));
+        return -.1f + (float) (Math.random() * (.1 + .1));
     }
     
     public static void startCustomFountain(Location loc, String id, String fountainName) {
@@ -197,7 +193,7 @@ public class FountainListener implements Listener {
                             particleManager.removeFountainItem(headItem);
                             headItem.remove();
                         }
-                    }.runDelayed(2 * 20);
+                    }.runDelayed(40);
                 }
             }
         }.runAtFixedRate(0, 3));
@@ -214,28 +210,28 @@ public class FountainListener implements Listener {
 
                 final Item fleshItem = loc.getWorld().dropItem(loc.clone().add(.5, 1, .5), flesh);
 
-                fleshItem.customName(Component.text(new Random().nextInt(Integer.MAX_VALUE)));
+                fleshItem.customName(Component.text(random.nextInt(Integer.MAX_VALUE)));
                 fleshItem.setCustomNameVisible(false);
                 fleshItem.setCanMobPickup(false);
                 fleshItem.setCanPlayerPickup(false);
 
                 final Item redstoneItem = loc.getWorld().dropItem(loc.clone().add(.5, 1, .5), redstone);
 
-                redstoneItem.customName(Component.text(new Random().nextInt(Integer.MAX_VALUE)));
+                redstoneItem.customName(Component.text(random.nextInt(Integer.MAX_VALUE)));
                 redstoneItem.setCustomNameVisible(false);
                 redstoneItem.setCanMobPickup(false);
                 redstoneItem.setCanPlayerPickup(false);
 
                 final Item boneItem = loc.getWorld().dropItem(loc.clone().add(.5, 1, .5), bone);
 
-                boneItem.customName(Component.text(new Random().nextInt(Integer.MAX_VALUE)));
+                boneItem.customName(Component.text(random.nextInt(Integer.MAX_VALUE)));
                 boneItem.setCustomNameVisible(false);
                 boneItem.setCanMobPickup(false);
                 boneItem.setCanPlayerPickup(false);
 
                 final Item pumpkinItem = loc.getWorld().dropItem(loc.clone().add(.5, 1, .5), pumpkin);
 
-                pumpkinItem.customName(Component.text(new Random().nextInt(Integer.MAX_VALUE)));
+                pumpkinItem.customName(Component.text(random.nextInt(Integer.MAX_VALUE)));
                 pumpkinItem.setCustomNameVisible(false);
                 pumpkinItem.setCanMobPickup(false);
                 pumpkinItem.setCanPlayerPickup(false);
@@ -261,7 +257,7 @@ public class FountainListener implements Listener {
                         particleManager.removeFountainItem(pumpkinItem);
                         pumpkinItem.remove();
                     }
-                }.runDelayed(2 * 20);
+                }.runDelayed(40);
             }
         }.runAtFixedRate(0, 2));
     }
@@ -276,21 +272,21 @@ public class FountainListener implements Listener {
 
                 final Item emeraldItem = loc.getWorld().dropItem(loc.clone().add(.5, 1, .5), emerald);
 
-                emeraldItem.customName(Component.text(new Random().nextInt(Integer.MAX_VALUE)));
+                emeraldItem.customName(Component.text(random.nextInt(Integer.MAX_VALUE)));
                 emeraldItem.setCustomNameVisible(false);
                 emeraldItem.setCanMobPickup(false);
                 emeraldItem.setCanPlayerPickup(false);
 
                 final Item diamondItem = loc.getWorld().dropItem(loc.clone().add(.5, 1, .5), diamond);
 
-                diamondItem.customName(Component.text(new Random().nextInt(Integer.MAX_VALUE)));
+                diamondItem.customName(Component.text(random.nextInt(Integer.MAX_VALUE)));
                 diamondItem.setCustomNameVisible(false);
                 diamondItem.setCanMobPickup(false);
                 diamondItem.setCanPlayerPickup(false);
 
                 final Item goldItem = loc.getWorld().dropItem(loc.clone().add(.5, 1, .5), gold);
 
-                goldItem.customName(Component.text(new Random().nextInt(Integer.MAX_VALUE)));
+                goldItem.customName(Component.text(random.nextInt(Integer.MAX_VALUE)));
                 goldItem.setCustomNameVisible(false);
                 goldItem.setCanMobPickup(false);
                 goldItem.setCanPlayerPickup(false);
@@ -312,7 +308,7 @@ public class FountainListener implements Listener {
                         particleManager.removeFountainItem(goldItem);
                         goldItem.remove();
                     }
-                }.runDelayed(2 * 20);
+                }.runDelayed(40);
             }
         }.runAtFixedRate(0, 2));
     }
@@ -321,8 +317,7 @@ public class FountainListener implements Listener {
         particleManager.getParticleControl().getLocations().put(id, new FoliaScheduler(plugin, loc) {
             @Override
             public void run() {
-                int radius = 10;
-                for (Entity entity : getNearbyEntities(loc.clone(), radius, radius, radius)) {
+                for (Entity entity : loc.getNearbyPlayers(10)) {
                     if (entity instanceof Player player) {
                         final Item head = loc.getWorld().dropItem(loc.clone().add(.5, .8, .5), HeadDatabaseHook.getPlayerHead(player.getName()));
                         head.setVelocity(new Vector(randomVector(), .01, randomVector()));
@@ -334,7 +329,7 @@ public class FountainListener implements Listener {
                                 particleManager.removeFountainItem(head);
                                 head.remove();
                             }
-                        }.runDelayed(2 * 20);
+                        }.runDelayed(40);
                     }
                 }
             }
@@ -356,7 +351,7 @@ public class FountainListener implements Listener {
                             particleManager.removeFountainItem(headItem);
                             headItem.remove();
                         }
-                    }.runDelayed(2 * 20);
+                    }.runDelayed(40);
                 }
             }
         }.runAtFixedRate(0, 3));
@@ -377,7 +372,7 @@ public class FountainListener implements Listener {
                             particleManager.removeFountainItem(headItem);
                             headItem.remove();
                         }
-                    }.runDelayed(2 * 20);
+                    }.runDelayed(40);
                 }
             }
         }.runAtFixedRate(0, 3));
@@ -398,7 +393,7 @@ public class FountainListener implements Listener {
                             particleManager.removeFountainItem(headItem);
                             headItem.remove();
                         }
-                    }.runDelayed(2 * 20);
+                    }.runDelayed(40);
                 }
             }
         }.runAtFixedRate(0, 3));
@@ -419,7 +414,7 @@ public class FountainListener implements Listener {
                             particleManager.removeFountainItem(headItem);
                             headItem.remove();
                         }
-                    }.runDelayed(2 * 20);
+                    }.runDelayed(40);
                 }
             }
         }.runAtFixedRate(0, 3));
@@ -439,7 +434,7 @@ public class FountainListener implements Listener {
                             particleManager.removeFountainItem(headItem);
                             headItem.remove();
                         }
-                    }.runDelayed(2 * 20);
+                    }.runDelayed(40);
                 }
             }
         }.runAtFixedRate(0, 3));
@@ -461,15 +456,6 @@ public class FountainListener implements Listener {
             pickedHeads.add(headList.get(p));
         }
         return pickedHeads;
-    }
-    
-    @SuppressWarnings("deprecation")
-    private static List<Entity> getNearbyEntities(Location loc, double x, double y, double z) {
-        if (loc == null || loc.getWorld() == null) return new ArrayList<>();
-        FallingBlock ent = loc.getWorld().spawnFallingBlock(loc.subtract(0, 1, 0), Material.TRIPWIRE, (byte) 0);
-        List<Entity> out = ent.getNearbyEntities(x, y, z);
-        ent.remove();
-        return out;
     }
     
     @EventHandler
