@@ -182,6 +182,7 @@ public class FountainListener implements Listener {
         particleManager.getParticleControl().getLocations().put(id, new FoliaScheduler(plugin, loc) {
             @Override
             public void run() {
+                if (noPlayers(loc)) return;
                 for (ItemStack head : getRandomCustomHead(fountain.getHeads())) {
                     final Item headItem = loc.getWorld().dropItem(loc.clone().add(.5, .8, .5), head);
                     headItem.setVelocity(new Vector(randomVector(), .01, randomVector()));
@@ -203,6 +204,7 @@ public class FountainListener implements Listener {
         particleManager.getParticleControl().getLocations().put(id, new FoliaScheduler(plugin, loc) {
             @Override
             public void run() {
+                if (noPlayers(loc)) return;
                 ItemStack flesh = new ItemStack(Material.ROTTEN_FLESH);
                 ItemStack redstone = new ItemStack(Material.REDSTONE);
                 ItemStack bone = new ItemStack(Material.BONE);
@@ -266,6 +268,7 @@ public class FountainListener implements Listener {
         particleManager.getParticleControl().getLocations().put(id, new FoliaScheduler(plugin, loc) {
             @Override
             public void run() {
+                if (noPlayers(loc)) return;
                 ItemStack emerald = new ItemStack(Material.EMERALD);
                 ItemStack diamond = new ItemStack(Material.DIAMOND);
                 ItemStack gold = new ItemStack(Material.GOLD_INGOT);
