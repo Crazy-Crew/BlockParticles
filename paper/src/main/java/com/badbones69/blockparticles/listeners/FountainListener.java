@@ -15,10 +15,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+
+import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class FountainListener implements Listener {
@@ -453,7 +451,7 @@ public class FountainListener implements Listener {
         }
         return pickedHeads;
     }
-    
+
     private static List<ItemStack> getRandomCustomHead(List<ItemStack> headList) {
         List<ItemStack> pickedHeads = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
