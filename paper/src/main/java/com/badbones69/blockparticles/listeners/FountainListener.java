@@ -427,7 +427,7 @@ public class FountainListener implements Listener {
                 for (String head : getRandomHeads(marioHeads)) {
                     final Item headItem = loc.getWorld().dropItem(loc.clone().add(.5, .8, .5), HeadDatabaseHook.getPlayerHead(head));
                     headItem.setVelocity(new Vector(randomVector(), .01, randomVector()));
-
+                    particleManager.addFountainItem(headItem); 
                     new FoliaScheduler(plugin, loc) {
                         @Override
                         public void run() {
