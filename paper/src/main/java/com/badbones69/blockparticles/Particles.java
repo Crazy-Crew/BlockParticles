@@ -811,8 +811,8 @@ public class Particles implements ParticleControl {
 
         locations.put(id, new FoliaScheduler(this.plugin, location) {
             final Location l = location.clone().add(.5, 0, .5);
-            final List<Location> ring = getCircle(l, 2, 75);
-            final List<Location> ringReverse = getCircleReverse(l, 2, 75);
+            final List<Location> ring = getCircle(l, 3.5, 75);
+            final List<Location> ringReverse = getCircleReverse(l, 3.5, 75);
 
             void startBigSoulWell(final Location location, final String id) {
                 final int num = random.nextInt(Integer.MAX_VALUE);
@@ -1001,8 +1001,8 @@ public class Particles implements ParticleControl {
 
         locations.put(id, new FoliaScheduler(this.plugin, location) {
             final Location l = location.clone().add(.5, 0, .5);
-            final List<Location> ring = getCircle(l, 2, 75);
-            final List<Location> ringReverse = getCircleReverse(l, 2, 75);
+            final List<Location> ring = getCircle(l, 3.5, 75);
+            final List<Location> ringReverse = getCircleReverse(l, 3.5, 75);
 
             void startBigLoveWell(final Location location) {
                 final int num = random.nextInt(Integer.MAX_VALUE);
