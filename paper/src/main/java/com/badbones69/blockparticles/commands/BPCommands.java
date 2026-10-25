@@ -1,12 +1,12 @@
 package com.badbones69.blockparticles.commands;
 
 import com.badbones69.blockparticles.BlockParticles;
-import com.badbones69.blockparticles.api.builders.types.MainMenu;
-import com.badbones69.blockparticles.api.enums.Files;
-import com.badbones69.blockparticles.api.enums.particles.ParticleType;
-import com.badbones69.blockparticles.api.enums.particles.CustomParticles;
 import com.badbones69.blockparticles.Methods;
 import com.badbones69.blockparticles.api.ParticleManager;
+import com.badbones69.blockparticles.api.builders.types.MainMenu;
+import com.badbones69.blockparticles.api.enums.Files;
+import com.badbones69.blockparticles.api.enums.particles.CustomParticles;
+import com.badbones69.blockparticles.api.enums.particles.ParticleType;
 import com.ryderbelserion.fusion.paper.files.PaperFileManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -21,7 +21,7 @@ public class BPCommands implements CommandExecutor {
     private final PaperFileManager fileManager = this.plugin.getFileManager();
 
     private final ParticleManager particleManager = this.plugin.getParticleManager();
-    
+
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String commandLabel, String[] args) {
         if (hasPermission(sender)) {
@@ -128,7 +128,7 @@ public class BPCommands implements CommandExecutor {
 
         return false;
     }
-    
+
     private boolean hasPermission(CommandSender sender) {
         if (sender instanceof Player) {
             return sender.hasPermission("bparticles." + "admin");
@@ -136,4 +136,5 @@ public class BPCommands implements CommandExecutor {
             return true;
         }
     }
+
 }

@@ -12,6 +12,7 @@ import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Entity;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -25,7 +26,6 @@ public class ParticleManager {
     private final List<CustomFountain> customFountains = new ArrayList<>();
     private ParticleControl particleControl;
 
-    
     public void load() {
         if (this.particleControl != null) {
             // cancel all tasks
@@ -50,15 +50,15 @@ public class ParticleManager {
             this.customFountains.add(new CustomFountain(customFountain, config.getStringList("settings.heads." + customFountain)));
         }
     }
-    
+
     public ParticleControl getParticleControl() {
         return particleControl;
     }
-    
+
     public List<CustomFountain> getCustomFountains() {
         return customFountains;
     }
-    
+
     public CustomFountain getCustomFountain(String name) {
         for (CustomFountain fountain : customFountains) {
             if (fountain.getName().equalsIgnoreCase(name)) {
@@ -67,7 +67,7 @@ public class ParticleManager {
         }
         return null;
     }
-    
+
     public boolean hasParticle(Location loc) {
         FileConfiguration data = Files.data.getConfiguration();
 
@@ -101,19 +101,19 @@ public class ParticleManager {
 
         return hasLocation;
     }
-    
+
     public Set<Entity> getFountainItem() {
         return fountainItems;
     }
-    
+
     public void addFountainItem(Entity item) {
         fountainItems.add(item);
     }
-    
+
     public void removeFountainItem(Entity item) {
         fountainItems.remove(item);
     }
-    
+
     /**
      * Set a Particle to a specified Location;
      *
@@ -267,7 +267,7 @@ public class ParticleManager {
                 break;
         }
     }
-    
+
     /**
      * Remove a Particle;
      *
@@ -279,4 +279,5 @@ public class ParticleManager {
             this.particleControl.getLocations().remove(name);
         }
     }
+
 }

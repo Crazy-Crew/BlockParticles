@@ -18,13 +18,13 @@ public class Particles implements ParticleControl {
     private final Random random = new Random();
     private static final Particle.DustOptions RED = new Particle.DustOptions(Color.RED, 1);
     private static final Particle.DustOptions WHITE = new Particle.DustOptions(Color.WHITE, 1);
-    
+
     private Location randomDrop(Location location) {
         double x = random.nextInt(100) / 100.0 - .50;
         double z = random.nextInt(100) / 100.0 - .50;
         return location.add(x, 0, z);
     }
-    
+
     private float randomVector() {
         return -.05f + (float) (Math.random() * ((.05 - -.05)));
     }
@@ -48,7 +48,7 @@ public class Particles implements ParticleControl {
             }
         }.runAtFixedRate(0, 4));
     }
-    
+
     public void playBigFlame(final Location location, String id) {
         locations.put(id, new FoliaScheduler(this.plugin, location) {
             final Location l = location.clone().add(.5, .1, .5);
@@ -65,7 +65,7 @@ public class Particles implements ParticleControl {
             }
         }.runAtFixedRate(0, 5));
     }
-    
+
     public void playFlame(final Location location, String id) {
         locations.put(id, new FoliaScheduler(this.plugin, location) {
             final Location l = location.add(.5, .1, .5);
@@ -82,7 +82,7 @@ public class Particles implements ParticleControl {
             }
         }.runAtFixedRate(0, 5));
     }
-    
+
     public void playDoubleSpiral(final Location location, String id, CustomParticles customParticles, int amount) {
         locations.put(id, new FoliaScheduler(this.plugin, location) {
             final Location l = location.add(.5, .7, .5);
@@ -182,7 +182,7 @@ public class Particles implements ParticleControl {
             }
         }.runAtFixedRate(0, 2));
     }
-    
+
     public void playSpiral(final Location location, String id, CustomParticles customParticles, int amount) {
         locations.put(id, new FoliaScheduler(this.plugin, location) {
             final Location l = location.add(.5, .7, .5);
@@ -221,7 +221,7 @@ public class Particles implements ParticleControl {
             }
         }.runAtFixedRate(0, 2));
     }
-    
+
     public void playCrit(final Location location, String id) {
         locations.put(id, new FoliaScheduler(this.plugin, location) {
             final Location l = location.add(.5, 1.1, .5);
@@ -235,7 +235,7 @@ public class Particles implements ParticleControl {
             }
         }.runAtFixedRate(0, 2));
     }
-    
+
     public void playBigCrit(final Location location, String id) {
         locations.put(id, new FoliaScheduler(this.plugin, location) {
             final Location l = location.add(.5, .5, .5);
@@ -250,7 +250,7 @@ public class Particles implements ParticleControl {
             }
         }.runAtFixedRate(0, 2));
     }
-    
+
     public void playStorm(final Location location, String id) {
         locations.put(id, new FoliaScheduler(this.plugin, location) {
             final Location l = location.add(.5, 2, .5);
@@ -265,7 +265,7 @@ public class Particles implements ParticleControl {
             }
         }.runAtFixedRate(0, 2));
     }
-    
+
     public void playFog(final Location location, String id) {
         locations.put(id, new FoliaScheduler(this.plugin, location) {
             final Location l = location.add(.5, .5, .5);
@@ -279,7 +279,7 @@ public class Particles implements ParticleControl {
             }
         }.runAtFixedRate(0, 2));
     }
-    
+
     public void playEnchant(final Location location, String id) {
         locations.put(id, new FoliaScheduler(this.plugin, location) {
             final Location l = location.add(.5, 1.5, .5);
@@ -293,7 +293,7 @@ public class Particles implements ParticleControl {
             }
         }.runAtFixedRate(0, 2));
     }
-    
+
     public void playChains(final Location location, String id) {
         locations.put(id, new FoliaScheduler(this.plugin, location) {
             final Location l = location.add(.5, .1, .5);
@@ -337,7 +337,7 @@ public class Particles implements ParticleControl {
             }
         }.runAtFixedRate(0, 5));
     }
-    
+
     public void playFireStorm(final Location location, String id) {
         locations.put(id, new FoliaScheduler(this.plugin, location) {
             final Location l = location.add(.5, 2, .5);
@@ -360,7 +360,7 @@ public class Particles implements ParticleControl {
             }
         }.runAtFixedRate(0, 2));
     }
-    
+
     public void playSnow(final Location location, String id) {
         locations.put(id, new FoliaScheduler(this.plugin, location) {
             final Location l = location.add(.5, 2, .5);
@@ -374,7 +374,7 @@ public class Particles implements ParticleControl {
             }
         }.runAtFixedRate(0, 2));
     }
-    
+
     public void playSpew(final Location location, String id) {
         locations.put(id, new FoliaScheduler(this.plugin, location) {
             final Location l = location.add(.5, 1, .5);
@@ -388,7 +388,7 @@ public class Particles implements ParticleControl {
             }
         }.runAtFixedRate(0, 2));
     }
-    
+
     public void playPotion(final Location location, String id) {
         locations.put(id, new FoliaScheduler(this.plugin, location) {
             final Location l = location.add(.5, .2, .5);
@@ -404,7 +404,7 @@ public class Particles implements ParticleControl {
             }
         }.runAtFixedRate(0, 2));
     }
-    
+
     public void playMusic(final Location location, String id) {
         locations.put(id, new FoliaScheduler(this.plugin, location) {
             final Location l = location.add(.5, .2, .5);
@@ -429,7 +429,7 @@ public class Particles implements ParticleControl {
             }
         }.runAtFixedRate(0, 2));
     }
-    
+
     public void playMagic(final Location location, String id) {
         locations.put(id, new FoliaScheduler(this.plugin, location) {
             final Location l = location.add(.5, .5, .5);
@@ -527,7 +527,7 @@ public class Particles implements ParticleControl {
             }
         }.runAtFixedRate(0, 2));
     }
-    
+
     public void playSnowStorm(final Location location, String id) {
         locations.put(id, new FoliaScheduler(this.plugin, location) {
             final Location l = location.add(.5, 2, .5);
@@ -542,7 +542,7 @@ public class Particles implements ParticleControl {
             }
         }.runAtFixedRate(0, 2));
     }
-    
+
     public void playFireSpew(final Location location, String id) {
         locations.put(id, new FoliaScheduler(this.plugin, location) {
             final Location l = location.add(.5, 1, .5);
@@ -558,7 +558,7 @@ public class Particles implements ParticleControl {
             }
         }.runAtFixedRate(0, 2));
     }
-    
+
     public void playFootPrint(final Location location, String id) {
         locations.put(id, new FoliaScheduler(this.plugin, location) {
             final Location l = location.add(.5, .1, .5);
@@ -572,7 +572,7 @@ public class Particles implements ParticleControl {
             }
         }.runAtFixedRate(0, 20));
     }
-    
+
     public void playHappyVillager(final Location location, String id) {
         locations.put(id, new FoliaScheduler(this.plugin, location) {
             final Location l = location.add(.5, .1, .5);
@@ -586,7 +586,7 @@ public class Particles implements ParticleControl {
             }
         }.runAtFixedRate(0, 5));
     }
-    
+
     public void playAngryVillager(final Location location, String id) {
         locations.put(id, new FoliaScheduler(this.plugin, location) {
             final Location l = location.add(.5, .1, .5);
@@ -600,7 +600,7 @@ public class Particles implements ParticleControl {
             }
         }.runAtFixedRate(0, 10));
     }
-    
+
     public void playMobSpawner(final Location location, String id) {
         locations.put(id, new FoliaScheduler(this.plugin, location) {
             final Location l = location.add(.5, .1, .5);
@@ -614,7 +614,7 @@ public class Particles implements ParticleControl {
             }
         }.runAtFixedRate(0, 8));
     }
-    
+
     public void startWater(final Location location, String id) {
         locations.put(id, new FoliaScheduler(this.plugin, location) {
             final Location l = location.add(.5, .8, .6);
@@ -633,7 +633,7 @@ public class Particles implements ParticleControl {
             }
         }.runAtFixedRate(0, 2));
     }
-    
+
     public void playEnderSignal(final Location location, String id) {
         locations.put(id, new FoliaScheduler(this.plugin, location) {
             final Location l = location.add(.5, 0, .5);
@@ -650,7 +650,7 @@ public class Particles implements ParticleControl {
             }
         }.runAtFixedRate(0, 8));
     }
-    
+
     public void playRainbow(final Location location, String id) {
         locations.put(id, new FoliaScheduler(this.plugin, location) {
             final Location l = location.add(.5, .1, .5);
@@ -668,7 +668,7 @@ public class Particles implements ParticleControl {
             }
         }.runAtFixedRate(0, 5));
     }
-    
+
     public void playSnowBlast(final Location location, String id) {
         locations.put(id, new FoliaScheduler(this.plugin, location) {
             final Location l = location.add(.5, .5, .5);
@@ -682,7 +682,7 @@ public class Particles implements ParticleControl {
             }
         }.runAtFixedRate(0, 2));
     }
-    
+
     public void playHalo(final Location location, String id) {
         locations.put(id, new FoliaScheduler(this.plugin, location) {
             final Location l = location.add(.5, 1.3, .5);
@@ -717,11 +717,13 @@ public class Particles implements ParticleControl {
             }
         }.runAtFixedRate(0, 5));
     }
-    
+
     public void playSantaHat(final Location location, String id) {
         final Location baseLocation = location.clone().add(.5, 1, .5);
         locations.put(id, new FoliaScheduler(this.plugin, location) {
-            final List<List<Location>> rings = new ArrayList<>(); {
+            final List<List<Location>> rings = new ArrayList<>();
+
+            {
                 final double[] offsetLocation = {0, .05, .10, .15, .20, .25, .30, .35, .40, .50, .55};// The height of the row
                 final double[] offsetParticleRadius = {.5, .4, .35, .3, .2, .15, .1, .05, .05, .05, .05};// How much the row shrinks
                 final int[] offsetParticleAmount = {20, 15, 15, 15, 15, 15, 15, 10, 10, 15, 15};// The amount of particles that spawn
@@ -751,7 +753,7 @@ public class Particles implements ParticleControl {
             }
         }.runAtFixedRate(0, 5));
     }
-    
+
     public void playSoulWell(final Location location, final String id) {
         final HashMap<Integer, ScheduledTask> scheduledTaskHashMap = new HashMap<>();
 
@@ -792,7 +794,7 @@ public class Particles implements ParticleControl {
             }
         }.runAtFixedRate(0, 16));
     }
-    
+
     public void playBigSoulWell(final Location location, final String id) {
         final HashMap<Integer, ScheduledTask> scheduledTaskHashMap = new HashMap<>();
 
@@ -832,7 +834,7 @@ public class Particles implements ParticleControl {
             }
         }.runAtFixedRate(0, 25));
     }
-    
+
     public void playFlameWheel(final Location location, final String id) {
         final HashMap<Integer, ScheduledTask> scheduledTaskHashMap = new HashMap<>();
 
@@ -894,7 +896,7 @@ public class Particles implements ParticleControl {
             }
         }.runAtFixedRate(0, 25));
     }
-    
+
     public void playWitchTornado(final Location location, final String id) {
         final HashMap<Integer, ScheduledTask> scheduledTaskHashMap = new HashMap<>();
 
@@ -938,7 +940,7 @@ public class Particles implements ParticleControl {
             }
         }.runAtFixedRate(0, 30));
     }
-    
+
     public void playLoveTornado(final Location location, final String id) {
         final HashMap<Integer, ScheduledTask> scheduledTaskHashMap = new HashMap<>();
 
@@ -983,7 +985,7 @@ public class Particles implements ParticleControl {
             }
         }.runAtFixedRate(0, 30));
     }
-    
+
     public void playBigLoveWell(final Location location, final String id) {
         final HashMap<Integer, ScheduledTask> scheduledTaskHashMap = new HashMap<>();
 
@@ -1023,7 +1025,7 @@ public class Particles implements ParticleControl {
             }
         }.runAtFixedRate(0, 25));
     }
-    
+
     public void playLoveWell(final Location location, final String id) {
         final HashMap<Integer, ScheduledTask> scheduledTaskHashMap = new HashMap<>();
 
@@ -1063,7 +1065,7 @@ public class Particles implements ParticleControl {
             }
         }.runAtFixedRate(0, 16));
     }
-    
+
     private ArrayList<Location> getCircle(Location center, double radius, int amount) {
         World world = center.getWorld();
         double increment = (2 * Math.PI) / amount;
@@ -1078,7 +1080,7 @@ public class Particles implements ParticleControl {
 
         return locationArrayList;
     }
-    
+
     private ArrayList<Location> getCircleReverse(Location center, double radius, int amount) {
         World world = center.getWorld();
         double increment = (2 * Math.PI) / amount;
@@ -1097,9 +1099,9 @@ public class Particles implements ParticleControl {
     private boolean noPlayers(Location location, int range) {
         return location.getNearbyPlayers(range).isEmpty();
     }
-    
+
     private int randomColor() {
         return random.nextInt(255);
     }
-    
+
 }

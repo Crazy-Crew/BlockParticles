@@ -62,4 +62,5 @@ public abstract class StaticInventoryBuilder extends InventoryBuilder {
     public final Gui getGui() {
         return this.gui;
     }
+
 }

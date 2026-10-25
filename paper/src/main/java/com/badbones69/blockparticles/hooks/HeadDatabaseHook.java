@@ -16,17 +16,17 @@ public class HeadDatabaseHook {
     private static final BlockParticles plugin = BlockParticles.getPlugin();
 
     private static FusionPaper fusion = plugin.getFusion();
-    
+
     private static HeadDatabaseAPI headDatabaseAPI;
 
     private static final Map<String, ItemStack> headCache = new ConcurrentHashMap<>();
-    
+
     public HeadDatabaseHook() {
         if (fusion.isModReady(ModSupport.head_database)) {
             headDatabaseAPI = new HeadDatabaseAPI();
         }
     }
-    
+
     public static ItemStack getHead(String head) {
         if (fusion.isModReady(ModSupport.head_database)) {
             return headDatabaseAPI.getItemHead(head);
@@ -38,4 +38,5 @@ public class HeadDatabaseHook {
     public static ItemStack getPlayerHead(final String playerName) {
         return headCache.computeIfAbsent(playerName, name -> new ItemBuilder(ItemType.PLAYER_HEAD).asSkullBuilder().withName(name).asItemStack());
     }
+
 }

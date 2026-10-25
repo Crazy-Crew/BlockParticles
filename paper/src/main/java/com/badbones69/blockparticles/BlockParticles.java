@@ -13,6 +13,7 @@ import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.ApiStatus;
+
 import java.nio.file.Path;
 import java.util.Locale;
 
@@ -86,4 +87,5 @@ public class BlockParticles extends JavaPlugin {
     public final FusionPaper getFusion() {
         return this.fusion;
     }
+
 }

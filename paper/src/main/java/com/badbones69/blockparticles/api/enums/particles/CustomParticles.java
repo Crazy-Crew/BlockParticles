@@ -3,7 +3,7 @@ package com.badbones69.blockparticles.api.enums.particles;
 import java.util.ArrayList;
 
 public enum CustomParticles {
-    
+
     BIGLOVEWELL("BigLoveWell", ParticleType.PARTICLE),
     LOVEWELL("LoveWell", ParticleType.PARTICLE),
     WITCHTORNADO("WitchTornado", ParticleType.PARTICLE),
@@ -50,15 +50,15 @@ public enum CustomParticles {
     DOUBLESPIRAL("DoubleSpiral", ParticleType.PARTICLE),
     CRIT("Crit", ParticleType.PARTICLE),
     BIGCRIT("BigCrit", ParticleType.PARTICLE);
-    
+
     private final String name;
     private final ParticleType type;
-    
+
     CustomParticles(String name, ParticleType type) {
         this.name = name;
         this.type = type;
     }
-    
+
     /**
      * @param type The ParticleType you want all the Particles From.
      * @return Returns all the Particles in a ParticleType.
@@ -71,14 +71,14 @@ public enum CustomParticles {
 
         return i;
     }
-    
+
     /**
      * Returns the Particle's name in a String.
      */
     public String toString() {
         return name;
     }
-    
+
     /**
      * Returns the Particle's type (Particle/Fountain).
      */
