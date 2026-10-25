@@ -340,6 +340,7 @@ public class FountainListener implements Listener {
         particleManager.getParticleControl().getLocations().put(id, new FoliaScheduler(plugin, loc) {
             @Override
             public void run() {
+                if (noPlayers(loc)) return;
                 for (String head : getRandomHeads(presentHeads)) {
                     final Item headItem = loc.getWorld().dropItem(loc.clone().add(.5, .8, .5), HeadDatabaseHook.getPlayerHead(head));
                     headItem.setVelocity(new Vector(randomVector(), .01, randomVector()));
@@ -361,6 +362,7 @@ public class FountainListener implements Listener {
         particleManager.getParticleControl().getLocations().put(id, new FoliaScheduler(plugin, loc) {
             @Override
             public void run() {
+                if (noPlayers(loc)) return;
                 for (String head : getRandomHeads(mobHeads)) {
                     final Item headItem = loc.getWorld().dropItem(loc.clone().add(.5, .8, .5), HeadDatabaseHook.getPlayerHead(head));
                     headItem.setVelocity(new Vector(randomVector(), .01, randomVector()));
@@ -382,6 +384,7 @@ public class FountainListener implements Listener {
         particleManager.getParticleControl().getLocations().put(id, new FoliaScheduler(plugin, loc) {
             @Override
             public void run() {
+                if (noPlayers(loc)) return;
                 for (String head : getRandomHeads(foodHeads)) {
                     final Item headItem = loc.getWorld().dropItem(loc.clone().add(.5, .8, .5), HeadDatabaseHook.getPlayerHead(head));
                     headItem.setVelocity(new Vector(randomVector(), .01, randomVector()));
@@ -403,6 +406,7 @@ public class FountainListener implements Listener {
         particleManager.getParticleControl().getLocations().put(id, new FoliaScheduler(plugin, loc) {
             @Override
             public void run() {
+                if (noPlayers(loc)) return;
                 for (String head : getRandomHeads(pokemonHeads)) {
                     final Item headItem = loc.getWorld().dropItem(loc.clone().add(.5, .8, .5), HeadDatabaseHook.getPlayerHead(head));
                     headItem.setVelocity(new Vector(randomVector(), .01, randomVector()));
@@ -424,10 +428,11 @@ public class FountainListener implements Listener {
         particleManager.getParticleControl().getLocations().put(id, new FoliaScheduler(plugin, loc) {
             @Override
             public void run() {
+                if (noPlayers(loc)) return;
                 for (String head : getRandomHeads(marioHeads)) {
                     final Item headItem = loc.getWorld().dropItem(loc.clone().add(.5, .8, .5), HeadDatabaseHook.getPlayerHead(head));
                     headItem.setVelocity(new Vector(randomVector(), .01, randomVector()));
-                    particleManager.addFountainItem(headItem); 
+                    particleManager.addFountainItem(headItem);
                     new FoliaScheduler(plugin, loc) {
                         @Override
                         public void run() {
@@ -463,5 +468,9 @@ public class FountainListener implements Listener {
         if (particleManager.getFountainItem().contains(e.getItem())) {
             e.setCancelled(true);
         }
+    }
+
+    private static boolean noPlayers(Location loc) {
+        return loc.getNearbyPlayers(25).isEmpty();
     }
 }
