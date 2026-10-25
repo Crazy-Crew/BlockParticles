@@ -14,12 +14,14 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Entity;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class ParticleManager {
 
     private final BlockParticles plugin = BlockParticles.getPlugin();
 
-    private final List<Entity> fountainItems = new ArrayList<>();
+    private final Set<Entity> fountainItems = ConcurrentHashMap.newKeySet();
     private final List<CustomFountain> customFountains = new ArrayList<>();
     private ParticleControl particleControl;
 
@@ -100,7 +102,7 @@ public class ParticleManager {
         return hasLocation;
     }
     
-    public List<Entity> getFountainItem() {
+    public Set<Entity> getFountainItem() {
         return fountainItems;
     }
     
