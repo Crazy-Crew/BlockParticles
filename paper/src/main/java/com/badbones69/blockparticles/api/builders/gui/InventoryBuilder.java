@@ -19,4 +19,5 @@ public abstract class InventoryBuilder {
     public final String parse(final Player player, final String title) {
         return this.fusion.papi(player, title);
     }
+
 }

@@ -1,4 +1,10 @@
-- Fixed an issue with custom names appearing for specific fountains when they shouldn't
-  - These were used to make them not stack.
-- Items should no longer be able to be picked up by players or entities for specific fountains.
-- Optimized a small portion of the plugin
+- Fixed players and hoppers being able to pick up items from the Mario fountain.
+- Item fountains now pause while no players are within 25 blocks.
+  - Applies to the Mario, Pokemon, Food, Mobs, Presents, Gems, Halloween and custom fountains.
+- The Heads fountain no longer spawns a temporary falling block every few ticks to find nearby players.
+- Fountain heads are now built once and reused instead of being rebuilt for every drop.
+  - The Heads fountain keeps showing the skin a player had when first seen until the server restarts.
+- Particles now only look for nearby players instead of checking every nearby entity.
+- The Soul Well, Big Soul Well, Love Well, Big Love Well, Santa Hat and Flame Wheel effects now calculate their shapes once instead of every tick.
+- Optimized several smaller parts of the plugin.
+  - Overall, the plugin now uses about a third less server time than 1.13.2.

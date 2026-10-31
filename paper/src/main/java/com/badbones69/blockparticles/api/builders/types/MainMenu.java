@@ -6,32 +6,32 @@ import com.ryderbelserion.fusion.paper.builders.ItemBuilder;
 import com.ryderbelserion.fusion.paper.builders.gui.interfaces.Gui;
 import com.ryderbelserion.fusion.paper.builders.gui.interfaces.GuiItem;
 import io.papermc.paper.persistence.PersistentDataContainerView;
-import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ItemType;
 import org.bukkit.persistence.PersistentDataType;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class MainMenu extends StaticInventoryBuilder {
 
     private final NamespacedKey key = new NamespacedKey(this.plugin, "button");
-    
+
     private final Map<Integer, Map<Integer, ItemStack>> items;
 
     private final String location;
 
     public MainMenu(final Player player, final String title, final int rows, String location) {
         super(player, title, rows);
-        
+
         this.items = new HashMap<>();
-        
+
         this.items.put(1, new HashMap<>());
         this.items.put(2, new HashMap<>());
-        
+
         final Map<Integer, ItemStack> page_one = new HashMap<>() {{
             put(0, new ItemBuilder(ItemType.BROWN_MUSHROOM).setPersistentString(key, "Crit").withDisplayName("<gold>Crit").asItemStack());
             put(1, new ItemBuilder(ItemType.BROWN_MUSHROOM_BLOCK).setPersistentString(key, "BigCrit").withDisplayName("<gold>BigCrit").asItemStack());
@@ -87,7 +87,7 @@ public class MainMenu extends StaticInventoryBuilder {
             put(32, new ItemBuilder(ItemType.PLAYER_HEAD).setPersistentString(key, "Mario").asSkullBuilder().withUrl("a0c2549a893726988f3428bef799875ba871688ae64eb0cfdc43f7d6e24c6c").withDisplayName("<red>Mario").asItemStack());
             put(35, new ItemBuilder(ItemType.ARROW).setPersistentString(key, "particles").withDisplayName("<yellow>Particles").asItemStack());
         }};
-        
+
         this.items.put(2, page_two);
 
         this.location = location;
@@ -103,7 +103,7 @@ public class MainMenu extends StaticInventoryBuilder {
         items.forEach((slot, item) -> this.gui.setItem(slot, new GuiItem(item)));
 
         this.gui.addSlotAction(53, action -> {
-            this.items.get(1).keySet().forEach(this.gui::removeItem);
+            this.items.get(1).keySet().forEach(this.gui :: removeItem);
 
             this.items.get(2).forEach((slot, item) -> this.gui.setItem(slot, new GuiItem(item)));
         });
@@ -150,4 +150,5 @@ public class MainMenu extends StaticInventoryBuilder {
 
         this.gui.open(this.player);
     }
+
 }

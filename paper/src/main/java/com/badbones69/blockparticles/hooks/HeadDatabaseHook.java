@@ -8,29 +8,35 @@ import me.arcaniax.hdb.api.HeadDatabaseAPI;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ItemType;
 
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 public class HeadDatabaseHook {
 
     private static final BlockParticles plugin = BlockParticles.getPlugin();
 
     private static FusionPaper fusion = plugin.getFusion();
-    
+
     private static HeadDatabaseAPI headDatabaseAPI;
-    
+
+    private static final Map<String, ItemStack> headCache = new ConcurrentHashMap<>();
+
     public HeadDatabaseHook() {
         if (fusion.isModReady(ModSupport.head_database)) {
             headDatabaseAPI = new HeadDatabaseAPI();
         }
     }
-    
+
     public static ItemStack getHead(String head) {
         if (fusion.isModReady(ModSupport.head_database)) {
             return headDatabaseAPI.getItemHead(head);
         }
-        
+
         return getPlayerHead(head);
     }
 
     public static ItemStack getPlayerHead(final String playerName) {
-        return new ItemBuilder(ItemType.PLAYER_HEAD).asSkullBuilder().withName(playerName).asItemStack();
+        return headCache.computeIfAbsent(playerName, name -> new ItemBuilder(ItemType.PLAYER_HEAD).asSkullBuilder().withName(name).asItemStack());
     }
+
 }

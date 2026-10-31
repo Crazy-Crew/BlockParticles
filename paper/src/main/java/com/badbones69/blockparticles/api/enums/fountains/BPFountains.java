@@ -4,7 +4,7 @@ import com.badbones69.blockparticles.BlockParticles;
 import com.badbones69.blockparticles.api.objects.CustomFountain;
 
 public enum BPFountains {
-    
+
     MARIO(),
     POKEMON(),
     FOOD(),
@@ -14,7 +14,7 @@ public enum BPFountains {
     HEADS(),
     PRESENTS(),
     CUSTOM();
-    
+
     public static BPFountains getFromName(String name) {
         for (BPFountains fountain : values()) {
             if (fountain == CUSTOM) {

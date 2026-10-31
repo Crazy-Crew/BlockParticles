@@ -1,12 +1,15 @@
 package com.badbones69.blockparticles;
 
+import com.badbones69.blockparticles.api.ParticleManager;
+import com.badbones69.blockparticles.api.enums.Files;
 import com.badbones69.blockparticles.api.enums.fountains.BPFountains;
 import com.badbones69.blockparticles.api.enums.fountains.BPParticles;
-import com.badbones69.blockparticles.api.enums.Files;
 import com.badbones69.blockparticles.api.enums.particles.CustomParticles;
 import com.badbones69.blockparticles.listeners.FountainListener;
-import com.badbones69.blockparticles.api.ParticleManager;
-import org.bukkit.*;
+import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.Server;
+import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
@@ -14,6 +17,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
+
 import java.util.ArrayList;
 
 public class Methods {
@@ -23,11 +27,11 @@ public class Methods {
     private static final Server server = plugin.getServer();
 
     private static final ParticleManager particleManager = plugin.getParticleManager();
-    
+
     public static String color(String message) {
         return ChatColor.translateAlternateColorCodes('&', message);
     }
-    
+
     public static ArrayList<String> getLocations() {
         final FileConfiguration data = Files.data.getConfiguration();
 
@@ -37,7 +41,7 @@ public class Methods {
 
         return new ArrayList<>(section.getKeys(false));
     }
-    
+
     public static void kill() {
         particleManager.getParticleControl().getLocations().clear();
 
@@ -55,7 +59,7 @@ public class Methods {
 
         server.getGlobalRegionScheduler().cancelTasks(plugin);
     }
-    
+
     public static void startParticles() {
         final FileConfiguration data = Files.data.getConfiguration();
 
@@ -228,7 +232,7 @@ public class Methods {
             }
         }
     }
-    
+
     public static void addLoc(Player player, String name, String particle) {
         final FileConfiguration configuration = Files.config.getConfiguration();
 
@@ -284,7 +288,7 @@ public class Methods {
 
         player.sendMessage(color(prefix + "&3You have added &6" + name + " &3to the block."));
     }
-    
+
     public static void delLoc(CommandSender player, String name) {
         final FileConfiguration configuration = Files.config.getConfiguration();
 
@@ -305,7 +309,7 @@ public class Methods {
         for (String loc : section.getKeys(false)) {
             if (loc.equalsIgnoreCase(name)) {
                 data.set("locations." + loc, null);
-                
+
                 Files.data.save();
 
                 particleManager.getParticleControl().getLocations().get(loc).cancel();
@@ -322,7 +326,7 @@ public class Methods {
             player.sendMessage(color(prefix + "&3There are no locations called &6" + name + "&3."));
         }
     }
-    
+
     public static void listLoc(Player player) {
         final FileConfiguration configuration = Files.config.getConfiguration();
 
@@ -348,7 +352,7 @@ public class Methods {
             String x = data.getString("locations." + id + ".x");
             String y = data.getString("locations." + id + ".y");
             String z = data.getString("locations." + id + ".z");
-            
+
             part = Methods.color("&8[&6" + line + "&8]: " + "&c" + id + "&8, &c" + world + "&8, &c" + x + "&8, &c" + y + "&8, &c" + z);
 
             l.append(part);
@@ -365,7 +369,7 @@ public class Methods {
         player.sendMessage(msg);
         player.sendMessage(Methods.color("&3Number of locations: &6" + line));
     }
-    
+
     public static void setLoc(Player player, String name, String particle) {
         final FileConfiguration configuration = Files.config.getConfiguration();
 
@@ -405,4 +409,5 @@ public class Methods {
 
         if (!hasLocation) player.sendMessage(color(prefix + "&3There are no locations called &6" + name + "&3."));
     }
+
 }

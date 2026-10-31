@@ -1,7 +1,7 @@
 package com.badbones69.blockparticles.api.enums.fountains;
 
 public enum BPParticles {
-    
+
     LOVEWELL(),
     BIGLOVEWELL(),
     LOVETORNADO(),
@@ -40,7 +40,7 @@ public enum BPParticles {
     DOUBLESPIRAL(),
     CRIT(),
     BIGCRIT();
-    
+
     public static BPParticles getFromName(String name) {
         for (BPParticles fountain : values()) {
             if (fountain.name().equalsIgnoreCase(name.replace(" ", ""))) {

@@ -11,11 +11,12 @@ public class ParticleListener implements Listener {
     private final BlockParticles plugin = BlockParticles.getPlugin();
 
     private final ParticleManager particleManager = this.plugin.getParticleManager();
-    
+
     @EventHandler
     public void onItemPickUp(EntityPickupItemEvent e) {
         if (this.particleManager.getFountainItem().contains(e.getItem())) {
             e.setCancelled(true);
         }
     }
+
 }
